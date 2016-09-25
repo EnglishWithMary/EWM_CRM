@@ -50,5 +50,53 @@ public class DepartmentController {
         return "redirect:/dep";
     }
 
+    @RequestMapping(value = "/depEdit", method = RequestMethod.GET)
+    public ModelAndView showEdit(@RequestParam(required = true) Integer id) {
+        Department department = null;
+        try {
+            department = departmentService.getById(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ModelAndView(JspPath.DEPARTMENT_EDIT, "department", department);
+    }
+
+    @RequestMapping(value = "/depEditSave", method = RequestMethod.POST)
+    public String editExistOne(@RequestParam(required = true) Integer id, @RequestParam(required = true) String param) {
+        Department department;
+        try{
+            department = departmentService.getById(id);
+            department.setName(param);
+            departmentService.update(department);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/dep";
+    }
+
+    @RequestMapping(value = "/depDel", method = RequestMethod.GET)
+    public ModelAndView showDel() {
+        return new ModelAndView(JspPath.DEPARTMENT_DEL);
+    }
+
+
+    @RequestMapping(value = "/depDelete", method = RequestMethod.POST)
+    public String delExistOne(@RequestParam(required = true) Integer id) {
+
+        try{
+            departmentService.removeById(id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return "redirect:/dep";
+    }
+
+    /*@RequestMapping(value = "/depDelete", method = RequestMethod.POST)
+    public String delExistOne(@RequestParam(required = true) String name) {
+
+        return "redirect:/dep";
+    }*/
+
 
 }

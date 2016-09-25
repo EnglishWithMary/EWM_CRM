@@ -41,7 +41,7 @@
 
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
+            <artifactId><spring-bean></spring-bean>s</artifactId>
             <version>${spring.version}</version>
         </dependency>
 

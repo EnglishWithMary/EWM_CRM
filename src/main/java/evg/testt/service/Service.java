@@ -13,6 +13,8 @@ public interface Service<T> {
 
     void delete(T o) throws SQLException;
 
+    void removeById(Integer id) throws SQLException;
+
     void insert(T o) throws SQLException;
 
     void update(T o) throws SQLException;
