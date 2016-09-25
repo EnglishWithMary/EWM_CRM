@@ -82,18 +82,21 @@ public class EmployeeController {
             department = departmentService.getById(dep);
             list = department.getEmployees();
             list.remove(employee);
-            employeeService.delete(employee);
+//            employeeService.delete(employee);
+//            employeeService.removeById(id);
+//            employeeService.update(employee);
             departmentService.update(department);
-        }catch (Exception e){
+            employeeService.delete(employee);
+        }catch (SQLException e){
             e.printStackTrace();
         }
 
-        try{
-            department = departmentService.getById(dep);
-        }catch (SQLException e){
-            department = null;
-            e.printStackTrace();
-        }
+//        try{
+//            department = departmentService.getById(dep);
+//        }catch (SQLException e){
+//            department = null;
+//            e.printStackTrace();
+//        }
         return "redirect:/dep";
     }
 

@@ -1,7 +1,9 @@
 package evg.testt.controller;
 
 import evg.testt.model.Department;
+import evg.testt.model.Employee;
 import evg.testt.service.DepartmentService;
+import evg.testt.service.EmployeeService;
 import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,9 @@ public class DepartmentController {
 
     @Autowired
     DepartmentService departmentService;
+
+    @Autowired
+    EmployeeService employeeService;
 
     @RequestMapping(value = "/dep", method = RequestMethod.GET)
     public ModelAndView showAll() {
@@ -82,10 +87,17 @@ public class DepartmentController {
 
     @RequestMapping(value = "/depDelete", method = RequestMethod.POST)
     public String delExistOne(@RequestParam(required = true) Integer id) {
-
+        List<Employee> list;
+        List<Employee> deletedList = null;
         try{
-            departmentService.removeById(id);
-        }catch (Exception e){
+            list = departmentService.getById(id).getEmployees();
+            deletedList = list;
+            list = null;
+            departmentService.delete(departmentService.getById(id));
+            for(Employee empl:deletedList){
+                employeeService.delete(empl);
+            }
+        }catch (SQLException e){
             e.printStackTrace();
         }
 

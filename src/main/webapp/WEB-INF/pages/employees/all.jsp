@@ -28,7 +28,7 @@
                 </form:form>
             </td>
             <td>
-                <form:form method="get" action="/emplEdit">
+                <form:form method="get" action="/">
                     <input type="hidden" name="id" value="${employee.id}"/>
                     <input type="submit" value = "Edit" />
                 </form:form>
