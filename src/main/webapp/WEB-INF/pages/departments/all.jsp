@@ -3,9 +3,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>All</title>
+    <title>All Departments</title>
 </head>
 <body>
+<script>
+    window.onload = function () {
+        window.history.pushState(null,'','dep');
+    };
+</script>
 <p>Departments</p>
 <table width="600px">
     <tr>

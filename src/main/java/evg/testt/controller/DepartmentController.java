@@ -1,12 +1,15 @@
 package evg.testt.controller;
 
+import com.sun.corba.se.spi.presentation.rmi.StubAdapter;
 import evg.testt.model.Department;
 import evg.testt.model.Employee;
 import evg.testt.service.DepartmentService;
 import evg.testt.service.EmployeeService;
 import evg.testt.util.JspPath;
+import org.omg.PortableInterceptor.ForwardRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +29,7 @@ public class DepartmentController {
     @Autowired
     EmployeeService employeeService;
 
-    @RequestMapping(value = "/dep", method = RequestMethod.GET)
+    @RequestMapping(value = "/dep")//, method = RequestMethod.GET)
     public ModelAndView showAll() {
         List<Department> departments;
         try {
@@ -52,7 +55,7 @@ public class DepartmentController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return "redirect:/dep";
+        return "forward:/dep";
     }
 
     @RequestMapping(value = "/depEdit", method = RequestMethod.GET)
@@ -76,7 +79,7 @@ public class DepartmentController {
         }catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/dep";
+        return "forward:/dep";
     }
 
     @RequestMapping(value = "/depDel", method = RequestMethod.GET)
@@ -86,7 +89,7 @@ public class DepartmentController {
 
 
     @RequestMapping(value = "/depDelete", method = RequestMethod.POST)
-    public String delExistOne(@RequestParam(required = true) Integer id) {
+    public String delExistOne(@RequestParam(required = true) Integer id, Model model) {
         List<Employee> list;
         List<Employee> deletedList = null;
         try{
@@ -100,8 +103,7 @@ public class DepartmentController {
         }catch (SQLException e){
             e.printStackTrace();
         }
-
-        return "redirect:/dep";
+        return "forward:/dep";
     }
 
     /*@RequestMapping(value = "/depDelete", method = RequestMethod.POST)
