@@ -9,7 +9,7 @@ import javax.persistence.MappedSuperclass;
 public class BaseModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     public Integer getId() {

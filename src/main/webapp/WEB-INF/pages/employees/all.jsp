@@ -6,6 +6,11 @@
     <title></title>
 </head>
 <body>
+<script>
+    window.onload = function () {
+        window.history.pushState(null,'','empl');
+    };
+</script>
 <p>Employees</p>
 <p>Department ID: ${department.id}, Department Name: ${department.name}</p>
 <table width="600px">

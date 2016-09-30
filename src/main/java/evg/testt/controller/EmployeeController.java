@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,7 +28,7 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
-    @RequestMapping(value = "/empl", method = RequestMethod.POST)
+    @RequestMapping(value = "/empl")
     public ModelAndView showAll(@RequestParam (required = true) Integer id){
         Department department;
         try{
@@ -73,31 +72,23 @@ public class EmployeeController {
     }
 
     @RequestMapping(value = "/emplDelete", method = RequestMethod.POST)
-    public String delExistOne(@RequestParam(required = true) Integer id, @RequestParam(required = true) Integer dep) {
+    public String delExistOne(@RequestParam(required = true) Integer id,
+                                    @RequestParam(required = true) Integer dep) {
         Department department;
         Employee employee;
         List<Employee> list;
+
         try{
             employee = employeeService.getById(id);
-            department = departmentService.getById(dep);
+            department = employee.getDepartment();
             list = department.getEmployees();
             list.remove(employee);
-//            employeeService.delete(employee);
-//            employeeService.removeById(id);
-//            employeeService.update(employee);
             departmentService.update(department);
-            employeeService.delete(employee);
+
         }catch (SQLException e){
             e.printStackTrace();
         }
-
-//        try{
-//            department = departmentService.getById(dep);
-//        }catch (SQLException e){
-//            department = null;
-//            e.printStackTrace();
-//        }
-        return "redirect:/dep";
+        return "forward:/dep";
     }
 
 

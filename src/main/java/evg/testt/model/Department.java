@@ -1,5 +1,6 @@
 package evg.testt.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -10,7 +11,7 @@ public class Department extends BaseModel{
 
     private String name;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Employee> employees;
 
     public String getName() {

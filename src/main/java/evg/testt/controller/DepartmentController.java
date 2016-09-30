@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import java.sql.SQLException;
@@ -48,10 +49,10 @@ public class DepartmentController {
 
     @RequestMapping(value = "/depSave", method = RequestMethod.POST)
     public String addNewOne(@RequestParam(required = true) String name) {
-        Department addedDepartment = new Department();
-        addedDepartment.setName(name);
+        Department department = new Department();
+        department.setName(name);
         try {
-            departmentService.insert(addedDepartment);
+            departmentService.insert(department);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -60,23 +61,26 @@ public class DepartmentController {
 
     @RequestMapping(value = "/depEdit", method = RequestMethod.GET)
     public ModelAndView showEdit(@RequestParam(required = true) Integer id) {
-        Department department = null;
+        Department department;
         try {
             department = departmentService.getById(id);
         } catch (SQLException e) {
+            department = null;
             e.printStackTrace();
         }
         return new ModelAndView(JspPath.DEPARTMENT_EDIT, "department", department);
     }
 
+//    Change this method - it should work with model "department", not with "id"
     @RequestMapping(value = "/depEditSave", method = RequestMethod.POST)
-    public String editExistOne(@RequestParam(required = true) Integer id, @RequestParam(required = true) String param) {
+    public String editExistOne(@RequestParam(required = true) Integer id,
+                               @RequestParam(required = true) String param) {
         Department department;
         try{
             department = departmentService.getById(id);
             department.setName(param);
             departmentService.update(department);
-        }catch (Exception e) {
+        }catch (SQLException e) {
             e.printStackTrace();
         }
         return "forward:/dep";
@@ -89,28 +93,19 @@ public class DepartmentController {
 
 
     @RequestMapping(value = "/depDelete", method = RequestMethod.POST)
-    public String delExistOne(@RequestParam(required = true) Integer id, Model model) {
+    public String delExistOne(@RequestParam(required = true) Integer id) {
+        Department department;
         List<Employee> list;
-        List<Employee> deletedList = null;
         try{
-            list = departmentService.getById(id).getEmployees();
-            deletedList = list;
-            list = null;
+            department = departmentService.getById(id);
+            list = department.getEmployees();
+            list.clear();
+            departmentService.update(department);
             departmentService.delete(departmentService.getById(id));
-            for(Employee empl:deletedList){
-                employeeService.delete(empl);
-            }
+
         }catch (SQLException e){
             e.printStackTrace();
         }
         return "forward:/dep";
     }
-
-    /*@RequestMapping(value = "/depDelete", method = RequestMethod.POST)
-    public String delExistOne(@RequestParam(required = true) String name) {
-
-        return "redirect:/dep";
-    }*/
-
-
 }
