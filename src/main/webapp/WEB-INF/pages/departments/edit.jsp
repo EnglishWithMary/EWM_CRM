@@ -1,22 +1,26 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title></title>
 </head>
 <body>
-<form:form method="post" action="/depSave">
+<sf:form method="post" modelAttribute="department" action="/depSave">
+    <fieldset>
     <table>
         <tr>
-            <td>Name:</td>
-            <td><input type="text" name="name"/></td>
+            <th><sf:label path="name">Name:</sf:label></th>
+            <td><sf:input path="name" /><br/>
+                <%--<sf:errors path="fullName" cssClass="error" />--%>
+            </td>
         </tr>
         <tr>
             <td colspan="2">
-                <input type="submit" />
+                <input type="submit" value="Add department" />
             </td>
         </tr>
     </table>
-</form:form>
+    </fieldset>
+</sf:form>
 </body>
 </html>

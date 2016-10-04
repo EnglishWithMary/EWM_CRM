@@ -6,10 +6,14 @@ import evg.testt.model.Employee;
 import evg.testt.service.DepartmentService;
 import evg.testt.service.EmployeeService;
 import evg.testt.util.JspPath;
+import net.sf.oval.ConstraintViolation;
+import net.sf.oval.Validator;
 import org.omg.PortableInterceptor.ForwardRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +34,7 @@ public class DepartmentController {
     @Autowired
     EmployeeService employeeService;
 
-    @RequestMapping(value = "/dep")//, method = RequestMethod.GET)
+    @RequestMapping(value = "/dep")
     public ModelAndView showAll() {
         List<Department> departments;
         try {
@@ -42,20 +46,25 @@ public class DepartmentController {
         return new ModelAndView(JspPath.DEPARTMENT_ALL, "departments", departments);
     }
 
-    @RequestMapping(value = "/depAdd", method = RequestMethod.GET)
-    public ModelAndView showAdd() {
+    @RequestMapping(value = "/depAdd")//, method = RequestMethod.GET)
+    public ModelAndView showAdd(Model model) {
+        model.addAttribute(new Department());
         return new ModelAndView(JspPath.DEPARTMENT_ADD);
     }
 
     @RequestMapping(value = "/depSave", method = RequestMethod.POST)
-    public String addNewOne(@RequestParam(required = true) String name) {
-        Department department = new Department();
-        department.setName(name);
-        try {
-            departmentService.insert(department);
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public String addNewOne(@Validated Department department, Model model) {
+        Validator validator = new Validator();
+        List<ConstraintViolation> violations = validator.validate(department);
+        model.addAttribute(violations); /*  return "forward:/dep";*/
+        if (violations.isEmpty()) {
+            try {
+                departmentService.insert(department);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
         return "forward:/dep";
     }
 
@@ -71,16 +80,17 @@ public class DepartmentController {
         return new ModelAndView(JspPath.DEPARTMENT_EDIT, "department", department);
     }
 
-//    Change this method - it should work with model "department", not with "id"
     @RequestMapping(value = "/depEditSave", method = RequestMethod.POST)
-    public String editExistOne(@RequestParam(required = true) Integer id,
-                               @RequestParam(required = true) String param) {
-        Department department;
-        try{
-            department = departmentService.getById(id);
-            department.setName(param);
-            departmentService.update(department);
-        }catch (SQLException e) {
+    public String editExistOne(@Validated Department department,
+                               BindingResult bindingResult) {
+//        if(bindingResult.hasErrors()){
+//            return "/depEdit";
+//        }
+        try {
+            Department dep = departmentService.getById(department.getId());
+            dep.setName(department.getName());
+            departmentService.update(dep);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return "forward:/dep";
@@ -91,19 +101,18 @@ public class DepartmentController {
         return new ModelAndView(JspPath.DEPARTMENT_DEL);
     }
 
-
-    @RequestMapping(value = "/depDelete", method = RequestMethod.POST)
+    @RequestMapping(value = "/depDelete", method = RequestMethod.GET)
     public String delExistOne(@RequestParam(required = true) Integer id) {
         Department department;
         List<Employee> list;
-        try{
+        try {
             department = departmentService.getById(id);
             list = department.getEmployees();
             list.clear();
             departmentService.update(department);
             departmentService.delete(departmentService.getById(id));
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return "forward:/dep";

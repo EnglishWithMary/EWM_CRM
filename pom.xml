@@ -21,7 +21,7 @@
         <hibernate.version>5.0.1.Final</hibernate.version>
         <hibernate.validator.version>5.2.1.Final</hibernate.validator.version>
         <hibernate.commons.version>5.0.0.Final</hibernate.commons.version>
-        <!-- Validation -->
+        <!-- Validation-->
         <oval.version>1.84</oval.version>
         <!-- jackson -->
         <jackson.version>2.5.2</jackson.version>
@@ -240,6 +240,13 @@
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15on</artifactId>
             <version>1.53</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.0.0.GA</version>
         </dependency>
 
 

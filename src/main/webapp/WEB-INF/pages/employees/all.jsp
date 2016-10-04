@@ -8,16 +8,16 @@
 <body>
 <script>
     window.onload = function () {
-        window.history.pushState(null,'','empl');
+        window.history.pushState(null,'','empl?id=${department.id}');
     };
 </script>
 <p>Employees</p>
 <p>Department ID: ${department.id}, Department Name: ${department.name}</p>
 <table width="600px">
     <tr>
-        <td><b>Id</b></td>
-        <td><b>Name</b></td>
-        <td><b>Actions</b></td>
+        <td><b>Employee Id:</b></td>
+        <td><b>Name:</b></td>
+        <td><b>Actions:</b></td>
     </tr>
     <c:forEach var="employee" items="${department.employees}">
         <tr>
@@ -26,25 +26,19 @@
             <td>${employee.secondName}</td>
                 <%--<td><a href="/depAdd?id=${contact.id}">Edit</a> | <a href="/delete?id=${contact.id}">Delete</a></td>--%>
             <td>
-                <form:form method="post" action="/emplDelete">
-                    <input type="hidden" name="id" value="${employee.id}"/>
-                    <input type="hidden" name="dep" value="${department.id}"/>
-                    <input type="submit" value = "Delete" />
-                </form:form>
+                <a href="/emplDelete?id=${employee.id}">Delete</a>
             </td>
             <td>
-                <form:form method="get" action="/">
-                    <input type="hidden" name="id" value="${employee.id}"/>
-                    <input type="submit" value = "Edit" />
-                </form:form>
+                <a href="/emplEdit?id=${employee.id}">Edit</a>
             </td>
         </tr>
     </c:forEach>
 </table>
-<form:form method="post" action="/emplAdd">
-    <input type="hidden" name="id" value="${department.id}"/>
-    <input type="submit" value="Add Employee"/>
-</form:form>
+<tr>
+    <td colspan="5">
+        <a href="/emplAdd?id=${department.id}">Add Employee</a>
+    </td>
+</tr>
 <tr>
     <td colspan="5">
         <a href="/dep">See Departments</a>

@@ -1,4 +1,4 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -6,12 +6,16 @@
 </head>
 <body>
 <p></p>
-<form:form method="post" action="/depEditSave" var="department" item="${department}">
+<sf:form method="post" action="/depEditSave" modelAttribute="department">
+<fieldset>
     <table>
-        <tr>Department ID ${department.id}</tr>
         <tr>
-            <td><input type="hidden" name="id" value="${department.id}"/></td>
-            <td><input type="text" name="param" value="${department.name}"/></td>
+            <th><sf:label path="id">Department ID: ${department.id}</sf:label></th>
+            <td><sf:hidden path="id" /></td>
+        </tr>
+        <tr>
+            <th><sf:label path="name">Name</sf:label></th>
+            <td><sf:input path="name" value="${department.name}"/></td>
         </tr>
         <tr>
             <td colspan="2">
@@ -19,6 +23,7 @@
             </td>
         </tr>
     </table>
-</form:form>
+</fieldset>
+</sf:form>
 </body>
 </html>
