@@ -5,7 +5,7 @@
     <title></title>
 </head>
 <body>
-<sf:form method="post" modelAttribute="department" action="/depSave">
+    <sf:form method="post" modelAttribute="department" action="/depSave">
     <fieldset>
     <table>
         <tr>
