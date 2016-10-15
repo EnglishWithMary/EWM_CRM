@@ -11,6 +11,7 @@
   <title>Hello world</title>
 </head>
 <body>
-  Home World !
+  Home World!
+ <a href="/users">Users</a>
 </body>
 </html>

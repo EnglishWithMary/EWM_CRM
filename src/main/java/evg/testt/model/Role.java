@@ -1,8 +1,8 @@
 package evg.testt.model;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
 
 /**
  * Created by clay on 05.10.16.
@@ -11,26 +11,25 @@ import javax.persistence.OneToOne;
 @Entity(name = "roles")
 public class Role extends BaseModel {
 
-    private UserRole userRole;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-//    @OneToOne
-//    @JoinColumn(name = "user_id")
-    private Integer userId;
+    private String role;
 
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
+    public User getUser() {
+        return user;
     }
 
-    public UserRole getUserRole() {
-        return userRole;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-
-    public Integer getUserId() {
-        return userId;
+    public void setRole(String role) {
+        this.role = role;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public String getRole() {
+        return role;
     }
 }
