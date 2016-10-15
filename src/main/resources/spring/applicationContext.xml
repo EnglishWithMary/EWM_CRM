@@ -13,7 +13,7 @@
         http://www.springframework.org/schema/data/jpa
         http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
         http://www.springframework.org/schema/data/mongo
-        http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+        http://www.springframework.org/schema/data/mongo/spring-mongo-1.8.xsd">
 
     <context:annotation-config/>
 

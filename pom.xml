@@ -13,22 +13,23 @@
         <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <spring.version>4.2.1.RELEASE</spring.version>
+        <spring.version>4.3.2.RELEASE</spring.version>
         <version.spring.mongodb>1.8.0.RELEASE</version.spring.mongodb>
-        <spring.data.jpa.version>1.10.4.RELEASE</spring.data.jpa.version>
-        <spring.security.version>4.1.3.RELEASE</spring.security.version>
+        <spring.data.jpa.version>1.8.0.RELEASE</spring.data.jpa.version>
         <version.jackson>1.9.13</version.jackson>
         <!-- Hibernate -->
-        <hibernate.version>5.2.2.Final</hibernate.version>
-        <hibernate.validator.version>5.2.2.Final</hibernate.validator.version>
-        <hibernate.commons.version>5.0.1.Final</hibernate.commons.version>
+        <hibernate.version>5.0.1.Final</hibernate.version>
+        <hibernate.validator.version>5.2.1.Final</hibernate.validator.version>
+        <hibernate.commons.version>5.0.0.Final</hibernate.commons.version>
         <!-- Validation-->
         <oval.version>1.84</oval.version>
         <!-- jackson -->
         <jackson.version>2.5.2</jackson.version>
         <jackson.mapper.version>1.9.13</jackson.mapper.version>
         <!-- mySql JDBC -->
-        <mysql.jdbc.version>6.0.4</mysql.jdbc.version>
+        <mysql.jdbc.version>5.1.34</mysql.jdbc.version>
+        <!--spring-security-->
+        <spring.security.version>4.1.3.RELEASE</spring.security.version>
     </properties>
 
     <dependencies>
@@ -70,24 +71,16 @@
             <version>${spring.version}</version>
         </dependency>
 
+        <!--spring-bom-->
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>${spring.data.jpa.version}</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-framework-bom</artifactId>
+            <version>4.3.2.RELEASE</version>
+            <type>pom</type>
+            <scope>import</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-mongodb</artifactId>
-            <version>${version.spring.mongodb}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-            <version>${spring.security.version}</version>
-        </dependency>
-
+        <!--spring-security-->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
@@ -98,6 +91,19 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
             <version>${spring.security.version}</version>
+        </dependency>
+
+        <!--spring jpa-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>${spring.data.jpa.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>${version.spring.mongodb}</version>
         </dependency>
 
         <!-- Hibernate -->
@@ -156,6 +162,7 @@
             <version>3.0.3</version>
         </dependency>
 
+
         <!-- Marker -->
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
@@ -164,18 +171,17 @@
         </dependency>
 
         <!-- Servlet Api -->
-        <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>jsp-api</artifactId>
-            <version>2.2</version>
+            <version>2.1</version>
             <scope>provided</scope>
         </dependency>
 
@@ -260,6 +266,14 @@
             <artifactId>bcprov-jdk15on</artifactId>
             <version>1.53</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.0.0.GA</version>
+        </dependency>
+
 
     </dependencies>
 

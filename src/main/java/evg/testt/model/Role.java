@@ -13,8 +13,8 @@ public class Role extends BaseModel {
 
     private UserRole userRole;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
+//    @OneToOne
+//    @JoinColumn(name = "user_id")
     private Integer userId;
 
     public void setUserRole(UserRole userRole) {

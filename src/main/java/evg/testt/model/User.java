@@ -14,8 +14,8 @@ public class User extends BaseModel{
     private String login;
     private String password;
 
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "users")
-    private Role role;
+//    @OneToOne(fetch = FetchType.EAGER, mappedBy = "users")
+//    private Role role;
 
     public String getLogin() {
         return login;
@@ -33,11 +33,11 @@ public class User extends BaseModel{
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
+//    public Role getRole() {
+//        return role;
+//    }
+//
+//    public void setRole(Role role) {
+//        this.role = role;
+//    }
 }
