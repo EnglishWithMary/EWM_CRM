@@ -31,7 +31,7 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @RequestMapping(value = "empl", method = {RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView showAll(@RequestParam (required = true) Integer id){
+    public ModelAndView showAll(@RequestParam int id){
         Department department;
         try{
             department = departmentService.getById(id);
@@ -43,15 +43,15 @@ public class EmployeeController {
     }
 
     @RequestMapping(value = "/emplAdd", method = RequestMethod.GET)
-    public ModelAndView showAdd(@RequestParam(required = true) Integer id) {
+    public ModelAndView showAdd(@RequestParam Integer id) {
         return new ModelAndView(JspPath.EMPLOYEE_ADD, "id", id);
     }
 
     @RequestMapping(value = "/saveEmpl", method = RequestMethod.POST)
     public ModelAndView saveEmloyee(
-            @RequestParam(required = true) Integer id,
-            @RequestParam(required = true) String firstName,
-            @RequestParam(required = true) String secondName) {
+            @RequestParam Integer id,
+            @RequestParam String firstName,
+            @RequestParam String secondName) {
 
         Employee employee = new Employee();
         employee.setFirstName(firstName);

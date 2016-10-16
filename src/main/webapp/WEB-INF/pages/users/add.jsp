@@ -9,10 +9,10 @@
 <body>
 <form:form commandName="user">
     <label for="login">Login:</label>
-    <form:input path="login"/>
+    <form:input path="login"/><br>
 
     <label for="password">Password:</label>
-    <form:password path="password"/>
+    <form:password path="password"/><br>
 
     <input type="submit" value="Add user"/>
 </form:form>

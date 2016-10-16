@@ -14,7 +14,7 @@ public class User extends BaseModel{
     private String login;
     private String password;
 
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
     private Role role;
 
     public String getLogin() {

@@ -1,14 +1,11 @@
 package evg.testt.controller;
 
-import com.sun.corba.se.spi.presentation.rmi.StubAdapter;
 import evg.testt.model.Department;
-import evg.testt.model.Employee;
 import evg.testt.service.DepartmentService;
 import evg.testt.service.EmployeeService;
 import evg.testt.util.JspPath;
 import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
-import org.omg.PortableInterceptor.ForwardRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 import java.sql.SQLException;
@@ -69,7 +65,7 @@ public class DepartmentController {
     }
 
     @RequestMapping(value = "/depEdit", method = RequestMethod.GET)
-    public ModelAndView showEdit(@RequestParam(required = true) Integer id) {
+    public ModelAndView showEdit(@RequestParam int id) {
         Department department;
         try {
             department = departmentService.getById(id);
@@ -102,14 +98,14 @@ public class DepartmentController {
     }
 
     @RequestMapping(value = "/depDelete", method = RequestMethod.GET)
-    public String delExistOne(@RequestParam(required = true) Integer id) {
-        Department department;
-        List<Employee> list;
+    public String delExistOne(@RequestParam int id) {
+//        Department department;
+//        List<Employee> list;
         try {
-            department = departmentService.getById(id);
-            list = department.getEmployees();
-            list.clear();
-            departmentService.update(department);
+//            department = departmentService.getById(id);
+//            list = department.getEmployees();
+//            list.clear();
+//            departmentService.update(department);
             departmentService.delete(departmentService.getById(id));
 
         } catch (SQLException e) {
