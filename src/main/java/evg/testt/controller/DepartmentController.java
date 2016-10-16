@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,25 +44,32 @@ public class DepartmentController {
     }
 
     @RequestMapping(value = "/depAdd")//, method = RequestMethod.GET)
-    public ModelAndView showAdd(Model model) {
+    public ModelAndView showAdd(Model model
+//            , @ModelAttribute("violations") List<ConstraintViolation> violations
+    ) {
         model.addAttribute(new Department());
+        model.addAttribute("violations", Collections.EMPTY_LIST);
         return new ModelAndView(JspPath.DEPARTMENT_ADD);
     }
 
     @RequestMapping(value = "/depSave", method = RequestMethod.POST)
-    public String addNewOne(@Validated Department department, Model model) {
-        Validator validator = new Validator();
-        List<ConstraintViolation> violations = validator.validate(department);
-        model.addAttribute(violations); /*  return "forward:/dep";*/
+    public ModelAndView addNewOne(@ModelAttribute("department") Department department, Model model) {
+//        Validator validator = new Validator();
+        List<ConstraintViolation> violations = new Validator().validate(department);
+//                validator.validate(department);
         if (violations.isEmpty()) {
             try {
                 departmentService.insert(department);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            return showAll();
+        } else {
+            model.addAttribute(department);
+//            model.addAttribute("violations", violations);
+            model.addAttribute("violations", violations);
+            return new ModelAndView(JspPath.DEPARTMENT_ADD);
         }
-
-        return "forward:/dep";
     }
 
     @RequestMapping(value = "/depEdit", method = RequestMethod.GET)
