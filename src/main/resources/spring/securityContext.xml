@@ -9,8 +9,11 @@
 
     <http auto-config="true" use-expressions="true">
         <!--<intercept-url pattern="/**" access="permitAll" />-->
+        <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/users**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/users/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/depDel" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/depDelete" access="hasRole('ROLE_ADMIN')"/>
         <form-login />
         <logout />
     </http>
