@@ -17,7 +17,7 @@
         <tr>
             <th><sf:label path="name">Name:</sf:label></th>
             <td><sf:input path="name" /><br/>
-                <%--<sf:errors path="name" />--%>
+                <sf:errors path="name" />
             </td>
         </tr>
         <c:forEach var="violation" items="${violations}">

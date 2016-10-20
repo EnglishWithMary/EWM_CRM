@@ -24,5 +24,12 @@
         </property>
     </bean>
 
+    <bean name="ovalSpringInjector" class="net.sf.oval.integration.spring.SpringInjector"/>
+
+    <bean id="validator" class="evg.testt.oval.SpringOvalValidator">
+        <property name="validator">
+            <bean class="evg.testt.oval.OvalConfiguration" depends-on="ovalSpringInjector"/>
+        </property>
+    </bean>
 
 </beans>

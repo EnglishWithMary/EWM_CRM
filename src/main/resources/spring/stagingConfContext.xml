@@ -18,7 +18,7 @@
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath*:database_nosql.staging.properties</value>
+                <!--<value>classpath*:database_nosql.staging.properties</value>-->
                 <value>classpath*:database_rdbms.staging.properties</value>
             </list>
         </property>

@@ -28,7 +28,6 @@
         <!--<authentication-provider user-service-ref='myUserDetailsService'/>-->
 
         <authentication-provider>
-
             <password-encoder hash="bcrypt"/>
             <jdbc-user-service data-source-ref="dataSource" id="userService"
                                users-by-username-query="select login as username, password, true from users where login=?"
@@ -40,7 +39,6 @@
 
     <!--<beans:bean id="myUserDetailsService"-->
                 <!--class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">-->
-
     <!--<beans:property name="dataSource" ref="dataSource"/>-->
 
 </beans:beans>

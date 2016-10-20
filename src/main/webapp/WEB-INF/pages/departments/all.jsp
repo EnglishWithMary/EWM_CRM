@@ -18,7 +18,6 @@
         <td><b>Id</b></td>
         <td><b>Name</b></td>
         <td><b>Actions</b></td>
-        <td>Total violations = ${violations.size}</td>
     </tr>
     <c:forEach var="department" items="${departments}">
         <tr>

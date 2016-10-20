@@ -1,25 +1,27 @@
 package evg.testt.controller;
 
+import evg.testt.oval.SpringOvalValidator;
+import evg.testt.util.JspPath;
 import evg.testt.model.Department;
 import evg.testt.service.DepartmentService;
 import evg.testt.service.EmployeeService;
-import evg.testt.util.JspPath;
-import net.sf.oval.ConstraintViolation;
-import net.sf.oval.Validator;
+
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.validation.annotation.Validated;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Collections;
 import java.util.List;
-
 import java.sql.SQLException;
 
 @Controller
@@ -43,21 +45,20 @@ public class DepartmentController {
         return new ModelAndView(JspPath.DEPARTMENT_ALL, "departments", departments);
     }
 
-    @RequestMapping(value = "/depAdd")//, method = RequestMethod.GET)
-    public ModelAndView showAdd(Model model
-//            , @ModelAttribute("violations") List<ConstraintViolation> violations
-    ) {
+    @RequestMapping(value = "/depAdd")
+    public ModelAndView showAdd(Model model) {
         model.addAttribute(new Department());
         model.addAttribute("violations", Collections.EMPTY_LIST);
         return new ModelAndView(JspPath.DEPARTMENT_ADD);
     }
 
     @RequestMapping(value = "/depSave", method = RequestMethod.POST)
-    public ModelAndView addNewOne(@ModelAttribute("department") Department department, Model model) {
-//        Validator validator = new Validator();
-        List<ConstraintViolation> violations = new Validator().validate(department);
-//                validator.validate(department);
-        if (violations.isEmpty()) {
+    public ModelAndView addNewOne(@ModelAttribute("department") @Validated Department department,
+                                  BindingResult bindingResult, Model model) {
+//        Making custom validator helps
+        Validator validator = new SpringOvalValidator();
+        validator.validate(department, bindingResult);
+        if (!bindingResult.hasErrors()) {
             try {
                 departmentService.insert(department);
             } catch (SQLException e) {
@@ -65,9 +66,8 @@ public class DepartmentController {
             }
             return showAll();
         } else {
-            model.addAttribute(department);
+//            model.addAttribute(department);
 //            model.addAttribute("violations", violations);
-            model.addAttribute("violations", violations);
             return new ModelAndView(JspPath.DEPARTMENT_ADD);
         }
     }
