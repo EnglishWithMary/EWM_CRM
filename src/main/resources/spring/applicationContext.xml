@@ -21,6 +21,4 @@
 
     <bean class="com.fasterxml.jackson.databind.ObjectMapper"/>
 
-    <!--<bean class="net.sf.oval.integration.spring.SpringInjector" />-->
-
 </beans>
