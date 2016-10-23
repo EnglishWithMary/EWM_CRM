@@ -30,18 +30,20 @@
         </security:authorize>
     </table>
 </header>
-<sf:form method="post" action="/saveEmpl">
+<sf:form method="post" action="/saveEmpl" modelAttribute="employee">
+    <input type="hidden" name="id" value="${id}"/>
     <table>
         <tr>
-            <td><input type="hidden" name="id" value="${id}"/></td>
+            <th><sf:label path="firstName">First Name:</sf:label></th>
+            <td><sf:input path="firstName"/><br>
+                <sf:errors path="firstName"/>
+            </td>
         </tr>
         <tr>
-            <td>First Name:</td>
-            <td><input type="text" name="firstName"/></td>
-        </tr>
-        <tr>
-            <td>Last Name:</td>
-            <td><input type="text" name="secondName"/></td>
+            <th><sf:label path="secondName">Last Name:</sf:label></th>
+            <td><sf:input path="secondName" name="secondName"/><br>
+                <sf:errors path="secondName"/>
+            </td>
         </tr>
         <tr>
             <td colspan="2">

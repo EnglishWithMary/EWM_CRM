@@ -36,8 +36,7 @@
         </security:authorize>
     </table>
 </header>
-<p>Employees</p>
-<p>Department ID: ${department.id}, Department Name: ${department.name}</p>
+<p>Employees:</p>
 <table width="600px">
     <tr>
         <td><b>Employee Id:</b></td>
@@ -49,7 +48,6 @@
             <td>${employee.id}</td>
             <td>${employee.firstName}</td>
             <td>${employee.secondName}</td>
-                <%--<td><a href="/depAdd?id=${contact.id}">Edit</a> | <a href="/delete?id=${contact.id}">Delete</a></td>--%>
             <td>
                 <a href="/emplDelete?id=${employee.id}">Delete</a>
             </td>

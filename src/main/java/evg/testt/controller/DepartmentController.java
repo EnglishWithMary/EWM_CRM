@@ -55,8 +55,6 @@ public class DepartmentController {
     @RequestMapping(value = "/depSave", method = RequestMethod.POST)
     public ModelAndView addNewOne(@ModelAttribute("department") @Validated Department department,
                                   BindingResult bindingResult, Model model) {
-//        Making custom validator helps, @Validation doesn't work
-//        Validator validator = new SpringOvalValidator();
         validator.validate(department, bindingResult);
         if (!bindingResult.hasErrors()) {
             try {
@@ -66,7 +64,6 @@ public class DepartmentController {
             }
             return showAll();
         } else {
-//            model.addAttribute(department);
             return new ModelAndView(JspPath.DEPARTMENT_ADD);
         }
     }
@@ -85,9 +82,13 @@ public class DepartmentController {
 
     @RequestMapping(value = "/depEditSave", method = RequestMethod.POST)
     public ModelAndView editExistOne(@ModelAttribute("department") @Validated Department department,
-                                     BindingResult bindingResult) {
-        validator.validate(department, bindingResult);
-        if (!bindingResult.hasErrors()) {
+                                     BindingResult result) {
+//        if, somehow, the department id is null
+        if(department.getId()==null){
+            return showAll();
+        }
+        validator.validate(department, result);
+        if (!result.hasErrors()) {
             try {
                 Department dep = departmentService.getById(department.getId());
                 dep.setName(department.getName());
@@ -95,16 +96,10 @@ public class DepartmentController {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            return new ModelAndView(JspPath.DEPARTMENT_ALL);
+            return showAll();
         } else {
             return new ModelAndView(JspPath.DEPARTMENT_EDIT, "department", department);
-
         }
-    }
-
-    @RequestMapping(value = "/depDel", method = RequestMethod.GET)
-    public ModelAndView showDel() {
-        return new ModelAndView(JspPath.DEPARTMENT_DEL);
     }
 
     @RequestMapping(value = "/depDelete", method = RequestMethod.GET)

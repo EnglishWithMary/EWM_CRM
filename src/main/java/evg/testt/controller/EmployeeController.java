@@ -6,7 +6,6 @@ import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.DepartmentService;
 import evg.testt.service.EmployeeService;
 import evg.testt.util.JspPath;
-import net.sf.oval.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
-import java.util.List;
 
 @Controller
 public class EmployeeController {
@@ -33,12 +31,12 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
-    @RequestMapping(value = "empl", method = {RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView showAll(@RequestParam int id){
+    @RequestMapping(value = "empl")
+    public ModelAndView showAll(@RequestParam int id) {
         Department department;
-        try{
+        try {
             department = departmentService.getById(id);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             department = null;
             e.printStackTrace();
         }
@@ -55,94 +53,60 @@ public class EmployeeController {
     @RequestMapping(value = "/saveEmpl", method = RequestMethod.POST)
     public ModelAndView saveEmloyee(@ModelAttribute("employee") @Validated Employee employee,
                                     BindingResult result,
-                                    @ModelAttribute("id") Integer id, Model model) throws SQLException{
+                                    @ModelAttribute("id") Integer id, Model model) throws SQLException {
 //      @Validated doesn't work
+//        if, somehow, there is no such department
+        if (!departmentService.isExists(id)) {
+            return new ModelAndView(JspPath.HOME);
+        }
         Department department = departmentService.getById(id);
         validator.validate(employee, result);
-        if(department!=null){
-            if(!result.hasErrors()){
-                employee.setDepartment(department);
-                employeeService.insert(employee);
-                return showAll(id);
-            }else{
-                return new ModelAndView(JspPath.EMPLOYEE_ADD);
-            }
-        }else{
-            return new ModelAndView(JspPath.DEPARTMENT_ALL);
+        if (!result.hasErrors()) {
+            employee.setDepartment(department);
+            employeeService.insert(employee);
+            return showAll(id);
+        } else {
+            model.addAttribute("id", id);
+            return new ModelAndView(JspPath.EMPLOYEE_ADD);
         }
-//        Employee employee = new Employee();
-//        employee.setFirstName(firstName);
-//        employee.setSecondName(secondName);
-//        List<Employee> list;
-//        Department department;
-//
-//        try {
-//            department = departmentService.getById(id);
-//            employee.setDepartment(department);
-//            list = department.getEmployees();
-//            list.add(employee);
-//            employeeService.update(employee);
-//            departmentService.update(department);
-//        } catch (SQLException e) {
-//            department = null;
-//            e.printStackTrace();
-//        }
-//        return new ModelAndView(JspPath.EMPLOYEE_ALL, "department", department);
-    }
-
-    @RequestMapping(value = "/emplDelete", method = RequestMethod.GET)
-    public ModelAndView delExistOne(@RequestParam(required = true) Integer id) {
-        Department department;
-        Employee employee;
-        List<Employee> list;
-
-        try{
-            employee = employeeService.getById(id);
-            department = employee.getDepartment();
-            list = department.getEmployees();
-            list.remove(employee);
-            departmentService.update(department);
-
-        }catch (SQLException e){
-            department = null;
-            e.printStackTrace();
-        }
-        return new ModelAndView(JspPath.EMPLOYEE_ALL, "department", department);
     }
 
     @RequestMapping(value = "/emplEditSave", method = RequestMethod.POST)
-    public ModelAndView saveEditedEmployee(@Validated Employee employee) {
-
-        Employee newEmployee;
-
-//        List<Employee> list;
-        Department department;
-
-        try {
-            newEmployee = employeeService.getById(employee.getId());
-            newEmployee.setFirstName(employee.getFirstName());
-            newEmployee.setSecondName(employee.getSecondName());
-
-            employeeService.update(newEmployee);
-            department = newEmployee.getDepartment();
-
-        } catch (SQLException e) {
-            department = null;
-            e.printStackTrace();
+    public ModelAndView saveEditedEmployee(@ModelAttribute("employee") @Validated Employee employee,
+                                           BindingResult result, Model model) throws SQLException {
+//        if, somehow, there is no such department, so:
+        if (!employeeService.isExists(employee.getId())) {
+            return new ModelAndView(JspPath.HOME);
         }
-        return new ModelAndView(JspPath.EMPLOYEE_ALL, "department", department);
+        validator.validate(employee, result);
+        Department department = employeeService.getById(employee.getId()).getDepartment();
+        if (!result.hasErrors()) {
+            employee.setDepartment(department);
+            employeeService.update(employee);
+            return showAll(department.getId());
+        } else {
+            return new ModelAndView(JspPath.EMPLOYEE_EDIT);
+        }
     }
 
     @RequestMapping(value = "/emplEdit", method = RequestMethod.GET)
-    public ModelAndView editEmployee(@RequestParam(required = true) Integer id) {
-        Employee employee;
-        try {
-            employee = employeeService.getById(id);
-        } catch (SQLException e) {
-            employee = null;
-            e.printStackTrace();
+    public ModelAndView editEmployee(@RequestParam Integer id) throws SQLException {
+        if (employeeService.isExists(id)) {
+            return new ModelAndView(JspPath.EMPLOYEE_EDIT, "employee", employeeService.getById(id));
+        } else {
+            return new ModelAndView(JspPath.HOME);
         }
-        return new ModelAndView(JspPath.EMPLOYEE_EDIT, "employee", employee);
     }
 
+    @RequestMapping(value = "/emplDelete", method = RequestMethod.GET)
+    public ModelAndView delExistOne(@RequestParam Integer id) throws SQLException {
+        if (!employeeService.isExists(id)) {
+            return new ModelAndView(JspPath.HOME);
+        }
+        Employee employee = employeeService.getById(id);
+        Department department = employee.getDepartment();
+        department.getEmployees().remove(employee);
+        departmentService.update(department);
+        return showAll(department.getId());
+    }
 }

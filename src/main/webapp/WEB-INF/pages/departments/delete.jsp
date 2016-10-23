@@ -38,7 +38,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <input type="submit" />
+                <input type="submit" value="Delete Department"/>
             </td>
         </tr>
     </table>

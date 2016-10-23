@@ -36,9 +36,7 @@ public abstract class BaseService <T , P extends JpaRepository<T,Integer>> imple
         dao.save(o);
     }
 
-//    public void removeById(Integer id) throws SQLException {
-//        if(dao.exists(id))
-//            dao.delete(id);
-//        dao.de
-//    }
+    public boolean isExists(Integer id) throws SQLException {
+        return dao.exists(id);
+    }
 }

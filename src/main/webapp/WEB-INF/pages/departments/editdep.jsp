@@ -5,6 +5,7 @@
 <head>
     <title></title>
 </head>
+<body>
 <header>
     <div align="right">
         <security:authorize access="isAuthenticated()">
@@ -29,16 +30,12 @@
         </security:authorize>
     </table>
 </header>
-<body>
-<p></p>
+<p>Edit Department</p>
 <sf:form method="post" action="/depEditSave" modelAttribute="department">
     <fieldset>
         <table>
             <tr>
-                <th><sf:label path="id">Department ID: ${department.id}</sf:label></th>
-                <td><sf:hidden path="id"/></td>
-            </tr>
-            <tr>
+                <sf:hidden path="id"/>
                 <th><sf:label path="name">Name</sf:label></th>
                 <td><sf:input path="name" value="${department.name}"/></td>
                 <sf:errors path="name"/>

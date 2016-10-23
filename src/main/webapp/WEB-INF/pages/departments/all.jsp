@@ -37,15 +37,13 @@
     </table>
 </header>
 <p>Departments</p>
-<table width="600px" var="violations" item="violations">
+<table width="600px">
     <tr>
-        <td><b>Id</b></td>
         <td><b>Name</b></td>
         <td><b>Actions</b></td>
     </tr>
     <c:forEach var="department" items="${departments}">
         <tr>
-            <td>${department.id}</td>
             <td>${department.name}</td>
             <td>
                 <a href="/depDelete?id=${department.id}">Delete</a>
