@@ -1,5 +1,7 @@
 package evg.testt.model;
 
+import net.sf.oval.constraint.Length;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -7,7 +9,10 @@ import javax.persistence.ManyToOne;
 @Entity(name = "employees")
 public class Employee extends BaseModel{
 
+    @Length(min = 1, max = 20, message = "The size of Name name should be at least 1 char")
     private String firstName;
+
+    @Length(min = 1, max = 20, message = "The size of Name name should be at least 1 char")
     private String secondName;
 
     @ManyToOne

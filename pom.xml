@@ -29,7 +29,7 @@
         <!-- mySql JDBC -->
         <mysql.jdbc.version>5.1.34</mysql.jdbc.version>
         <!--spring-security-->
-        <spring.security.version>4.1.3.RELEASE</spring.security.version>
+        <spring.security.version>4.1.1.RELEASE</spring.security.version>
     </properties>
 
     <dependencies>
@@ -72,13 +72,13 @@
         </dependency>
 
         <!--spring-bom-->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-framework-bom</artifactId>
-            <version>4.3.2.RELEASE</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring-framework-bom</artifactId>-->
+            <!--<version>4.3.2.RELEASE</version>-->
+            <!--<type>pom</type>-->
+            <!--<scope>import</scope>-->
+        <!--</dependency>-->
 
         <!--spring-security-->
         <dependency>
@@ -90,6 +90,12 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
             <version>${spring.security.version}</version>
         </dependency>
 

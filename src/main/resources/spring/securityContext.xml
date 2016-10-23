@@ -14,8 +14,9 @@
         <intercept-url pattern="/users/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/depDel" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/depDelete" access="hasRole('ROLE_ADMIN')"/>
-        <form-login />
-        <logout />
+        <form-login/>
+        <logout logout-success-url="/home"/>
+        <csrf disabled="true"/>
     </http>
 
     <authentication-manager>

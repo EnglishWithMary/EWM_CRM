@@ -17,10 +17,6 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by clay on 25.09.16.
- */
-
 @Controller
 public class UsersController {
 
@@ -35,12 +31,7 @@ public class UsersController {
         return new User();
     }
 
-//    @ModelAttribute("role")
-//    public Role createRole(){
-//        return  new Role();
-//    }
-
-    @RequestMapping(value = "home")
+    @RequestMapping(value = {"","/","home"})
     public ModelAndView homePage() {
         return new ModelAndView(JspPath.HOME);
     }

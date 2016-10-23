@@ -7,12 +7,10 @@ import evg.testt.service.DepartmentService;
 import evg.testt.service.EmployeeService;
 
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +24,9 @@ import java.sql.SQLException;
 
 @Controller
 public class DepartmentController {
+
+    @Autowired
+    SpringOvalValidator validator;
 
     @Autowired
     DepartmentService departmentService;
@@ -48,15 +49,14 @@ public class DepartmentController {
     @RequestMapping(value = "/depAdd")
     public ModelAndView showAdd(Model model) {
         model.addAttribute(new Department());
-        model.addAttribute("violations", Collections.EMPTY_LIST);
         return new ModelAndView(JspPath.DEPARTMENT_ADD);
     }
 
     @RequestMapping(value = "/depSave", method = RequestMethod.POST)
     public ModelAndView addNewOne(@ModelAttribute("department") @Validated Department department,
                                   BindingResult bindingResult, Model model) {
-//        Making custom validator helps
-        Validator validator = new SpringOvalValidator();
+//        Making custom validator helps, @Validation doesn't work
+//        Validator validator = new SpringOvalValidator();
         validator.validate(department, bindingResult);
         if (!bindingResult.hasErrors()) {
             try {
@@ -67,7 +67,6 @@ public class DepartmentController {
             return showAll();
         } else {
 //            model.addAttribute(department);
-//            model.addAttribute("violations", violations);
             return new ModelAndView(JspPath.DEPARTMENT_ADD);
         }
     }
@@ -85,19 +84,22 @@ public class DepartmentController {
     }
 
     @RequestMapping(value = "/depEditSave", method = RequestMethod.POST)
-    public String editExistOne(@Validated Department department,
-                               BindingResult bindingResult) {
-//        if(bindingResult.hasErrors()){
-//            return "/depEdit";
-//        }
-        try {
-            Department dep = departmentService.getById(department.getId());
-            dep.setName(department.getName());
-            departmentService.update(dep);
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public ModelAndView editExistOne(@ModelAttribute("department") @Validated Department department,
+                                     BindingResult bindingResult) {
+        validator.validate(department, bindingResult);
+        if (!bindingResult.hasErrors()) {
+            try {
+                Department dep = departmentService.getById(department.getId());
+                dep.setName(department.getName());
+                departmentService.update(dep);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return new ModelAndView(JspPath.DEPARTMENT_ALL);
+        } else {
+            return new ModelAndView(JspPath.DEPARTMENT_EDIT, "department", department);
+
         }
-        return "forward:/dep";
     }
 
     @RequestMapping(value = "/depDel", method = RequestMethod.GET)
@@ -106,19 +108,12 @@ public class DepartmentController {
     }
 
     @RequestMapping(value = "/depDelete", method = RequestMethod.GET)
-    public String delExistOne(@RequestParam int id) {
-//        Department department;
-//        List<Employee> list;
+    public ModelAndView delExistOne(@RequestParam int id) {
         try {
-//            department = departmentService.getById(id);
-//            list = department.getEmployees();
-//            list.clear();
-//            departmentService.update(department);
             departmentService.delete(departmentService.getById(id));
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return "forward:/dep";
+        return new ModelAndView(JspPath.DEPARTMENT_ALL);
     }
 }
