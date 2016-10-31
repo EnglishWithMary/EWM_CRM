@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="default" template="/WEB-INF/pages/templates/defaultLayout.jsp">
+        <put-attribute name="header" value="/WEB-INF/pages/templates/defaultHeader.jsp" />
+        <put-attribute name="menu" value="/WEB-INF/pages/templates/defaultMenu.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/templates/defaultBody.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/pages/templates/defaultFooter.jsp" />
+    </definition>
+
+    <definition name="home" extends="default">
+        <put-attribute name="header"
+                       value="/WEB-INF/pages/Security/securityPage.jsp" />
+    </definition>
+
+    <definition name="" extends="default">
+        <put-attribute name="header"
+                       value="/WEB-INF/pages/Security/securityPage.jsp" />
+
+    </definition>
+
+    <definition name="/" extends="default">
+        <put-attribute name="header"
+                       value="/WEB-INF/pages/Security/securityPage.jsp" />
+    </definition>
+</tiles-definitions>
