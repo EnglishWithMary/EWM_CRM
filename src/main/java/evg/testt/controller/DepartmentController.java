@@ -34,7 +34,7 @@ public class DepartmentController {
     @Autowired
     EmployeeService employeeService;
 
-    @RequestMapping(value = "/depffffff")
+    @RequestMapping(value = "/dep3")
     public ModelAndView showAll() {
         List<Department> departments;
         try {
@@ -57,14 +57,11 @@ public class DepartmentController {
                                   BindingResult bindingResult, Model model) {
         validator.validate(department, bindingResult);
         if (!bindingResult.hasErrors()) {
-
             try {
                 departmentService.insert(department);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
-
             return showAll();
         } else {
             return new ModelAndView(JspPath.DEPARTMENT_ADD);
