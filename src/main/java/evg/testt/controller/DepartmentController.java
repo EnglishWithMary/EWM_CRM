@@ -34,7 +34,7 @@ public class DepartmentController {
     @Autowired
     EmployeeService employeeService;
 
-    @RequestMapping(value = "/dep3")
+    @RequestMapping(value = "/dep")
     public ModelAndView showAll() {
         List<Department> departments;
         try {
