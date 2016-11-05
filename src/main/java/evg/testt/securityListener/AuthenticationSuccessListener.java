@@ -1,6 +1,9 @@
 package evg.testt.securityListener;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -10,16 +13,17 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class AuthenticationSuccessListener implements ApplicationListener<InteractiveAuthenticationSuccessEvent>{
+
+    @Autowired
+    private JavaMailSender ms;
+
+    @Autowired
+    SimpleMailMessage smm;
+
     @Override
     public void onApplicationEvent(InteractiveAuthenticationSuccessEvent interactiveAuthenticationSuccessEvent) {
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!LOOOOOGEF!!!!!!!!!!!!!!!!!!");
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!LOOOOOGEF!!!!!!!!!!!!!!!!!!");
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!LOOOOOGEF!!!!!!!!!!!!!!!!!!");
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!LOOOOOGEF!!!!!!!!!!!!!!!!!!");
-
-        UserDetails s = (UserDetails) interactiveAuthenticationSuccessEvent.getAuthentication().getPrincipal();
-        System.out.println(s.getUsername());
-        System.out.println(s.getPassword());
-        System.out.println(interactiveAuthenticationSuccessEvent.getAuthentication().getCredentials());
+        smm.setTo("testspringmail@mailinator.com");
+        smm.setText("Hello");
+        ms.send(smm);
     }
 }
