@@ -19,7 +19,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @Controller
 public class ErrorController {
     @RequestMapping(value = "/error403", method = RequestMethod.GET)
-    public ModelAndView accesssDenied() {
+    public ModelAndView accessDenied() {
 
         ModelAndView model = new ModelAndView();
 
