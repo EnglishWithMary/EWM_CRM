@@ -8,6 +8,7 @@
     <title>Add User</title>
 </head>
 <body>
+<
 <header>
     <div align="right">User:<security:authentication property="principal.username"/></div>
     <table>
