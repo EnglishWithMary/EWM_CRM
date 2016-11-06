@@ -4,7 +4,7 @@
 <html>
 <head>
 
-    <title>Hello world</title>
+    <title><tiles:getAsString name="title"/></title>
 
     <tiles:insertAttribute name="resources" />
   <%--<link href="${pageContext.request.contextPath}/resources/assets/css/all.css" rel="stylesheet" type="text/css" />--%>

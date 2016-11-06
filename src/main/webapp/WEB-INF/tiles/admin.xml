@@ -6,6 +6,6 @@
 <tiles-definitions>
     <definition name="admin" extends="home">
         <put-attribute name="body" value="/WEB-INF/pages/admin/admin.jsp" />
-        <put-attribute name="title"
+        <put-attribute name="title" value="Admin page" />
     </definition>
 </tiles-definitions>
