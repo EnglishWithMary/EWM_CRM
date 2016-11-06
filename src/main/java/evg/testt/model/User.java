@@ -9,7 +9,6 @@ import javax.persistence.*;
  */
 
 @Entity(name = "users")
-@Table(uniqueConstraints={@UniqueConstraint(columnNames={"login"})})
 public class User extends BaseModel{
 
     @Column(unique = true)
@@ -44,5 +43,13 @@ public class User extends BaseModel{
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
