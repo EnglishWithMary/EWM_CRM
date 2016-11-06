@@ -3,13 +3,31 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title><tiles:insertAttribute name="title" ignore="true" /></title>
+
+    <title>Hello world</title>
+
+    <tiles:insertAttribute name="resources" />
+  <%--<link href="${pageContext.request.contextPath}/resources/assets/css/all.css" rel="stylesheet" type="text/css" />--%>
 </head>
 <body>
-<tiles:insertAttribute name="header" />
-      <tiles:insertAttribute name="menu"/>
-        <tiles:insertAttribute name="body"/>
-    <tiles:insertAttribute name="footer"/>
+    <header id="header">
+        <tiles:insertAttribute name="header"/>
+
+        <nav class="right">
+        <tiles:insertAttribute name="authentification"/>
+        </nav>
+    </header>
+    <nav id="menu">
+        <tiles:insertAttribute name="menu"/>
+    </nav>
+    <section id="banner">
+        <div class="content">
+            <tiles:insertAttribute name="body"/>
+        </div>
+    </section>
+    <footer id="footer">
+        <tiles:insertAttribute name="footer"/>
+    </footer>
+    <tiles:insertAttribute name="scripts"/>
 </body>
 </html>

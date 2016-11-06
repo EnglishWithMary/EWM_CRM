@@ -1,11 +1,7 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: User
-  Date: 31.10.2016
-  Time: 17:29
-  To change this template use File | Settings | File Templates.
---%>
-<div>
-    <h1>Home page. Body</h1>
-</div>
+ <h1>Enjoy your english with Mary! :)</h1>
+ <p>English with Mary is your new way to improve your skills!!!
+ <ul class="actions">
+     <li><a href="#" class="button scrolly">Try out it</a></li>
+ </ul>
+
 

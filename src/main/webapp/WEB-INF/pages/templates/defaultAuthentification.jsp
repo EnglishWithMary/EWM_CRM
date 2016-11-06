@@ -1,16 +1,12 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: beketov
-  Date: 03.11.16
-  Time: 15:57
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+
+
+<nav class="right">
+    <security:authorize access="isAnonymous()">
+        <a href="/login" class="button alt">Log in</a>
+    </security:authorize>
+    <security:authorize access="isAuthenticated()">
+        <a href="/logout" class="button alt">Log out</a>
+    </security:authorize>
+</nav>

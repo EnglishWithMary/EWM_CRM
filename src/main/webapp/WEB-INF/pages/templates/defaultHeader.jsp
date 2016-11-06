@@ -1,10 +1,12 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: User
-  Date: 31.10.2016
-  Time: 16:28
-  To change this template use File | Settings | File Templates.
---%>
-<div>
-    <h3>Home page</h3>
-</div>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+
+
+<nav class="left">
+    <a href="#menu"><span>Menu</span></a>
+</nav>
+<a href="/home" class="logo">English with Mary</a>
+
+    <security:authorize access="isAuthenticated()">
+        <security:authentication var="user" property="principal"/>
+    <p>${user.username}</p>
+    </security:authorize>
