@@ -4,10 +4,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="smtp.gmail.com" />
-        <property name="port" value="587" />
-        <property name="username" value="itclimbspring@gmail.com" />
-        <property name="password" value="11111111spring" />
+        <property name="host" value="${mail.host}" />
+        <property name="port" value="${mail.port}" />
+        <property name="username" value="${mail.username.from}" />
+        <property name="password" value="${mail.password}" />
 
         <property name="javaMailProperties">
             <props>
@@ -18,8 +18,8 @@
     </bean>
 
     <bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
-        <property name="from" value="itclimbspring@gmail.com"/>
-        <property name="subject" value="Hello dead user. Thank you for joining us."/>
+        <property name="from" value="${mail.username.from}"/>
+        <property name="subject" value="${mail.message}"/>
     </bean>
 
 </beans>
