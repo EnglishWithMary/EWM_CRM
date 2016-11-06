@@ -1,6 +1,8 @@
 package evg.testt.model;
 
 import evg.testt.validators.mail.MailValidator;
+import net.sf.oval.constraint.Length;
+import net.sf.oval.constraint.MatchPattern;
 
 import javax.persistence.*;
 
@@ -11,11 +13,12 @@ import javax.persistence.*;
 @Entity(name = "users")
 public class User extends BaseModel{
 
-    @Column(unique = true)
+   // @Length(min = 3, max = 20)
     private String login;
     private String password;
 
-    @Mail
+   // @MatchPattern(pattern = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9]" +
+   //         "(?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email address.")
     private String email;
 
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)

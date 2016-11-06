@@ -30,5 +30,6 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
         smm.setTo("testspringmail@mailinator.com");
         smm.setText(msg);
         jms.send(smm);
+
     }
 }

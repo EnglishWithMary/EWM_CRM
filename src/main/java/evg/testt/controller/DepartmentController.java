@@ -38,7 +38,7 @@ public class DepartmentController {
     public ModelAndView showAll() {
         List<Department> departments;
         try {
-            departments = departmentService.getAll();
+            departments = departmentService.getAllWithEmployeers();
         } catch (SQLException e) {
             departments = Collections.emptyList();
             e.printStackTrace();

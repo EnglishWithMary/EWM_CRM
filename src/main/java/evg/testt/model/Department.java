@@ -19,7 +19,7 @@ public class Department extends BaseModel{
     @Length(min = 3, max = 20, message = "The size of Department name should be between 3 and 20 included")
     private String name;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Employee> employees;
 
     public String getName() {
