@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
@@ -59,7 +60,7 @@ public class UsersController {
     }
 
     @RequestMapping(value = "/userAdd", method = RequestMethod.POST)
-    public String saveUser(@ModelAttribute("user") User user) {
+    public String saveUser(@ModelAttribute("user") @Valid User user) {
         try {
             userService.insert(user);
         } catch (SQLException e) {

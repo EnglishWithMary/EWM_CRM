@@ -1,18 +1,23 @@
 package evg.testt.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
+import evg.testt.validators.mail.MailValidator;
+
+import javax.persistence.*;
 
 /**
  * Created by clay on 05.10.16.
  */
 
 @Entity(name = "users")
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"login"})})
 public class User extends BaseModel{
 
+    @Column(unique = true)
     private String login;
     private String password;
+
+    @MailValidator
+    private String email;
 
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
     private Role role;

@@ -31,6 +31,9 @@
     <label for="password">Password:</label>
     <sf:password path="password"/><br>
 
+    <label for="email">Password:</label>
+    <sf:password path="email"/><br>
+
     <input type="submit" value="Add user"/>
 </sf:form>
 
