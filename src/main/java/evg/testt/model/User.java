@@ -25,6 +25,9 @@ public class User extends BaseModel {
             "(?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email address.")
             private String email;
 
+    //true или false
+    private String isFirstLogin;
+
     @ManyToMany
 //            (fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
     @JoinTable(name = "users_roles",
@@ -62,5 +65,13 @@ public class User extends BaseModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getIsFirstLogin() {
+        return isFirstLogin;
+    }
+
+    public void setIsFirstLogin(String isFirstLogin) {
+        this.isFirstLogin = isFirstLogin;
     }
 }

@@ -9,7 +9,6 @@ import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +19,11 @@ import org.springframework.web.servlet.ModelAndView;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
+
+
+/**
+ * TODO: add functionality to interact with User - CRUD
+ */
 
 @Controller
 public class UsersController {
@@ -38,16 +42,16 @@ public class UsersController {
         return new User();
     }
 
-    @RequestMapping(value = {"","/","home"})
-    public ModelAndView homePage() {
-        return new ModelAndView(JspPath.HOME);
+    @RequestMapping(value = {"","/","/home"})
+    public String homePage() {
+        return "home";
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public ModelAndView showUsersFromPost() {
-        return showUsers();
-    }
-
+//    @RequestMapping(value = "/users", method = RequestMethod.POST)
+//    public ModelAndView showUsersFromPost() {
+//        return showUsers();
+//    }
+//
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ModelAndView showUsers() {
         List<User> users;
@@ -65,15 +69,18 @@ public class UsersController {
         return new ModelAndView(JspPath.USERS_ADD);
     }
 
-    @RequestMapping(value = "/userAdd", method = RequestMethod.POST)
+    @RequestMapping(value = "/userSave", method = RequestMethod.POST)
     public ModelAndView saveUser(@ModelAttribute("user") @Validated User user, BindingResult bindingResult) {
         validator.validate(user, bindingResult);
 
-            //bindingResult.rejectValue("login", "1", "Login already exist.");
+        User u = null;
+        u =  userService.findByUserLogin(user.getLogin());
+        if (u != null)
+        bindingResult.rejectValue("login", "1", "Login already exist.");
 
         if (!bindingResult.hasErrors()) {
             try {
-                User u = userService.getByLogin("user");
+                user.setIsFirstLogin("true");
                 userService.insert(user);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -83,56 +90,56 @@ public class UsersController {
             return new ModelAndView(JspPath.USERS_ADD);
         }
     }
+//
+//    @RequestMapping(value = "/userAddRole", method = RequestMethod.GET)
+//    public ModelAndView addRole(@RequestParam int id) {
+//        User user;
+//        ModelAndView model;
+//        try {
+//            user = userService.getById(id);
+//        } catch (SQLException e) {
+//            user = null;
+//            e.printStackTrace();
+//        }
+//        if (user.getRoles() != null) {
+//            return showUsers();
+//        } else {
+//            model = new ModelAndView(JspPath.USERS_ADD_ROLE);
+//        }
+//        model.addObject("role", new Role());
+//        model.addObject("user_id", id);
+//        return model;
+//    }
 
-    @RequestMapping(value = "/userAddRole", method = RequestMethod.GET)
-    public ModelAndView addRole(@RequestParam int id) {
-        User user;
-        ModelAndView model;
-        try {
-            user = userService.getById(id);
-        } catch (SQLException e) {
-            user = null;
-            e.printStackTrace();
-        }
-        if (user.getRole() != null) {
-            return showUsers();
-        } else {
-            model = new ModelAndView(JspPath.USERS_ADD_ROLE);
-        }
-        model.addObject("role", new Role());
-        model.addObject("user_id", id);
-        return model;
-    }
+//    @RequestMapping(value = "/userAddRole", method = RequestMethod.POST)
+//    public String saveRole(@ModelAttribute("role") Role role, @RequestParam int id) {
+//        User user;
+//        try {
+//            user = userService.getById(id);
+//            user.setRoles(role);
+//            role.setUsers(user);
+//            roleService.update(role);
+//            userService.update(user);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return "forward:/users";
+//    }
 
-    @RequestMapping(value = "/userAddRole", method = RequestMethod.POST)
-    public String saveRole(@ModelAttribute("role") Role role, @RequestParam int id) {
-        User user;
-        try {
-            user = userService.getById(id);
-            user.setRole(role);
-            role.setUser(user);
-            roleService.update(role);
-            userService.update(user);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return "forward:/users";
-    }
-
-    @RequestMapping(value = "userDel")
-    public String deleteUser(@RequestParam int id) {
-        User user;
-        Role role;
-        try {
-            user = userService.getById(id);
-            role = user.getRole();
-            user.setRole(null);
-            roleService.delete(role);
-            userService.update(user);
-            userService.delete(user);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return "forward:/users";
-    }
+//    @RequestMapping(value = "userDel")
+//    public String deleteUser(@RequestParam int id) {
+//        User user;
+//        Role role;
+//        try {
+//            user = userService.getById(id);
+//            role = user.getRoles();
+//            user.setRoles(null);
+//            roleService.delete(role);
+//            userService.update(user);
+//            userService.delete(user);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return "forward:/users";
+//    }
 }
