@@ -15,7 +15,7 @@ public class User extends BaseModel{
     private String login;
     private String password;
 
-    @MailValidator
+    @Mail
     private String email;
 
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
