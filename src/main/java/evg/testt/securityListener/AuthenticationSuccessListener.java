@@ -8,6 +8,8 @@ import org.springframework.security.authentication.event.InteractiveAuthenticati
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 /**
  * Created by DENNNN on 05.11.2016.
  */
@@ -15,15 +17,18 @@ import org.springframework.stereotype.Component;
 public class AuthenticationSuccessListener implements ApplicationListener<InteractiveAuthenticationSuccessEvent>{
 
     @Autowired
-    private JavaMailSender ms;
+    private JavaMailSender jms;
 
     @Autowired
     SimpleMailMessage smm;
 
+    @Resource(name = "messageForMail")
+    String msg;
+
     @Override
     public void onApplicationEvent(InteractiveAuthenticationSuccessEvent interactiveAuthenticationSuccessEvent) {
         smm.setTo("testspringmail@mailinator.com");
-        smm.setText("Hello");
-        ms.send(smm);
+        smm.setText(msg);
+        jms.send(smm);
     }
 }

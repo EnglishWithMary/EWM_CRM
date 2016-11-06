@@ -19,7 +19,11 @@
 
     <bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
         <property name="from" value="${mail.username.from}"/>
-        <property name="subject" value="${mail.message}"/>
+        <property name="subject" value="${mail.subject}"/>
+    </bean>
+
+    <bean id="messageForMail" class="java.lang.String">
+        <constructor-arg value="${mail.message}"></constructor-arg>
     </bean>
 
 </beans>
