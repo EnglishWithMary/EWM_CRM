@@ -6,6 +6,7 @@ import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.DepartmentService;
 import evg.testt.service.EmployeeService;
 import evg.testt.util.JspPath;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,7 @@ import java.sql.SQLException;
 @Controller
 public class EmployeeController {
 
+    Logger log = Logger.getLogger(EmployeeController.class);
     @Autowired
     SpringOvalValidator validator;
 

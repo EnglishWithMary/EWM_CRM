@@ -6,6 +6,7 @@ import evg.testt.model.Department;
 import evg.testt.service.DepartmentService;
 import evg.testt.service.EmployeeService;
 
+import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,7 @@ public class DepartmentController {
         } catch (SQLException e) {
             departments = Collections.emptyList();
             e.printStackTrace();
+
         }
         return new ModelAndView(JspPath.DEPARTMENT_ALL, "departments", departments);
     }
