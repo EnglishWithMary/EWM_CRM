@@ -13,13 +13,15 @@ import javax.persistence.*;
 @Entity(name = "users")
 public class User extends BaseModel{
 
-   // @Length(min = 3, max = 20)
+    @Length(min = 3, max = 20, message = "Wrong login.")
     private String login;
+
+    @Length(min = 6, max = 20, message = "Incorrect password.")
     private String password;
 
-   // @MatchPattern(pattern = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9]" +
-   //         "(?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email address.")
-    private String email;
+    @MatchPattern(pattern = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9]" +
+            "(?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email address.")
+            private String email;
 
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
     private Role role;

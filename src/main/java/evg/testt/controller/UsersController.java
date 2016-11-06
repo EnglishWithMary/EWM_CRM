@@ -2,18 +2,21 @@ package evg.testt.controller;
 
 import evg.testt.model.Role;
 import evg.testt.model.User;
+import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.RoleService;
 import evg.testt.service.UserService;
 import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
@@ -26,6 +29,9 @@ public class UsersController {
 
     @Autowired
     RoleService roleService;
+
+    @Autowired
+    SpringOvalValidator validator;
 
     @ModelAttribute("user")
     public User createUser() {
@@ -60,13 +66,21 @@ public class UsersController {
     }
 
     @RequestMapping(value = "/userAdd", method = RequestMethod.POST)
-    public String saveUser(@ModelAttribute("user") @Valid User user) {
-        try {
-            userService.insert(user);
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public ModelAndView saveUser(@ModelAttribute("user") @Validated User user, BindingResult bindingResult) {
+        validator.validate(user, bindingResult);
+
+           // bindingResult.rejectValue("login", "1", "Login already exist.");
+
+        if (!bindingResult.hasErrors()) {
+            try {
+                userService.insert(user);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return showUsers();
+        } else {
+            return new ModelAndView(JspPath.USERS_ADD);
         }
-        return "forward:/users";
     }
 
     @RequestMapping(value = "/userAddRole", method = RequestMethod.GET)

@@ -9,6 +9,11 @@
     <title>Add User</title>
 </head>
 <body>
+<script>
+    window.onload = function () {
+        window.history.pushState(null, '', 'userAdd');
+    };
+</script>
 <header>
     <div align="right">User:<security:authentication property="principal.username"/></div>
     <table>
