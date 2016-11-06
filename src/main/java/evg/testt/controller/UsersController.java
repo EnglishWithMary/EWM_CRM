@@ -69,10 +69,11 @@ public class UsersController {
     public ModelAndView saveUser(@ModelAttribute("user") @Validated User user, BindingResult bindingResult) {
         validator.validate(user, bindingResult);
 
-           // bindingResult.rejectValue("login", "1", "Login already exist.");
+            //bindingResult.rejectValue("login", "1", "Login already exist.");
 
         if (!bindingResult.hasErrors()) {
             try {
+                User u = userService.getByLogin("user");
                 userService.insert(user);
             } catch (SQLException e) {
                 e.printStackTrace();

@@ -56,7 +56,7 @@
 
             <tr>
                 <td colspan="2">
-                    <input type="submit" value="Add department"/>
+                    <input type="submit" value="Add user"/>
                 </td>
             </tr>
         </table>
