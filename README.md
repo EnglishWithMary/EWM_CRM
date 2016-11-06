@@ -24,6 +24,8 @@ To run project:
  
  - create mysql command 'insert into hibernate_sequence(next_val) values (0)'
 
+ - execute mysql scripts from 'create.sql' ()
+
 
 github link https://github.com/Ievgen-Grabets/TestT
 

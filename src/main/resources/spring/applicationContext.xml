@@ -22,6 +22,8 @@
 
     <context:component-scan base-package="evg.testt"/>
 
+    <!--<jpa:repositories base-package="evg.testt.dao"/>-->
+
     <bean class="com.fasterxml.jackson.databind.ObjectMapper"/>
 
 </beans>

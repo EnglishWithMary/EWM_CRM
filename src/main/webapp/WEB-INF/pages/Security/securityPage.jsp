@@ -1,11 +1,9 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+
 <%--
-  Created by IntelliJ IDEA.
-  User: User
-  Date: 31.10.2016
-  Time: 17:45
-  To change this template use File | Settings | File Templates.
+    TODO: this page is not in use
 --%>
+
 <div align="right">
     <security:authorize access="isAuthenticated()">
         User:<security:authentication property="principal.username"/>
