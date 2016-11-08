@@ -8,7 +8,7 @@ import javax.persistence.OneToOne;
 public class Manager extends BaseModel {
 
     @OneToOne
-    @JoinColumn(name="person_id")
+    @JoinColumn(name="persons_id")
     private Person person;
 
     public Person getPerson() {
