@@ -2,14 +2,33 @@ package evg.testt.model;
 
 import javax.persistence.*;
 import java.util.Set;
+import evg.testt.validators.mail.MailValidator;
+import net.sf.oval.constraint.Length;
+import net.sf.oval.constraint.MatchPattern;
+
+import javax.persistence.*;
+
+/**
+ * Created by clay on 05.10.16.
+ */
 
 @Entity(name = "users")
 public class User extends BaseModel {
 
+    @Length(min = 3, max = 20, message = "Wrong login.")
     private String login;
+
+    @Length(min = 6, max = 20, message = "Incorrect password.")
     private String password;
 
-    @ManyToMany
+    @MatchPattern(pattern = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9]" +
+            "(?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email address.")
+            private String email;
+
+    //true или false
+    private String isFirstLogin;
+
+    @ManyToMany(cascade = CascadeType.ALL)
 //            (fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -38,5 +57,21 @@ public class User extends BaseModel {
 
     public void setRoles(Set<Role> role) {
         this.roles = role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getIsFirstLogin() {
+        return isFirstLogin;
+    }
+
+    public void setIsFirstLogin(String isFirstLogin) {
+        this.isFirstLogin = isFirstLogin;
     }
 }

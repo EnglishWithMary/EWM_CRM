@@ -2,11 +2,14 @@ package evg.testt.controller;
 
 import evg.testt.model.Role;
 import evg.testt.model.User;
+import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.RoleService;
 import evg.testt.service.UserService;
 import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +34,9 @@ public class UsersController {
     @Autowired
     RoleService roleService;
 
+    @Autowired
+    SpringOvalValidator validator;
+
     @ModelAttribute("user")
     public User createUser() {
         return new User();
@@ -46,32 +52,44 @@ public class UsersController {
 //        return showUsers();
 //    }
 //
-//    @RequestMapping(value = "/users", method = RequestMethod.GET)
-//    public ModelAndView showUsers() {
-//        List<User> users;
-//        try {
-//            users = userService.getAll();
-//        } catch (SQLException e) {
-//            users = Collections.emptyList();
-//            e.printStackTrace();
-//        }
-//        return new ModelAndView(JspPath.USERS_ALL, "users", users);
-//    }
-//
-//    @RequestMapping(value = "/userAdd")
-//    public ModelAndView addUser() {
-//        return new ModelAndView(JspPath.USERS_ADD);
-//    }
-//
-//    @RequestMapping(value = "/userAdd", method = RequestMethod.POST)
-//    public String saveUser(@ModelAttribute("user") User user) {
-//        try {
-//            userService.insert(user);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return "forward:/users";
-//    }
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public ModelAndView showUsers() {
+        List<User> users;
+        try {
+            users = userService.getAll();
+        } catch (SQLException e) {
+            users = Collections.emptyList();
+            e.printStackTrace();
+        }
+        return new ModelAndView(JspPath.USERS_ALL, "users", users);
+    }
+
+    @RequestMapping(value = "/userAdd")
+    public ModelAndView addUser() {
+        return new ModelAndView(JspPath.USERS_ADD);
+    }
+
+    @RequestMapping(value = "/userSave", method = RequestMethod.POST)
+    public ModelAndView saveUser(@ModelAttribute("user") @Validated User user, BindingResult bindingResult) {
+        validator.validate(user, bindingResult);
+
+        User u = null;
+        u =  userService.findByUserLogin(user.getLogin());
+        if (u != null)
+        bindingResult.rejectValue("login", "1", "Login already exist.");
+
+        if (!bindingResult.hasErrors()) {
+            try {
+                user.setIsFirstLogin("true");
+                userService.insert(user);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return showUsers();
+        } else {
+            return new ModelAndView(JspPath.USERS_ADD);
+        }
+    }
 //
 //    @RequestMapping(value = "/userAddRole", method = RequestMethod.GET)
 //    public ModelAndView addRole(@RequestParam int id) {

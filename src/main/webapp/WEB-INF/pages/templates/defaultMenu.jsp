@@ -11,7 +11,8 @@
         <li><a href="/schedules">Schedules</a></li>
         <security:authorize access="hasRole('ROLE_ADMIN')">
             <li><a href="/admin">Admin</a></li>
-            <li><a href="/users">Users</a></li>
+            <li><a href="/users">Users List</a></li>
+            <li><a href="/managers">Managers List</a></li>
         </security:authorize>
     </ul>
 </security:authorize>
