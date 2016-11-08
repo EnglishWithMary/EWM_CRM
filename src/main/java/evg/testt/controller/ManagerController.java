@@ -3,6 +3,7 @@ package evg.testt.controller;
 import evg.testt.dto.ManagerDTO;
 import evg.testt.model.Manager;
 import evg.testt.model.Person;
+import evg.testt.model.Role;
 import evg.testt.model.User;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.ManagerService;
@@ -12,6 +13,7 @@ import evg.testt.service.UserService;
 import evg.testt.service.impl.UserServiceImpl;
 import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,8 +24,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by DENNNN on 08.11.2016.
@@ -48,7 +52,15 @@ public class ManagerController {
 
     @RequestMapping(value = "/managers", method = RequestMethod.GET)
     public ModelAndView showManagers() {
-        return new ModelAndView(JspPath.MANAGER_ALL);
+        List<Manager> managers = Collections.EMPTY_LIST;
+
+        try {
+            managers = managerService.getAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return new ModelAndView(JspPath.MANAGER_ALL, "managers", managers);
     }
 
     @RequestMapping(value = "/managerAdd")
@@ -71,9 +83,11 @@ public class ManagerController {
 
         if (!bindingResult.hasErrors()) {
 
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
             User newUser = new User();
                 newUser.setEmail(managerDto.getEmail());
-                newUser.setPassword(managerDto.getPassword());
+                newUser.setPassword(passwordEncoder.encode(managerDto.getPassword()));
                 newUser.setLogin(managerDto.getLogin());
                 newUser.setIsFirstLogin("true");
 
@@ -88,9 +102,7 @@ public class ManagerController {
                 newManager.setPerson(newPerson);
 
             try {
-
                 managerService.insert(newManager);
-
             } catch (SQLException e) {
                 e.printStackTrace();
             }

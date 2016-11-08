@@ -1,22 +1,17 @@
 <div>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<p>Users</p>
+<p>Managers</p>
 <table>
     <tr>
-        <td>User login</td>
-        <td>User role</td>
+        <td>First name</td>
+        <td>Last name</td>
+        <td>Middle name</td>
     </tr>
-    <c:forEach var="user" items="${users}">
+    <c:forEach var="manager" items="${managers}">
         <tr>
-            <td>
-                <a href="user/${user.id}">${user.login}</a>
-            </td>
-            <td>
-                <a href="userAddRole?id=${user.id}">add role</a>
-            </td>
-            <td>
-                <a href="userDel?id=${user.id}">delete user</a>
-            </td>
+            <td><label>${manager.person.firstName}</label></td>
+            <td><label>${manager.person.lastName}</label></td>
+            <td><label>${manager.person.middleName}</label></td>
         </tr>
     </c:forEach>
 </table>

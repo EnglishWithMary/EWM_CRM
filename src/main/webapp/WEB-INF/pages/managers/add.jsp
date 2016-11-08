@@ -11,20 +11,20 @@
         <table>
 
             <tr>
-                <th><sf:label path="firstName">Login:</sf:label></th>
+                <th><sf:label path="firstName">First Name:</sf:label></th>
                 <td><sf:input path="firstName"/><br/>
                     <sf:errors path="firstName"/></td>
             </tr>
 
             <tr>
-                <th><sf:label path="lastName">Login:</sf:label></th>
+                <th><sf:label path="lastName">Last Name:</sf:label></th>
                 <td><sf:input path="lastName"/><br/>
                     <sf:errors path="lastName"/></td>
             </tr>
 
 
             <tr>
-                <th><sf:label path="middleName">Login:</sf:label></th>
+                <th><sf:label path="middleName">Middle Name:</sf:label></th>
                 <td><sf:input path="middleName"/><br/>
                     <sf:errors path="middleName"/></td>
             </tr>

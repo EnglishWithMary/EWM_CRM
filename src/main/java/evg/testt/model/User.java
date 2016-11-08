@@ -28,7 +28,7 @@ public class User extends BaseModel {
     //true или false
     private String isFirstLogin;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
 //            (fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),

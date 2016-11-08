@@ -18,7 +18,7 @@ public class Person extends BaseModel{
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Phone> phones;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "users_id")
     User user;
 
