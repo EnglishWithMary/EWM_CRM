@@ -1,8 +1,9 @@
 package evg.testt.model;
 
 /**
- * Created by clay on 05.10.16.
+ * TODO: refactor this code, see @{Role}
  */
+
 public enum UserRole {
     ADMIN,
     DIRECTOR,
