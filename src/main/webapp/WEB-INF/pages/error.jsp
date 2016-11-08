@@ -7,8 +7,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
 
     <c:if test="${empty username}">
     <h1>Error 404. Page not found.</h1>
@@ -28,8 +26,3 @@
         </c:otherwise>
     </c:choose>
     </c:if>
-</head>
-<body>
-
-</body>
-</html>

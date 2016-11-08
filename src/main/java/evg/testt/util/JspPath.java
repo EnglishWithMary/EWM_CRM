@@ -18,5 +18,5 @@ public class JspPath {
     public static final String USERS_ADD_ROLE = "users/addrole";
     public static final String USERS_EDIT = "users/edit";
     public static final String USERS_DEL = "users/del";
-
+    public static final String ERROR = "error";
 }
