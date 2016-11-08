@@ -1,5 +1,7 @@
 package evg.testt.controller;
 
+import evg.testt.util.JspPath;
+import org.apache.tiles.request.jsp.JspUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,7 +23,7 @@ public class ErrorController {
     @RequestMapping(value = "/error403", method = RequestMethod.GET)
     public ModelAndView accessDenied() {
 
-        ModelAndView model = new ModelAndView();
+        ModelAndView model = new ModelAndView(JspPath.ERROR);
 
         //check if user is login
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -38,8 +40,13 @@ public class ErrorController {
     @ExceptionHandler(NoHandlerFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handle(NoHandlerFoundException ex) {
+        return "redirect:/pageNotFound";
+    }
 
-        return "redirect:/error";
+    @RequestMapping("/pageNotFound")
+    public ModelAndView showErrorPage()
+    {
+       return new ModelAndView(JspPath.ERROR);
     }
 }
 
