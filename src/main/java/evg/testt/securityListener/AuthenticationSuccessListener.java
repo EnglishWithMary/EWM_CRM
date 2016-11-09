@@ -39,6 +39,8 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 
         User u = us.findByUserLogin(login);
 
+        String email = u.getEmail();
+        if(email != null)
         if(u.getIsFirstLogin().equals("true")) {
             smm.setTo(u.getEmail());
             smm.setText(msg);
