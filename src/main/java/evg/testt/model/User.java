@@ -1,39 +1,20 @@
 package evg.testt.model;
 
 import javax.persistence.*;
-import java.util.Set;
-import evg.testt.validators.mail.MailValidator;
 import net.sf.oval.constraint.Length;
-import net.sf.oval.constraint.MatchPattern;
-
-import javax.persistence.*;
-
-/**
- * Created by clay on 05.10.16.
- */
 
 @Entity(name = "users")
 public class User extends BaseModel {
 
-    @Length(min = 3, max = 20, message = "Wrong login.")
+    @Length(min = 3, max = 20, message = "Login should be at least 3 and less than 20 symbols")
     private String login;
 
-    @Length(min = 6, max = 20, message = "Incorrect password.")
+    @Length(min = 6, max = 20, message = "Password should be at least 3 and less than 20 symbols")
     private String password;
 
-    @MatchPattern(pattern = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9]" +
-            "(?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email address.")
-            private String email;
+    @ManyToOne
 
-    //true или false
-    private String isFirstLogin;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-//            (fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private Role role;
 
     public String getLogin() {
         return login;
@@ -51,27 +32,11 @@ public class User extends BaseModel {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> role) {
-        this.roles = role;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getIsFirstLogin() {
-        return isFirstLogin;
-    }
-
-    public void setIsFirstLogin(String isFirstLogin) {
-        this.isFirstLogin = isFirstLogin;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
