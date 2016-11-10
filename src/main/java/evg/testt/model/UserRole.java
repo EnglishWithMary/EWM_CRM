@@ -1,14 +1,11 @@
 package evg.testt.model;
 
-/**
- * TODO: refactor this code, see @{Role}
- */
-
 public enum UserRole {
-    ADMIN,
-    DIRECTOR,
-    TEACHER,
-    STUDENT;
+    ROLE_ADMIN,
+    ROLE_MANAGER,
+    ROLE_TEACHER,
+    ROLE_STUDENT;
+
 
     String userRole;
 

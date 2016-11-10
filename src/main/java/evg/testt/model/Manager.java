@@ -1,22 +1,12 @@
 package evg.testt.model;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
+import lombok.Data;
 
 @Entity(name = "managers")
-public class Manager extends BaseModel {
+public @Data class Manager extends BaseModel {
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name="persons_id")
     private Person person;
-
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
 }

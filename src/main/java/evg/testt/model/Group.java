@@ -2,9 +2,10 @@ package evg.testt.model;
 
 import javax.persistence.*;
 import java.util.Set;
+import lombok.Data;
 
 @Entity(name = "groups")
-public class Group extends BaseModel {
+public @Data class Group extends BaseModel {
 
     private String name;
 
@@ -22,48 +23,8 @@ public class Group extends BaseModel {
     private Teacher teacher;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Event> eventList;
+    private Set<Event> eventSet;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Student> studentList;
-
-    public Teacher getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
-
-    public Set<Student> getStudentList() {
-        return studentList;
-    }
-
-    public void setStudentList(Set<Student> studentList) {
-        this.studentList = studentList;
-    }
-
-    public Set<Event> getEventList() {
-        return eventList;
-    }
-
-    public void setEventList(Set<Event> eventList) {
-        this.eventList = eventList;
-    }
+    private Set<Student> studentSet;
 }
