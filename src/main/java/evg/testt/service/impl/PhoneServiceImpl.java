@@ -6,6 +6,6 @@ import evg.testt.service.PhoneService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PhonesServiceImpl extends BaseService<Phone, PhoneDao> implements PhoneService {
+public class PhoneServiceImpl extends BaseService<Phone, PhoneDao> implements PhoneService {
 
 }
