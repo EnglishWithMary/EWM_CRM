@@ -83,10 +83,10 @@ public class ManagerController {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
             User newUser = new User();
-                newUser.setEmail(managerDto.getEmail());
+//                newUser.setEmail(managerDto.getEmail());
                 newUser.setPassword(passwordEncoder.encode(managerDto.getPassword()));
                 newUser.setLogin(managerDto.getLogin());
-                newUser.setIsFirstLogin("true");
+//                newUser.setIsFirstLogin("true");
 
             Person newPerson = new Person();
                 newPerson.setFirstName(managerDto.getFirstName());
