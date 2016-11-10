@@ -26,5 +26,3 @@ WHERE `id` = 1;
 SELECT * FROM roles;
 
 SELECT * FROM users;
-
-
