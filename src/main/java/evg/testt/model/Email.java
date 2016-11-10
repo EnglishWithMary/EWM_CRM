@@ -3,12 +3,12 @@ package evg.testt.model;
 import javax.persistence.*;
 import lombok.Data;
 
-@Entity(name = "phones")
-public @Data class Phone extends BaseModel{
+@Entity(name = "emails")
+public @Data class Email extends BaseModel{
 
-    private String phone;
+    private String email;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "person_id")
     private Person person;
 }

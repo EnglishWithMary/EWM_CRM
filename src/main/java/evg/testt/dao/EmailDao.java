@@ -1,8 +1,8 @@
 package evg.testt.dao;
 
-import evg.testt.model.PersonEmails;
+import evg.testt.model.Email;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface EmailDao extends JpaRepository<PersonEmails, Integer> {
+public interface EmailDao extends JpaRepository<Email, Integer> {
 
 }
