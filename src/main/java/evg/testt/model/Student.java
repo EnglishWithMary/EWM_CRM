@@ -8,15 +8,13 @@ import lombok.Data;
 public @Data class Student extends BaseModel {
 
     @ManyToOne
-    @PrimaryKeyJoinColumn
     private Teacher teacher;
 
     @ManyToOne
-    @PrimaryKeyJoinColumn
     private Group group;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Person> personSet;
+    @OneToOne
+    private Person person;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Package> packageSet;

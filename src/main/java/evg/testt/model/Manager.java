@@ -7,6 +7,6 @@ import java.util.Set;
 @Entity(name = "managers")
 public @Data class Manager extends BaseModel {
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Person> personSet;
+    @OneToOne
+    private Person person;
 }
