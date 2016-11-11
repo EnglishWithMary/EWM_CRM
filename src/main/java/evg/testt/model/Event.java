@@ -11,6 +11,7 @@ public @Data class Event extends BaseModel {
 
     private String comment;
 
+    @Temporal(TemporalType.DATE)
     private Date date;
 
     private String type;
