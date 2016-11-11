@@ -19,7 +19,6 @@ public @Data class Group extends BaseModel {
     }
 
     @ManyToOne
-    @PrimaryKeyJoinColumn
     private Teacher teacher;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)

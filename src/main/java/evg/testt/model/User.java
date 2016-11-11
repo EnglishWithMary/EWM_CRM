@@ -17,10 +17,8 @@ public @Data class User extends BaseModel {
     private String password;
 
     @ManyToOne
-    @PrimaryKeyJoinColumn
     private Role role;
 
     @OneToOne
-    @PrimaryKeyJoinColumn
     private Person person;
 }

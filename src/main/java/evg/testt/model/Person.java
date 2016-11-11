@@ -29,24 +29,19 @@ public @Data class Person extends BaseModel{
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private User user;
 
-    @ManyToOne
-    @PrimaryKeyJoinColumn
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private Lead lead;
 
-    @ManyToOne
-    @PrimaryKeyJoinColumn
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private Student student;
 
-    @ManyToOne
-    @PrimaryKeyJoinColumn
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private Teacher teacher;
 
-    @ManyToOne
-    @PrimaryKeyJoinColumn
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private Manager manager;
 
-    @ManyToOne
-    @PrimaryKeyJoinColumn
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private Admin admin;
 
     public Person(){ }

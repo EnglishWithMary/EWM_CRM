@@ -14,6 +14,5 @@ public @Data class Package extends BaseModel {
     private Float cost;
 
     @ManyToOne
-    @PrimaryKeyJoinColumn
     private Student student;
 }

@@ -16,11 +16,9 @@ public @Data class Event extends BaseModel {
     private String type;
 
     @ManyToOne
-    @PrimaryKeyJoinColumn
     private Person person;
 
     @ManyToOne
-    @PrimaryKeyJoinColumn
     private Group group;
 
     public Event(){ }

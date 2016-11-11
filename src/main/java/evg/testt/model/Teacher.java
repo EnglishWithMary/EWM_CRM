@@ -7,8 +7,8 @@ import java.util.Set;
 @Entity(name = "teachers")
 public @Data class Teacher extends BaseModel {
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Person> personSet;
+    @OneToOne
+    private Person person;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Group> groupSet;
