@@ -39,7 +39,7 @@
                 <value>/WEB-INF/tiles/teacher.xml</value>
                 <value>/WEB-INF/tiles/student.xml</value>
                 <value>/WEB-INF/tiles/user.xml</value>
-                <value>/WEB-INF/tiles/error.xml</value>
+                <!--<value>/WEB-INF/tiles/error.xml</value>-->
             </list>
         </property>
     </bean>
