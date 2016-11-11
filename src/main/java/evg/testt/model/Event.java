@@ -3,8 +3,10 @@ package evg.testt.model;
 import javax.persistence.*;
 import java.util.Date;
 import lombok.Data;
+import lombok.Builder;
 
 @Entity(name = "events")
+@Builder
 public @Data class Event extends BaseModel {
 
     private String name;
@@ -21,13 +23,4 @@ public @Data class Event extends BaseModel {
 
     @ManyToOne
     private Group group;
-
-    public Event(){ }
-
-    public Event(String name, String comment, Date date, String type){
-        this.name = name;
-        this.comment = comment;
-        this.date = date;
-        this.name = type;
-    }
 }
