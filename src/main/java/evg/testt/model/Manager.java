@@ -2,11 +2,11 @@ package evg.testt.model;
 
 import javax.persistence.*;
 import lombok.Data;
+import java.util.Set;
 
 @Entity(name = "managers")
 public @Data class Manager extends BaseModel {
 
-    @OneToOne
-    @JoinColumn(name="persons_id")
-    private Person person;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Person> personSet;
 }
