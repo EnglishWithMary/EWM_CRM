@@ -12,7 +12,6 @@ public @Data class Payment extends BaseModel {
     private Float payment;
 
     @ManyToOne
-    @PrimaryKeyJoinColumn
     private Student student;
 
     Payment(Date date, Float payment){
