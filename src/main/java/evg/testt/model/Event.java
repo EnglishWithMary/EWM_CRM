@@ -16,11 +16,11 @@ public @Data class Event extends BaseModel {
     private String type;
 
     @ManyToOne
-    @JoinColumn(name = "person_id")
+    @PrimaryKeyJoinColumn
     private Person person;
 
     @ManyToOne
-    @JoinColumn(name = "group_id")
+    @PrimaryKeyJoinColumn
     private Group group;
 
     public Event(){ }

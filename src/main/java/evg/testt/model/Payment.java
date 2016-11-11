@@ -12,7 +12,7 @@ public @Data class Payment extends BaseModel {
     private Float payment;
 
     @ManyToOne
-    @JoinColumn(name="student_id")
+    @PrimaryKeyJoinColumn
     private Student student;
 
     Payment(Date date, Float payment){

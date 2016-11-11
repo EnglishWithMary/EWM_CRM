@@ -19,7 +19,7 @@ public @Data class Group extends BaseModel {
     }
 
     @ManyToOne
-    @JoinColumn(name="teacher_id")
+    @PrimaryKeyJoinColumn
     private Teacher teacher;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)

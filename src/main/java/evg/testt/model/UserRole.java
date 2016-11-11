@@ -6,7 +6,6 @@ public enum UserRole {
     ROLE_TEACHER,
     ROLE_STUDENT;
 
-
     String userRole;
 
     private String getUserRole() {

@@ -1,5 +1,5 @@
 package evg.testt.controller;
-
+/*
 import evg.testt.dto.ManagerDTO;
 import evg.testt.model.Manager;
 import evg.testt.model.Person;
@@ -109,4 +109,4 @@ public class ManagerController {
         }
     }
 
-}
+}*/
