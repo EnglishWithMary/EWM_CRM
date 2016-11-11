@@ -7,8 +7,10 @@ import lombok.Data;
 @Entity(name = "packages")
 public @Data class Package extends BaseModel {
 
+    @Temporal(TemporalType.DATE)
     private Date date_start;
 
+    @Temporal(TemporalType.DATE)
     private Date date_stop;
 
     private Float cost;

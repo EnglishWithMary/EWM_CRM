@@ -13,6 +13,7 @@ public @Data class Person extends BaseModel{
 
     private String middleName;
 
+    @Temporal(TemporalType.DATE)
     private Date birthdayDate;
 
     private String organization;
