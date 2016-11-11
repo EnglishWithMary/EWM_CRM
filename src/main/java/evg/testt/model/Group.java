@@ -3,8 +3,10 @@ package evg.testt.model;
 import javax.persistence.*;
 import java.util.Set;
 import lombok.Data;
+import lombok.Builder;
 
 @Entity(name = "groups")
+@Builder
 public @Data class Group extends BaseModel {
 
     private String name;
