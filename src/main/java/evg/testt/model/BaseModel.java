@@ -2,8 +2,10 @@ package evg.testt.model;
 
 import javax.persistence.*;
 import lombok.Data;
+import lombok.Builder;
 
 @MappedSuperclass
+@Builder
 public @Data class BaseModel {
 
     @Id
