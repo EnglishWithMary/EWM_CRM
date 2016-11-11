@@ -9,6 +9,6 @@ public @Data class Email extends BaseModel{
     private String email;
 
     @ManyToOne
-    @JoinColumn(name = "person_id")
+    @PrimaryKeyJoinColumn
     private Person person;
 }
