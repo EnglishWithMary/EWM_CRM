@@ -1,19 +1,28 @@
-<div>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<p>Managers</p>
-<table>
-    <tr>
-        <td>First name</td>
-        <td>Last name</td>
-        <td>Middle name</td>
-    </tr>
-    <c:forEach var="manager" items="${managers}">
-        <tr>
-            <td><label>${manager.person.firstName}</label></td>
-            <td><label>${manager.person.lastName}</label></td>
-            <td><label>${manager.person.middleName}</label></td>
-        </tr>
-    </c:forEach>
-</table>
-<p><a href="/managerAdd">Add Manager</a></p>
-</div>
+<div class="12u">
+<h3>Managers list</h3>
+    <div class="table-wrapper">
+        <table class="alt">
+            <thead>
+                <tr>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Middle name</th>
+                    <th>Login</th>
+                </tr>
+            </thead>
+            <tbod>
+                <c:forEach var="manager" items="${managers}">
+                    <tr>
+                        <td>${manager.person.firstName}</td>
+                        <td>${manager.person.lastName}</td>
+                        <td>${manager.person.middleName}</td>
+                        <td>${manager.person.user.login}</td>
+                    </tr>
+                </c:forEach>
+            </tbod>
+        </table>
+    </div>
+    <p><a href="/managerAdd">Add Manager</a></p>
+</div >
