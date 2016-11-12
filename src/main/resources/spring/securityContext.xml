@@ -17,6 +17,8 @@
         <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/users**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/users/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/managers**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/managers/**" access="hasRole('ROLE_ADMIN')"/>
         <form-login />
         <logout logout-success-url="/home"/>
         <csrf disabled="true"/>
