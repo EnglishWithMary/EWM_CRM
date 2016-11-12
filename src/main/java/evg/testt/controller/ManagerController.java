@@ -29,9 +29,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by DENNNN on 08.11.2016.
- */
 @Controller
 public class ManagerController {
 

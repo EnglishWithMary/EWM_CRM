@@ -25,7 +25,7 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
     @Autowired
     SimpleMailMessage smm;
 
-    @Resource(name = "messageForMail")
+//    @Resource(name = "messageForMail")
     String msg;
 
     @Autowired

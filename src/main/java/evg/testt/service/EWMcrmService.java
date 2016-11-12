@@ -4,9 +4,11 @@ import evg.testt.model.Admin;
 import evg.testt.model.Manager;
 import evg.testt.model.Student;
 import evg.testt.model.Teacher;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
+@Transactional
 public interface EWMcrmService {
 
     void saveAdmin(Admin admin);

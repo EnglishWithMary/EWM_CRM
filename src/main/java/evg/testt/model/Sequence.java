@@ -3,9 +3,6 @@ package evg.testt.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-/**
- * Created on 9/10/15.
- */
 @Document(collection = Sequence.COLLECTION_NAME)
 public class Sequence {
 

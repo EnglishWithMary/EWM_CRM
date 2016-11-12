@@ -4,24 +4,32 @@ import evg.testt.model.Admin;
 import evg.testt.model.Manager;
 import evg.testt.model.Student;
 import evg.testt.model.Teacher;
+import evg.testt.repository.AdminRepository;
 import evg.testt.service.EWMcrmService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
+@Service
 public class EWMcrmServiceImpl implements EWMcrmService {
+
+    @Autowired
+    AdminRepository adminRepository;
+
     @Override
     public void saveAdmin(Admin admin) {
-
+        adminRepository.save(admin);
     }
 
     @Override
     public Collection<Admin> getAllAdmins() {
-        return null;
+        return adminRepository.getAll();
     }
 
     @Override
     public Admin getAdminById(Integer id) {
-        return null;
+        return adminRepository.findById(id);
     }
 
     @Override

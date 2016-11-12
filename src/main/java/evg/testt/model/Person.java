@@ -1,11 +1,13 @@
 package evg.testt.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity (name = "persons")
 public class Person extends BaseModel{
 
+    @Size(min = 3, max = 20, message = "Lenght between 3 and 20")
     private String firstName;
 
     private String lastName;

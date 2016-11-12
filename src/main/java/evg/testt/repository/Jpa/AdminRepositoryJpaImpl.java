@@ -17,7 +17,7 @@ public class AdminRepositoryJpaImpl implements AdminRepository {
 
     @Override
     public Collection<Admin> getAll() {
-        Query query = em.createQuery("SELECT admin FROM Admin admin LEFT JOIN FETCH " +
+        Query query = em.createQuery("SELECT admin FROM admins admin LEFT JOIN FETCH " +
                 "admin.person");
         return query.getResultList();
     }
