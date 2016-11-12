@@ -71,10 +71,10 @@ public class LeadController {
     @RequestMapping(value = "/leadSave", method = RequestMethod.POST)
     public ModelAndView saveLead(@ModelAttribute("lead") @Validated LeadDto leadDto,
                                     BindingResult bindingResult) {
+
+
         validator.validate(leadDto, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return new ModelAndView(JspPath.LEAD_ADD);
-        }
+        if (!bindingResult.hasErrors()) {
 
         //TODO:add Builder to models
         Person newPerson = new Person();
@@ -98,6 +98,7 @@ public class LeadController {
 
         Lead newLead = new Lead();
         newLead.setPerson(newPerson);
+
         try {
             personService.insert(newPerson);
             phoneService.insert(phone);
@@ -106,6 +107,9 @@ public class LeadController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return showLeads();
+             return  showLeads();
+        }else{
+            return new ModelAndView(JspPath.LEAD_ADD);
+        }
     }
 }
