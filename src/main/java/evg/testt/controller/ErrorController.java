@@ -2,6 +2,8 @@ package evg.testt.controller;
 
 import evg.testt.util.JspPath;
 import org.apache.tiles.request.jsp.JspUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -12,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -37,7 +41,9 @@ public class ErrorController {
     }
 
     @ExceptionHandler(Exception.class)
-    public ModelAndView anyException(Exception ex) {
+    public ModelAndView anyException(HttpServletRequest req, Exception ex) {
+        Logger logger = LoggerFactory.getLogger(ex.getClass());
+        logger.error("Request: " + req.getRequestURL() + " raised " + ex);
         return new ModelAndView(JspPath.ERROR);
     }
 }
