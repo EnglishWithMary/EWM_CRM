@@ -49,19 +49,9 @@
             </div>
 
             <div class="6u 12u$(xsmall)">
-                <sf:input path="password"/>
+                <sf:password path="password"/>
                 <sf:errors path="password"/>
             </div>
-
-            <div class="6u 12u$(xsmall)">
-                <sf:label path="email">Email:</sf:label>
-            </div>
-
-            <div class="6u 12u$(xsmall)">
-                <sf:input path="email"/>
-                <sf:errors path="email"/>
-            </div>
-
 
             <div class="12u$">
                     <input type="submit" value="Add manager"/>
