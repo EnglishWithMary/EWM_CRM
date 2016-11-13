@@ -30,7 +30,7 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 
     @Override
     public void onApplicationEvent(InteractiveAuthenticationSuccessEvent interactiveAuthenticationSuccessEvent) {
-
+/*
         UserDetails userDetails = (UserDetails)interactiveAuthenticationSuccessEvent.getAuthentication().getPrincipal();
         String login = userDetails.getUsername();
 
@@ -50,6 +50,6 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
             {
                 e.printStackTrace();
             }
-//        }
+//        }*/
     }
 }

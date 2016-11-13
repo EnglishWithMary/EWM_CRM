@@ -2,13 +2,11 @@ package evg.testt.model;
 
 import javax.persistence.*;
 import lombok.Data;
-import lombok.Builder;
 
 import net.sf.oval.constraint.Length;
 import net.sf.oval.constraint.MatchPattern;
 
 @Entity(name = "users")
-@Builder
 public @Data class User extends BaseModel {
 
     @Length(min = 3, max = 20, message = "Login should be at least 3 and less than 20 symbols")

@@ -1,12 +1,10 @@
 package evg.testt.model;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.*;
 import lombok.Data;
-import lombok.Builder;
 
 @Entity (name = "persons")
-@Builder
 public @Data class Person extends BaseModel{
 
     private String firstName;
@@ -46,14 +44,4 @@ public @Data class Person extends BaseModel{
 
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private Admin admin;
-
-    public Person(){ }
-
-    public Person(String firstName, String lastName, String middleName, Date birthdayDate, String organization) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.middleName = middleName;
-        this.birthdayDate = birthdayDate;
-        this.organization = organization;
-    }
 }

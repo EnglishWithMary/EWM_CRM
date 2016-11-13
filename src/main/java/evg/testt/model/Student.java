@@ -3,10 +3,8 @@ package evg.testt.model;
 import javax.persistence.*;
 import java.util.Set;
 import lombok.Data;
-import lombok.Builder;
 
 @Entity(name = "students")
-@Builder
 public @Data class Student extends BaseModel {
 
     @ManyToOne
