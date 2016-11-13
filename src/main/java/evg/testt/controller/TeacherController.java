@@ -48,6 +48,7 @@ public class TeacherController {
     @Autowired
     TeacherService teacherService;
 
+    //Привет
     @RequestMapping(value = "/teachers", method = RequestMethod.GET)
     public ModelAndView showTeachers() {
         List<Teacher> teachers = Collections.EMPTY_LIST;
@@ -61,10 +62,11 @@ public class TeacherController {
         return new ModelAndView(JspPath.TEACHER_ALL, "teachers", teachers);
     }
 
+
     @RequestMapping(value = "/teacherAdd")
     public ModelAndView addTeacher(Model model) {
-        TeacherDTO teacher =  new TeacherDTO();
-        model.addAttribute("teacher", teacher);
+        TeacherDTO teacherX =  new TeacherDTO();
+        model.addAttribute("teacher", teacherX);
         return new ModelAndView(JspPath.TEACHER_ADD);
     }
 
