@@ -5,6 +5,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 
+/**
+ * TODO: Delete this class @link Contact
+ */
+
 @Document(collection = Contact.COLLECTION_NAME)
 public class Contact implements Serializable {
 

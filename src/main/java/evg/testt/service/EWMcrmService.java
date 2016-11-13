@@ -1,6 +1,7 @@
 package evg.testt.service;
 
 import evg.testt.model.*;
+import evg.testt.model.Package;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
@@ -35,5 +36,29 @@ public interface EWMcrmService {
     Integer savePerson(Person person);
 
     Person getPersonById(Integer id);
+
+    Event getEventById(Integer id);
+
+    void saveEvent(Event event);
+
+    Collection <Event> getAllEvents();
+
+    Group getGroupById(Integer id);
+
+    void saveGroup(Group group);
+
+    Collection <Group> getAllGroup();
+
+    Package getPackageById(Integer id);
+
+    void savePackage(Package p);
+
+    Collection <Package> getAllPackages();
+
+    Payment getPaymentById(Integer id);
+
+    void savePayment(Payment payment);
+
+    Collection <Payment> getAllPayments();
 
 }

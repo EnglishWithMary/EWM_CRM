@@ -1,6 +1,7 @@
 package evg.testt.service.impl;
 
 import evg.testt.model.*;
+import evg.testt.model.Package;
 import evg.testt.repository.*;
 import evg.testt.service.EWMcrmService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +17,26 @@ public class EWMcrmServiceImpl implements EWMcrmService {
     TeacherRepository teacherRepository;
     StudentRepository studentRepository;
     PersonRepository personRepository;
+    EventRepository eventRepository;
+    GroupRepository groupRepository;
+    PackageRepository packageRepository;
+    PaymentRepository paymentRepository;
 
     @Autowired
     public EWMcrmServiceImpl(AdminRepository adminRepository, ManagerRepository managerRepository,
                              TeacherRepository teacherRepository, StudentRepository studentRepository,
-                             PersonRepository personRepository) {
+                             PersonRepository personRepository, EventRepository eventRepository,
+                             GroupRepository groupRepository, PackageRepository packageRepository,
+                             PaymentRepository paymentRepository) {
         this.adminRepository = adminRepository;
         this.managerRepository = managerRepository;
         this.teacherRepository = teacherRepository;
         this.studentRepository = studentRepository;
         this.personRepository= personRepository;
+        this.eventRepository = eventRepository;
+        this.groupRepository = groupRepository;
+        this.packageRepository = packageRepository;
+        this.paymentRepository = paymentRepository;
     }
 
     @Override
@@ -96,5 +107,65 @@ public class EWMcrmServiceImpl implements EWMcrmService {
     @Override
     public Person getPersonById(Integer id) {
         return personRepository.findPersonById(id);
+    }
+
+    @Override
+    public Event getEventById(Integer id) {
+        return eventRepository.findById(id);
+    }
+
+    @Override
+    public void saveEvent(Event event) {
+        eventRepository.save(event);
+    }
+
+    @Override
+    public Collection<Event> getAllEvents() {
+        return eventRepository.getAll();
+    }
+
+    @Override
+    public Group getGroupById(Integer id) {
+        return groupRepository.findById(id);
+    }
+
+    @Override
+    public void saveGroup(Group group) {
+        groupRepository.save(group);
+    }
+
+    @Override
+    public Collection<Group> getAllGroup() {
+        return groupRepository.getAll();
+    }
+
+    @Override
+    public Package getPackageById(Integer id) {
+        return packageRepository.findById(id);
+    }
+
+    @Override
+    public void savePackage(Package p) {
+        packageRepository.save(p);
+    }
+
+    @Override
+    public Collection<Package> getAllPackages() {
+        return packageRepository.getAll();
+    }
+
+    @Override
+    public Payment getPaymentById(Integer id) {
+        return paymentRepository.findById(id);
+    }
+
+    @Override
+    public void savePayment(Payment payment) {
+        paymentRepository.save(payment);
+    }
+
+    @Override
+    public Collection<Payment> getAllPayments() {
+        return paymentRepository.getAll();
     }
 }
