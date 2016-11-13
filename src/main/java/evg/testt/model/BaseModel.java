@@ -1,10 +1,14 @@
 package evg.testt.model;
 
+
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+//@ToString(exclude = "id")
+//@EqualsAndHashCode(exclude = "id")
 @MappedSuperclass
 public class BaseModel {
 
