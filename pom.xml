@@ -345,6 +345,11 @@
             <artifactId>tiles-jsp</artifactId>
             <version>${apachetiles.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>4.0.0.RELEASE</version>
+        </dependency>
 
     </dependencies>
 
