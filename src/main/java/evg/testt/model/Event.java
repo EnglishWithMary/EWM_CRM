@@ -3,10 +3,8 @@ package evg.testt.model;
 import javax.persistence.*;
 import java.util.Date;
 import lombok.Data;
-import lombok.Builder;
 
 @Entity(name = "events")
-@Builder
 public @Data class Event extends BaseModel {
 
     private String name;
