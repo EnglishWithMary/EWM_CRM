@@ -46,6 +46,7 @@ public class TeacherController {
     @Autowired
     TeacherService teacherService;
 
+    //Привет
     @RequestMapping(value = "/teachers", method = RequestMethod.GET)
     public ModelAndView showTeachers() {
         List<Teacher> teachers = Collections.EMPTY_LIST;
