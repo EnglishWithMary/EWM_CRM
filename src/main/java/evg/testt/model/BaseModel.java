@@ -2,14 +2,12 @@ package evg.testt.model;
 
 import javax.persistence.*;
 import lombok.Data;
-import lombok.Builder;
 
 @MappedSuperclass
-@Builder
 public @Data class BaseModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Override
