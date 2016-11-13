@@ -39,5 +39,4 @@ public class BaseModel {
         return id.hashCode();
     }
 
-
 }
