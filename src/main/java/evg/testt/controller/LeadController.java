@@ -133,49 +133,4 @@ public class LeadController {
         }
         return showLeads();
     }
-
-//    @RequestMapping(value = "/leadSave", method = RequestMethod.POST)
-//    public ModelAndView saveLead(@ModelAttribute("lead") @Validated LeadDto leadDto,
-//                                    BindingResult bindingResult) {
-//
-//
-//        validator.validate(leadDto, bindingResult);
-//        if (!bindingResult.hasErrors()) {
-//
-//        //TODO:add Builder to models
-//        Person newPerson = new Person();
-//        newPerson.setFirstName(leadDto.getFirstName());
-//        newPerson.setLastName(leadDto.getLastName());
-//        newPerson.setMiddleName(leadDto.getMiddleName());
-//
-//        Set<Phone> phoneSet= new HashSet<>();
-//        Phone phone= new Phone();
-//        phone.setPhone(leadDto.getPhone());
-//        phone.setPerson(newPerson);
-//        phoneSet.add(phone);
-//        newPerson.setPhones(phoneSet);
-//
-//        Set<PersonEmails> personEmailsSet = new HashSet<>();
-//        PersonEmails personEmails = new PersonEmails();
-//        personEmails.setEmail(leadDto.getEmail());
-//        personEmails.setPerson(newPerson);
-//        personEmailsSet.add(personEmails);
-//        newPerson.setEmails(personEmailsSet);
-//
-//        Lead newLead = new Lead();
-//        newLead.setPerson(newPerson);
-//
-//        try {
-//            personService.insert(newPerson);
-//            phoneService.insert(phone);
-//            personEmailsService.insert(personEmails);
-//            leadService.insert(newLead);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//             return  showLeads();
-//        }else{
-//            return new ModelAndView(JspPath.LEAD_ADD);
-//        }
-//    }
 }
