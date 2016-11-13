@@ -63,8 +63,8 @@ public class TeacherController {
 
     @RequestMapping(value = "/teacherAdd")
     public ModelAndView addTeacher(Model model) {
-        TeacherDTO teacher =  new TeacherDTO();
-        model.addAttribute("teacher", teacher);
+        TeacherDTO teacherZ =  new TeacherDTO();
+        model.addAttribute("teacher", teacherZ);
         return new ModelAndView(JspPath.TEACHER_ADD);
     }
 
