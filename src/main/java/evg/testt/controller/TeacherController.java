@@ -1,7 +1,5 @@
 package evg.testt.controller;
 
-import evg.testt.dto.ManagerDTO;
-//import evg.testt.model.Manager;
 import evg.testt.dto.TeacherDTO;
 import evg.testt.model.Person;
 import evg.testt.model.Teacher;
@@ -61,7 +59,6 @@ public class TeacherController {
 
         return new ModelAndView(JspPath.TEACHER_ALL, "teachers", teachers);
     }
-
 
     @RequestMapping(value = "/teacherAdd")
     public ModelAndView addTeacher(Model model) {
