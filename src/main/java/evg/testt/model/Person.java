@@ -39,7 +39,7 @@ public class Person extends BaseModel{
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this     .firstName = firstName;
     }
 
     public String getLastName() {
