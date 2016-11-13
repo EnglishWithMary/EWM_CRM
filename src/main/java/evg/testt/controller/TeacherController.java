@@ -9,6 +9,7 @@ import evg.testt.service.*;
 import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -24,9 +25,8 @@ import java.util.List;
 /**
  * Created by leonid on 13.11.16.
  */
+@Controller
 public class TeacherController {
-
-
 
     @Autowired
     SpringOvalValidator validator;
@@ -61,8 +61,8 @@ public class TeacherController {
 
     @RequestMapping(value = "/teacherAdd")
     public ModelAndView addTeacher(Model model) {
-        TeacherDTO teacherZ =  new TeacherDTO();
-        model.addAttribute("teacher", teacherZ);
+        TeacherDTO teacher =  new TeacherDTO();
+        model.addAttribute("teacher", teacher);
         return new ModelAndView(JspPath.TEACHER_ADD);
     }
 

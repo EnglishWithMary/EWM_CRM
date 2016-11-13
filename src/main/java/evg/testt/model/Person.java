@@ -22,6 +22,10 @@ public class Person extends BaseModel{
     @JoinColumn(name = "users_id")
     User user;
 
+    @OneToOne
+    @JoinColumn(name="person_id")
+    private Person person;
+
     public User getUser() {
         return user;
     }
