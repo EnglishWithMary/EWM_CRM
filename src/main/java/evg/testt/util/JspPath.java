@@ -23,4 +23,7 @@ public class JspPath {
     public static final String MANAGER_ALL = "managers/all";
     public static final String MANAGER_ADD = "managers/add";
 
+
+    public static final String LOGIN_LOGOUT = "loginLogout";
+
 }
