@@ -1,11 +1,13 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 
-
+<!--
 <script>
     window.onload = function () {
         window.history.pushState(null, '', 'managerAdd');
     };
 </script>
+-->
+
 <sf:form method="post" modelAttribute="manager" action="/managerSave">
     <fieldset>
         <table>
