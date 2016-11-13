@@ -1,7 +1,5 @@
 package evg.testt.controller;
 
-import evg.testt.dto.ManagerDTO;
-//import evg.testt.model.Manager;
 import evg.testt.dto.TeacherDTO;
 import evg.testt.model.Person;
 import evg.testt.model.Teacher;
@@ -22,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
+
+//import evg.testt.model.Manager;
 
 /**
  * Created by leonid on 13.11.16.
@@ -63,8 +63,8 @@ public class TeacherController {
 
     @RequestMapping(value = "/teacherAdd")
     public ModelAndView addTeacher(Model model) {
-        TeacherDTO teacher =  new TeacherDTO();
-        model.addAttribute("teacher", teacher);
+        TeacherDTO teacherY =  new TeacherDTO();
+        model.addAttribute("teacher", teacherY);
         return new ModelAndView(JspPath.TEACHER_ADD);
     }
 
