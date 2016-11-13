@@ -361,4 +361,12 @@
         </plugins>
     </build>
 
+    <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context-support</artifactId>
+        <version>3.2.0.RELEASE</version>
+    </dependency>
+
+
 </project>
