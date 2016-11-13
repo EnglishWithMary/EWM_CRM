@@ -1,10 +1,7 @@
 package evg.testt.service.impl;
 
-import evg.testt.model.Admin;
-import evg.testt.model.Manager;
-import evg.testt.model.Student;
-import evg.testt.model.Teacher;
-import evg.testt.repository.AdminRepository;
+import evg.testt.model.*;
+import evg.testt.repository.*;
 import evg.testt.service.EWMcrmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +11,22 @@ import java.util.Collection;
 @Service
 public class EWMcrmServiceImpl implements EWMcrmService {
 
-    @Autowired
     AdminRepository adminRepository;
+    ManagerRepository managerRepository;
+    TeacherRepository teacherRepository;
+    StudentRepository studentRepository;
+    PersonRepository personRepository;
+
+    @Autowired
+    public EWMcrmServiceImpl(AdminRepository adminRepository, ManagerRepository managerRepository,
+                             TeacherRepository teacherRepository, StudentRepository studentRepository,
+                             PersonRepository personRepository) {
+        this.adminRepository = adminRepository;
+        this.managerRepository = managerRepository;
+        this.teacherRepository = teacherRepository;
+        this.studentRepository = studentRepository;
+        this.personRepository= personRepository;
+    }
 
     @Override
     public void saveAdmin(Admin admin) {
@@ -33,47 +44,57 @@ public class EWMcrmServiceImpl implements EWMcrmService {
     }
 
     @Override
-    public void saveManager(Manager manager) {
+    public void saveManager(Manager manager) { managerRepository.save(manager);
 
     }
 
     @Override
     public Collection<Manager> getAllManagers() {
-        return null;
+        return managerRepository.getAll();
     }
 
     @Override
     public Manager getManagerById(Integer id) {
-        return null;
+        return managerRepository.findById(id);
     }
 
     @Override
     public void saveTeacher(Teacher teacher) {
-
+        teacherRepository.save(teacher);
     }
 
     @Override
     public Collection<Teacher> getAllTeachers() {
-        return null;
+        return teacherRepository.getAll();
     }
 
     @Override
     public Teacher getTeacherById(Integer id) {
-        return null;
+        return teacherRepository.findById(id);
     }
 
     @Override
     public void saveStudent(Student student) {
-
+        studentRepository.save(student);
     }
 
     @Override
     public Collection<Student> getAllStudents() {
-        return null;
+        return studentRepository.getAll();
     }
 
     @Override
     public Student getStudentById(Integer id) {
-        return null;
+        return studentRepository.findById(id);
+    }
+
+    @Override
+    public Integer savePerson(Person person) {
+        return personRepository.save(person);
+    }
+
+    @Override
+    public Person getPersonById(Integer id) {
+        return personRepository.findPersonById(id);
     }
 }

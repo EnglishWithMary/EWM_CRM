@@ -1,5 +1,6 @@
 package evg.testt.controller;
 
+import evg.testt.dto.AdminDTO;
 import evg.testt.model.Admin;
 import evg.testt.model.Person;
 import evg.testt.model.Role;
@@ -39,25 +40,32 @@ public class AdminController {
 
     @RequestMapping(value = "/admin")
     public String adminPage(Model model){
-        List<Admin> admins = new ArrayList<Admin>(ewMcrmService.getAllAdmins());
+        List<Admin> admins = new ArrayList<>(ewMcrmService.getAllAdmins());
         model.addAttribute("admins", admins);
         return "admin";
     }
 
     @RequestMapping(value = "/adminAdd", method = RequestMethod.GET)
     public String adminAdd(Model model){
-        model.addAttribute("admin", createAdmin());
+        Admin admin = createAdmin();
+        model.addAttribute("adminDTO", new AdminDTO(admin, admin.getPerson()));
         return "adminAdd";
     }
 
     @RequestMapping(value = "/adminAdd", method = RequestMethod.POST)
-    public String adminSave(@ModelAttribute (value = "admin") @Validated Admin admin,
+    public String adminSave(@ModelAttribute (value = "adminDTO") @Validated AdminDTO adminDTO,
                             BindingResult result, Model model){
         if(result.hasErrors()){
             return "adminAdd";
+        }else {
+            Admin admin = adminDTO.getAdmin();
+            Person person = adminDTO.getPerson();
+            Integer id =
+                    ewMcrmService.savePerson(person);
+            admin.setPerson(ewMcrmService.getPersonById(id));
+            ewMcrmService.saveAdmin(admin);
+            return "redirect:/admin";
         }
-        ewMcrmService.saveAdmin(admin);
-        return "redirect:/admin";
     }
 
 }

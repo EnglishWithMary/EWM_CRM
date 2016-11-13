@@ -25,7 +25,7 @@ public class AdminRepositoryJpaImpl implements AdminRepository {
     @Override
     public Admin findById(Integer id) {
         Query query = em.createQuery("SELECT admin FROM Admin admin LEFT JOIN FETCH " +
-                "admin.person WHERE admin.id =: id");
+                "admin.person WHERE admin.id =:id");
         query.setParameter("id", id);
         return (Admin) query.getSingleResult();
     }

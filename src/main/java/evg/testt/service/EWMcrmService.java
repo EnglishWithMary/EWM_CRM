@@ -1,9 +1,6 @@
 package evg.testt.service;
 
-import evg.testt.model.Admin;
-import evg.testt.model.Manager;
-import evg.testt.model.Student;
-import evg.testt.model.Teacher;
+import evg.testt.model.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
@@ -34,5 +31,9 @@ public interface EWMcrmService {
     Collection<Student> getAllStudents();
 
     Student getStudentById(Integer id);
+
+    Integer savePerson(Person person);
+
+    Person getPersonById(Integer id);
 
 }

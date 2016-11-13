@@ -3,14 +3,14 @@
 <div>
 <h1>Add Admin:</h1>
     
-    <sf:form action="/adminAdd" modelAttribute="admin" method="post">
-        <sf:label path="${person.firstName}">First Name:</sf:label>
-        <sf:input path="${person.firstName}"/>
-        <sf:errors path="${person.firstName}"/>
+    <sf:form action="/adminAdd" modelAttribute="adminDTO" method="post">
+        <sf:label path="firstName">First Name:</sf:label>
+        <sf:input path="firstName"/>
+        <sf:errors path="firstName"/>
 
-        <sf:label path="${person.lastName}">First Name:</sf:label>
-        <sf:input path="${erson.lastName}"/>
-        <sf:errors path="${person.lastName}"/>
+        <sf:label path="lastName">First Name:</sf:label>
+        <sf:input path="lastName"/>
+        <sf:errors path="lastName"/>
         
         <input type="submit" value="Save Admin"/>
     </sf:form>
