@@ -29,9 +29,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by DENNNN on 08.11.2016.
- */
 @Controller
 public class ManagerController {
 
@@ -84,12 +81,11 @@ public class ManagerController {
         if (!bindingResult.hasErrors()) {
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
             User newUser = new User();
-                newUser.setEmail(managerDto.getEmail());
+//                newUser.setEmail(managerDto.getEmail());
                 newUser.setPassword(passwordEncoder.encode(managerDto.getPassword()));
                 newUser.setLogin(managerDto.getLogin());
-                newUser.setIsFirstLogin("true");
+//                newUser.setIsFirstLogin("true");
 
             Person newPerson = new Person();
                 newPerson.setFirstName(managerDto.getFirstName());

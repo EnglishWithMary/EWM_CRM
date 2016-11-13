@@ -13,9 +13,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.sql.SQLException;
 
-/**
- * Created by DENNNN on 05.11.2016.
- */
 @Component
 public class AuthenticationSuccessListener implements ApplicationListener<InteractiveAuthenticationSuccessEvent>{
 
@@ -33,26 +30,26 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 
     @Override
     public void onApplicationEvent(InteractiveAuthenticationSuccessEvent interactiveAuthenticationSuccessEvent) {
-
+/*
         UserDetails userDetails = (UserDetails)interactiveAuthenticationSuccessEvent.getAuthentication().getPrincipal();
         String login = userDetails.getUsername();
 
         User u = us.findByUserLogin(login);
 
-        String email = u.getEmail();
-        if(email != null)
-        if(u.getIsFirstLogin().equals("true")) {
-            smm.setTo(u.getEmail());
-            smm.setText(msg);
-            jms.send(smm);
-
-            u.setIsFirstLogin("false");
+//        String email = u.getEmail();
+//        if(email != null)
+//        if(u.getIsFirstLogin().equals("true")) {
+//            smm.setTo(u.getEmail());
+//            smm.setText(msg);
+//            jms.send(smm);
+//
+//            u.setIsFirstLogin("false");
             try {
                 us.update(u);
             }catch (SQLException e)
             {
                 e.printStackTrace();
             }
-        }
+//        }*/
     }
 }
