@@ -81,7 +81,6 @@ public class ManagerController {
         if (!bindingResult.hasErrors()) {
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
             User newUser = new User();
 //                newUser.setEmail(managerDto.getEmail());
                 newUser.setPassword(passwordEncoder.encode(managerDto.getPassword()));
