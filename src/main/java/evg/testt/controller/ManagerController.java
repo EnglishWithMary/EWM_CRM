@@ -10,7 +10,6 @@ import evg.testt.service.ManagerService;
 import evg.testt.service.PersonService;
 import evg.testt.service.RoleService;
 import evg.testt.service.UserService;
-import evg.testt.service.impl.UserServiceImpl;
 import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -81,11 +80,14 @@ public class ManagerController {
         if (!bindingResult.hasErrors()) {
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            try {
+            Role role = roleService.getById(2);
+
             User newUser = new User();
-//                newUser.setEmail(managerDto.getEmail());
+
                 newUser.setPassword(passwordEncoder.encode(managerDto.getPassword()));
                 newUser.setLogin(managerDto.getLogin());
-//                newUser.setIsFirstLogin("true");
+
 
             Person newPerson = new Person();
                 newPerson.setFirstName(managerDto.getFirstName());
@@ -97,7 +99,7 @@ public class ManagerController {
             Manager newManager = new Manager();
                 newManager.setPerson(newPerson);
 
-            try {
+
                 managerService.insert(newManager);
             } catch (SQLException e) {
                 e.printStackTrace();
