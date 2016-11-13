@@ -13,13 +13,6 @@ public @Data class Group extends BaseModel {
 
     private String level;
 
-    public Group(){}
-
-    public Group(String name, String level){
-        this.name = name;
-        this.level = level;
-    }
-
     @ManyToOne
     private Teacher teacher;
 

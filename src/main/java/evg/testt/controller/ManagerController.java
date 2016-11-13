@@ -1,5 +1,5 @@
 package evg.testt.controller;
-/*
+
 import evg.testt.dto.ManagerDTO;
 import evg.testt.model.Manager;
 import evg.testt.model.Person;
@@ -84,19 +84,19 @@ public class ManagerController {
 
             User newUser = new User();
 //                newUser.setEmail(managerDto.getEmail());
-            newUser.setPassword(passwordEncoder.encode(managerDto.getPassword()));
-            newUser.setLogin(managerDto.getLogin());
+                newUser.setPassword(passwordEncoder.encode(managerDto.getPassword()));
+                newUser.setLogin(managerDto.getLogin());
 //                newUser.setIsFirstLogin("true");
 
             Person newPerson = new Person();
-            newPerson.setFirstName(managerDto.getFirstName());
-            newPerson.setLastName(managerDto.getLastName());
-            newPerson.setMiddleName(managerDto.getMiddleName());
+                newPerson.setFirstName(managerDto.getFirstName());
+                newPerson.setLastName(managerDto.getLastName());
+                newPerson.setMiddleName(managerDto.getMiddleName());
 
             newPerson.setUser(newUser);
 
             Manager newManager = new Manager();
-            newManager.setPerson(newPerson);
+                newManager.setPerson(newPerson);
 
             try {
                 managerService.insert(newManager);
@@ -109,4 +109,4 @@ public class ManagerController {
         }
     }
 
-}*/
+}

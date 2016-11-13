@@ -1,6 +1,5 @@
 package evg.testt.controller;
 
-import evg.testt.model.Email;
 import evg.testt.model.Role;
 import evg.testt.model.User;
 import evg.testt.oval.SpringOvalValidator;
@@ -48,7 +47,7 @@ public class UsersController {
         return "home";
     }
 
-    //    @RequestMapping(value = "/users", method = RequestMethod.POST)
+//    @RequestMapping(value = "/users", method = RequestMethod.POST)
 //    public ModelAndView showUsersFromPost() {
 //        return showUsers();
 //    }
@@ -77,7 +76,7 @@ public class UsersController {
         User u = null;
         u =  userService.findByUserLogin(user.getLogin());
         if (u != null)
-            bindingResult.rejectValue("login", "1", "Login already exist.");
+        bindingResult.rejectValue("login", "1", "Login already exist.");
 
         if (!bindingResult.hasErrors()) {
             try {
@@ -91,4 +90,56 @@ public class UsersController {
             return new ModelAndView(JspPath.USERS_ADD);
         }
     }
+//
+//    @RequestMapping(value = "/userAddRole", method = RequestMethod.GET)
+//    public ModelAndView addRole(@RequestParam int id) {
+//        User user;
+//        ModelAndView model;
+//        try {
+//            user = userService.getById(id);
+//        } catch (SQLException e) {
+//            user = null;
+//            e.printStackTrace();
+//        }
+//        if (user.getRoles() != null) {
+//            return showUsers();
+//        } else {
+//            model = new ModelAndView(JspPath.USERS_ADD_ROLE);
+//        }
+//        model.addObject("role", new Role());
+//        model.addObject("user_id", id);
+//        return model;
+//    }
+
+//    @RequestMapping(value = "/userAddRole", method = RequestMethod.POST)
+//    public String saveRole(@ModelAttribute("role") Role role, @RequestParam int id) {
+//        User user;
+//        try {
+//            user = userService.getById(id);
+//            user.setRoles(role);
+//            role.setUsers(user);
+//            roleService.update(role);
+//            userService.update(user);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return "forward:/users";
+//    }
+
+//    @RequestMapping(value = "userDel")
+//    public String deleteUser(@RequestParam int id) {
+//        User user;
+//        Role role;
+//        try {
+//            user = userService.getById(id);
+//            role = user.getRoles();
+//            user.setRoles(null);
+//            roleService.delete(role);
+//            userService.update(user);
+//            userService.delete(user);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return "forward:/users";
+//    }
 }

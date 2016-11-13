@@ -1,6 +1,5 @@
 package evg.testt.securityListener;
 
-
 import evg.testt.model.User;
 import evg.testt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import javax.annotation.Resource;
 import java.sql.SQLException;
 
 @Component
-public class AuthenticationSuccessListener implements ApplicationListener<InteractiveAuthenticationSuccessEvent> {
+public class AuthenticationSuccessListener implements ApplicationListener<InteractiveAuthenticationSuccessEvent>{
 
     @Autowired
     private JavaMailSender jms;
@@ -32,7 +31,7 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
     @Override
     public void onApplicationEvent(InteractiveAuthenticationSuccessEvent interactiveAuthenticationSuccessEvent) {
 
-        UserDetails userDetails = (UserDetails) interactiveAuthenticationSuccessEvent.getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails)interactiveAuthenticationSuccessEvent.getAuthentication().getPrincipal();
         String login = userDetails.getUsername();
 
         User u = us.findByUserLogin(login);
@@ -45,11 +44,12 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 //            jms.send(smm);
 //
 //            u.setIsFirstLogin("false");
-        try {
-            us.update(u);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            try {
+                us.update(u);
+            }catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
 //        }
     }
 }

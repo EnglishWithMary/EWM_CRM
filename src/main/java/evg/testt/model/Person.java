@@ -1,7 +1,7 @@
 package evg.testt.model;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Set;
 import lombok.Data;
 import lombok.Builder;
 
