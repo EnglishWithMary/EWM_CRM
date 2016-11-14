@@ -66,30 +66,31 @@
 <%--</div>--%>
 <%--</body>--%>
 <%--</html>--%>
-    <!DOCTYPE html>
-    <html >
-    <head>
-        <meta charset="UTF-8">
-        <title>Bootstrap Snippet: Login Form</title>
-
-        <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css'>
-
-        <link rel="stylesheet" href="<c:url value="/resources/assets/css/style.css"/>
-</head>
-
-<body>
-<div class="wrapper">
-        <form class="form-signin">
-            <h2 class="form-signin-heading">Please login</h2>
-            <input type="text" class="form-control" name="username" placeholder="Email Address" required="" autofocus="" />
-            <input type="password" class="form-control" name="password" placeholder="Password" required=""/>
-            <label class="checkbox">
-                <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me
-            </label>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-        </form>
+    <form method="post" class="signin" action="/login_security_chek">
+        <fieldset>
+            <table cellspacing="0">
+                <tr>
+                    <th><label for="username_or_email">Username or Email</label></th>
+                    <td><input id="username_or_email" name="j_username" type="text"/></td>
+                </tr>
+                <tr>
+                    <th><label for="password">Password</label></th>
+                    <td><input id="password" name="j_password" type="password"/>
+                        <small><a href="/account/resend_password">Restore password</a></small>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><input id="remember_me" name="_spring_security_remember_me" type="checkbox"/>
+                        <label for="remember_me" class="inline">Remember me</label></td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><input name="commit" type="submit" value="Sign In"/></td>
+                </tr>
+            </table>
+        </fieldset>
+    </form>
 </div>
-
-
 </body>
 </html>
