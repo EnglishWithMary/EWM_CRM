@@ -1,8 +1,11 @@
 package evg.testt.model;
 
-import javax.persistence.*;
 import lombok.Data;
 import net.sf.oval.constraint.Length;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Entity(name = "users")
 public @Data class User extends BaseModel {

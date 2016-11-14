@@ -26,7 +26,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class ManagerController {
@@ -53,7 +52,7 @@ public class ManagerController {
         try {
             managers = managerService.getAll();
             for (Manager item : managers){
-                persons.add(item.getPerson());
+                boolean add = persons.add(item.getPerson());
             }
         } catch (SQLException e) {
             e.printStackTrace();

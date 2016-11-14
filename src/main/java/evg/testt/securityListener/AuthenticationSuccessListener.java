@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.sql.SQLException;
 
 @Component
 public class AuthenticationSuccessListener implements ApplicationListener<InteractiveAuthenticationSuccessEvent>{

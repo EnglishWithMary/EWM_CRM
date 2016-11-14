@@ -1,7 +1,10 @@
 package evg.testt.controller;
 
+//INSERT INTO hibernate_sequence(next_val) VALUE (0);
+
 import evg.testt.dto.TeacherDTO;
 import evg.testt.model.Person;
+import evg.testt.model.Role;
 import evg.testt.model.Teacher;
 import evg.testt.model.User;
 import evg.testt.oval.SpringOvalValidator;
@@ -64,7 +67,7 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/teacherSave", method = RequestMethod.POST)
-    public ModelAndView saveTeacher(@ModelAttribute("teacher") @Validated TeacherDTO teacherDto, BindingResult bindingResult) {
+    public ModelAndView saveTeacher(@ModelAttribute("teacher") @Validated TeacherDTO teacherDto, BindingResult bindingResult) throws SQLException {
         validator.validate(teacherDto, bindingResult);
 
         // проверка логина на уникальность
@@ -73,6 +76,7 @@ public class TeacherController {
             bindingResult.rejectValue("login", "1", "Login already exist.");
 
         if (!bindingResult.hasErrors()) {
+            Role role = roleService.getById(3);
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -87,10 +91,16 @@ public class TeacherController {
             newPerson.setLastName(teacherDto.getLastName());
             newPerson.setMiddleName(teacherDto.getMiddleName());
 
-            newPerson.setUser(newUser);
+            newUser.setRole(role);
+            newUser.setPassword(passwordEncoder.encode(teacherDto.getPassword()));
+            newUser.setLogin(teacherDto.getLogin());
 
             Teacher newTeacher = new Teacher();
+
             newTeacher.setPerson(newPerson);
+            newTeacher.setUser(newUser);
+
+            teacherService.insert(newTeacher);
 
             try {
                 teacherService.insert(newTeacher);
