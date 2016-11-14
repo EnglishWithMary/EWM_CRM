@@ -15,7 +15,6 @@ public class StudentDTO {
     @Length(min = 6, max = 20, message = "Incorrect password.")
     private String password;
 
-    // ??
     @MatchPattern(pattern = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9]" +
             "(?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email address.")
     private String email;

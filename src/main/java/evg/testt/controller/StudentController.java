@@ -62,12 +62,13 @@ public class StudentController {
     }
 //  c DTO:
 
-    @RequestMapping(value = "/studentAdd")
-    public ModelAndView addStudent(Model model) {
-        StudentDTO student =  new StudentDTO();
-        model.addAttribute("student", student);
-        return new ModelAndView(JspPath.STUDENT_ADD);
+    @RequestMapping(value = "/studentAdd") // вход при нажатии кнопки "добавить студетна"
+    public ModelAndView addStudent(Model model) { // метод, генерирующий страницу, на которой можно "добавить студента" (в него приходит "модель")
+        StudentDTO student =  new StudentDTO(); // создание "промежуточного" объекта для передачи данных
+        model.addAttribute("student", student); // в модель добавляется атрибут с именем "student" и соотсетствующим DTO-шником?
+        return new ModelAndView(JspPath.STUDENT_ADD); // возвращает страницу, на которой можно вводить данные
     }
+
 
 /*//  без DTO:
     @RequestMapping(value = "/studentAdd")
