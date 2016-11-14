@@ -9,16 +9,14 @@
                     <th>First name</th>
                     <th>Last name</th>
                     <th>Middle name</th>
-                    <th>Login</th>
                 </tr>
             </thead>
             <tbod>
                 <c:forEach var="manager" items="${managers}">
                     <tr>
-                        <td>${manager.person.firstName}</td>
-                        <td>${manager.person.lastName}</td>
-                        <td>${manager.person.middleName}</td>
-                        <td>${manager.person.user.login}</td>
+                        <td>${manager.firstName}</td>
+                        <td>${manager.lastName}</td>
+                        <td>${manager.middleName}</td>
                     </tr>
                 </c:forEach>
             </tbod>

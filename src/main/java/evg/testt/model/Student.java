@@ -1,11 +1,11 @@
 package evg.testt.model;
 
-import javax.persistence.*;
 import lombok.Data;
+import javax.persistence.*;
 
-@Entity(name = "managers")
+@Entity(name = "students")
 
-public @Data class Manager extends BaseModel {
+public @Data class Student extends BaseModel {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Person person;
