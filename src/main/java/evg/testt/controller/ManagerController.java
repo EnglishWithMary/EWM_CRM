@@ -49,14 +49,17 @@ public class ManagerController {
     @RequestMapping(value = "/managers", method = RequestMethod.GET)
     public ModelAndView showManagers() {
         List<Manager> managers = Collections.EMPTY_LIST;
-
+        List<Person> persons = new ArrayList<Person>();
         try {
             managers = managerService.getAll();
+            for (Manager item : managers){
+                persons.add(item.getPerson());
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return new ModelAndView(JspPath.MANAGER_ALL, "managers", managers);
+        return new ModelAndView(JspPath.MANAGER_ALL, "managers", persons);
     }
 
     @RequestMapping(value = "/managerAdd")
@@ -85,20 +88,20 @@ public class ManagerController {
 
                 Person newPerson = new Person();
                 User newUser = new User();
-
-
+                Manager newManager = new Manager();
 
                 newPerson.setFirstName(managerDto.getFirstName());
                 newPerson.setLastName(managerDto.getLastName());
                 newPerson.setMiddleName(managerDto.getMiddleName());
-                newPerson.setUser(newUser);
 
                 newUser.setRole(role);
                 newUser.setPassword(passwordEncoder.encode(managerDto.getPassword()));
                 newUser.setLogin(managerDto.getLogin());
-                //newUser.setPerson(newPerson);
 
-                personService.insert(newPerson);
+                newManager.setPerson(newPerson);
+                newManager.setUser(newUser);
+
+                managerService.insert(newManager);
 
             } catch (SQLException e) {
                 e.printStackTrace();

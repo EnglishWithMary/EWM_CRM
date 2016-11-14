@@ -2,10 +2,7 @@ package evg.testt.model;
 
 import javax.persistence.*;
 import lombok.Data;
-
 import net.sf.oval.constraint.Length;
-import net.sf.oval.constraint.MatchPattern;
-import org.springframework.security.access.method.P;
 
 @Entity(name = "users")
 public @Data class User extends BaseModel {
@@ -16,10 +13,6 @@ public @Data class User extends BaseModel {
     @Length(min = 6, max = 20, message = "Password should be at least 3 and less than 20 symbols")
     private String password;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Role role;
-
-    @OneToOne
-    @JoinColumn(name = "person_id")
-    private Person person;
 }

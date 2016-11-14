@@ -17,16 +17,4 @@ public @Data class Person extends BaseModel{
     private Date birthdayDate;
 
     private String organization;
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "person")
-    private User user;
-
-    /*@OneToOne(cascade = CascadeType.ALL)
-    private User user;
-*/
-//    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
-//    private User user;
-
-//    @OneToOne(fetch = FetchType.EAGER, mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Manager manager;
 }
