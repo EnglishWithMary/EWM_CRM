@@ -81,26 +81,25 @@ public class ManagerController {
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             try {
-            Role role = roleService.getById(2);
+                Role role = roleService.getById(2);
 
-            User newUser = new User();
-
-                newUser.setPassword(passwordEncoder.encode(managerDto.getPassword()));
-                newUser.setLogin(managerDto.getLogin());
+                Person newPerson = new Person();
+                User newUser = new User();
 
 
-            Person newPerson = new Person();
+
                 newPerson.setFirstName(managerDto.getFirstName());
                 newPerson.setLastName(managerDto.getLastName());
                 newPerson.setMiddleName(managerDto.getMiddleName());
+                newPerson.setUser(newUser);
 
-            newPerson.setUser(newUser);
+                newUser.setRole(role);
+                newUser.setPassword(passwordEncoder.encode(managerDto.getPassword()));
+                newUser.setLogin(managerDto.getLogin());
+                //newUser.setPerson(newPerson);
 
-            Manager newManager = new Manager();
-                newManager.setPerson(newPerson);
+                personService.insert(newPerson);
 
-
-                managerService.insert(newManager);
             } catch (SQLException e) {
                 e.printStackTrace();
             }

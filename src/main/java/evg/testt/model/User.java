@@ -5,6 +5,7 @@ import lombok.Data;
 
 import net.sf.oval.constraint.Length;
 import net.sf.oval.constraint.MatchPattern;
+import org.springframework.security.access.method.P;
 
 @Entity(name = "users")
 public @Data class User extends BaseModel {
@@ -19,5 +20,6 @@ public @Data class User extends BaseModel {
     private Role role;
 
     @OneToOne
+    @JoinColumn(name = "person_id")
     private Person person;
 }

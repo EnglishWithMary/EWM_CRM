@@ -7,6 +7,6 @@ import lombok.Data;
 
 public @Data class Manager extends BaseModel {
 
-    @OneToOne
-    private Person person;
+    /*@OneToOne(fetch = FetchType.EAGER, mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Person person;*/
 }
