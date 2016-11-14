@@ -22,9 +22,6 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by leonid on 13.11.16.
- */
 @Controller
 public class TeacherController {
 
@@ -46,7 +43,6 @@ public class TeacherController {
     @Autowired
     TeacherService teacherService;
 
-    //Привет
     @RequestMapping(value = "/teachers", method = RequestMethod.GET)
     public ModelAndView showTeachers() {
         List<Teacher> teachers = Collections.EMPTY_LIST;
@@ -71,10 +67,8 @@ public class TeacherController {
     public ModelAndView saveTeacher(@ModelAttribute("teacher") @Validated TeacherDTO teacherDto, BindingResult bindingResult) {
         validator.validate(teacherDto, bindingResult);
 
-
         // проверка логина на уникальность
-        User u = null;
-        u =  userService.findByUserLogin(teacherDto.getLogin());
+        User u = userService.findByUserLogin(teacherDto.getLogin());
         if (u != null)
             bindingResult.rejectValue("login", "1", "Login already exist.");
 

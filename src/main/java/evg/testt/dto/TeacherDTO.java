@@ -3,9 +3,6 @@ package evg.testt.dto;
 import net.sf.oval.constraint.Length;
 import net.sf.oval.constraint.MatchPattern;
 
-/**
- * Created by leonid on 13.11.16.
- */
 public class TeacherDTO {
 
 
