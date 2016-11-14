@@ -1,18 +1,14 @@
 package evg.testt.model;
 
 public enum UserRole {
-    ROLE_ADMIN,
-    ROLE_MANAGER,
-    ROLE_TEACHER,
-    ROLE_STUDENT;
+   /* ROLE_ADMIN(1), ROLE_MANAGER(2), ROLE_TEACHER(3), ROLE_STUDENT(4);
 
-    String userRole;
+    public final int Value;
+    private int UserRole(){
 
-    private String getUserRole() {
+    }
+
+    public int getUserRole() {
         return userRole;
-    }
-
-    public void setUserRole(String userRole) {
-        this.userRole = userRole;
-    }
+    }*/
 }

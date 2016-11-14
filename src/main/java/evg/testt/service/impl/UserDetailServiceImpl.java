@@ -22,7 +22,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
     UserDao userDao;
 
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException{
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException
+    {
         User user = userDao.findByLogin(name);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();

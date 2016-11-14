@@ -1,17 +1,10 @@
 package evg.testt.model;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import lombok.Data;
 
 @Entity(name = "roles")
-public class Role extends BaseModel {
+public @Data class Role extends BaseModel {
 
     private String role;
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getRole() {
-        return role;
-    }
 }

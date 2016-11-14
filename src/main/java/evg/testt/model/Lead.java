@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Entity(name = "admins")
 
-public @Data class Admin extends BaseModel {
+public @Data class Lead extends BaseModel {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Person person;

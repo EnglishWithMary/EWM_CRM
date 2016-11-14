@@ -32,10 +32,15 @@
         <spring.security.version>4.1.1.RELEASE</spring.security.version>
         <!--apache tiles-->
         <apachetiles.version>3.0.5</apachetiles.version>
+        <lombok.version>1.16.10</lombok.version>
     </properties>
 
     <dependencies>
-
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
         <!-- Mail -->
         <!-- https://mvnrepository.com/artifact/org.springframework.integration/spring-integration-mail -->
         <dependency>

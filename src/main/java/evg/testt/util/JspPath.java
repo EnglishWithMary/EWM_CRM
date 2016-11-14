@@ -25,4 +25,5 @@ public class JspPath {
 
     public static final String TEACHER_ALL = "teachers/all";
     public static final String TEACHER_ADD = "teachers/add";
+    public static final String ERROR = "error";
 }
