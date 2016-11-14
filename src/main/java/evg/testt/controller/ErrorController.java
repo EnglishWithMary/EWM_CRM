@@ -17,10 +17,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 
-
-/**
- * Created by User on 03.11.2016.
- */
 @ControllerAdvice
 public class ErrorController {
     @RequestMapping(value = "/error403", method = RequestMethod.GET)

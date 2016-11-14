@@ -1,6 +1,5 @@
 package evg.testt.controller;
 
-import evg.testt.model.Email;
 import evg.testt.model.Role;
 import evg.testt.model.User;
 import evg.testt.oval.SpringOvalValidator;
