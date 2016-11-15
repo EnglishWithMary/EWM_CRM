@@ -9,7 +9,7 @@
     <tiles:insertAttribute name="resources" />
   <%--<link href="${pageContext.request.contextPath}/resources/assets/css/all.css" rel="stylesheet" type="text/css" />--%>
 </head>
-<body>
+<body class="subpage">
     <header id="header">
         <tiles:insertAttribute name="header"/>
 
@@ -20,11 +20,17 @@
     <nav id="menu">
         <tiles:insertAttribute name="menu"/>
     </nav>
-    <section id="banner">
-        <div class="content">
-            <tiles:insertAttribute name="body"/>
+
+    <section id="main" class="wrapper">
+        <div class="inner">
+            <section id="banner">
+                <div class="content">
+                    <tiles:insertAttribute name="body"/>
+                </div>
+            </section>
         </div>
     </section>
+
     <footer id="footer">
         <tiles:insertAttribute name="footer"/>
     </footer>

@@ -80,7 +80,7 @@ public class UsersController {
 
         if (!bindingResult.hasErrors()) {
             try {
-                user.setIsFirstLogin("true");
+//                user.setIsFirstLogin("true");
                 userService.insert(user);
             } catch (SQLException e) {
                 e.printStackTrace();

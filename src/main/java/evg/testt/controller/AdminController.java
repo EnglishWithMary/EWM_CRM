@@ -24,40 +24,6 @@ public class AdminController {
     public String adminPage(){
         return "admin";
     }
-/*
-    @RequestMapping(value = "/studentAdd", method = RequestMethod.GET) // Entrance when "Add Student" button clicked
-    public ModelAndView showAdd() {
-        return new ModelAndView(JspPath.STUDENT_ADD); // Redirect to STUDENT_ADD page
-    }
 
-    // add /studentSave
-    @RequestMapping(value = "/studentSave", method = RequestMethod.POST)
-    public String addNewOne(@RequestParam(required = true) String name,
-                            @RequestParam(required = false) Integer id) {
-        if (id == null) {
-
-            Department addedDepartment = new Department(); // создается объект
-            addedDepartment.setName(name); // присваевается имя
-            try {
-                departmentService.insert(addedDepartment); // добавляется в БД
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        else {
-            Department depedit = null;
-            try {
-                depedit = departmentService.getById(id);
-                depedit.setName(name);
-                departmentService.update(depedit); // обновляет обїект в БД
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return "redirect:/dep"; // обновляет страницу со списком
-    }
-*/
 }
 
