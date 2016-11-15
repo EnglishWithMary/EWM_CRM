@@ -26,4 +26,5 @@ public class JspPath {
     public static final String LEAD_ALL = "leads/all";
     public static final String LEAD_ADD = "leads/add";
 
+    public static final String ERROR = "error";
 }

@@ -1,24 +1,15 @@
 package evg.testt.model;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import lombok.Data;
+import javax.persistence.*;
 
 @Entity(name = "leads")
-public class Lead extends BaseModel {
 
-    @OneToOne
-    @JoinColumn(name = "person_id")
+public @Data class Lead extends BaseModel {
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Person person;
 
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
-
-
+    @OneToOne(cascade = CascadeType.ALL)
+    private User user;
 }

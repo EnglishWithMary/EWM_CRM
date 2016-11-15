@@ -6,5 +6,6 @@ import evg.testt.service.LeadService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LeadServiceImpl  extends BaseService<Lead, LeadDao> implements LeadService {
+public class LeadServiceImpl extends BaseService<Lead, LeadDao> implements LeadService {
+
 }
