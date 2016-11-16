@@ -3,10 +3,7 @@ package evg.testt.controller;
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
-import evg.testt.service.ManagerService;
-import evg.testt.service.PersonService;
-import evg.testt.service.RoleService;
-import evg.testt.service.UserService;
+import evg.testt.service.*;
 import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,15 +17,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
-public class ManagerController {
+public class TeacherController {
 
     @Autowired
     SpringOvalValidator validator;
     @Autowired
-    ManagerService managerService;
+    TeacherService teacherService;
     @Autowired
     UserService userService;
     @Autowired
@@ -36,31 +35,31 @@ public class ManagerController {
     @Autowired
     PersonService personService;
 
-    @RequestMapping(value = "/managers", method = RequestMethod.GET)
-    public ModelAndView showManagers() {
-        List<Manager> managers = Collections.EMPTY_LIST;
+    @RequestMapping(value = "/teachers", method = RequestMethod.GET)
+    public ModelAndView showTeachers() {
+        List<Teacher> teachers = Collections.EMPTY_LIST;
         List<Person> persons = new ArrayList<Person>();
         try {
-            managers = managerService.getAll();
-            for (Manager item : managers){
+            teachers = teacherService.getAll();
+            for (Teacher item : teachers){
                 persons.add(item.getPerson());
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return new ModelAndView(JspPath.MANAGER_ALL, "managers", persons);
+        return new ModelAndView(JspPath.TEACHER_ALL, "teachers", persons);
     }
 
-    @RequestMapping(value = "/managerAdd")
-    public ModelAndView addManager(Model model) {
+    @RequestMapping(value = "/teacherAdd")
+    public ModelAndView addTeacher(Model model) {
         PersonDTO person =  new PersonDTO();
-        model.addAttribute("manager", person);
-        return new ModelAndView(JspPath.MANAGER_ADD);
+        model.addAttribute("teacher", person);
+        return new ModelAndView(JspPath.TEACHER_ADD);
     }
 
-    @RequestMapping(value = "/managerSave", method = RequestMethod.POST)
-    public ModelAndView saveManager(@ModelAttribute("manager") @Validated PersonDTO personDTO, BindingResult bindingResult) {
+    @RequestMapping(value = "/teacherSave", method = RequestMethod.POST)
+    public ModelAndView saveTeacher(@ModelAttribute("teacher") @Validated PersonDTO personDTO, BindingResult bindingResult) {
         validator.validate(personDTO, bindingResult);
         // проверка логина на уникальность
         User u = userService.findByUserLogin(personDTO.getLogin());
@@ -71,35 +70,31 @@ public class ManagerController {
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             try {
-                Role role = roleService.getById(2);
+                Role role = roleService.getById(3);
 
                 Person newPerson = new Person();
                 User newUser = new User();
-                Manager newManager = new Manager();
-                Email email = new Email();
-
-                email.setEmail(personDTO.getEmail());
+                Teacher newTeacher = new Teacher();
 
                 newPerson.setFirstName(personDTO.getFirstName());
                 newPerson.setLastName(personDTO.getLastName());
                 newPerson.setMiddleName(personDTO.getMiddleName());
-                newPerson.setEmail(email);
 
                 newUser.setRole(role);
                 newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
                 newUser.setLogin(personDTO.getLogin());
 
-                newManager.setPerson(newPerson);
-                newManager.setUser(newUser);
+                newTeacher.setPerson(newPerson);
+                newTeacher.setUser(newUser);
 
-                managerService.insert(newManager);
+                teacherService.insert(newTeacher);
 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            return showManagers();
+            return showTeachers();
         } else {
-            return new ModelAndView(JspPath.MANAGER_ADD);
+            return new ModelAndView(JspPath.TEACHER_ADD);
         }
     }
 
