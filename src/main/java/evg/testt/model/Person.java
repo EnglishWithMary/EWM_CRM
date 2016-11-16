@@ -2,7 +2,10 @@ package evg.testt.model;
 
 import javax.persistence.*;
 import java.util.*;
+
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
 
 @Entity (name = "persons")
 public @Data class Person extends BaseModel{
