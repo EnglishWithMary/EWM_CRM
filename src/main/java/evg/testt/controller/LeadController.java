@@ -1,9 +1,11 @@
 package evg.testt.controller;
 
 import evg.testt.dto.LeadDto;
+import evg.testt.model.Email;
 import evg.testt.model.Lead;
 import evg.testt.model.Person;
 import evg.testt.oval.SpringOvalValidator;
+import evg.testt.service.EmailService;
 import evg.testt.service.LeadService;
 import evg.testt.service.PersonService;
 import evg.testt.util.JspPath;
@@ -29,6 +31,9 @@ public class LeadController {
 
     @Autowired
     PersonService personService;
+
+    @Autowired
+    EmailService emailService;
 
     @RequestMapping(value = "/leads", method = RequestMethod.GET)
     public ModelAndView showLeads() {
@@ -66,10 +71,19 @@ public class LeadController {
             return new ModelAndView(JspPath.LEAD_ADD);
         }
 
+        Email email=new Email();
+        email.setEmail(leadDto.getEmail());
+        try {
+            emailService.insert(email);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         Person newPerson = new Person();
         newPerson.setFirstName(leadDto.getFirstName());
         newPerson.setLastName(leadDto.getLastName());
         newPerson.setMiddleName(leadDto.getMiddleName());
+        newPerson.setEmail(email);
         try {
             personService.insert(newPerson);
         } catch (SQLException e) {

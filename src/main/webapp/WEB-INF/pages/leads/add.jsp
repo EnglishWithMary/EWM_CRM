@@ -25,13 +25,13 @@
                     <sf:errors path="middleName"/></td>
             </tr>
 
-            <%--tr>
+            <tr>
                 <th><sf:label path="email">Email:</sf:label></th>
                 <td><sf:input path="email"/><br/>
                     <sf:errors path="email"/></td>
             </tr>
 
-            <tr>
+            <%--tr>
                 <th><sf:label path="phone">Phone:</sf:label></th>
                 <td><sf:input path="phone"/><br/>
                     <sf:errors path="phone"/></td>
