@@ -15,6 +15,8 @@
             <li><a href="/admin">Admin</a></li>
             <li><a href="/users">Users List</a></li>
             <li><a href="/managers">Managers List</a></li>
+            <li><a href="/teachers">Teachers List</a></li>
+            <li><a href="/students">Students List</a></li>
         </security:authorize>
     </ul>
 </security:authorize>

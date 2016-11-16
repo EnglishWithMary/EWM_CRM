@@ -4,7 +4,13 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-    <definition name="" extends="home">
-        <put-attribute name="body" value="/WEB-INF/pages/admin/admin.jsp" />
+    <definition name="students/add" extends="home">
+        <put-attribute name="title" value="Student page" />
+        <put-attribute name="body" value="/WEB-INF/pages/students/add.jsp" />
+    </definition>
+
+    <definition name="students/all" extends="home">
+        <put-attribute name="title" value="Students page" />
+        <put-attribute name="body" value="/WEB-INF/pages/students/all.jsp" />
     </definition>
 </tiles-definitions>

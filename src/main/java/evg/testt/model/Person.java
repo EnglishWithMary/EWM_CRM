@@ -17,4 +17,7 @@ public @Data class Person extends BaseModel{
     private Date birthdayDate;
 
     private String organization;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    Email email;
 }
