@@ -3,13 +3,9 @@ package evg.testt.controller;
 import evg.testt.dto.LeadDto;
 import evg.testt.model.Lead;
 import evg.testt.model.Person;
-import evg.testt.model.PersonEmails;
-import evg.testt.model.Phone;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.LeadService;
-import evg.testt.service.PersonEmailsService;
 import evg.testt.service.PersonService;
-import evg.testt.service.PhoneService;
 import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,12 +29,6 @@ public class LeadController {
 
     @Autowired
     PersonService personService;
-
-    @Autowired
-    PersonEmailsService personEmailsService;
-
-    @Autowired
-    PhoneService phoneService;
 
     @RequestMapping(value = "/leads", method = RequestMethod.GET)
     public ModelAndView showLeads() {
@@ -85,48 +75,9 @@ public class LeadController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        Set<Phone> phoneSet = new TreeSet<Phone>(
-                new Comparator<Phone>() {
-                    @Override
-                    public int compare(Phone o1, Phone o2) {
-                        return 1;
-                    }
-                });
-        Phone phone= new Phone();
-        phone.setPhone(leadDto.getPhone());
-        phone.setPerson(newPerson);
-        phoneSet.add(phone);
-        try {
-            phoneService.insert(phone);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
-        Set<PersonEmails> personEmailsSet = new TreeSet<>(new Comparator<PersonEmails>() {
-            @Override
-            public int compare(PersonEmails o1, PersonEmails o2) {
-                return 1;
-            }
-        });
-        PersonEmails personEmails = new PersonEmails();
-        personEmails.setEmail(leadDto.getEmail());
-        personEmails.setPerson(newPerson);
-        personEmailsSet.add(personEmails);
-        try {
-            personEmailsService.insert(personEmails);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
-        newPerson.setEmails(personEmailsSet);
-        newPerson.setPhones(phoneSet);
         Lead newLead = new Lead();
         newLead.setPerson(newPerson);
         try {
-            personService.update(newPerson);
             leadService.insert(newLead);
         } catch (SQLException e) {
             e.printStackTrace();

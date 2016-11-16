@@ -8,8 +8,8 @@
             <td>First name</td>
             <td>Last name</td>
             <td>Middle name</td>
-            <td>Emails</td>
-            <td>Phones</td>
+            <!--td>Emails</td>
+            <td>Phones</td-->
             <td> </td>
         </tr>
         <c:forEach var="lead" items="${leads}">
@@ -17,7 +17,7 @@
                 <td><label>${lead.person.firstName}</label></td>
                 <td><label>${lead.person.lastName}</label></td>
                 <td><label>${lead.person.middleName}</label></td>
-                <td>
+                <%--td>
                     <c:forEach var="email" items="${lead.person.emails}">
                         <label>${email.email}</label></br>
                     </c:forEach>
@@ -26,7 +26,7 @@
                     <c:forEach var="phone" items="${lead.person.phones}">
                         <label>${phone.phone}</label></br>
                     </c:forEach>
-                </td>
+                </td--%>
 
                 <td>
                     <security:authorize access="hasRole('ROLE_ADMIN')">
