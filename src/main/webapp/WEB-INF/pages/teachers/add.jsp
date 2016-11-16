@@ -37,7 +37,7 @@
 
             <tr>
                 <th><sf:label path="password">Password:</sf:label></th>
-                <td><sf:input path="password"/><br/>
+                <td><sf:password path="password"/><br/>
                     <sf:errors path="password"/></td>
             </tr>
 
