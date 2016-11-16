@@ -19,7 +19,14 @@
         <intercept-url pattern="/users/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/managers**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/managers/**" access="hasRole('ROLE_ADMIN')"/>
-        <form-login />
+        <!--<intercept-url pattern="/login.jsp*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
+        <form-login
+                login-processing-url="/security_check"
+                login-page="/login"
+                default-target-url="/home"
+                authentication-failure-url="/login?error"
+                username-parameter="username"
+                password-parameter="password"/>
         <logout logout-success-url="/home"/>
         <csrf disabled="true"/>
     </http>

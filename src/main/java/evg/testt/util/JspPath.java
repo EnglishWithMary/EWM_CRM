@@ -12,10 +12,13 @@ public class JspPath {
 
     public static final String MANAGER_ALL = "managers/all";
     public static final String MANAGER_ADD = "managers/add";
-    public static final String TEACHER_ALL = "teachers/all";
-    public static final String TEACHER_ADD = "teachers/add";
     public static final String STUDENT_ALL = "students/all";
     public static final String STUDENT_ADD = "students/add";
+
+    public static final String TEACHER_ALL = "teachers/all";
+    public static final String TEACHER_ADD = "teachers/add";
+    public static final String LEAD_ALL = "leads/all";
+    public static final String LEAD_ADD = "leads/add";
 
     public static final String ERROR = "error";
 }

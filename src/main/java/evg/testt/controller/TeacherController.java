@@ -70,7 +70,9 @@ public class TeacherController {
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             try {
-                Role role = roleService.getById(3);
+                UserRole roleId = UserRole.ROLE_TEACHER;
+
+                Role role = roleService.getById(roleId.getRoleId());
 
                 Person newPerson = new Person();
                 User newUser = new User();
