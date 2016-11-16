@@ -30,7 +30,6 @@
                 <%--&lt;%&ndash;<input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me&ndash;%&gt;--%>
             <%--</label>--%>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-
     </div>
 </div>
 </body>
