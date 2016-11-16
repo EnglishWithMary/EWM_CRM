@@ -19,10 +19,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import evg.testt.model.Role;
+import evg.testt.service.RoleService;
 
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by oleksiy on 10.11.16.
@@ -32,9 +35,6 @@ public class StudentController {
 
     @Autowired
     SpringOvalValidator validator;
-
-    @Autowired
-    ManagerService managerService;
 
     @Autowired
     UserService userService;
@@ -51,9 +51,13 @@ public class StudentController {
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public ModelAndView showStudents() {
         List<Student> students = Collections.EMPTY_LIST;
+        List<Person> persons = new ArrayList<Person>();
 
         try {
             students = studentService.getAll();
+            for (Student item : students){
+                persons.add(item.getPerson());
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -93,24 +97,26 @@ public class StudentController {
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-            User newUser = new User();
-            newUser.setEmail(studentDto.getEmail());
-            newUser.setPassword(passwordEncoder.encode(studentDto.getPassword()));
-            newUser.setLogin(studentDto.getLogin());
-            newUser.setIsFirstLogin("true");
-
-            Person newPerson = new Person();
-            newPerson.setFirstName(studentDto.getFirstName());
-            newPerson.setLastName(studentDto.getLastName());
-            newPerson.setMiddleName(studentDto.getMiddleName());
-
-            newPerson.setUser(newUser);
-
-            Student newStudent = new Student();
-            newStudent.setPerson(newPerson);
-
             try {
+                Role role = roleService.getById(2);
+
+                Person newPerson = new Person();
+                User newUser = new User();
+                Student newStudent = new Student();
+
+                newPerson.setLastName(studentDto.getLastName());
+                newPerson.setFirstName(studentDto.getFirstName());
+                newPerson.setMiddleName(studentDto.getMiddleName());
+
+                newUser.setRole(role);
+                newUser.setPassword(passwordEncoder.encode(studentDto.getPassword()));
+                newUser.setLogin(studentDto.getLogin());
+
+                newStudent.setPerson(newPerson);
+                newStudent.setUser(newUser);
+
                 studentService.insert(newStudent);
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
