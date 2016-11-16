@@ -6,11 +6,7 @@ To run project:
 
  - Install mySQL
 
- - Install MongoDB
-
  - Create mySql database
-
- - Create mongoDB database following instructuin
 
  - Check out project from github
 
@@ -18,17 +14,17 @@ To run project:
 
  - Start project from idea in debug mode
 
- - Double check for not existing of any exceptions
+ - Update Dependencies in Maven
 
- - Observe 'hello world' message from browser (https://localhost:8080)
- 
- - create mysql command 'insert into hibernate_sequence(next_val) values (0)'
+ - execute mysql scripts from 'create.sql'
 
- - execute mysql scripts from 'create.sql' ()
+ INSERT INTO `testT`.`roles` (`id`, `role`) VALUES (1, 'ROLE_ADMIN');
+ INSERT INTO `testT`.`roles` (`id`, `role`) VALUES (2, 'ROLE_MANAGER');
+ INSERT INTO `testT`.`roles` (`id`, `role`) VALUES (3, 'ROLE_TEACHER');
+ INSERT INTO `testT`.`roles` (`id`, `role`) VALUES (4, 'ROLE_STUDENT');
 
+ INSERT INTO `testT`.`persons` (`id`, `firstName`, `lastName`, `middleName`)
+ VALUES (1, 'Ivan', 'Ivanov', 'Ivanovich');
 
-github link https://github.com/Ievgen-Grabets/TestT
-
-branch: dev
-
-instruction for creating mongoDB database http://habrahabr.ru/post/217391/
+ INSERT INTO `testT`.`users` (`id`, `login`, `password`,`role_id`)
+ VALUES (1, 'admin', '$2a$04$8aP2T1T4Otu6NVNoYc.kkODExjy8MCUYLVf8cO2NTqnwoVC/FC166', 1); -- admin

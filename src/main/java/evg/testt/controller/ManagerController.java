@@ -71,7 +71,10 @@ public class ManagerController {
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             try {
-                Role role = roleService.getById(2);
+
+                UserRole roleId = UserRole.ROLE_MANAGER;
+
+                Role role = roleService.getById(roleId.getRoleId());
 
                 Person newPerson = new Person();
                 User newUser = new User();

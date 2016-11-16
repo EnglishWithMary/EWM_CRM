@@ -1,6 +1,6 @@
 package evg.testt.controller;
 
-import evg.testt.dto.LeadDto;
+import evg.testt.dto.PersonDTO;
 import evg.testt.model.Lead;
 import evg.testt.model.Person;
 import evg.testt.oval.SpringOvalValidator;
@@ -53,23 +53,23 @@ public class LeadController {
     }
     @RequestMapping(value = "/leadAdd")
     public ModelAndView addLead(Model model) {
-        LeadDto lead = new LeadDto();
+        PersonDTO lead = new PersonDTO();
         model.addAttribute("lead", lead);
         return new ModelAndView(JspPath.LEAD_ADD);
     }
 
     @RequestMapping(value = "/leadSave", method = RequestMethod.POST)
-    public ModelAndView saveLead(@ModelAttribute("lead") @Validated LeadDto leadDto,
+    public ModelAndView saveLead(@ModelAttribute("lead") @Validated PersonDTO personDTO,
                                  BindingResult bindingResult) {
-        validator.validate(leadDto, bindingResult);
+        validator.validate(personDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             return new ModelAndView(JspPath.LEAD_ADD);
         }
 
         Person newPerson = new Person();
-        newPerson.setFirstName(leadDto.getFirstName());
-        newPerson.setLastName(leadDto.getLastName());
-        newPerson.setMiddleName(leadDto.getMiddleName());
+        newPerson.setFirstName(personDTO.getFirstName());
+        newPerson.setLastName(personDTO.getLastName());
+        newPerson.setMiddleName(personDTO.getMiddleName());
         try {
             personService.insert(newPerson);
         } catch (SQLException e) {
