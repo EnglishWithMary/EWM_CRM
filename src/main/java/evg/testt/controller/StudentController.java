@@ -22,12 +22,12 @@ import java.util.Collections;
 import java.util.List;
 
 @Controller
-public class TeacherController {
+public class StudentController {
 
     @Autowired
     SpringOvalValidator validator;
     @Autowired
-    TeacherService teacherService;
+    StudentService studentService;
     @Autowired
     UserService userService;
     @Autowired
@@ -35,31 +35,31 @@ public class TeacherController {
     @Autowired
     PersonService personService;
 
-    @RequestMapping(value = "/teachers", method = RequestMethod.GET)
-    public ModelAndView showTeachers() {
-        List<Teacher> teachers = Collections.EMPTY_LIST;
+    @RequestMapping(value = "/students", method = RequestMethod.GET)
+    public ModelAndView showStudent() {
+        List<Student> students = Collections.EMPTY_LIST;
         List<Person> persons = new ArrayList<Person>();
         try {
-            teachers = teacherService.getAll();
-            for (Teacher item : teachers){
+            students = studentService.getAll();
+            for (Student item : students){
                 persons.add(item.getPerson());
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return new ModelAndView(JspPath.TEACHER_ALL, "teachers", persons);
+        return new ModelAndView(JspPath.STUDENT_ALL, "students", persons);
     }
 
-    @RequestMapping(value = "/teacherAdd")
-    public ModelAndView addTeacher(Model model) {
+    @RequestMapping(value = "/studentAdd")
+    public ModelAndView addStudent(Model model) {
         PersonDTO person =  new PersonDTO();
-        model.addAttribute("teacher", person);
-        return new ModelAndView(JspPath.TEACHER_ADD);
+        model.addAttribute("student", person);
+        return new ModelAndView(JspPath.STUDENT_ADD);
     }
 
-    @RequestMapping(value = "/teacherSave", method = RequestMethod.POST)
-    public ModelAndView saveTeacher(@ModelAttribute("teacher") @Validated PersonDTO personDTO, BindingResult bindingResult) {
+    @RequestMapping(value = "/studentSave", method = RequestMethod.POST)
+    public ModelAndView saveStudent(@ModelAttribute("student") @Validated PersonDTO personDTO, BindingResult bindingResult) {
         validator.validate(personDTO, bindingResult);
         // проверка логина на уникальность
         User u = userService.findByUserLogin(personDTO.getLogin());
@@ -70,31 +70,24 @@ public class TeacherController {
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             try {
-                Role role = roleService.getById(3);
 
                 Person newPerson = new Person();
-                User newUser = new User();
-                Teacher newTeacher = new Teacher();
+                Student newStudent = new Student();
 
                 newPerson.setFirstName(personDTO.getFirstName());
                 newPerson.setLastName(personDTO.getLastName());
                 newPerson.setMiddleName(personDTO.getMiddleName());
 
-                newUser.setRole(role);
-                newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
-                newUser.setLogin(personDTO.getLogin());
+                newStudent.setPerson(newPerson);
 
-                newTeacher.setPerson(newPerson);
-                newTeacher.setUser(newUser);
-
-                teacherService.insert(newTeacher);
+                studentService.insert(newStudent);
 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            return showTeachers();
+            return showStudent();
         } else {
-            return new ModelAndView(JspPath.TEACHER_ADD);
+            return new ModelAndView(JspPath.STUDENT_ADD);
         }
     }
 
