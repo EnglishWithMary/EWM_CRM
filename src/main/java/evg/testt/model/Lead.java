@@ -3,7 +3,7 @@ package evg.testt.model;
 import lombok.Data;
 import javax.persistence.*;
 
-@Entity(name = "admins")
+@Entity(name = "leads")
 
 public @Data class Lead extends BaseModel {
 
