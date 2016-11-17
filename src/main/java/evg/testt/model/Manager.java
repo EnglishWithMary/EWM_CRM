@@ -1,7 +1,10 @@
 package evg.testt.model;
 
-import javax.persistence.*;
 import lombok.Data;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 @Entity(name = "managers")
 

@@ -5,7 +5,7 @@
 
 <tiles-definitions>
     <definition name="students/add" extends="home">
-        <put-attribute name="title" value="Students page" />
+        <put-attribute name="title" value="Student page" />
         <put-attribute name="body" value="/WEB-INF/pages/students/add.jsp" />
     </definition>
 

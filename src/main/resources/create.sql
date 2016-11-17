@@ -7,4 +7,4 @@ INSERT INTO `testT`.`persons` (`id`, `firstName`, `lastName`, `middleName`)
 VALUES (1, 'Ivan', 'Ivanov', 'Ivanovich');
 
 INSERT INTO `testT`.`users` (`id`, `login`, `password`,`role_id`)
-VALUES (1, 'admin', '$2a$04$8aP2T1T4Otu6NVNoYc.kkODExjy8MCUYLVf8cO2NTqnwoVC/FC166', 1);--admin
+VALUES (1, 'admin', '$2a$04$8aP2T1T4Otu6NVNoYc.kkODExjy8MCUYLVf8cO2NTqnwoVC/FC166', 1); --password-admin

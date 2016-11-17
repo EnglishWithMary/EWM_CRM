@@ -80,7 +80,6 @@ public class UsersController {
 
         if (!bindingResult.hasErrors()) {
             try {
-//                user.setIsFirstLogin("true");
                 userService.insert(user);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -90,56 +89,22 @@ public class UsersController {
             return new ModelAndView(JspPath.USERS_ADD);
         }
     }
-//
-//    @RequestMapping(value = "/userAddRole", method = RequestMethod.GET)
-//    public ModelAndView addRole(@RequestParam int id) {
-//        User user;
-//        ModelAndView model;
-//        try {
-//            user = userService.getById(id);
-//        } catch (SQLException e) {
-//            user = null;
-//            e.printStackTrace();
-//        }
-//        if (user.getRoles() != null) {
-//            return showUsers();
-//        } else {
-//            model = new ModelAndView(JspPath.USERS_ADD_ROLE);
-//        }
-//        model.addObject("role", new Role());
-//        model.addObject("user_id", id);
-//        return model;
-//    }
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ModelAndView login(
+            @RequestParam(value = "error", required = false) String error,
+            @RequestParam(value = "logout", required = false) String logout) {
 
-//    @RequestMapping(value = "/userAddRole", method = RequestMethod.POST)
-//    public String saveRole(@ModelAttribute("role") Role role, @RequestParam int id) {
-//        User user;
-//        try {
-//            user = userService.getById(id);
-//            user.setRoles(role);
-//            role.setUsers(user);
-//            roleService.update(role);
-//            userService.update(user);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return "forward:/users";
-//    }
+        ModelAndView model = new ModelAndView();
+        if (error != null) {
+            model.addObject("error", "Invalid username and password!");
+        }
 
-//    @RequestMapping(value = "userDel")
-//    public String deleteUser(@RequestParam int id) {
-//        User user;
-//        Role role;
-//        try {
-//            user = userService.getById(id);
-//            role = user.getRoles();
-//            user.setRoles(null);
-//            roleService.delete(role);
-//            userService.update(user);
-//            userService.delete(user);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return "forward:/users";
-//    }
+        if (logout != null) {
+            model.addObject("msg", "You've been logged out successfully.");
+        }
+        model.setViewName("login");
+
+        return model;
+    }
+
 }
