@@ -5,6 +5,7 @@ import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import evg.testt.util.JspPath;
+import org.bouncycastle.jcajce.provider.symmetric.TEA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -34,6 +35,8 @@ public class StudentController {
     RoleService roleService;
     @Autowired
     PersonService personService;
+    @Autowired
+    TeacherService teacherService;
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public ModelAndView showStudent() {
@@ -42,7 +45,7 @@ public class StudentController {
         try {
             students = studentService.getAll();
             for (Student item : students){
-                persons.add(item.getPerson());
+                persons.add(item.getPerson()); // persons.add(student.getPerson())
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -54,8 +57,20 @@ public class StudentController {
     @RequestMapping(value = "/studentAdd")
     public ModelAndView addStudent(Model model) {
         PersonDTO person =  new PersonDTO();
-        model.addAttribute("student", person);
-        return new ModelAndView(JspPath.STUDENT_ADD);
+        List<Teacher> teachers = Collections.EMPTY_LIST; // пустой список тичеров
+        List<Person> persons = new ArrayList<Person>(); // непустой список персонов
+        try {
+            teachers = teacherService.getAll(); // заполняет список тичеров
+            for (Teacher item : teachers) { // для каждого тичера в списке
+                persons.add(item.getPerson());
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+         model.addAttribute("student", person);
+         model.addAttribute("teacher", teachers);
+        return new ModelAndView(JspPath.STUDENT_ADD, "teachers", persons);
     }
 
     @RequestMapping(value = "/studentSave", method = RequestMethod.POST)
@@ -77,6 +92,7 @@ public class StudentController {
                 newPerson.setFirstName(personDTO.getFirstName());
                 newPerson.setLastName(personDTO.getLastName());
                 newPerson.setMiddleName(personDTO.getMiddleName());
+                newPerson.setComment(personDTO.getComment());
 
                 newStudent.setPerson(newPerson);
 

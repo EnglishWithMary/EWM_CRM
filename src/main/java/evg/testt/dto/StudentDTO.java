@@ -28,6 +28,8 @@ public class StudentDTO {
     @Length(min = 3, max = 20, message = "Wrong middle name.")
     private String middleName;
 
+    private String comment;
+
     public String getLogin() {
         return login;
     }
@@ -74,6 +76,14 @@ public class StudentDTO {
 
     public void setMiddleName(String middleName) {
         this.middleName = middleName;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getComment() {
+        return comment;
     }
 
 
