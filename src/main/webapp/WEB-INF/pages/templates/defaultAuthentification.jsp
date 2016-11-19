@@ -3,6 +3,7 @@
 
 
 <nav class="right">
+    <a href="/pipeline" class="button alt">Pipeline</a>
     <security:authorize access="isAnonymous()">
         <a href="/login" class="button alt">Log in</a>
     </security:authorize>
