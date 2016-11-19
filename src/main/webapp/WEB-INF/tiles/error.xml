@@ -6,5 +6,13 @@
 <tiles-definitions>
     <definition name="error" extends="home">
         <put-attribute name="title" value="Error page" />
+        <put-attribute name="body" value="/WEB-INF/pages/error.jsp" />
+
+        <put-attribute name="header" value="" />
+        <put-attribute name="authentification" value="" />
+        <put-attribute name="menu" value="" />
+        <put-attribute name="footer" value="" />
+        <put-attribute name="scripts" value="" />
+        <put-attribute name="resources" value="" />
     </definition>
 </tiles-definitions>
