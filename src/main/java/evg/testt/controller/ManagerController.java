@@ -97,8 +97,8 @@ public class ManagerController {
                 newManager.setUser(newUser);
 
 
-                userService.insert(newUser);
-//                managerService.insert(newManager);
+//                userService.insert(newUser);
+                managerService.insert(newManager);
 
             } catch (SQLException e) {
                 e.printStackTrace();
