@@ -51,7 +51,6 @@ public class ManagerController {
                 который (как-то через dao) заполняет (пустой) список менеджеров
                 менеджерами (из БД?);
                 */
-            for (Manager item : managers){
             for (Manager item : managers) {
                 persons.add(item.getPerson());
             }
