@@ -30,6 +30,10 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:spring/dispatcherServlet.xml</param-value>
         </init-param>
+        <init-param>
+            <param-name>throwExceptionIfNoHandlerFound</param-name>
+            <param-value>true</param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
@@ -84,30 +88,5 @@
      <!--/Character Filter -->
 
      <!--/Filters -->
-
-    <error-page>
-        <error-code>404</error-code>
-        <location>/WEB-INF/pages/error.jsp</location>
-    </error-page>
-
-    <error-page>
-    <error-code>500</error-code>
-    <location>/WEB-INF/pages/error.jsp</location>
-    </error-page>
-
-    <!--<error-page>-->
-        <!--<error-code>404</error-code>-->
-        <!--<location>/WEB-INF/pages/error.jsp</location>-->
-    <!--</error-page>-->
-
-    <!--<error-page>-->
-    <!--<error-code>500</error-code>-->
-    <!--<location>/WEB-INF/pages/error.jsp</location>-->
-    <!--</error-page>-->
-
-    <error-page>
-    <error-code>500</error-code>
-    <location>/WEB-INF/pages/error.jsp</location>
-    </error-page>
 
 </web-app>

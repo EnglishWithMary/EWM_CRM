@@ -36,6 +36,15 @@
             </div>
 
             <div class="6u 12u$(xsmall)">
+                <sf:label path="email">Email:</sf:label>
+            </div>
+
+            <div class="6u 12u$(xsmall)">
+                <sf:input path="email"/>
+                <sf:errors path="email"/>
+            </div>
+
+            <div class="6u 12u$(xsmall)">
                 <sf:label path="login">Login:</sf:label>
             </div>
 

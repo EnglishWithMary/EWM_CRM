@@ -1,12 +1,12 @@
 package evg.testt.controller;
 
-import evg.testt.dto.ManagerDTO;
-import evg.testt.model.Manager;
-import evg.testt.model.Person;
-import evg.testt.model.Role;
-import evg.testt.model.User;
+import evg.testt.dto.PersonDTO;
+import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
-import evg.testt.service.*;
+import evg.testt.service.ManagerService;
+import evg.testt.service.PersonService;
+import evg.testt.service.RoleService;
+import evg.testt.service.UserService;
 import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,104 +19,91 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.persistence.NoResultException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class ManagerController {
 
     @Autowired
     SpringOvalValidator validator;
-
     @Autowired
     ManagerService managerService;
-
     @Autowired
     UserService userService;
-
     @Autowired
     RoleService roleService;
-
     @Autowired
     PersonService personService;
 
-    @Autowired
-    EWMcrmService ewMcrmService;
-
-    @Autowired
-    EWMcrmSecurityService ewMcrmSecurityService;
-
     @RequestMapping(value = "/managers", method = RequestMethod.GET)
-    public ModelAndView showManagers() throws SQLException {
-        List<Manager> managers = new ArrayList<>(ewMcrmService.getAllManagers());
-
+    public ModelAndView showManagers() {
+        List<Manager> managers = Collections.EMPTY_LIST;
         List<Person> persons = new ArrayList<Person>();
-//        try {
-        for (Manager item : managers) {
-            persons.add(item.getPerson());
+        try {
+            managers = managerService.getAll();
+            for (Manager item : managers){
+                persons.add(item.getPerson());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
 
         return new ModelAndView(JspPath.MANAGER_ALL, "managers", persons);
     }
 
     @RequestMapping(value = "/managerAdd")
     public ModelAndView addManager(Model model) {
-        ManagerDTO manager = new ManagerDTO();
-        model.addAttribute("manager", manager);
+        PersonDTO person =  new PersonDTO();
+        model.addAttribute("manager", person);
         return new ModelAndView(JspPath.MANAGER_ADD);
     }
 
     @RequestMapping(value = "/managerSave", method = RequestMethod.POST)
-    public ModelAndView saveManager(@ModelAttribute("manager") @Validated ManagerDTO managerDto,
-                                    BindingResult bindingResult) throws SQLException {
-
-        validator.validate(managerDto, bindingResult);
-
-        User u;
-        try{
-            u = ewMcrmSecurityService.getUserByLogin(managerDto.getLogin());
-        } catch(NoResultException e){
-            u = null;
-        }
-        if (u != null) {
+    public ModelAndView saveManager(@ModelAttribute("manager") @Validated PersonDTO personDTO, BindingResult bindingResult) {
+        validator.validate(personDTO, bindingResult);
+        // проверка логина на уникальность
+        User u = userService.findByUserLogin(personDTO.getLogin());
+        if (u != null)
             bindingResult.rejectValue("login", "1", "Login already exist.");
-        }
 
         if (!bindingResult.hasErrors()) {
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//            try {
-                Role role = ewMcrmSecurityService.getRoleById(2);
-//                        roleService.getById(2);
+            try {
+
+                UserRole roleId = UserRole.ROLE_MANAGER;
+
+                Role role = roleService.getById(roleId.getRoleId());
 
                 Person newPerson = new Person();
                 User newUser = new User();
                 Manager newManager = new Manager();
+                Email email = new Email();
 
-                newPerson.setFirstName(managerDto.getFirstName());
-                newPerson.setLastName(managerDto.getLastName());
-                newPerson.setMiddleName(managerDto.getMiddleName());
+                email.setEmail(personDTO.getEmail());
+
+                newPerson.setFirstName(personDTO.getFirstName());
+                newPerson.setLastName(personDTO.getLastName());
+                newPerson.setMiddleName(personDTO.getMiddleName());
+                newPerson.setEmail(email);
 
                 newUser.setRole(role);
-                newUser.setPassword(passwordEncoder.encode(managerDto.getPassword()));
-                newUser.setLogin(managerDto.getLogin());
+                newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
+                newUser.setLogin(personDTO.getLogin());
 
                 newManager.setPerson(newPerson);
                 newManager.setUser(newUser);
 
-            ewMcrmService.saveManager(newManager);
-//            managerService.insert(newManager);
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
+                managerService.insert(newManager);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             return showManagers();
         } else {
             return new ModelAndView(JspPath.MANAGER_ADD);
         }
     }
+
 }

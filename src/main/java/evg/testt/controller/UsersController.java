@@ -47,7 +47,7 @@ public class UsersController {
         return "home";
     }
 
-    //    @RequestMapping(value = "/users", method = RequestMethod.POST)
+//    @RequestMapping(value = "/users", method = RequestMethod.POST)
 //    public ModelAndView showUsersFromPost() {
 //        return showUsers();
 //    }
@@ -76,11 +76,10 @@ public class UsersController {
         User u = null;
         u =  userService.findByUserLogin(user.getLogin());
         if (u != null)
-            bindingResult.rejectValue("login", "1", "Login already exist.");
+        bindingResult.rejectValue("login", "1", "Login already exist.");
 
         if (!bindingResult.hasErrors()) {
             try {
-//                user.setIsFirstLogin("true");
                 userService.insert(user);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -90,4 +89,22 @@ public class UsersController {
             return new ModelAndView(JspPath.USERS_ADD);
         }
     }
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ModelAndView login(
+            @RequestParam(value = "error", required = false) String error,
+            @RequestParam(value = "logout", required = false) String logout) {
+
+        ModelAndView model = new ModelAndView();
+        if (error != null) {
+            model.addObject("error", "Invalid username and password!");
+        }
+
+        if (logout != null) {
+            model.addObject("msg", "You've been logged out successfully.");
+        }
+        model.setViewName("login");
+
+        return model;
+    }
+
 }

@@ -6,11 +6,7 @@ To run project:
 
  - Install mySQL
 
- - Install MongoDB
-
- - Create mySql database
-
- - Create mongoDB database following instructuin
+ - Create mySql database with name "ewm"
 
  - Check out project from github
 
@@ -18,17 +14,6 @@ To run project:
 
  - Start project from idea in debug mode
 
- - Double check for not existing of any exceptions
+ - Update Dependencies in Maven
 
- - Observe 'hello world' message from browser (https://localhost:8080)
- 
- - create mysql command 'insert into hibernate_sequence(next_val) values (0)'
-
- - execute mysql scripts from 'create.sql' ()
-
-
-github link https://github.com/Ievgen-Grabets/TestT
-
-branch: dev
-
-instruction for creating mongoDB database http://habrahabr.ru/post/217391/
+ - SQL script from "create.sql" will run automatically
