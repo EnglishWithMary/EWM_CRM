@@ -7,5 +7,4 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ManagerServiceImpl extends BaseService<Manager, ManagerDao> implements ManagerService {
-
 }

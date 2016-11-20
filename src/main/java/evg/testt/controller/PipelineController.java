@@ -90,6 +90,25 @@ public class PipelineController {
         return JspPath.PIPELINE;
     }
 
+    @RequestMapping(value = "/deleteCard", method = RequestMethod.POST)
+    public String deleteCard(Model model, Principal principal, int card_id, int pt_id)
+    {
+        Pipe pipe = Pipe.valueOf(pt_id);
+        Card card = new Card();
+
+        try {
+            card = cs.getById(card_id);
+            cs.delete(card);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        model.addAttribute("cards", getCards(principal, pipe));
+        model.addAttribute("pt", getPipe(pipe));
+        return JspPath.PIPELINE;
+    }
+
     /*
     Get cards that related to user. With chosen pipe type.
      */
