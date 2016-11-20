@@ -9,6 +9,7 @@
                     <th>First name</th>
                     <th>Last name</th>
                     <th>Middle name</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbod>
@@ -17,6 +18,11 @@
                         <td>${manager.firstName}</td>
                         <td>${manager.lastName}</td>
                         <td>${manager.middleName}</td>
+                        <td>
+                            <security:authorize access="hasRole('ROLE_ADMIN')">
+                                <a href="/managerDelete?id=${manager.id}">Delete</a>
+                            </security:authorize>
+                        </td>
                     </tr>
                 </c:forEach>
             </tbod>

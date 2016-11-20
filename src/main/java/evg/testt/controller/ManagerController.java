@@ -3,10 +3,7 @@ package evg.testt.controller;
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
-import evg.testt.service.ManagerService;
-import evg.testt.service.PersonService;
-import evg.testt.service.RoleService;
-import evg.testt.service.UserService;
+import evg.testt.service.*;
 import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
@@ -35,6 +33,8 @@ public class ManagerController {
     RoleService roleService;
     @Autowired
     PersonService personService;
+    @Autowired
+    StateService stateService;
 
     @RequestMapping(value = "/managers", method = RequestMethod.GET)
     public ModelAndView showManagers() {
@@ -104,6 +104,20 @@ public class ManagerController {
         } else {
             return new ModelAndView(JspPath.MANAGER_ADD);
         }
+    }
+
+    @RequestMapping(value = "/managerDelete")
+    public ModelAndView deleteManager(@RequestParam Integer id) {
+        try {
+
+            Person person = personService.getById(id);
+            personService.delete(person);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return showManagers();
     }
 
 }

@@ -6,6 +6,7 @@ import evg.testt.model.Person;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.LeadService;
 import evg.testt.service.PersonService;
+import evg.testt.service.StateService;
 import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,10 @@ public class LeadController {
     @Autowired
     PersonService personService;
 
+
+    @Autowired
+    StateService stateService;
+
     @RequestMapping(value = "/leads", method = RequestMethod.GET)
     public ModelAndView showLeads() {
         List<Lead> leads = Collections.EMPTY_LIST;
@@ -45,7 +50,9 @@ public class LeadController {
         Lead lead= null;
         try {
             lead = leadService.getById(id);
-            leadService.delete(lead);
+            Person person = lead.getPerson();
+            personService.delete(person);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
@@ -34,6 +35,8 @@ public class StudentController {
     RoleService roleService;
     @Autowired
     PersonService personService;
+    @Autowired
+    StateService stateService;
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public ModelAndView showStudent() {
@@ -89,6 +92,18 @@ public class StudentController {
         } else {
             return new ModelAndView(JspPath.STUDENT_ADD);
         }
+    }
+    @RequestMapping(value = "/studentDelete")
+    public ModelAndView deleteStudent(@RequestParam Integer id) {
+        try {
+
+            Person person = personService.getById(id);
+            personService.delete(person);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return showStudent();
     }
 
 }
