@@ -1,8 +1,6 @@
 package evg.testt.repository;
 
-import evg.testt.model.User;
+import evg.testt.model.PipeType;
 
-public interface UserRepository extends BaseRepository<User>{
-
-    User findByLogin(String login);
+public interface PipeTypeRepository extends BaseRepository<PipeType>{
 }

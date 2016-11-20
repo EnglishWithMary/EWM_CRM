@@ -1,7 +1,7 @@
 package evg.testt.repository;
 
-import evg.testt.model.Admin;
+import evg.testt.model.Card;
 
-public interface AdminRepository extends BaseRepository<Admin> {
+public interface CardRepository extends BaseRepository<Card> {
 
 }
