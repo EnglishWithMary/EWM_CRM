@@ -1,9 +1,12 @@
 package evg.testt.controller;
 
+import evg.testt.dto.GroupDTO;
 import evg.testt.model.Group;
+import evg.testt.model.Teacher;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.GroupService;
 import evg.testt.service.PersonService;
+import evg.testt.service.TeacherService;
 import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +31,9 @@ public class GroupController {
     @Autowired
     GroupService groupService;
 
+    @Autowired
+    TeacherService teacherService;
+
 
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
     public ModelAndView showGroups() {
@@ -42,8 +48,14 @@ public class GroupController {
 
     @RequestMapping(value = "/groupAdd")
     public ModelAndView addLead(Model model) {
-        Group group = new Group();
-        model.addAttribute("group", group);
+        GroupDTO groupDTO = new GroupDTO();
+        try {
+            List<Teacher> teacherList = teacherService.getAll();
+            groupDTO.setTeacherList(teacherList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("group", groupDTO);
         return new ModelAndView(JspPath.GROUP_ADD);
     }
 

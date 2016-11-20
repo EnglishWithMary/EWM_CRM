@@ -2,7 +2,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-    <p>Leads</p>
+    <p>Groups</p>
     <table>
         <tr>
             <td>Group name</td>
@@ -17,6 +17,7 @@
             <tr>
                 <td><label>${group.name}</label></td>
             </tr>
+
         </c:forEach>
     </table>
     <security:authorize access="hasRole('ROLE_ADMIN')">

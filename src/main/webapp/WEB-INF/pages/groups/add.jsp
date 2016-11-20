@@ -10,9 +10,13 @@
     <fieldset>
         <table>
             <tr>
-                <th><sf:label path="name">First Name:</sf:label></th>
+                <th><sf:label path="name">Group Name:</sf:label></th>
                 <td><sf:input path="name"/><br/>
                     <sf:errors path="name"/></td>
+            </tr>
+            <tr>
+                <th><sf:label path="teacher">Teacher:</sf:label></th>
+                <td><sf:select path="name"/><br/></td>
             </tr>
             <tr>
                 <td colspan="2">
