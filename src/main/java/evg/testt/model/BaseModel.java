@@ -23,4 +23,9 @@ public @Data class BaseModel {
 
         return id.equals(baseModel.id);
     }
+
+    @Override
+    public int hashCode(){
+        return getId().hashCode();
+    }
 }
