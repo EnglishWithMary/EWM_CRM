@@ -2,7 +2,6 @@ package evg.testt.controller;
 
 import evg.testt.model.Admin;
 import evg.testt.model.Person;
-import evg.testt.service.EWMcrmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +15,6 @@ import java.util.List;
 @Controller
 public class AdminController {
 
-    @Autowired
-    EWMcrmService ewMcrmService;
-
     @ModelAttribute
     public Admin createAdmin(){
         Admin admin = new Admin();
@@ -28,8 +24,6 @@ public class AdminController {
 
     @RequestMapping(value = "/admin")
     public String adminPage(Model model){
-        List<Admin> admins = new ArrayList<>(ewMcrmService.getAllAdmins());
-        model.addAttribute("admins", admins);
         return "admin";
     }
 

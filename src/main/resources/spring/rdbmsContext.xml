@@ -51,7 +51,7 @@
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
-    <jpa:repositories base-package="evg.testt.dao"
+    <jpa:repositories base-package="evg.testt.repository"
                       entity-manager-factory-ref="entityManagerFactory"
                       transaction-manager-ref="txManager"
                       repository-impl-postfix="CustomImpl"/>

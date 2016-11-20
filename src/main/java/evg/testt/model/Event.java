@@ -1,4 +1,4 @@
 package evg.testt.model;
 
-public class Event {
+public class Event extends BaseModel{
 }

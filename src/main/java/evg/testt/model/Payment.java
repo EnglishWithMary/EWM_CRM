@@ -1,4 +1,4 @@
 package evg.testt.model;
 
-public class Payment {
+public class Payment extends BaseModel {
 }

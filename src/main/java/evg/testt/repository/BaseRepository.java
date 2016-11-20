@@ -6,9 +6,13 @@ import java.util.Collection;
 
 public interface BaseRepository <T extends BaseModel> {
 
-    Collection<T> getAll();
+    Collection<T> findAll();
 
-    T findById(Integer id);
+    T findOne(Integer id);
 
     void save(T t);
+
+    void delete(T t);
+
+    boolean exists(Integer id);
 }

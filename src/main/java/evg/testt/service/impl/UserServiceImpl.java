@@ -1,7 +1,7 @@
 package evg.testt.service.impl;
 
-import evg.testt.dao.UserDao;
 import evg.testt.model.User;
+import evg.testt.repository.UserRepository;
 import evg.testt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class UserServiceImpl extends BaseService<User, UserDao> implements UserService{
+public class UserServiceImpl extends BaseService<User, UserRepository> implements UserService{
 
     @Autowired
-    UserDao userDao;
+    UserRepository userRepository;
 
 //    public
     @Override
@@ -25,6 +25,6 @@ public class UserServiceImpl extends BaseService<User, UserDao> implements UserS
 
     @Override
     public User findByUserLogin(String login){
-        return userDao.findByLogin(login);
+        return userRepository.findByLogin(login);
     }
 }

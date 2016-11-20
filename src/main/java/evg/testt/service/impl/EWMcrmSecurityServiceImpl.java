@@ -32,12 +32,12 @@ public class EWMcrmSecurityServiceImpl implements EWMcrmSecurityService {
 
     @Override
     public Collection<User> getAllUsers() {
-        return userRepository.getAll();
+        return userRepository.findAll();
     }
 
     @Override
     public User getUserById(Integer id) {
-        return userRepository.findById(id);
+        return userRepository.findOne(id);
     }
 
     /* Security things */
@@ -54,11 +54,11 @@ public class EWMcrmSecurityServiceImpl implements EWMcrmSecurityService {
 
     @Override
     public Collection<Role> getAllRoles() {
-        return roleRepository.getAll();
+        return roleRepository.findAll();
     }
 
     @Override
     public Role getRoleById(Integer id) {
-        return roleRepository.findById(id);
+        return roleRepository.findOne(id);
     }
 }
