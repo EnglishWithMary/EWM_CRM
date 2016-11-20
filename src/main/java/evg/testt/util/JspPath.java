@@ -21,4 +21,6 @@ public class JspPath {
     public static final String LEAD_ADD = "leads/add";
 
     public static final String ERROR = "error";
+    public static final String GROUP_ALL = "groups/all";
+    public static final String GROUP_ADD = "groups/add";
 }
