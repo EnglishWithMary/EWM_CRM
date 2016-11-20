@@ -67,6 +67,7 @@ public class ManagerController {
         }
 
         return new ModelAndView(JspPath.MANAGER_ALL, "managers", persons); // вывод списка персон-менеджеров
+        // "managers" - это modelName Manager в Моделях для обращения к элементам списка
     }
 
     @RequestMapping(value = "/managerAdd")

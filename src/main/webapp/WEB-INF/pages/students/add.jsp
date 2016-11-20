@@ -50,6 +50,18 @@
                 <sf:errors path="password"/>
             </div>
 
+
+            <div class="6u 12u$(xsmall)">
+                 <sf:label path="comments">Comments:</sf:label>
+            </div>
+
+            <div class="6u 12u$(xsmall)">
+                <%--sf:input path="comments"/--%>
+                <sf:textarea path="comments" rows="5"/>
+                <sf:errors path="comments"/>
+            </div>
+
+<%--
             <div class="6u 12u$(xsmall)">
             <c:forEach var="teacher" items="${teachers}">
                 <tr>
@@ -59,15 +71,7 @@
                 </tr>
             </c:forEach>
             </div>
-
-            <div class="6u 12u$(xsmall)">
-                <sf:label path="Comments">Comments:</sf:label>
-            </div>
-
-            <div class="6u 12u$(xsmall)">
-                <sf:input path="Comments"/>
-                <sf:errors path="Comments"/>
-            </div>
+--%>
 
             <div class="12u$">
                     <input type="submit" value="Add student"/>

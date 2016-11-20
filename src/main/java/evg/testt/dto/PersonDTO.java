@@ -8,7 +8,7 @@ import java.util.Set;
 
 public @Data class PersonDTO {
 
-    // Почему нет геттеров и сеттеров здесь, хотя они есть в StudentsDTO?
+    // Почему нет геттеров и сеттеров здесь
 
     @Length(min = 3, max = 20, message = "Wrong login.")
     private String login;
@@ -30,5 +30,5 @@ public @Data class PersonDTO {
     private String middleName;
 
 //    @Length(min = 3, max = 20, message = "Wrong middle name.")
-    private String Comment;
+    private String comments;
 }

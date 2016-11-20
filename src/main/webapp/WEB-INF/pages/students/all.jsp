@@ -17,6 +17,7 @@
                         <td>${student.firstName}</td>
                         <td>${student.lastName}</td>
                         <td>${student.middleName}</td>
+                        <td><textarea>${student.comments}</textarea></td>
                     </tr>
                 </c:forEach>
             </tbod>
