@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 public class ManagerController {
@@ -42,7 +44,7 @@ public class ManagerController {
         List<Person> persons = new ArrayList<Person>();
         try {
             managers = managerService.getAll();
-            for (Manager item : managers){
+            for (Manager item : managers) {
                 persons.add(item.getPerson());
             }
         } catch (SQLException e) {
@@ -54,7 +56,7 @@ public class ManagerController {
 
     @RequestMapping(value = "/managerAdd")
     public ModelAndView addManager(Model model) {
-        PersonDTO person =  new PersonDTO();
+        PersonDTO person = new PersonDTO();
         model.addAttribute("manager", person);
         return new ModelAndView(JspPath.MANAGER_ADD);
     }
@@ -87,7 +89,6 @@ public class ManagerController {
                 newPerson.setLastName(personDTO.getLastName());
                 newPerson.setMiddleName(personDTO.getMiddleName());
                 newPerson.setEmail(email);
-
                 newUser.setRole(role);
                 newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
                 newUser.setLogin(personDTO.getLogin());
@@ -95,6 +96,8 @@ public class ManagerController {
                 newManager.setPerson(newPerson);
                 newManager.setUser(newUser);
 
+
+//                userService.insert(newUser);
                 managerService.insert(newManager);
 
             } catch (SQLException e) {

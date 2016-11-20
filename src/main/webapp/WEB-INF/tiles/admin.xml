@@ -8,4 +8,9 @@
         <put-attribute name="body" value="/WEB-INF/pages/admin/admin.jsp" />
         <put-attribute name="title" value="Admin page" />
     </definition>
+
+    <definition name="adminAdd" extends="home">
+        <put-attribute name="body" value="/WEB-INF/pages/admin/adminAdd.jsp"/>
+        <put-attribute name="title" value="Add admin"/>
+    </definition>
 </tiles-definitions>
