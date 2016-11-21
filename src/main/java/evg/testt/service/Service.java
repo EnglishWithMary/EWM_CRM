@@ -20,4 +20,7 @@ public interface Service<T> {
 
     boolean isExists(Integer id) throws SQLException;
 
+    int count() throws SQLException;
+
+    List<T> getByPage(int pageNumber);
 }

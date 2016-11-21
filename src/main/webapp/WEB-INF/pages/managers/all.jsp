@@ -14,13 +14,22 @@
             <tbod>
                 <c:forEach var="manager" items="${managers}">
                     <tr>
-                        <td>${manager.firstName}</td>
-                        <td>${manager.lastName}</td>
-                        <td>${manager.middleName}</td>
+                        <td>${manager.person.firstName}</td>
+                        <td>${manager.person.lastName}</td>
+                        <td>${manager.person.middleName}</td>
                     </tr>
                 </c:forEach>
             </tbod>
         </table>
     </div>
-    <p><a href="/managerAdd">Add Manager</a></p>
+    <p><a href="/managerAdd" class="button">Add Manager</a></p><br>
+    <p>Pages</p>
+
+    <table>
+        <c:forEach var="page" begin="1" end="${pages}">
+            <tr>
+                <a href="/managers?page=${page}" class="button atl small">${page}</a>
+            </tr>
+        </c:forEach>
+    </table>
 </div >
