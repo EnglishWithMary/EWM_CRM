@@ -2,6 +2,8 @@ package evg.testt.repository.Jpa;
 
 import evg.testt.model.BaseModel;
 import evg.testt.repository.BaseRepository;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -12,12 +14,16 @@ import java.util.Collection;
 import java.util.List;
 
 @Repository
-public abstract class BaseRepositoryJpaImpl<T extends BaseModel> {
+@PropertySource(value = "classpath:standard.properties")
+public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements BaseRepository<T>{
 
-    private Class<T> entityClass;
+    protected Class<T> entityClass;
 
     @PersistenceContext
-    EntityManager em;
+    protected EntityManager em;
+
+    @Value("${pagination.page.size}")
+    protected int pageSize;
 
     public BaseRepositoryJpaImpl(){
         ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
@@ -62,5 +68,21 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> {
          * TODO: add logic
          */
         return false;
+    }
+
+    public int count()
+    {
+        long total = 0;
+        Query query = em.createQuery("SELECT count(t) FROM " + entityClass.getName() + " t");
+        total = (long)query.getSingleResult();
+        return (int)total;
+    }
+
+    public List<T> findByPage(int pageNumber)
+    {
+        Query query = em.createQuery("SELECT t FROM " + entityClass.getName() + " t");
+        query.setFirstResult((pageNumber-1) * pageSize);
+        query.setMaxResults(pageSize);
+        return query.getResultList();
     }
 }
