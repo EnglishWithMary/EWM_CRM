@@ -1,28 +1,34 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
-
-
-<script>
-    window.onload = function () {
-        window.history.pushState(null, '', 'groupAdd');
-    };
-</script>
-<sf:form method="post" modelAttribute="group" action="/groupSave">
-    <fieldset>
-        <table>
-            <tr>
-                <th><sf:label path="name">Group Name:</sf:label></th>
-                <td><sf:input path="name"/><br/>
-                    <sf:errors path="name"/></td>
-            </tr>
-            <tr>
-                <th><sf:label path="teacher">Teacher:</sf:label></th>
-                <td><sf:select path="name"/><br/></td>
-            </tr>
-            <tr>
-                <td colspan="2">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<div class="12u">
+    <h3>Create group</h3>
+    <sf:form method="post" modelAttribute="group" action="/groupSave">
+        <fieldset>
+            <div class="row uniform">
+                <div class="6u 12u$(xsmall)">
+                    <sf:label path="name">Group Name:</sf:label>
+                </div>
+                <div class="6u 12u$(xsmall)">
+                    <sf:input path="name"/>
+                    <sf:errors path="name"/>
+                </div>
+            </div>
+            <div class="row uniform">
+                <div class="6u 12u$(xsmall)">
+                    <sf:label path="teacherId"> Teacher: </sf:label>
+                </div>
+                <div class="6u 12u$(xsmall)">
+                    <sf:select path="teacherId">
+                        <c:forEach items="${teachers}" var="teach">
+                            <sf:option value="${teach.id}">${teach.user.login}</sf:option>
+                        </c:forEach>
+                    </sf:select>
+                </div>
+            </div>
+            <div class="12u$">
                     <input type="submit" value="Add group"/>
-                </td>
-            </tr>
-        </table>
-    </fieldset>
-</sf:form>
+            </div>
+        </fieldset>
+    </sf:form>
+</div>

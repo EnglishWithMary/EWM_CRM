@@ -5,7 +5,6 @@ import evg.testt.model.Group;
 import evg.testt.model.Teacher;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.GroupService;
-import evg.testt.service.PersonService;
 import evg.testt.service.TeacherService;
 import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,47 +33,46 @@ public class GroupController {
     @Autowired
     TeacherService teacherService;
 
-
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
     public ModelAndView showGroups() {
-        List<Group> groupList = Collections.EMPTY_LIST;
+        List<Group> groups = Collections.EMPTY_LIST;
         try {
-            groupList = groupService.getAll();
+            groups = groupService.getAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new ModelAndView(JspPath.GROUP_ALL, "groups", groupList);
+        return new ModelAndView(JspPath.GROUP_ALL, "groups", groups);
     }
 
     @RequestMapping(value = "/groupAdd")
-    public ModelAndView addLead(Model model) {
-        GroupDTO groupDTO = new GroupDTO();
+    public ModelAndView addGroup(Model model) {
+        ModelAndView modelAndView=new ModelAndView(JspPath.GROUP_ADD);
+        GroupDTO groupDTO =  new GroupDTO();
         try {
-            List<Teacher> teacherList = teacherService.getAll();
-            groupDTO.setTeacherList(teacherList);
-        } catch (SQLException e) {
+            List<Teacher> teachers=teacherService.getAll();
+            modelAndView.addObject("teachers",teachers);
+            groupDTO.setName("Default Group");
+        }catch (SQLException e){
             e.printStackTrace();
         }
         model.addAttribute("group", groupDTO);
-        return new ModelAndView(JspPath.GROUP_ADD);
+        return modelAndView;
     }
 
-    @RequestMapping(value = "/groupSave", method = RequestMethod.POST)
-    public ModelAndView saveLead(@ModelAttribute("group") @Validated Group group,
-                                 BindingResult bindingResult) {
-        validator.validate(group, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return new ModelAndView(JspPath.LEAD_ADD);
+    @RequestMapping(value = "/groupSave")
+    public ModelAndView saveGroup(@ModelAttribute("group") @Validated GroupDTO groupDTO,
+                                  BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return new ModelAndView(JspPath.GROUP_ADD);
         }
-        Group newGroup = new Group();
-        newGroup.setName(group.getName());
+        Group newGroup =  new Group();
+        newGroup.setName(groupDTO.getName());
         try {
+            newGroup.setTeacher(teacherService.getById(groupDTO.getTeacherId()));
             groupService.insert(newGroup);
-        } catch (SQLException e) {
+        }catch (SQLException e){
             e.printStackTrace();
         }
         return showGroups();
     }
-
-
 }
