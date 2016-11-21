@@ -26,5 +26,6 @@
     <!--<jpa:repositories base-package="evg.testt.dao"/>-->
 
     <bean class="com.fasterxml.jackson.databind.ObjectMapper"/>
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
 </beans>

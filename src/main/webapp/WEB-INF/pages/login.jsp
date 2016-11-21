@@ -26,11 +26,10 @@
             <hr class="colorgraph"><br>
             <input type="text" class="form-control" name="username" placeholder="Login" required="" autofocus="" />
             <input type="password" class="form-control" name="password" placeholder="Password" required=""/>
-            <%--<label class="checkbox">--%>
-                <%--&lt;%&ndash;<input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me&ndash;%&gt;--%>
-            <%--</label>--%>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-    </div>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        </div>
+    </form>
 </div>
 </body>
 </html>
