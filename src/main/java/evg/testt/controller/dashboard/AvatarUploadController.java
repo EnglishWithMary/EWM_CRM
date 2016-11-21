@@ -32,8 +32,6 @@ public class AvatarUploadController {
     @Value("${amazonYourSecretAccessKey}")
     private String amazonYourSecretAccessKey;
 
-    private String fileName;
-    private String newAvatarName;
     private Person updatePerson;
     private StringBuilder amazonBacket = new StringBuilder();
 
@@ -52,7 +50,6 @@ public class AvatarUploadController {
                 changeAvatar(image);
             }
         }
-
         return new ModelAndView(JspPath.MANAGER_ADD);
     }
 
