@@ -23,9 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @PropertySource(value = "classpath:standard.properties")
@@ -110,6 +108,7 @@ public class ManagerController {
                 newPerson.setLastName(personDTO.getLastName());
                 newPerson.setMiddleName(personDTO.getMiddleName());
                 newPerson.setEmail(email);
+
                 newUser.setRole(role);
                 newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
                 newUser.setLogin(personDTO.getLogin());
