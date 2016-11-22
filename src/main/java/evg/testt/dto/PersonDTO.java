@@ -8,6 +8,8 @@ import java.util.Set;
 
 public @Data class PersonDTO {
 
+    // Почему нет геттеров и сеттеров здесь
+
     @Length(min = 3, max = 20, message = "Wrong login.")
     private String login;
 
@@ -26,4 +28,7 @@ public @Data class PersonDTO {
 
     @Length(min = 3, max = 20, message = "Wrong middle name.")
     private String middleName;
+
+//    @Length(min = 3, max = 20, message = "Wrong middle name.")
+    private String comments;
 }

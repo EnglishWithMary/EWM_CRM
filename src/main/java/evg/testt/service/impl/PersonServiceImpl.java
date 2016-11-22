@@ -1,7 +1,7 @@
 package evg.testt.service.impl;
 
-import evg.testt.dao.PersonDao;
 import evg.testt.model.Person;
+import evg.testt.repository.PersonRepository;
 import evg.testt.service.PersonService;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.Date;
 
 @Service
-public class PersonServiceImpl extends BaseService<Person, PersonDao> implements PersonService {
+public class PersonServiceImpl extends BaseService<Person, PersonRepository> implements PersonService {
 
     @Override
     public void insert(Person o) throws SQLException {

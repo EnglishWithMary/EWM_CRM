@@ -7,6 +7,7 @@ import java.util.List;
 
 @Transactional
 public interface Service<T> {
+
     List<T> getAll() throws SQLException;
 
     T getById(Integer id) throws SQLException;
@@ -19,4 +20,7 @@ public interface Service<T> {
 
     boolean isExists(Integer id) throws SQLException;
 
+    int count() throws SQLException;
+
+    List<T> getByPage(int pageNumber);
 }

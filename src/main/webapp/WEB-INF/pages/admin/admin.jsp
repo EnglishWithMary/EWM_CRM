@@ -2,3 +2,4 @@
 <a href="/userAdd">Add User</a>
 <a href="/managerAdd">Add manager</a>
 <a href="/teacherAdd">Add teacher</a>
+<a href="/studentAdd">Add student</a>
