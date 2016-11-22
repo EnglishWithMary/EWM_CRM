@@ -43,6 +43,8 @@
                 <value>/WEB-INF/tiles/error.xml</value>
                 <value>/WEB-INF/tiles/login.xml</value>
                 <value>/WEB-INF/tiles/listView.xml</value>
+                <value>/WEB-INF/tiles/group.xml</value>
+                <value>/WEB-INF/tiles/pipeline.xml</value>
             </list>
         </property>
     </bean>

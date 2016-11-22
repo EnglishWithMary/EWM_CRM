@@ -5,6 +5,7 @@ import evg.testt.repository.BaseRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,6 +14,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.List;
 
+@Transactional
 @Repository
 @PropertySource(value = "classpath:standard.properties")
 public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements BaseRepository<T>{
@@ -64,10 +66,7 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
     }
 
     public boolean exists(Integer id){
-        /**
-         * TODO: add logic
-         */
-        return false;
+        return findOne(id) != null;
     }
 
     public int count()

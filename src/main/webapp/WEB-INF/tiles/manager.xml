@@ -5,7 +5,7 @@
 
 <tiles-definitions>
     <definition name="managers/add" extends="home">
-        <put-attribute name="title" value="Manager page" />
+        <put-attribute name="title" value="Add new Manager" />
         <put-attribute name="body" value="/WEB-INF/pages/managers/add.jsp" />
     </definition>
 
