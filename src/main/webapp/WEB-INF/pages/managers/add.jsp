@@ -1,29 +1,8 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="12u">
     <h3>Create manager</h3>
-    <div id="avatar">
-        <form:form enctype="multipart/form-data" method="post" action="/uploadAvatar">
-            <label class="file_upload">
-                <c:choose>
-                    <c:when test="${person.id == null}">
-                        <img width="200px" class="img-circle" alt="Responsive image"
-                             src="${pageContext.request.contextPath}/resources/img/defaultAvatar.jpg">
-                    </c:when>
-                    <c:otherwise>
-                        <img width="200px" class="img-circle" alt="Responsive image"
-                             src="${pageContext.request.contextPath}+${person.avatarUrl}">
-                    </c:otherwise>
-                </c:choose>
-            </label>
-            <input type="file"
-                   accept="image/png,image/jpeg"
-                   name="image">
-            <input type="submit" value="Upload File"/>
-        </form:form>
-    </div>
     <sf:form method="post" modelAttribute="manager" action="/managerSave">
         <fieldset>
             <div class="row uniform">

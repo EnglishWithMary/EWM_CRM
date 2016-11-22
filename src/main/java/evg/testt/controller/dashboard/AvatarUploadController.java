@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.security.Principal;
 import java.sql.SQLException;
 
 @Controller
@@ -42,10 +43,10 @@ public class AvatarUploadController {
     PersonService personService;
 
     @RequestMapping(value = "/uploadAvatar", method = RequestMethod.POST)
-    public ModelAndView updateAvatar(@RequestParam("image") MultipartFile image) throws SQLException, IOException {
+    public ModelAndView updateAvatar(@RequestParam("image") MultipartFile image, Principal principal) throws SQLException, IOException {
         this.amazonBacket = new StringBuilder("http://" + amazonBacketName + ".s3.amazonaws.com/");
         if (!image.isEmpty()) {
-            this.updatePerson = personService.getById(3);
+            this.updatePerson = personService.getPersonByUserLogin(principal.getName());
             if (!this.updatePerson.equals(null)) {
                 changeAvatar(image);
             }
@@ -62,11 +63,9 @@ public class AvatarUploadController {
     public void changeAvatar(MultipartFile avatarFile) throws IOException, SQLException {
         //Convert Multipart To File for Amazon
         File newImgFile = multipartToFile(avatarFile);
-        //Generete new unuque data
 
         //Set Unique Avatar File Name
         //boolean b = newImgFile.renameTo(String.valueOf(updatePerson.getRegistrationDate()));
-
 
         //Upload new Avatar to Amazon
         uploadOnS3(newImgFile);
