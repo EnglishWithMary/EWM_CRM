@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
@@ -36,12 +37,17 @@ public class GroupController {
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
     public ModelAndView showGroups() {
         List<Group> groups = Collections.EMPTY_LIST;
+        List<Teacher> teachers=Collections.EMPTY_LIST;
         try {
+            teachers=teacherService.getAll();
             groups = groupService.getAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new ModelAndView(JspPath.GROUP_ALL, "groups", groups);
+        ModelAndView modelAndView=new ModelAndView(JspPath.GROUP_ALL, "groups", groups);
+        modelAndView.addObject("teachers",teachers);
+        modelAndView.addObject("groupFilter", new GroupDTO());
+        return modelAndView;
     }
 
     @RequestMapping(value = "/groupAdd")
@@ -74,5 +80,29 @@ public class GroupController {
             e.printStackTrace();
         }
         return showGroups();
+    }
+
+    @RequestMapping(value = "/groupFilter", method = RequestMethod.POST)
+    public ModelAndView filterGroups(@RequestParam(required = false) Integer teacherId) {
+
+        GroupDTO groupFilter= new GroupDTO();
+        List<Group> groups = Collections.EMPTY_LIST;
+        List<Teacher> teachers=Collections.EMPTY_LIST;
+        try {
+            teachers=teacherService.getAll();
+            if(teacherId!=null){
+                groupFilter.setTeacherId(teacherId);
+                Teacher teacher =teacherService.getById(teacherId);
+                groups = groupService.getByTeacher(teacher);
+            }else{
+                groups=groupService.getAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ModelAndView modelAndView=new ModelAndView(JspPath.GROUP_ALL, "groups", groups);
+        modelAndView.addObject("teachers",teachers);
+        modelAndView.addObject("groupFilter", groupFilter);
+        return modelAndView;
     }
 }

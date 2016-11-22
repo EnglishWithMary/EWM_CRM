@@ -1,6 +1,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+
+
 <div>
     <p>Groups</p>
+    <sf:form method="post" modelAttribute="groupFilter" action="/groupFilter">
+        <div class="form-group">
+            <label for="sel1">By teacher:</label>
+            <sf:select path="teacherId" class="form-control" id="sel1">
+                <c:forEach items="${teachers}" var="teach">
+                    <sf:option value=""></sf:option>
+                    <sf:option value="${teach.id}">${teach.user.login}</sf:option>
+                </c:forEach>
+            </sf:select>
+            <input type="submit" value="filter">
+        </div>
+    </sf:form>
     <table>
         <tr>
             <td>Group Name</td>
