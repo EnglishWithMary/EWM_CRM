@@ -27,10 +27,5 @@ public @Data class Person extends BaseModel{
     private String comments;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date registrationDate = new Date();
-
-    @Override
-    public Integer getId() {
-        return super.getId();
-    }
+    private Date registrationDate= new Date();
 }

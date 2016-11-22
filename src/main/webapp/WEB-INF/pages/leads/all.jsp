@@ -8,6 +8,7 @@
             <td>First name</td>
             <td>Last name</td>
             <td>Middle name</td>
+            <td>Registration Date</td>
             <!--td>Emails</td>
             <td>Phones</td-->
             <td> </td>
@@ -17,16 +18,8 @@
                 <td><label>${lead.person.firstName}</label></td>
                 <td><label>${lead.person.lastName}</label></td>
                 <td><label>${lead.person.middleName}</label></td>
-                <%--td>
-                    <c:forEach var="email" items="${lead.person.emails}">
-                        <label>${email.email}</label></br>
-                    </c:forEach>
-                </td>
-                <td>
-                    <c:forEach var="phone" items="${lead.person.phones}">
-                        <label>${phone.phone}</label></br>
-                    </c:forEach>
-                </td--%>
+                <td><label>${lead.person.registrationDate}</label></td>
+
 
                 <td>
                     <security:authorize access="hasRole('ROLE_ADMIN')">
@@ -40,5 +33,16 @@
     <security:authorize access="hasRole('ROLE_ADMIN')">
         <p><a href="/leadAdd">Add Lead</a></p>
     </security:authorize>
-
 </div>
+
+
+<%--td>
+                    <c:forEach var="email" items="${lead.person.emails}">
+                        <label>${email.email}</label></br>
+                    </c:forEach>
+                </td>
+                <td>
+                    <c:forEach var="phone" items="${lead.person.phones}">
+                        <label>${phone.phone}</label></br>
+                    </c:forEach>
+                </td--%>
