@@ -1,7 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="12u">
+<head>
+    <meta charset="UTF-8">
+    <link href="/resources/assets/css/bootstrap-3.3.5/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/resources/assets/css/bootstrap-3.3.5/css/styles.css" rel="stylesheet">
+</head>
+<div class="12u wrapper">
     <h3>Create group</h3>
     <sf:form method="post" modelAttribute="group" action="/groupSave">
         <fieldset>
