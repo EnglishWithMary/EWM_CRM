@@ -42,6 +42,7 @@
                 <value>/WEB-INF/tiles/lead.xml</value>
                 <value>/WEB-INF/tiles/error.xml</value>
                 <value>/WEB-INF/tiles/login.xml</value>
+                <value>/WEB-INF/tiles/listView.xml</value>
             </list>
         </property>
     </bean>
