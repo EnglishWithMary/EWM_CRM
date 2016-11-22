@@ -8,11 +8,6 @@
 </nav>
 <a href="/home" class="logo">Mary</a>
 
-<nav class="listButton">
-            <a href="/listView" class="button alt">List view</a>
-</nav>
-
-
     <security:authorize access="isAuthenticated()">
         <security:authentication var="user" property="principal"/>
         <p>${user.username}</p>
