@@ -10,7 +10,12 @@
             <sf:select path="teacherId" class="form-control" id="sel1">
                 <c:forEach items="${teachers}" var="teach">
                     <sf:option value=""></sf:option>
-                    <sf:option value="${teach.id}">${teach.user.login}</sf:option>
+                    <sf:option value="${teach.id}">
+                    ${teach.user.login} (
+                    ${teach.person.firstName}
+                    ${teach.person.middleName}
+                    ${teach.person.lastName}
+                        )</sf:option>
                 </c:forEach>
             </sf:select>
             <input type="submit" value="filter">
@@ -24,7 +29,12 @@
         <c:forEach var="group" items="${groups}">
         <tr>
             <td>${group.name}</td>
-            <td>${group.teacher.user.login}</td>
+            <td>
+                ${group.teacher.user.login}
+                (${group.teacher.person.firstName}
+                ${group.teacher.person.middleName}
+                ${group.teacher.person.lastName})
+            </td>
         </tr>
         </c:forEach>
     </table>

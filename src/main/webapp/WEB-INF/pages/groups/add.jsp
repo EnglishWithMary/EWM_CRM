@@ -21,7 +21,8 @@
                 <div class="6u 12u$(xsmall)">
                     <sf:select path="teacherId">
                         <c:forEach items="${teachers}" var="teach">
-                            <sf:option value="${teach.id}">${teach.user.login}</sf:option>
+                            <sf:option value="${teach.id}"
+                            label="${teach.user.login} (${teach.person.firstName} ${teach.person.middleName} ${teach.person.lastName})"/>
                         </c:forEach>
                     </sf:select>
                 </div>
