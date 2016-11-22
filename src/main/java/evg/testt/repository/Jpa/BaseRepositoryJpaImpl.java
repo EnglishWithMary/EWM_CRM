@@ -66,7 +66,7 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
     }
 
     public boolean exists(Integer id){
-        return findOne(id) == null;
+        return findOne(id) != null;
     }
 
     public int count()
