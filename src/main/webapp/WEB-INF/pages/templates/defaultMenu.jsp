@@ -5,7 +5,7 @@
 <security:authorize access="isAuthenticated()">
     <ul class="links">
         <li><a href="/home">Home</a></li>
-        <li><a href="/mangers">Managers</a></li>
+        <li><a href="/managers">Managers</a></li>
         <li><a href="/teachers">Teachers</a></li>
         <li><a href="/students">Students</a></li>
         <li><a href="/groups">Groups</a></li>

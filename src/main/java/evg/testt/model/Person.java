@@ -1,8 +1,9 @@
 package evg.testt.model;
 
-import javax.persistence.*;
-import java.util.*;
 import lombok.Data;
+
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity (name = "persons")
 public @Data class Person extends BaseModel{
@@ -13,6 +14,8 @@ public @Data class Person extends BaseModel{
 
     private String middleName;
 
+    private String avatarURL;
+
     @Temporal(TemporalType.DATE)
     private Date birthdayDate;
 
@@ -20,4 +23,6 @@ public @Data class Person extends BaseModel{
 
     @OneToOne(cascade = CascadeType.ALL)
     Email email;
+
+    private String comments;
 }
