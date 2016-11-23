@@ -14,8 +14,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,6 +38,8 @@ public class PersonController {
     RoleService roleService;
     @Autowired
     PersonService personService;
+    @Autowired
+    AvatarUploadController avatarUploadController;
 
     @RequestMapping(value = "/personProfile", method = RequestMethod.GET)
     public ModelAndView profilePerson(@ModelAttribute("person") @Validated PersonDTO personDTO, BindingResult bindingResult, Principal principal) {
@@ -50,15 +55,29 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/personUpdate", method = RequestMethod.POST)
-    public ModelAndView updatePerson(@ModelAttribute("person") @Validated PersonDTO personDTO, BindingResult bindingResult) {
+    public ModelAndView updatePerson(@ModelAttribute("person") @Validated PersonDTO personDTO,
+                                     BindingResult bindingResult,
+                                     @RequestParam("image") MultipartFile multipartFile,
+                                     Principal principal) throws IOException, SQLException {
+        //Person validate
         validator.validate(personDTO, bindingResult);
-        // проверка логина на уникальность
+        //Create updated person
+        Person person = personService.getPersonByUserLogin(principal.getName());
+        person.setFirstName(personDTO.getFirstName());
+        person.setMiddleName(personDTO.getMiddleName());
+        person.setLastName(personDTO.getLastName());
+        //Update person in DB
         try {
-            Person updatePerson = personService.getById(1);
+            personService.update(person);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new ModelAndView(JspPath.MANAGER_ADD);
+        //Update Avatar if exist
+        if (!multipartFile.isEmpty()) {
+            avatarUploadController.updateAvatar(multipartFile,principal);
+        }
+        return new ModelAndView(JspPath.HOME);
+
     }
 }
 

@@ -35,6 +35,7 @@ public class AvatarUploadController {
 
     private Person updatePerson;
     private StringBuilder amazonBacket = new StringBuilder();
+    private String newFileName;
 
     @Autowired
     UserService userService;
@@ -43,12 +44,12 @@ public class AvatarUploadController {
     PersonService personService;
 
     @RequestMapping(value = "/uploadAvatar", method = RequestMethod.POST)
-    public ModelAndView updateAvatar(@RequestParam("image") MultipartFile image, Principal principal) throws SQLException, IOException {
+    public ModelAndView updateAvatar(@RequestParam(required = false) MultipartFile image, Principal principal) throws SQLException, IOException {
         this.amazonBacket = new StringBuilder("http://" + amazonBacketName + ".s3.amazonaws.com/");
         if (!image.isEmpty()) {
             this.updatePerson = personService.getPersonByUserLogin(principal.getName());
             if (!this.updatePerson.equals(null)) {
-                changeAvatar(image);
+                changeAvatar(image,principal.getName());
             }
         }
         return new ModelAndView(JspPath.MANAGER_ADD);
@@ -60,23 +61,37 @@ public class AvatarUploadController {
         return convFile;
     }
 
-    public void changeAvatar(MultipartFile avatarFile) throws IOException, SQLException {
+    public void changeAvatar(MultipartFile avatarFile, String login) throws IOException, SQLException {
         //Convert Multipart To File for Amazon
         File newImgFile = multipartToFile(avatarFile);
-
-        //Set Unique Avatar File Name
-        //boolean b = newImgFile.renameTo(String.valueOf(updatePerson.getRegistrationDate()));
-
-        //Upload new Avatar to Amazon
-        uploadOnS3(newImgFile);
+        try {
+            newFileName = updatePerson.getRegistrationDate().getTime() + "." + newImgFile.getName().split("\\.")[1];
+        }
+        catch (Exception exc){
+            exc.printStackTrace();
+            return;
+        }
         //Get Image old URL. It will be deleted the next step
         String oldImgFile = updatePerson.getAvatarURL();
         //Delete old Avatar to Amazon
         if (oldImgFile != null && !oldImgFile.isEmpty()) {
-            deleteFromS3(oldImgFile.split(amazonBacket.toString())[1]);
+            oldImgFile.replace(amazonBacket.toString(),"");
+            if (!oldImgFile.isEmpty()){
+                try {
+                    deleteFromS3(oldImgFile);
+                }
+                catch (Exception ex){
+                    ex.printStackTrace();
+                    /**
+                     * TODO custom AmazonNotFindFileException
+                     * */
+                }
+            }
         }
+        //Upload new Avatar to Amazon
+        uploadOnS3(newImgFile);
         //Set to person new Avatar Image URL
-        updatePerson.setAvatarURL(amazonBacket.append(newImgFile).toString());
+        updatePerson.setAvatarURL(amazonBacket.toString().concat(newFileName));
         //Update Person in DB
         personService.update(updatePerson);
         return;
@@ -87,9 +102,17 @@ public class AvatarUploadController {
         AWSCredentials credentials = new BasicAWSCredentials(amazonAccessKeyID, amazonYourSecretAccessKey);
         AmazonS3 s3client = new AmazonS3Client(credentials);
         //Upload file
-        s3client.putObject(
-                new PutObjectRequest(amazonBacketName, file.toString(), file)
-                        .withCannedAcl(CannedAccessControlList.PublicRead));
+        try {
+            s3client.putObject(
+                    new PutObjectRequest(amazonBacketName, newFileName, file)
+                            .withCannedAcl(CannedAccessControlList.PublicRead));
+        }
+        catch (Exception exc){
+            exc.printStackTrace();
+            /*
+            * TODO custom AmazonFileUploadException
+            * */
+        }
         return;
     }
 

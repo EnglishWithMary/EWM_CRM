@@ -23,7 +23,7 @@ public @Data class Person extends BaseModel{
     @Temporal(TemporalType.DATE)
     private Date birthdayDate;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate = new Date();
 
     @Temporal(TemporalType.TIMESTAMP)

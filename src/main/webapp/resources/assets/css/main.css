@@ -2386,6 +2386,7 @@
 	input[type="submit"],
 	input[type="reset"],
 	input[type="button"],
+	input[type="file"],
 	button,
 	.button {
 		-moz-appearance: none;
@@ -3211,12 +3212,15 @@
 
 		}
 .file_upload{
+	display: block;
 	position: relative;
 	overflow: hidden;
-	margin-bottom: 2em;
+	font-size: 1em;              /* example */
+	padding-bottom: 1%;
 }
 
 .file_upload input[type=file]{
+	display: block;
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -3226,5 +3230,5 @@
 	letter-spacing: 10em;     /* IE 9 fix */
 	-ms-transform: scale(20); /* IE 9 fix */
 	opacity: 0;
-	cursor: pointer
+	cursor: pointer;
 }
