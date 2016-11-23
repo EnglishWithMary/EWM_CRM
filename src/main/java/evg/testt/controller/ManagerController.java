@@ -83,7 +83,6 @@ public class ManagerController {
     @RequestMapping(value = "/managerSave", method = RequestMethod.POST)
     public ModelAndView saveManager(@ModelAttribute("manager") @Validated PersonDTO personDTO, BindingResult bindingResult) {
         validator.validate(personDTO, bindingResult);
-        // проверка логина на уникальность
         User u = userService.findByUserLogin(personDTO.getLogin());
         if (u != null)
             bindingResult.rejectValue("login", "1", "Login already exist.");
