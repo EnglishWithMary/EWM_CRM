@@ -7,13 +7,12 @@
         </head>
 
 <div class="wrapper">
-            <p>Persons</p>
+            <p>Leads</p>
             <form method="post" action="/personSortByDate">
                 <div class="form-group">
                     <input type="submit" value="Sort by Registration Date">
                 </div>
             </form>
-    <p>Leads</p>
     <table>
         <tr>
             <td>First name</td>

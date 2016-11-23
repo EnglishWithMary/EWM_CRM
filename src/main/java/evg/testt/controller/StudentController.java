@@ -130,5 +130,20 @@ public class StudentController {
                 return new ModelAndView(JspPath.STUDENT_ADD);
             }
         }
-    }
 
+    @RequestMapping(value = "/studentSortByDate", method = RequestMethod.POST)
+    public ModelAndView filterStudents() {
+        List<Student> students = Collections.EMPTY_LIST;
+        List<Person> persons = new ArrayList<Person>();
+        try {
+            students=studentService.getSortedByRegistrationDate();
+            for (Student item : students){
+                persons.add(item.getPerson());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ModelAndView modelAndView=new ModelAndView(JspPath.STUDENT_ALL, "students", persons);
+        return modelAndView;
+    }
+}
