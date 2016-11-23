@@ -1,24 +1,18 @@
 package evg.testt.model;
 
+import lombok.Data;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class BaseModel {
+public @Data class BaseModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -32,7 +26,8 @@ public class BaseModel {
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        int hash = 1;
+        hash = hash * 31 + (id == null ? 0 : id.hashCode());
+        return hash;
     }
-
 }
