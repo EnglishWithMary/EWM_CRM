@@ -1,5 +1,6 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Authentication</title>
@@ -31,12 +32,6 @@
     <h2>Sign in to proceed</h2>
     <p>Authentication</p>
 
-    <%-- WTF IS HERE? NEED TO BE CHANGED--%>
-    <%--
-    <spring:url var="authUrl" value="/login_security_check" />
-
-    <form method="post" class="signin" action="${authUrl}">
-    --%>
     <form method="post" class="signin" action="/login_security_chek">
         <fieldset>
             <table cellspacing="0">
