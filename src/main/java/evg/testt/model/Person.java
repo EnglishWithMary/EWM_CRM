@@ -35,7 +35,4 @@ public @Data class Person extends BaseModel{
     Email email;
 
     private String comments;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date registrationDate;
 }

@@ -75,7 +75,7 @@ public class AvatarUploadController {
         String oldImgFile = updatePerson.getAvatarURL();
         //Delete old Avatar to Amazon
         if (oldImgFile != null && !oldImgFile.isEmpty()) {
-            oldImgFile.replace(amazonBacket.toString(),"");
+            oldImgFile = oldImgFile.replace(amazonBacket.toString(),"");
             if (!oldImgFile.isEmpty()){
                 try {
                     deleteFromS3(oldImgFile);
