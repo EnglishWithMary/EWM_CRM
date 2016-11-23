@@ -8,10 +8,8 @@
 
 <div class="wrapper">
     <p>Persons</p>
-    <form method="post" action="/personFilter">
+    <form method="post" action="/personSortByDate">
         <div class="form-group">
-            <!--input type="checkbox" name="sorted" value="ASC"/-->
-            <%--sf:checkbox path="sorted" cssClass="checkbox" /--%>
             <input type="submit" value="Sort by Registration Date">
         </div>
     </form>
