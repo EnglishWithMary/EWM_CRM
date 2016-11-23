@@ -31,6 +31,8 @@
     </properties>
 
     <dependencies>
+
+        <!-- Lombok-->
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk</artifactId>

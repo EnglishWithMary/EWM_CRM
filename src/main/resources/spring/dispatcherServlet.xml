@@ -33,7 +33,18 @@
     <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
         <property name="definitions">
             <list>
-                <value>/WEB-INF/tiles/*</value>
+                <value>/WEB-INF/tiles/layouts.xml</value>
+                <value>/WEB-INF/tiles/admin.xml</value>
+                <value>/WEB-INF/tiles/manager.xml</value>
+                <value>/WEB-INF/tiles/teacher.xml</value>
+                <value>/WEB-INF/tiles/student.xml</value>
+                <value>/WEB-INF/tiles/user.xml</value>
+                <value>/WEB-INF/tiles/lead.xml</value>
+                <value>/WEB-INF/tiles/error.xml</value>
+                <value>/WEB-INF/tiles/login.xml</value>
+                <value>/WEB-INF/tiles/listView.xml</value>
+                <value>/WEB-INF/tiles/group.xml</value>
+                <value>/WEB-INF/tiles/pipeline.xml</value>
             </list>
         </property>
     </bean>

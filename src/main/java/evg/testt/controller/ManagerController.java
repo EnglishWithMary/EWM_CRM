@@ -9,6 +9,8 @@ import evg.testt.service.RoleService;
 import evg.testt.service.UserService;
 import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,14 +19,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Controller
+@PropertySource(value = "classpath:standard.properties")
 public class ManagerController {
 
     @Autowired
@@ -38,20 +40,37 @@ public class ManagerController {
     @Autowired
     PersonService personService;
 
+    @Value("${pagination.page.size}")
+    protected int pageSize;
+
     @RequestMapping(value = "/managers", method = RequestMethod.GET)
-    public ModelAndView showManagers() {
+    public ModelAndView showManagers(@RequestParam(required = false) Integer page) {
         List<Manager> managers = Collections.EMPTY_LIST;
-        List<Person> persons = new ArrayList<Person>();
+        int totalManagers = 0, pages = 0, currentPage = 1;
+
+        if(page != null)
+            if(page > 0)
+            currentPage = page;
+
         try {
-            managers = managerService.getAll();
-            for (Manager item : managers) {
-                persons.add(item.getPerson());
-            }
+            totalManagers = managerService.count();
+
+            managers = managerService.getByPage(currentPage);
+
+            pages = ((totalManagers / pageSize)+1);
+
+            if(totalManagers % pageSize == 0)
+                pages--;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return new ModelAndView(JspPath.MANAGER_ALL, "managers", persons);
+        ModelAndView model = new ModelAndView(JspPath.MANAGER_ALL);
+        model.addObject("managers", managers);
+        model.addObject("pages", pages);
+
+        return model;
     }
 
     @RequestMapping(value = "/managerAdd")
@@ -64,7 +83,6 @@ public class ManagerController {
     @RequestMapping(value = "/managerSave", method = RequestMethod.POST)
     public ModelAndView saveManager(@ModelAttribute("manager") @Validated PersonDTO personDTO, BindingResult bindingResult) {
         validator.validate(personDTO, bindingResult);
-        // проверка логина на уникальность
         User u = userService.findByUserLogin(personDTO.getLogin());
         if (u != null)
             bindingResult.rejectValue("login", "1", "Login already exist.");
@@ -89,6 +107,7 @@ public class ManagerController {
                 newPerson.setLastName(personDTO.getLastName());
                 newPerson.setMiddleName(personDTO.getMiddleName());
                 newPerson.setEmail(email);
+
                 newUser.setRole(role);
                 newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
                 newUser.setLogin(personDTO.getLogin());
@@ -96,14 +115,12 @@ public class ManagerController {
                 newManager.setPerson(newPerson);
                 newManager.setUser(newUser);
 
-
-//                userService.insert(newUser);
                 managerService.insert(newManager);
 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            return showManagers();
+            return showManagers(1);
         } else {
             return new ModelAndView(JspPath.MANAGER_ADD);
         }

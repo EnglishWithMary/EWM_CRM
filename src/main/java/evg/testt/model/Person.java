@@ -33,4 +33,9 @@ public @Data class Person extends BaseModel{
 
     @OneToOne(cascade = CascadeType.ALL)
     Email email;
+
+    private String comments;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date registrationDate;
 }
