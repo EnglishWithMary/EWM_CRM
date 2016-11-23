@@ -35,5 +35,6 @@
         <tiles:insertAttribute name="footer"/>
     </footer>
     <tiles:insertAttribute name="scripts"/>
+    <tiles:insertAttribute name="formValidationScripts"/>
 </body>
 </html>
