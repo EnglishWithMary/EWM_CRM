@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
@@ -19,29 +20,29 @@ import java.util.List;
 public class PersonController {
 
     @Autowired
-    SpringOvalValidator validator;
-
-    @Autowired
     PersonService personService;
-
-    /*@Autowired
-    GroupService groupService;
-
-    @Autowired
-    TeacherService teacherService;*/
 
     @RequestMapping(value = "/persons", method = RequestMethod.GET)
     public ModelAndView showGroups() {
         List<Person> persons = Collections.EMPTY_LIST;
-        Person p =new Person();
-        p.getId();
         try {
             persons=personService.getAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         ModelAndView modelAndView=new ModelAndView(JspPath.PERSON_ALL, "persons", persons);
-        modelAndView.addObject("personFilter", new PersonDTO());
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/personFilter", method = RequestMethod.POST)
+    public ModelAndView filterGroups() {
+        List<Person> persons = Collections.EMPTY_LIST;
+        try {
+            persons=personService.getSortedByRegistrationDate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ModelAndView modelAndView=new ModelAndView(JspPath.PERSON_ALL, "persons", persons);
         return modelAndView;
     }
 

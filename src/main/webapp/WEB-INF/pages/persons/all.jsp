@@ -7,24 +7,14 @@
 </head>
 
 <div class="wrapper">
-    <p>Groups</p>
-    <%--sf:form method="post" modelAttribute="groupFilter" action="/groupFilter">
+    <p>Persons</p>
+    <form method="post" action="/personFilter">
         <div class="form-group">
-            <label for="sel1">By teacher:</label>
-            <sf:select path="teacherId" class="form-control" id="sel1">
-                <c:forEach items="${teachers}" var="teach">
-                    <sf:option value=""></sf:option>
-                    <sf:option value="${teach.id}">
-                        ${teach.user.login} (
-                        ${teach.person.firstName}
-                        ${teach.person.middleName}
-                        ${teach.person.lastName}
-                        )</sf:option>
-                </c:forEach>
-            </sf:select>
-            <input type="submit" value="filter">
+            <!--input type="checkbox" name="sorted" value="ASC"/-->
+            <%--sf:checkbox path="sorted" cssClass="checkbox" /--%>
+            <input type="submit" value="Sort by Registration Date">
         </div>
-    </sf:form--%>
+    </form>
     <table>
         <tr>
             <td>Person Full Name</td>
