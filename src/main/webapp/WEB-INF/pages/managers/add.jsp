@@ -69,7 +69,7 @@
             </div>
 
             <div class="12u$">
-                    <input type="submit" value="Add manager"/>
+                <input type="submit" value="Add manager"/>
             </div>
 
         </div>

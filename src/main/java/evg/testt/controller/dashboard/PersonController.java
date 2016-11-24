@@ -79,6 +79,34 @@ public class PersonController {
         return new ModelAndView(JspPath.HOME);
 
     }
+
+
+
+
+    @RequestMapping(value = "/persons", method = RequestMethod.GET)
+    public ModelAndView showGroups() {
+        List<Person> persons = Collections.EMPTY_LIST;
+        try {
+            persons=personService.getAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ModelAndView modelAndView=new ModelAndView(JspPath.PERSON_ALL, "persons", persons);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/personSortByDate", method = RequestMethod.POST)
+    public ModelAndView filterPersons() {
+        List<Person> persons = Collections.EMPTY_LIST;
+        try {
+            persons=personService.getSortedByRegistrationDate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ModelAndView modelAndView=new ModelAndView(JspPath.PERSON_ALL, "persons", persons);
+        return modelAndView;
+    }
+
 }
 
 

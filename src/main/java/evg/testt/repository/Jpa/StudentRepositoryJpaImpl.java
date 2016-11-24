@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.TypedQuery;
 import java.util.Collections;
 import java.util.List;
+import javax.persistence.Query;
+import java.sql.SQLException;
 
 @Repository
 public class StudentRepositoryJpaImpl extends BaseRepositoryJpaImpl<Student> implements StudentRepository {
@@ -25,5 +27,16 @@ public class StudentRepositoryJpaImpl extends BaseRepositoryJpaImpl<Student> imp
             TypedQuery<Student> query = em.createQuery("SELECT student FROM students student where student.teacher.id is null", Student.class);
             students = query.getResultList();
         return students;
+    }
+
+    @Override
+    public List<Student> findSortedByRegistrationDate() throws SQLException {
+
+        Query query = em.createQuery("select s from students s join s.person p order by p.registrationDate asc");
+        List<Student> result = (List<Student>) query.getResultList();
+        if(result.size()>0) {
+            return result;
+        }
+        return null;
     }
 }
