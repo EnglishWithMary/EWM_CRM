@@ -10,7 +10,6 @@
         <li><a href="/groups">Groups</a></li>
         <li><a href="/schedules">Schedules</a></li>
         <li><a href="/leads">Leads</a></li>
-        <li><a href="/listView">List view</a></li>
         <li><a href="/pipeline">Pipeline</a></li>
         <li><a href="/persons">Persons</a></li>
 
