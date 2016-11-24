@@ -1,7 +1,18 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="12u">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="/resources/assets/css/bootstrap-3.3.5/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/resources/assets/css/bootstrap-3.3.5/css/styles.css" rel="stylesheet">
+</head>
+<div class="12u wrapper">
 <h3>Managers list</h3>
+    <form method="get" action="/managers">
+        <div class="form-group">
+            <input type="hidden" name="flagSorted" value="${!flagSorted}">
+            <input type="submit" value="${flagSorted == true ? 'Common  order' : 'Sort by Registration Date'}"/>
+        </div>
+    </form>
     <div class="table-wrapper">
         <table class="alt">
             <thead>
@@ -9,6 +20,7 @@
                     <th>First name</th>
                     <th>Last name</th>
                     <th>Middle name</th>
+                    <th>Registration Date</th>
                 </tr>
             </thead>
             <tbod>
@@ -17,6 +29,7 @@
                         <td>${manager.person.firstName}</td>
                         <td>${manager.person.lastName}</td>
                         <td>${manager.person.middleName}</td>
+                        <td>${manager.person.registrationDate}</td>
                     </tr>
                 </c:forEach>
             </tbod>
@@ -28,7 +41,7 @@
     <table>
         <c:forEach var="page" begin="1" end="${pages}">
             <tr>
-                <a href="/managers?page=${page}" class="button atl small">${page}</a>
+                <a href="/managers?page=${page}&flagSorted=${flagSorted}" class="button atl small">${page}</a>
             </tr>
         </c:forEach>
     </table>
