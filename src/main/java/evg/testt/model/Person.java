@@ -34,5 +34,6 @@ public @Data class Person extends BaseModel{
     @OneToOne(cascade = CascadeType.ALL)
     Email email;
 
+    @Column(columnDefinition = "text")
     private String comments;
 }
