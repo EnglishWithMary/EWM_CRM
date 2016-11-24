@@ -1,4 +1,5 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -17,10 +18,11 @@
         <tiles:insertAttribute name="authentification"/>
         </nav>
     </header>
+    <security:authorize access="isAuthenticated()">
     <nav id="menu">
         <tiles:insertAttribute name="menu"/>
     </nav>
-
+</security:authorize>
     <section id="main" class="wrapper">
         <div class="inner">
             <section id="banner">

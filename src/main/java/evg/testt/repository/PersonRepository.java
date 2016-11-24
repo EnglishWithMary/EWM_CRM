@@ -7,5 +7,8 @@ import java.util.List;
 
 public interface PersonRepository extends BaseRepository <Person>{
 
+    public Person findPersonByUserLogin(String userLogin);
+
+
     List<Person> findSortedByRegistrationDate() throws SQLException;
 }

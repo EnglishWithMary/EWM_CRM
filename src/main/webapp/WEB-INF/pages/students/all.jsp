@@ -1,4 +1,8 @@
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<div class="12u">
 
 <head>
     <meta charset="UTF-8">
@@ -7,12 +11,24 @@
 </head>
 <div class="12u wrapper">
 <h3>Students list</h3>
+
     <div class="table-wrapper">
         <form method="post" action="/studentSortByDate">
             <div class="form-group">
                 <input type="submit" value="Sort by Registration Date">
             </div>
         </form>
+    <form action="/students" method="get">
+        <select name="teacher_id">
+            <option value="">All teachers</option>
+            <option value="-1">Students without teachers</option>
+            <c:forEach var="teacher" items="${teachers}">
+                <option value="${teacher.id}">${teacher.person.firstName}</option>
+            </c:forEach>
+        </select>
+        <input type="submit" class="button" value="Find"/>
+    </form>
+
         <table class="alt">
             <thead>
                 <tr>
@@ -26,23 +42,17 @@
             <tbod>
                 <c:forEach var="student" items="${students}">
                     <tr>
-                        <td>${student.firstName}</td>
-                        <td>${student.lastName}</td>
-                        <td>${student.middleName}</td>
-                        <td>${student.registrationDate}</td>
-                        <td><textarea>${student.comments}</textarea></td>
+                        <td>${student.person.firstName}</td>
+                        <td>${student.person.lastName}</td>
+                        <td>${student.person.middleName}</td>
+                        <td>${student.person.registrationDate}</td>
+                        <td><textarea>${student.person.comments}</textarea></td>
                     </tr>
                 </c:forEach>
             </tbod>
         </table>
-
-
-
-
-
-
     </div>
-    <p><a href="/studentAdd">Add Student</a></p>
+    <p><a href="/studentAdd" class="button alt">Add Student</a></p>
 
 
 

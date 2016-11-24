@@ -7,11 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+
 import java.util.List;
 
 @Service
 public class PersonServiceImpl extends BaseService<Person, PersonRepository> implements PersonService {
 
+    @Override
+    public Person getPersonByUserLogin(String userLogin) throws SQLException{
+        return dao.findPersonByUserLogin(userLogin);
+    }
     @Autowired
     PersonRepository personRepository;
 

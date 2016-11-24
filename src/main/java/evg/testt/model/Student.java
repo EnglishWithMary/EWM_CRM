@@ -12,4 +12,7 @@ public @Data class Student extends BaseModel {
 
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
+
+    @OneToOne
+    private Teacher teacher;
 }

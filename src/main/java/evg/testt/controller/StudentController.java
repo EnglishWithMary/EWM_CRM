@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
@@ -39,60 +40,51 @@ public class StudentController {
     TeacherService teacherService;
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
-    public ModelAndView showStudent() {
+    public ModelAndView showStudent(@RequestParam(required = false) Integer teacher_id) {
         List<Student> students = Collections.EMPTY_LIST;
-        List<Person> persons = new ArrayList<Person>();
+        List<Teacher> teachers = Collections.EMPTY_LIST;
+
         try {
-            students = studentService.getAll();
-            for (Student item : students){
-                persons.add(item.getPerson()); // persons.add(student.getPerson())
+            teachers = teacherService.getAll();
+
+            if(teacher_id != null)
+            {
+                if(teacher_id > 0)
+                    students = studentService.getAllByTeacher(teacher_id);
+                else if(teacher_id == -1)
+                    students = studentService.getStudentsWithoutTeacher();
             }
+            else
+                students = studentService.getAll();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return new ModelAndView(JspPath.STUDENT_ALL, "students", persons);
+        return new ModelAndView(JspPath.STUDENT_ALL, "students", students).addObject("teachers", teachers);
     }
 
     @RequestMapping(value = "/studentAdd")
     public ModelAndView addStudent(Model model) {
         PersonDTO person = new PersonDTO();
-        model.addAttribute("student", person);
-        return new ModelAndView(JspPath.STUDENT_ADD);
-    }
+        List<Teacher> teachers = Collections.EMPTY_LIST;
 
-
-/*
-    @RequestMapping(value = "/studentAdd")
-    public ModelAndView addStudent(Model model) {
-        PersonDTO person =  new PersonDTO();
-        List<Teacher> teachers = Collections.EMPTY_LIST; // пустой список тичеров
-        List<Person> persons = new ArrayList<Person>(); // пустой список персонов
         try {
-            teachers = teacherService.getAll(); // заполняет список тичеров
-            for (Teacher item : teachers) { // для каждого тичера в списке
-                persons.add(item.getPerson());
-                /* для каждого тичера из списка выполняется извлечение данных
-                из соответствующего person (т.к. person - это часть информации о человеке,
-                в данном случае - о тичере) и добавляется в список персон (который теперь
-                является списком тех персон, которые - тичеры)*/
-/*
-            }
-        }
-        catch (SQLException e) {
+            teachers = teacherService.getAll();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
-//         model.addAttribute("students", persons);
-  //       model.addAttribute("teachers", teachers);
- //       return new ModelAndView(JspPath.STUDENT_ADD);
-
-        return new ModelAndView(JspPath.STUDENT_ALL, "students", persons);
-        // "teachers" - это modelName Teacher в Моделях для обращения к элементам списка персон-тичеров
+        ModelAndView mav = new ModelAndView(JspPath.STUDENT_ADD);
+        model.addAttribute("student", person);
+        model.addAttribute("teachers", teachers);
+        return mav;
     }
-*/
+
         @RequestMapping(value = "/studentSave", method = RequestMethod.POST)
-        public ModelAndView saveStudent (@ModelAttribute("student") @Validated PersonDTO personDTO, BindingResult bindingResult){
+        public ModelAndView saveStudent (@ModelAttribute("student") @Validated PersonDTO personDTO,
+                                         BindingResult bindingResult,
+                                         @RequestParam(required = false) Integer teacher_id){
             validator.validate(personDTO, bindingResult);
             // проверка логина на уникальность
             User u = userService.findByUserLogin(personDTO.getLogin());
@@ -110,6 +102,7 @@ public class StudentController {
                     Person newPerson = new Person();
                     User newUser = new User();
                     Student newStudent = new Student();
+                    Teacher teacher;
 
                     newPerson.setFirstName(personDTO.getFirstName());
                     newPerson.setLastName(personDTO.getLastName());
@@ -120,12 +113,17 @@ public class StudentController {
                     newStudent.setPerson(newPerson);
                     newStudent.setUser(newUser);
 
+                    if(teacher_id != null && teacher_id  > 0) {
+                        teacher = teacherService.getById(teacher_id);
+                        newStudent.setTeacher(teacher);
+                    }
+
                     studentService.insert(newStudent);
 
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                return showStudent();
+                return new ModelAndView("redirect:/students");
             } else {
                 return new ModelAndView(JspPath.STUDENT_ADD);
             }
