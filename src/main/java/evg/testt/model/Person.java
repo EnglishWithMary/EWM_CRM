@@ -16,8 +16,6 @@ public @Data class Person extends BaseModel{
 
     private String avatarURL;
 
-//    private String comment;
-
     private String state;
 
     @Temporal(TemporalType.DATE)

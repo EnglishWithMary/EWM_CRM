@@ -30,18 +30,3 @@
     </div>
 </div>
 </c:if>
-<script type="text/javascript">
-    $(document).ready(function(){
-       //Количество элементов div находящихся внутри дочернего Div "<div class="scroll_child">"
-         var quqntity=$(".scroll_cards div").size();
-
-         //Общая длинна всех элементов
-         var widthScroll=0;
-         for (i=0;i<quqntity;i++){
-         widthScroll+=$(".scroll_cards div:eq("+i+")").width();
-         }
-
-         //Установка ширины дочернего Div "<div class="scroll_child">"
-         $(".scroll_child").width(widthScroll);
-        });
-</script>
