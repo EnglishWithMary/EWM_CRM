@@ -16,7 +16,7 @@ public @Data class Person extends BaseModel{
 
     private String avatarURL;
 
-    private String comment;
+//    private String comment;
 
     private String state;
 
@@ -34,5 +34,6 @@ public @Data class Person extends BaseModel{
     @OneToOne(cascade = CascadeType.ALL)
     Email email;
 
+    @Column(columnDefinition = "text")
     private String comments;
 }
