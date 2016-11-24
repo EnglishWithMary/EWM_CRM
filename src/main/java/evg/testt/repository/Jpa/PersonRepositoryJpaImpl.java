@@ -15,6 +15,9 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.List;
 
+import java.sql.SQLException;
+import java.util.List;
+
 @Repository
 public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> implements PersonRepository{
 
@@ -43,4 +46,16 @@ public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> imple
         }
         return null;
     }
+    @Override
+    public List<Person> findSortedByRegistrationDate() throws SQLException {
+
+        Query query = em.createQuery("SELECT person FROM persons person ORDER BY person.registrationDate ASC");
+        List<Person> result = (List<Person>) query.getResultList();
+        if(result.size()>0) {
+            return result;
+        }
+        return null;
+
+    }
+
 }

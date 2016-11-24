@@ -44,22 +44,30 @@ public class ManagerController {
     protected int pageSize;
 
     @RequestMapping(value = "/managers", method = RequestMethod.GET)
-    public ModelAndView showManagers(@RequestParam(required = false) Integer page) {
+    public ModelAndView showManagers(@RequestParam(required = false) Integer page,
+                                     @RequestParam(required = false) Boolean flagSorted
+    ) {
+        if (flagSorted == null) flagSorted = false;
+
         List<Manager> managers = Collections.EMPTY_LIST;
         int totalManagers = 0, pages = 0, currentPage = 1;
 
-        if(page != null)
-            if(page > 0)
-            currentPage = page;
+        if (page != null)
+            if (page > 0)
+                currentPage = page;
 
         try {
             totalManagers = managerService.count();
 
-            managers = managerService.getByPage(currentPage);
+            if (flagSorted == false) {
+                managers = managerService.getByPage(currentPage);
+            } else {
+                managers = managerService.getByPageSorted(currentPage);
+            }
 
-            pages = ((totalManagers / pageSize)+1);
+            pages = ((totalManagers / pageSize) + 1);
 
-            if(totalManagers % pageSize == 0)
+            if (totalManagers % pageSize == 0)
                 pages--;
 
         } catch (SQLException e) {
@@ -69,7 +77,7 @@ public class ManagerController {
         ModelAndView model = new ModelAndView(JspPath.MANAGER_ALL);
         model.addObject("managers", managers);
         model.addObject("pages", pages);
-
+        model.addObject("flagSorted", flagSorted);
         return model;
     }
 
@@ -81,7 +89,8 @@ public class ManagerController {
     }
 
     @RequestMapping(value = "/managerSave", method = RequestMethod.POST)
-    public ModelAndView saveManager(@ModelAttribute("manager") @Validated PersonDTO personDTO, BindingResult bindingResult) {
+    public ModelAndView saveManager(@ModelAttribute("manager") @Validated PersonDTO personDTO,
+                                    BindingResult bindingResult) {
         validator.validate(personDTO, bindingResult);
         User u = userService.findByUserLogin(personDTO.getLogin());
         if (u != null)
@@ -120,10 +129,9 @@ public class ManagerController {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            return showManagers(1);
+            return showManagers(1, false);
         } else {
             return new ModelAndView(JspPath.MANAGER_ADD);
         }
     }
-
 }

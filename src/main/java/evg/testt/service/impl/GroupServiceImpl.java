@@ -10,20 +10,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
-
-
 @Transactional
 public class GroupServiceImpl extends BaseService<Group, GroupRepository> implements GroupService{
 
     @Autowired
     GroupRepository groupRepository;
-//public class GroupServiceImpl extends BaseService<Group, GroupDao> implements GroupService {
 
     @Override
-    public List<Group> getByTeacher(Teacher teacher) {
+    public List<Group> getByTeacher(Teacher teacher) throws SQLException {
         return groupRepository.findByTeacher(teacher);
     }
 }
