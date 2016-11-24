@@ -50,29 +50,35 @@
                 <sf:errors path="password"/>
             </div>
 
+            <div class="6u 12u$(xsmall)">
+                <sf:label path="confirmPassword">Confirm password:</sf:label>
+            </div>
+
+            <div class="6u 12u$(xsmall)">
+                <sf:password path="confirmPassword"/>
+                <sf:errors path="confirmPassword"/>
+            </div>
+
 
             <div class="6u 12u$(xsmall)">
                  <sf:label path="comments">Comments:</sf:label>
             </div>
 
             <div class="6u 12u$(xsmall)">
-                <%--sf:input path="comments"/--%>
                 <sf:textarea path="comments" rows="5"/>
                 <sf:errors path="comments"/>
             </div>
 
-<%--
-            <div class="6u 12u$(xsmall)">
-            <c:forEach var="teacher" items="${teachers}">
-                <tr>
-                    <td>${teacher.firstName}</td>
-                    <td>${teacher.lastName}</td>
-                    <td>${teacher.middleName}</td>
-                </tr>
-            </c:forEach>
+            <div class="12u$">
+                <div class="select-wrapper">
+                    <select name="teacher_id">
+                        <option value="">Set teacher later...</option>
+                        <c:forEach var="teacher" items="${teachers}">
+                            <option value="${teacher.id}">${teacher.person.firstName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
             </div>
---%>
-
             <div class="12u$">
                     <input type="submit" value="Add student"/>
             </div>

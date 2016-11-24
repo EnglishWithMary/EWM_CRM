@@ -16,8 +16,18 @@ public @Data class Person extends BaseModel{
 
     private String avatarURL;
 
+    private String comment;
+
+    private String state;
+
     @Temporal(TemporalType.DATE)
     private Date birthdayDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date registrationDate = new Date();
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date modifyDate;
 
     private String organization;
 

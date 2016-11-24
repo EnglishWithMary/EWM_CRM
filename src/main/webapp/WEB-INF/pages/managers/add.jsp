@@ -22,6 +22,7 @@
                 <sf:input path="lastName"/>
                 <sf:errors path="lastName"/>
             </div>
+
             <div class="6u 12u$(xsmall)">
                 <sf:label path="middleName">Middle Name:</sf:label>
             </div>
@@ -36,7 +37,7 @@
             </div>
 
             <div class="6u 12u$(xsmall)">
-                <sf:input path="email"/>
+                <sf:input path="email" type="email"/>
                 <sf:errors path="email"/>
             </div>
 
@@ -54,8 +55,17 @@
             </div>
 
             <div class="6u 12u$(xsmall)">
-                <sf:password path="password"/>
+                <sf:password path="password" />
                 <sf:errors path="password"/>
+            </div>
+
+            <div class="6u 12u$(xsmall)">
+                <sf:label path="confirmPassword">Confirm password:</sf:label>
+            </div>
+
+            <div class="6u 12u$(xsmall)">
+                <sf:password path="confirmPassword" />
+                <sf:errors path="confirmPassword"/>
             </div>
 
             <div class="12u$">

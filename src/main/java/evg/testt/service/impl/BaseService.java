@@ -40,4 +40,14 @@ public abstract class BaseService <T extends BaseModel, P extends BaseRepository
     public boolean isExists(Integer id) throws SQLException {
         return dao.exists(id);
     }
+
+    public int count()
+    {
+       return dao.count();
+    }
+
+    public List<T> getByPage(int pageNumber)
+    {
+        return dao.findByPage(pageNumber);
+    }
 }
