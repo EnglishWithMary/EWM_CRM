@@ -110,6 +110,8 @@ public class StudentController {
                     newPerson.setComments(personDTO.getComments());
 
                     newUser.setRole(role);
+                    newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
+                    newUser.setLogin(personDTO.getLogin());
                     newStudent.setPerson(newPerson);
                     newStudent.setUser(newUser);
 
