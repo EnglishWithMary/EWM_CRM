@@ -28,6 +28,7 @@ public class JspPath {
     public static final String ERROR = "error";
 
     public static final String PIPELINE = "pipeline/pipeline";
+    public static final String PERSON_ALL ="persons/all" ;
     public static final String GROUP_ALL = "groups/all";
     public static final String GROUP_ADD = "groups/add";
 }
