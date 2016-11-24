@@ -141,7 +141,7 @@ public class StudentController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        ModelAndView modelAndView=new ModelAndView(JspPath.STUDENT_ALL, "students", persons);
+        ModelAndView modelAndView=new ModelAndView(JspPath.STUDENT_ALL, "students", students);
         return modelAndView;
     }
 }

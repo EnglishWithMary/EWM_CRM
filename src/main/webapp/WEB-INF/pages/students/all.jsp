@@ -1,15 +1,8 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<div class="12u">
 
-<head>
-    <meta charset="UTF-8">
-    <link href="/resources/assets/css/bootstrap-3.3.5/css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="/resources/assets/css/bootstrap-3.3.5/css/styles.css" rel="stylesheet">
-</head>
-<div class="12u wrapper">
+<div class="12u">
 <h3>Students list</h3>
 
     <div class="table-wrapper">

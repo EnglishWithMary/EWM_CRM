@@ -81,7 +81,7 @@ public class LeadController {
         return showLeads();
     }
 
-    @RequestMapping(value = "/personSortByDate", method = RequestMethod.POST)
+    @RequestMapping(value = "/leadSortByDate", method = RequestMethod.POST)
     public ModelAndView filterLeads() {
         List<Lead> leads = Collections.EMPTY_LIST;
         try {

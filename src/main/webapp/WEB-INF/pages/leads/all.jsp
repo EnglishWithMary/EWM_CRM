@@ -1,14 +1,9 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-        <head>
-            <meta charset="UTF-8">
-            <link href="/resources/assets/css/bootstrap-3.3.5/css/bootstrap-theme.min.css" rel="stylesheet">
-            <link href="/resources/assets/css/bootstrap-3.3.5/css/styles.css" rel="stylesheet">
-        </head>
 
-<div class="wrapper">
+<div class="12u">
             <p>Leads</p>
-            <form method="post" action="/personSortByDate">
+            <form method="post" action="/leadSortByDate">
                 <div class="form-group">
                     <input type="submit" value="Sort by Registration Date">
                 </div>
