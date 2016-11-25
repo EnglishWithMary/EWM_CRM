@@ -28,16 +28,23 @@
         <apachetiles.version>3.0.5</apachetiles.version>
         <lombok.version>1.16.10</lombok.version>
         <amazonaws.version>1.9.2</amazonaws.version>
+        <postrgesql.version>9.4-1206-jdbc42</postrgesql.version>
     </properties>
 
     <dependencies>
 
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postrgesql.version}</version>
+        </dependency>
         <!-- Lombok-->
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk</artifactId>
             <version>${amazonaws.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
