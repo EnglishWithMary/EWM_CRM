@@ -1,6 +1,8 @@
 package evg.testt.repository.Jpa;
 
+import evg.testt.exception.PersonFieldTypeNotFoundException;
 import evg.testt.model.BaseModel;
+import evg.testt.model.Person;
 import evg.testt.repository.BaseRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -10,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
@@ -84,4 +88,40 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
         query.setMaxResults(pageSize);
         return query.getResultList();
     }
+
+    private Boolean hasPerson(){
+        Boolean hasPerson=false;
+        Field[] fields = entityClass.getDeclaredFields();
+        for (Field field:fields) {
+            if (field.getType().equals(Person.class)){
+                hasPerson=true;
+                break;
+            }
+        }
+        return hasPerson;
+    }
+    @Override
+    public List<T> findSortedByRegistrationDate() throws SQLException {
+        if(!hasPerson())throw new PersonFieldTypeNotFoundException(entityClass.getName() +
+                " has no field of " + Person.class.getName() + " type.");
+        Query query = em.createQuery("select l from "+entityClass.getName()+
+                " l join l.person p order by p.registrationDate asc");
+        List<T> result = (List<T>) query.getResultList();
+        if(result.size()>0) {
+            return result;
+        }
+        return null;
+    }
+
+    @Override
+    public List<T> findByPageSorted(int pageNumber) throws SQLException {
+        if(!hasPerson())throw new PersonFieldTypeNotFoundException(entityClass.getName() +
+                " has no field of " + Person.class.getName() + " type.");
+        Query query = em.createQuery("select t from "+entityClass.getName()+
+                " t join t.person p order by p.registrationDate asc");
+        query.setFirstResult((pageNumber-1) * pageSize);
+        query.setMaxResults(pageSize);
+        return query.getResultList();
+    }
+
 }

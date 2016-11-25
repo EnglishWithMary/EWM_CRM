@@ -13,17 +13,4 @@ import java.util.List;
 @Service
 @Transactional
 public class ManagerServiceImpl extends BaseService<Manager, ManagerRepository> implements ManagerService {
-
-    @Autowired
-    ManagerRepository managerRepository;
-
-    @Override
-    public List<Manager> getSortedByRegistrationDate() throws SQLException {
-        return managerRepository.findSortedByRegistrationDate();
-    }
-
-    @Override
-    public List<Manager> getByPageSorted(int pageNumber) throws SQLException {
-        return managerRepository.findByPageSorted(pageNumber);
-    }
 }

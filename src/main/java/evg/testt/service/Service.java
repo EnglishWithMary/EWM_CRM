@@ -23,4 +23,8 @@ public interface Service<T> {
     int count() throws SQLException;
 
     List<T> getByPage(int pageNumber);
+
+    List<T> getSortedByRegistrationDate() throws SQLException;
+
+    List<T> getByPageSorted(int pageNumber) throws SQLException;
 }
