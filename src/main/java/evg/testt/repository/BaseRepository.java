@@ -2,6 +2,7 @@ package evg.testt.repository;
 
 import evg.testt.model.BaseModel;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
@@ -20,4 +21,8 @@ public interface BaseRepository <T extends BaseModel> {
     int count();
 
     List<T> findByPage(int page);
+
+    List<T> findSortedByRegistrationDate() throws SQLException;
+
+    List<T> findByPageSorted(int pageNumber) throws SQLException;
 }

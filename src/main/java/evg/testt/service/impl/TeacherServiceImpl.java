@@ -14,12 +14,4 @@ import java.util.List;
 @Service
 @Transactional
 public class TeacherServiceImpl extends BaseService<Teacher, TeacherRepository> implements TeacherService {
-
-    @Autowired
-    TeacherRepository teacherRepository;
-
-    @Override
-    public List<Teacher> getSortedByRegistrationDate() throws SQLException {
-        return teacherRepository.findSortedByRegistrationDate();
-    }
 }

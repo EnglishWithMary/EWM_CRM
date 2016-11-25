@@ -6,8 +6,4 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface ManagerRepository extends BaseRepository<Manager>{
-
-    List<Manager> findSortedByRegistrationDate() throws SQLException;
-
-    List<Manager> findByPageSorted(int pageNumber) throws SQLException;
 }

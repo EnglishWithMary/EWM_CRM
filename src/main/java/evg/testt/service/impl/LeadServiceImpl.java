@@ -13,12 +13,4 @@ import java.util.List;
 @Service
 @Transactional
 public class LeadServiceImpl extends BaseService<Lead, LeadRepository> implements LeadService {
-
-    @Autowired
-    LeadRepository leadRepository;
-
-    @Override
-    public List<Lead> getSortedByRegistrationDate() throws SQLException {
-        return leadRepository.findSortedByRegistrationDate();
-    }
 }

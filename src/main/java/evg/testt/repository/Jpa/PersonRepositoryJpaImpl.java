@@ -46,6 +46,7 @@ public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> imple
         }
         return null;
     }
+
     @Override
     public List<Person> findSortedByRegistrationDate() throws SQLException {
 
