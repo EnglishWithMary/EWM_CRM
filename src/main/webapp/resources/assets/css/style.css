@@ -60,7 +60,7 @@ body {
 .scroll_child{
     width:99999px;
 }
-.scroll_child > div{
+.scroll_child div{
     height: 500px;
     border: solid #25a2c3;
     width: 250px;

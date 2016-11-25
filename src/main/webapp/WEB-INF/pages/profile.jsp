@@ -17,8 +17,6 @@
                          src="${person.avatarURL}">
                 </c:otherwise>
             </c:choose>
-                <%--<input type="submit" value="Upload Image"/>--%>
-            </label>
 
             <input type="file"
                    accept="image/png,image/jpeg"
@@ -56,12 +54,12 @@
                 </div>
 
                 <div class="6u 12u$(xsmall)">
-                    <sf:label path="comment">Comment:</sf:label>
+                    <sf:label path="comments">Comment:</sf:label>
                 </div>
 
                 <div class="6u 12u$(xsmall)">
-                    <sf:input path="comment"/>
-                    <sf:errors path="comment"/>
+                    <sf:input path="comments"/>
+                    <sf:errors path="comments"/>
                 </div>
 
                 <div class="6u 12u$(xsmall)">
