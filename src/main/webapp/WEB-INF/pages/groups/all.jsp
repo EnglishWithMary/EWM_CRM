@@ -1,12 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
-<head>
-    <meta charset="UTF-8">
-    <link href="/resources/assets/css/bootstrap-3.3.5/css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="/resources/assets/css/bootstrap-3.3.5/css/styles.css" rel="stylesheet">
-</head>
-
-<div class="wrapper">
+<div class="12u">
     <p>Groups</p>
     <sf:form method="post" modelAttribute="groupFilter" action="/groupFilter">
         <div class="form-group">
