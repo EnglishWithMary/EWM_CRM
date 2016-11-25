@@ -1,8 +1,8 @@
-package evg.testt.repository.Jpa;
+package evg.testt.dao.Jpa;
 
+import evg.testt.dao.PersonDao;
 import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.*;
-import evg.testt.repository.PersonRepository;
 import evg.testt.service.PersonService;
 import evg.testt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.sql.SQLException;
 
 @Repository
-public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> implements PersonRepository  {
+public class PersonDaoJpaImpl extends BaseDaoJpaImpl<Person> implements PersonDao {
 
     @Autowired
     UserService userService;

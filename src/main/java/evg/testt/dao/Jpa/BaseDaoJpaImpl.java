@@ -1,7 +1,7 @@
-package evg.testt.repository.Jpa;
+package evg.testt.dao.Jpa;
 
+import evg.testt.dao.BaseDao;
 import evg.testt.model.BaseModel;
-import evg.testt.repository.BaseRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
@@ -17,7 +17,7 @@ import java.util.List;
 @Transactional
 @Repository
 @PropertySource(value = "classpath:standard.properties")
-public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements BaseRepository<T>{
+public abstract class BaseDaoJpaImpl<T extends BaseModel> implements BaseDao<T> {
 
     protected Class<T> entityClass;
 
@@ -27,7 +27,7 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
     @Value("${pagination.page.size}")
     protected int pageSize;
 
-    public BaseRepositoryJpaImpl(){
+    public BaseDaoJpaImpl(){
         ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
     }

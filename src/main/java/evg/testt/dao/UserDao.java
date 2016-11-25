@@ -1,10 +1,8 @@
 package evg.testt.dao;
 
-
 import evg.testt.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserDao extends JpaRepository<User, Integer> {
+public interface UserDao extends BaseDao<User> {
 
-    User findByLogin(String userlogin);
+    User findByLogin(String login);
 }

@@ -1,6 +1,6 @@
 package evg.testt.service.impl;
 
-import evg.testt.repository.UserRepository;
+import evg.testt.dao.UserDao;
 import evg.testt.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,12 +18,12 @@ import java.util.Set;
 public class UserDetailServiceImpl implements UserDetailsService {
 
     @Autowired
-    UserRepository userRepository;
+    UserDao userDao;
 
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException
     {
-        User user = userRepository.findByLogin(name);
+        User user = userDao.findByLogin(name);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole().getRole()));

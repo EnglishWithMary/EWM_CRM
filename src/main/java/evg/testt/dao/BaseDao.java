@@ -1,11 +1,11 @@
-package evg.testt.repository;
+package evg.testt.dao;
 
 import evg.testt.model.BaseModel;
 
 import java.util.Collection;
 import java.util.List;
 
-public interface BaseRepository <T extends BaseModel> {
+public interface BaseDao<T extends BaseModel> {
 
     Collection<T> findAll();
 

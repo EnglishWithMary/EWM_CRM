@@ -1,15 +1,15 @@
-package evg.testt.repository.Jpa;
+package evg.testt.dao.Jpa;
 
+import evg.testt.dao.GroupDao;
 import evg.testt.model.Group;
 import evg.testt.model.Teacher;
-import evg.testt.repository.GroupRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
 import java.util.List;
 
 @Repository
-public class GroupRepositoryJpaImpl extends BaseRepositoryJpaImpl<Group> implements GroupRepository {
+public class GroupDaoJpaImpl extends BaseDaoJpaImpl<Group> implements GroupDao {
 
     @Override
     public List<Group> findByTeacher(Teacher teacher) {

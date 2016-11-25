@@ -1,8 +1,13 @@
 package evg.testt.dao;
 
 import evg.testt.model.Manager;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ManagerDao extends JpaRepository<Manager, Integer> {
+import java.sql.SQLException;
+import java.util.List;
 
+public interface ManagerDao extends BaseDao<Manager> {
+
+    List<Manager> findSortedByRegistrationDate() throws SQLException;
+
+    List<Manager> findByPageSorted(int pageNumber) throws SQLException;
 }

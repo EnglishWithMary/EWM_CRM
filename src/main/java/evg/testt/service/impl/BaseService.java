@@ -1,14 +1,14 @@
 package evg.testt.service.impl;
 
 import evg.testt.model.BaseModel;
-import evg.testt.repository.BaseRepository;
+import evg.testt.dao.BaseDao;
 import evg.testt.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public abstract class BaseService <T extends BaseModel, P extends BaseRepository<T>> implements Service<T> {
+public abstract class BaseService <T extends BaseModel, P extends BaseDao<T>> implements Service<T> {
 
     protected  P dao;
 

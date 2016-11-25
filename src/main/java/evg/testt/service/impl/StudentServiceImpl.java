@@ -1,7 +1,7 @@
 package evg.testt.service.impl;
 
 import evg.testt.model.Student;
-import evg.testt.repository.StudentRepository;
+import evg.testt.dao.StudentDao;
 import evg.testt.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class StudentServiceImpl extends BaseService<Student, StudentRepository> implements StudentService {
+public class StudentServiceImpl extends BaseService<Student, StudentDao> implements StudentService {
 
     @Override
     public List<Student> getAllByTeacher(int teacher_id) {
@@ -24,10 +24,10 @@ public class StudentServiceImpl extends BaseService<Student, StudentRepository> 
         return dao.findStudentsWithoutTeacher();
     }
     @Autowired
-    StudentRepository studentRepository;
+    StudentDao studentDao;
 
     @Override
     public List<Student> getSortedByRegistrationDate() throws SQLException {
-        return studentRepository.findSortedByRegistrationDate();
+        return studentDao.findSortedByRegistrationDate();
     }
 }

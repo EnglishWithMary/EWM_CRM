@@ -1,14 +1,14 @@
-package evg.testt.repository.Jpa;
+package evg.testt.dao.Jpa;
 
+import evg.testt.dao.UserDao;
 import evg.testt.model.User;
-import evg.testt.repository.UserRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
 import java.util.List;
 
 @Repository
-public class UserRepositoryJpaImpl extends BaseRepositoryJpaImpl<User> implements UserRepository {
+public class UserDaoJpaImpl extends BaseDaoJpaImpl<User> implements UserDao {
 
     @Override
     public User findByLogin(String login) {

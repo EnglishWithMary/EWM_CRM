@@ -2,8 +2,8 @@ package evg.testt.service.impl;
 
 import evg.testt.model.Role;
 import evg.testt.model.User;
-import evg.testt.repository.RoleRepository;
-import evg.testt.repository.UserRepository;
+import evg.testt.dao.RoleDao;
+import evg.testt.dao.UserDao;
 import evg.testt.service.EWMcrmSecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,51 +14,51 @@ import java.util.Collection;
 @Service
 public class EWMcrmSecurityServiceImpl implements EWMcrmSecurityService {
 
-    RoleRepository roleRepository;
-    UserRepository userRepository;
+    RoleDao roleDao;
+    UserDao userDao;
 
     @Autowired
-    public EWMcrmSecurityServiceImpl(RoleRepository roleRepository, UserRepository userRepository) {
-        this.roleRepository = roleRepository;
-        this.userRepository = userRepository;
+    public EWMcrmSecurityServiceImpl(RoleDao roleDao, UserDao userDao) {
+        this.roleDao = roleDao;
+        this.userDao = userDao;
     }
 
     @Override
     public void saveUser(User user) {
         BCryptPasswordEncoder b = new BCryptPasswordEncoder();
         user.setPassword(b.encode(user.getPassword()));
-        userRepository.save(user);
+        userDao.save(user);
     }
 
     @Override
     public Collection<User> getAllUsers() {
-        return userRepository.findAll();
+        return userDao.findAll();
     }
 
     @Override
     public User getUserById(Integer id) {
-        return userRepository.findOne(id);
+        return userDao.findOne(id);
     }
 
     /* Security things */
     @Override
     public User getUserByLogin(String login){
-        return userRepository.findByLogin(login);
+        return userDao.findByLogin(login);
     }
     /* Roles  */
 
     @Override
     public void saveRole(Role role) {
-        roleRepository.save(role);
+        roleDao.save(role);
     }
 
     @Override
     public Collection<Role> getAllRoles() {
-        return roleRepository.findAll();
+        return roleDao.findAll();
     }
 
     @Override
     public Role getRoleById(Integer id) {
-        return roleRepository.findOne(id);
+        return roleDao.findOne(id);
     }
 }

@@ -1,7 +1,7 @@
-package evg.testt.repository.Jpa;
+package evg.testt.dao.Jpa;
 
+import evg.testt.dao.ManagerDao;
 import evg.testt.model.Manager;
-import evg.testt.repository.ManagerRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class ManagerRepositoryJpaImpl extends BaseRepositoryJpaImpl<Manager> implements ManagerRepository {
+public class ManagerDaoJpaImpl extends BaseDaoJpaImpl<Manager> implements ManagerDao {
     @Override
     public List<Manager> findSortedByRegistrationDate() throws SQLException {
         Query query = em.createQuery("select t from managers t join t.person p order by p.registrationDate asc");

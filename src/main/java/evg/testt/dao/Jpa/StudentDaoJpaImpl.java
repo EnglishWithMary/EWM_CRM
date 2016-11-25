@@ -1,7 +1,7 @@
-package evg.testt.repository.Jpa;
+package evg.testt.dao.Jpa;
 
+import evg.testt.dao.StudentDao;
 import evg.testt.model.Student;
-import evg.testt.repository.StudentRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
@@ -11,7 +11,7 @@ import javax.persistence.Query;
 import java.sql.SQLException;
 
 @Repository
-public class StudentRepositoryJpaImpl extends BaseRepositoryJpaImpl<Student> implements StudentRepository {
+public class StudentDaoJpaImpl extends BaseDaoJpaImpl<Student> implements StudentDao {
     @Override
     public List<Student> findStudensByTeacher(int teacher_id) {
         List<Student> students = Collections.EMPTY_LIST;
