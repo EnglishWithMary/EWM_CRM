@@ -23,11 +23,4 @@ public class StudentServiceImpl extends BaseService<Student, StudentRepository> 
     public List<Student> getStudentsWithoutTeacher() {
         return dao.findStudentsWithoutTeacher();
     }
-    @Autowired
-    StudentRepository studentRepository;
-
-    @Override
-    public List<Student> getSortedByRegistrationDate() throws SQLException {
-        return studentRepository.findSortedByRegistrationDate();
-    }
 }

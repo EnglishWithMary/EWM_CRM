@@ -8,5 +8,4 @@ import java.util.List;
 
 
 public interface TeacherService extends Service<Teacher> {
-    List<Teacher> getSortedByRegistrationDate() throws SQLException;
 }
