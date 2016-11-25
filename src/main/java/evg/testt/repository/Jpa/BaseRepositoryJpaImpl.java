@@ -100,7 +100,6 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
         }
         return hasPerson;
     }
-
     @Override
     public List<T> findSortedByRegistrationDate() throws SQLException {
         if(!hasPerson())throw new PersonFieldTypeNotFoundException(entityClass.getName() +
