@@ -22,6 +22,7 @@
                 <sf:input path="lastName"/>
                 <sf:errors path="lastName"/>
             </div>
+
             <div class="6u 12u$(xsmall)">
                 <sf:label path="middleName">Middle Name:</sf:label>
             </div>
