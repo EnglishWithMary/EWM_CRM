@@ -11,12 +11,14 @@ import java.util.List;
 @Entity(name = "cards")
 public @Data class Card extends BaseModel{
 
-    @OneToOne
-    User user;
+    private String cardName = getId().toString();
 
     @OneToOne
-    PipeType type;
+    private User user;
+
+    @OneToOne
+    private PipeType type;
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
-    List<CardPerson> cardPersons;
+    private List<CardPerson> cardPersons;
 }

@@ -19,7 +19,10 @@
     <div class="scroll_child">
                 <c:forEach items="${cards}" var="card">
                     <div>
-                        ${card.id}
+                        <form method="post" action="/editCardName">
+                            <input type="text" value="${card.cardName}">
+                            <input class="glyphicon glyphicon-pencil" type="submit">
+                        </form>
                         <form method="post" action="/deleteCard">
                             <button type="submit" class="button btn">Delete</button>
                             <input type="hidden" value="${card.id}" name="card_id">
