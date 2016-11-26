@@ -22,6 +22,7 @@
                 <value>classpath*:database_rdbms.dev.properties</value>
                 <value>classpath*:mail.properties</value>
                 <value>classpath*:standard.properties</value>
+                <value>classpath*:amazon.properties</value>
             </list>
         </property>
     </bean>

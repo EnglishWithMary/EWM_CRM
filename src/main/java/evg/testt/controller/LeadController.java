@@ -77,18 +77,26 @@ public class LeadController {
         newPerson.setFirstName(personDTO.getFirstName());
         newPerson.setLastName(personDTO.getLastName());
         newPerson.setMiddleName(personDTO.getMiddleName());
+        Lead newLead = new Lead();
         try {
             personService.insert(newPerson);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        Lead newLead = new Lead();
-        newLead.setPerson(newPerson);
-        try {
+            newLead.setPerson(newPerson);
             leadService.insert(newLead);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return showLeads();
+    }
+
+    @RequestMapping(value = "/leadSortByDate", method = RequestMethod.POST)
+    public ModelAndView filterLeads() {
+        List<Lead> leads = Collections.EMPTY_LIST;
+        try {
+            leads=leadService.getSortedByRegistrationDate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ModelAndView modelAndView=new ModelAndView(JspPath.LEAD_ALL, "leads", leads);
+        return modelAndView;
     }
 }

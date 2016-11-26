@@ -5,6 +5,7 @@ import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import evg.testt.util.JspPath;
+import org.bouncycastle.jcajce.provider.symmetric.TEA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -36,54 +37,92 @@ public class StudentController {
     @Autowired
     PersonService personService;
     @Autowired
+    TeacherService teacherService;
+    @Autowired
     StateService stateService;
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
-    public ModelAndView showStudent() {
+    public ModelAndView showStudent(@RequestParam(required = false) Integer teacher_id) {
         List<Student> students = Collections.EMPTY_LIST;
-        List<Person> persons = new ArrayList<Person>();
+        List<Teacher> teachers = Collections.EMPTY_LIST;
+
         try {
-            students = studentService.getAll();
-            for (Student item : students){
-                persons.add(item.getPerson());
+            teachers = teacherService.getAll();
+
+            if(teacher_id != null)
+            {
+                if(teacher_id > 0)
+                    students = studentService.getAllByTeacher(teacher_id);
+                else if(teacher_id == -1)
+                    students = studentService.getStudentsWithoutTeacher();
             }
+            else
+                students = studentService.getAll();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return new ModelAndView(JspPath.STUDENT_ALL, "students", persons);
+        return new ModelAndView(JspPath.STUDENT_ALL, "students", students).addObject("teachers", teachers);
     }
 
     @RequestMapping(value = "/studentAdd")
     public ModelAndView addStudent(Model model) {
-        PersonDTO person =  new PersonDTO();
+        PersonDTO person = new PersonDTO();
+        List<Teacher> teachers = Collections.EMPTY_LIST;
+
+        try {
+            teachers = teacherService.getAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        ModelAndView mav = new ModelAndView(JspPath.STUDENT_ADD);
         model.addAttribute("student", person);
-        return new ModelAndView(JspPath.STUDENT_ADD);
+        model.addAttribute("teachers", teachers);
+        return mav;
     }
 
-    @RequestMapping(value = "/studentSave", method = RequestMethod.POST)
-    public ModelAndView saveStudent(@ModelAttribute("student") @Validated PersonDTO personDTO, BindingResult bindingResult) {
-        validator.validate(personDTO, bindingResult);
-        // проверка логина на уникальность
-        User u = userService.findByUserLogin(personDTO.getLogin());
-        if (u != null)
-            bindingResult.rejectValue("login", "1", "Login already exist.");
+        @RequestMapping(value = "/studentSave", method = RequestMethod.POST)
+        public ModelAndView saveStudent (@ModelAttribute("student") @Validated PersonDTO personDTO,
+                                         BindingResult bindingResult,
+                                         @RequestParam(required = false) Integer teacher_id){
+            validator.validate(personDTO, bindingResult);
+            // проверка логина на уникальность
+            User u = userService.findByUserLogin(personDTO.getLogin());
+            if (u != null)
+                bindingResult.rejectValue("login", "1", "Login already exist.");
 
-        if (!bindingResult.hasErrors()) {
+            if (!bindingResult.hasErrors()) {
 
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            try {
+                BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+                try {
 
-                Person newPerson = new Person();
-                Student newStudent = new Student();
+                    UserRole roleId = UserRole.ROLE_STUDENT;
+                    Role role = roleService.getById(roleId.getRoleId());
 
-                newPerson.setFirstName(personDTO.getFirstName());
-                newPerson.setLastName(personDTO.getLastName());
-                newPerson.setMiddleName(personDTO.getMiddleName());
+                    Person newPerson = new Person();
+                    User newUser = new User();
+                    Student newStudent = new Student();
+                    Teacher teacher;
 
-                newStudent.setPerson(newPerson);
+                    newPerson.setFirstName(personDTO.getFirstName());
+                    newPerson.setLastName(personDTO.getLastName());
+                    newPerson.setMiddleName(personDTO.getMiddleName());
+                    newPerson.setComments(personDTO.getComments());
 
-                studentService.insert(newStudent);
+                    newUser.setRole(role);
+                    newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
+                    newUser.setLogin(personDTO.getLogin());
+                    newStudent.setPerson(newPerson);
+                    newStudent.setUser(newUser);
+
+                    if(teacher_id != null && teacher_id  > 0) {
+                        teacher = teacherService.getById(teacher_id);
+                        newStudent.setTeacher(teacher);
+                    }
+
+                    studentService.insert(newStudent);
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -106,4 +145,19 @@ public class StudentController {
         return showStudent();
     }
 
+    @RequestMapping(value = "/studentSortByDate", method = RequestMethod.POST)
+    public ModelAndView filterStudents() {
+        List<Student> students = Collections.EMPTY_LIST;
+        List<Person> persons = new ArrayList<Person>();
+        try {
+            students=studentService.getSortedByRegistrationDate();
+            for (Student item : students){
+                persons.add(item.getPerson());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ModelAndView modelAndView=new ModelAndView(JspPath.STUDENT_ALL, "students", students);
+        return modelAndView;
+    }
 }

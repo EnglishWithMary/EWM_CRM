@@ -12,6 +12,7 @@
         <put-attribute name="footer" value="/WEB-INF/pages/templates/defaultFooter.jsp" />
         <put-attribute name="scripts" value="/WEB-INF/pages/templates/defaultScripts.jsp" />
         <put-attribute name="resources" value="/WEB-INF/pages/templates/defaultResources.jsp" />
+        <put-attribute name="formValidationScripts" value="" />
     </definition>
 
     <definition name="home" extends="default">
@@ -20,16 +21,5 @@
         <put-attribute name="menu" value="/WEB-INF/pages/templates/defaultMenu.jsp" />
         <!--<put-attribute name="header" value="/WEB-INF/pages/Security/securityPage.jsp" />-->
     </definition>
-
-    <!--<definition name="" extends="default">-->
-        <!--<put-attribute name="header"-->
-                       <!--value="/WEB-INF/pages/Security/securityPage.jsp" />-->
-
-    <!--</definition>-->
-
-    <!--<definition name="/" extends="default">-->
-        <!--<put-attribute name="header"-->
-                       <!--value="/WEB-INF/pages/Security/securityPage.jsp" />-->
-    <!--</definition>-->
 
 </tiles-definitions>

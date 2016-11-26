@@ -2,16 +2,13 @@ package evg.testt.model;
 
 import lombok.Data;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @MappedSuperclass
 public @Data class BaseModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Override
@@ -22,5 +19,12 @@ public @Data class BaseModel {
         BaseModel baseModel = (BaseModel) o;
 
         return id.equals(baseModel.id);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 1;
+        hash = hash * 31 + (id == null ? 0 : id.hashCode());
+        return hash;
     }
 }

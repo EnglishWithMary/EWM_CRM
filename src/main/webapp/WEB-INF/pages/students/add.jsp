@@ -1,4 +1,5 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="12u">
 <h3>Create student</h3>
@@ -49,6 +50,35 @@
                 <sf:errors path="password"/>
             </div>
 
+            <div class="6u 12u$(xsmall)">
+                <sf:label path="confirmPassword">Confirm password:</sf:label>
+            </div>
+
+            <div class="6u 12u$(xsmall)">
+                <sf:password path="confirmPassword"/>
+                <sf:errors path="confirmPassword"/>
+            </div>
+
+
+            <div class="6u 12u$(xsmall)">
+                 <sf:label path="comments">Comments:</sf:label>
+            </div>
+
+            <div class="6u 12u$(xsmall)">
+                <sf:textarea path="comments" rows="5"/>
+                <sf:errors path="comments"/>
+            </div>
+
+            <div class="12u$">
+                <div class="select-wrapper">
+                    <select name="teacher_id">
+                        <option value="">Set teacher later...</option>
+                        <c:forEach var="teacher" items="${teachers}">
+                            <option value="${teacher.id}">${teacher.person.firstName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
             <div class="12u$">
                     <input type="submit" value="Add student"/>
             </div>

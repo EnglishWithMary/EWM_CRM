@@ -3,5 +3,3 @@
  <ul class="actions">
      <li><a href="" class="button scrolly">Try out it</a></li>
  </ul>
-
-
