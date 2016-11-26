@@ -76,14 +76,19 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
     public int count()
     {
         long total = 0;
-        Query query = em.createQuery("SELECT count(t) FROM " + entityClass.getName() + " t");
+        Query query;
+        if(hasPerson()) {
+            query = em.createQuery("SELECT count(t) FROM " + entityClass.getName() + " t join t.person p WHERE p.stateDelete.id!=4");
+        } else {
+            query = em.createQuery("SELECT count(t) FROM " + entityClass.getName() + " t");
+        }
         total = (long)query.getSingleResult();
         return (int)total;
     }
 
     public List<T> findByPage(int pageNumber)
     {
-        Query query = em.createQuery("SELECT t FROM " + entityClass.getName() + " t");
+        Query query = em.createQuery("SELECT t FROM " + entityClass.getName() + " t join t.person p WHERE p.stateDelete.id!=4 " );
         query.setFirstResult((pageNumber-1) * pageSize);
         query.setMaxResults(pageSize);
         return query.getResultList();
@@ -118,7 +123,7 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
         if(!hasPerson())throw new PersonFieldTypeNotFoundException(entityClass.getName() +
                 " has no field of " + Person.class.getName() + " type.");
         Query query = em.createQuery("select t from "+entityClass.getName()+
-                " t join t.person p order by p.registrationDate asc");
+                " t join t.person p WHERE p.stateDelete.id!=4 order by p.registrationDate asc");
         query.setFirstResult((pageNumber-1) * pageSize);
         query.setMaxResults(pageSize);
         return query.getResultList();

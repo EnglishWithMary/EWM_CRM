@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
@@ -16,6 +17,7 @@
                     <th>Last name</th>
                     <th>Middle name</th>
                     <th>Registration Date</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbod>
@@ -25,6 +27,13 @@
                         <td>${teacher.lastName}</td>
                         <td>${teacher.middleName}</td>
                         <td>${teacher.registrationDate}</td>
+                        <td>
+                            <security:authorize access="hasRole('ROLE_ADMIN')">
+                                <a href="/teacherDelete?id=${teacher.id}">Delete</a>
+                            </security:authorize>
+                        </td>
+
+
                     </tr>
                 </c:forEach>
             </tbod>

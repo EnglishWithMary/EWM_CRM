@@ -6,7 +6,7 @@ public enum State {
 	INACTIVE("Inactive"),
 	DELETED("Deleted"),
 	LOCKED("Locked");
-	
+
 	private String state;
 
 	private State(final String state){
@@ -25,4 +25,5 @@ public enum State {
 	public String getName(){
 		return this.name();
 	}
+
 }

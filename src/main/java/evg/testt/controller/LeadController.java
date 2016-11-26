@@ -3,20 +3,29 @@ package evg.testt.controller;
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.Lead;
 import evg.testt.model.Person;
+import evg.testt.model.PersonStateDelete;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.LeadService;
 import evg.testt.service.PersonService;
+import evg.testt.service.StateDeleteService;
 import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+//import evg.testt.service.StateService;
 
 @Controller
 public class LeadController {
@@ -30,22 +39,33 @@ public class LeadController {
     @Autowired
     PersonService personService;
 
+    @Autowired
+    StateDeleteService stateDeleteService;
+
     @RequestMapping(value = "/leads", method = RequestMethod.GET)
     public ModelAndView showLeads() {
         List<Lead> leads = Collections.EMPTY_LIST;
+        List<Lead> newleads = new ArrayList<>();
         try {
             leads = leadService.getAll();
+            for (Lead item : leads){
+                if(PersonStateDelete.STATE_DELETED.getStateId()!= item.getPerson().getStateDelete().getId()){
+                    newleads.add(item);
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new ModelAndView(JspPath.LEAD_ALL, "leads", leads);
+        return new ModelAndView(JspPath.LEAD_ALL, "leads", newleads);
     }
     @RequestMapping(value = "/leadDelete")
     public ModelAndView deleteLead(@RequestParam Integer id) {
         Lead lead= null;
         try {
             lead = leadService.getById(id);
-            leadService.delete(lead);
+            Person person = lead.getPerson();
+            personService.delete(person);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -70,6 +90,7 @@ public class LeadController {
         newPerson.setFirstName(personDTO.getFirstName());
         newPerson.setLastName(personDTO.getLastName());
         newPerson.setMiddleName(personDTO.getMiddleName());
+
         Lead newLead = new Lead();
         try {
             personService.insert(newPerson);

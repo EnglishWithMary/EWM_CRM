@@ -61,4 +61,18 @@ public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> imple
         return null;
 
     }
+
+    @Override
+    public List<Person> findAllNotDeletedPersons() throws SQLException {
+
+        Query query = em.createQuery("SELECT person FROM persons person WHERE stateDelete_id !=:id");
+        query.setParameter("id", PersonStateDelete.STATE_DELETED.getStateId());
+        List<Person> result = (List<Person>) query.getResultList();
+        if(result.size()>0) {
+            return result;
+        }
+        return null;
+
+    }
+
 }

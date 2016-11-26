@@ -1,6 +1,5 @@
 package evg.testt.service.impl;
 
-import evg.testt.dao.RoleDao;
 import evg.testt.model.Role;
 import evg.testt.repository.RoleRepository;
 import evg.testt.service.RoleService;

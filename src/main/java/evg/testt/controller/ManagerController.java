@@ -3,10 +3,7 @@ package evg.testt.controller;
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
-import evg.testt.service.ManagerService;
-import evg.testt.service.PersonService;
-import evg.testt.service.RoleService;
-import evg.testt.service.UserService;
+import evg.testt.service.*;
 import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,6 +36,8 @@ public class ManagerController {
     RoleService roleService;
     @Autowired
     PersonService personService;
+    @Autowired
+    StateDeleteService stateDeleteService;
 
     @Value("${pagination.page.size}")
     protected int pageSize;
@@ -116,6 +115,7 @@ public class ManagerController {
                 newPerson.setLastName(personDTO.getLastName());
                 newPerson.setMiddleName(personDTO.getMiddleName());
                 newPerson.setEmail(email);
+                newPerson.setStateDelete(stateDeleteService.getById(PersonStateDelete.STATE_ACTIVE.getStateId()));
 
                 newUser.setRole(role);
                 newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
@@ -134,4 +134,20 @@ public class ManagerController {
             return new ModelAndView(JspPath.MANAGER_ADD);
         }
     }
+
+    @RequestMapping(value = "/managerDelete")
+    public ModelAndView deleteManager(@RequestParam Integer id) {
+        try {
+
+            Manager manager = managerService.getById(id);
+            Person person = manager.getPerson();
+            personService.delete(person);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return showManagers(1, false);
+    }
+
 }

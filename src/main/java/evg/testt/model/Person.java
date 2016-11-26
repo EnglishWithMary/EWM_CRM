@@ -34,4 +34,8 @@ public @Data class Person extends BaseModel{
 
     @Column(columnDefinition = "text")
     private String comments;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private StateDelete stateDelete;
+
 }
