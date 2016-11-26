@@ -7,8 +7,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.TypedQuery;
 import java.util.Collections;
 import java.util.List;
-import javax.persistence.Query;
-import java.sql.SQLException;
 
 @Repository
 public class StudentRepositoryJpaImpl extends BaseRepositoryJpaImpl<Student> implements StudentRepository {

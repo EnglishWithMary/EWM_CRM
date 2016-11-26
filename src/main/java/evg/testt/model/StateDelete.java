@@ -1,7 +1,12 @@
 package evg.testt.model;
 
-/**
- * Created by Яна on 25.11.2016.
- */
-public class StateDelete {
+import lombok.Data;
+
+import javax.persistence.Entity;
+
+@Entity(name = "states")
+public @Data class StateDelete extends BaseModel{
+        private String stateDelete;
+
 }
+

@@ -1,4 +1,6 @@
 package evg.testt.service;
 
-//public interface StateService extends Service<State> {
-//}
+import evg.testt.model.StateDelete;
+
+public interface StateDeleteService extends Service<StateDelete> {
+}

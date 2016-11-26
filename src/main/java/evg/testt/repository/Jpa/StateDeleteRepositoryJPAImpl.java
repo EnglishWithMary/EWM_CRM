@@ -2,10 +2,12 @@ package evg.testt.repository.Jpa;
 
 
 import evg.testt.model.StateDelete;
-import evg.testt.repository.StateRepository;
+import evg.testt.repository.StateDeleteRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * Created by Яна on 25.11.2016.
  */
-public class StateRepositoryJPAImpl extends BaseRepositoryJpaImpl<StateDelete> implements StateRepository {
+@Repository
+public class StateDeleteRepositoryJPAImpl extends BaseRepositoryJpaImpl<StateDelete> implements StateDeleteRepository {
 }

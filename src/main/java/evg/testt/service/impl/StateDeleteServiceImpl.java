@@ -1,6 +1,11 @@
 package evg.testt.service.impl;
 
-//@Service
-//public class StateServiceImpl extends BaseService<StateDelete, StateRepository> implements StateService {
-//
-//}
+import evg.testt.model.StateDelete;
+import evg.testt.repository.StateDeleteRepository;
+import evg.testt.service.StateDeleteService;
+import org.springframework.stereotype.Service;
+
+@Service
+public class StateDeleteServiceImpl extends BaseService<StateDelete, StateDeleteRepository> implements StateDeleteService {
+
+}

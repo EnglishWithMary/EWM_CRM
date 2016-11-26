@@ -32,7 +32,10 @@ public @Data class Person extends BaseModel{
     @OneToOne(cascade = CascadeType.ALL)
     Email email;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private State state;
+    @Column(columnDefinition = "text")
+    private String comments;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private StateDelete stateDelete;
 
 }
