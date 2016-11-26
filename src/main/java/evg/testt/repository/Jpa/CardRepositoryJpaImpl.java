@@ -28,8 +28,7 @@ public class CardRepositoryJpaImpl extends BaseRepositoryJpaImpl<Card> implement
 
         User user = us.findByUserLogin(principal.getName());
 
-        Query query = em.createQuery("from cards where user_id = :uid and type_id = :tid");
-        query.setParameter("uid", user.getId());
+        Query query = em.createQuery("from cards where type_id = :tid order by id ASC");
         query.setParameter("tid", pipe.getPipeId());
         cards = query.getResultList();
 
