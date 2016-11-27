@@ -1,7 +1,7 @@
 package evg.testt.service.impl;
 
 import evg.testt.model.User;
-import evg.testt.repository.UserRepository;
+import evg.testt.dao.UserRepository;
 import evg.testt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
