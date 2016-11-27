@@ -1,13 +1,12 @@
 package evg.testt.controller;
 
-import evg.testt.model.Role;
 import evg.testt.model.User;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.RoleService;
 import evg.testt.service.UserService;
-import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -47,13 +46,8 @@ public class UsersController {
         return "home";
     }
 
-//    @RequestMapping(value = "/users", method = RequestMethod.POST)
-//    public ModelAndView showUsersFromPost() {
-//        return showUsers();
-//    }
-//
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public ModelAndView showUsers() {
+    public String showUsers(Model model) {
         List<User> users;
         try {
             users = userService.getAll();
@@ -61,16 +55,17 @@ public class UsersController {
             users = Collections.emptyList();
             e.printStackTrace();
         }
-        return new ModelAndView(JspPath.USERS_ALL, "users", users);
+        model.addAttribute("users", users);
+        return "users/all";
     }
 
     @RequestMapping(value = "/userAdd")
-    public ModelAndView addUser() {
-        return new ModelAndView(JspPath.USERS_ADD);
+    public String addUser() {
+        return "users/add";
     }
 
     @RequestMapping(value = "/userSave", method = RequestMethod.POST)
-    public ModelAndView saveUser(@ModelAttribute("user") @Validated User user, BindingResult bindingResult) {
+    public String saveUser(Model model, @ModelAttribute("user") @Validated User user, BindingResult bindingResult) {
         validator.validate(user, bindingResult);
 
         User u = null;
@@ -84,27 +79,27 @@ public class UsersController {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            return showUsers();
+            return "users/all";
         } else {
-            return new ModelAndView(JspPath.USERS_ADD);
+            return "users/add";
         }
     }
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView login(
+    public String login(Model model,
             @RequestParam(value = "error", required = false) String error,
             @RequestParam(value = "logout", required = false) String logout) {
 
-        ModelAndView model = new ModelAndView();
+//        ModelAndView model = new ModelAndView();
         if (error != null) {
-            model.addObject("error", "Invalid username and password!");
+            model.addAttribute("error", "Invalid username and password!");
         }
 
         if (logout != null) {
-            model.addObject("msg", "You've been logged out successfully.");
+            model.addAttribute("msg", "You've been logged out successfully.");
         }
-        model.setViewName("login");
+//        model.setViewName("login");
 
-        return model;
+        return "login";
     }
 
 }

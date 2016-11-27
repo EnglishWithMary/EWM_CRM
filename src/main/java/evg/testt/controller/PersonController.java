@@ -7,9 +7,7 @@ import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
-import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -38,22 +35,22 @@ public class PersonController {
     AvatarService avatarService;
 
     @RequestMapping(value = "/personProfile", method = RequestMethod.GET)
-    public ModelAndView profilePerson(@ModelAttribute("person") @Validated PersonDTO personDTO,
+    public String profilePerson(@ModelAttribute("person") @Validated PersonDTO personDTO,
                                       BindingResult bindingResult,
-                                      Principal principal) throws PersonRoleNotFoundException, SQLException{
+                                      Principal principal, Model model) throws PersonRoleNotFoundException, SQLException{
 
         validator.validate(personDTO, bindingResult);
 
         Person person = personService.getPersonByUserLogin(principal.getName());
 
-        return new ModelAndView(JspPath.PROFILE,"person", person);
+        model.addAttribute("person", person);
+        return "profile";
     }
 
     @RequestMapping(value = "/personUpdate", method = RequestMethod.POST)
-    public ModelAndView updatePerson(@ModelAttribute("person") @Validated PersonDTO personDTO,
-                                     BindingResult bindingResult,
-                                     @RequestParam("image") MultipartFile multipartFile,
-                                     Principal principal)
+    public String updatePerson(@ModelAttribute("person") @Validated PersonDTO personDTO, BindingResult bindingResult,
+                                     @RequestParam("image") MultipartFile multipartFile, Principal principal,
+                               Model model)
             throws IOException, PersonException, PersonRoleNotFoundException, BadAvatarNameException {
 
         //Person validate
@@ -80,31 +77,21 @@ public class PersonController {
             throw new PersonException("Can't update Person Profile with login" + login);
         }
 
-        return new ModelAndView(JspPath.HOME);
+        return "redirect:/home";
     }
 
     @RequestMapping(value = "/persons", method = RequestMethod.GET)
-    public ModelAndView showGroups() {
-        List<Person> persons = Collections.EMPTY_LIST;
-        try {
-            persons=personService.getAll();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        ModelAndView modelAndView=new ModelAndView(JspPath.PERSON_ALL, "persons", persons);
-        return modelAndView;
+    public String showGroups(Model model) throws SQLException {
+        List<Person> persons = personService.getAll();
+        model.addAttribute("persons", persons);
+        return "persons/all";
     }
 
     @RequestMapping(value = "/personSortByDate", method = RequestMethod.POST)
-    public ModelAndView filterPersons() {
-        List<Person> persons = Collections.EMPTY_LIST;
-        try {
-            persons = personService.getSortedByRegistrationDate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        ModelAndView modelAndView=new ModelAndView(JspPath.PERSON_ALL, "persons", persons);
-        return modelAndView;
+    public String filterPersons(Model model) throws SQLException {
+        List<Person> persons = personService.getSortedByRegistrationDate();
+        model.addAttribute("persons", persons);
+        return "persons/all";
     }
 
 }
