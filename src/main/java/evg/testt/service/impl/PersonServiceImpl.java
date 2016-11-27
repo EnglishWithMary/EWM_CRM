@@ -2,7 +2,7 @@ package evg.testt.service.impl;
 
 import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.Person;
-import evg.testt.repository.PersonRepository;
+import evg.testt.dao.PersonRepository;
 import evg.testt.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

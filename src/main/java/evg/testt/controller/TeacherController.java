@@ -4,7 +4,6 @@ import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
-import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -36,32 +35,28 @@ public class TeacherController {
     PersonService personService;
 
     @RequestMapping(value = "/teachers", method = RequestMethod.GET)
-    public ModelAndView showTeachers() {
-        List<Teacher> teachers = Collections.EMPTY_LIST;
+    public String showTeachers(Model model) throws SQLException{
         List<Person> persons = new ArrayList<Person>();
-        try {
-            teachers = teacherService.getAll();
-            for (Teacher item : teachers){
-                persons.add(item.getPerson());
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
-        return new ModelAndView(JspPath.TEACHER_ALL, "teachers", persons);
+        List<Teacher> teachers = teacherService.getAll();
+        for (Teacher teacher : teachers){
+                persons.add(teacher.getPerson());
+            }
+        model.addAttribute("teachers", persons);
+        return "teachers/all";
     }
 
     @RequestMapping(value = "/teacherAdd")
-    public ModelAndView addTeacher(Model model) {
+    public String addTeacher(Model model) {
         PersonDTO person =  new PersonDTO();
         model.addAttribute("teacher", person);
-        return new ModelAndView(JspPath.TEACHER_ADD);
+        return "teachers/add";
     }
 
     @RequestMapping(value = "/teacherSave", method = RequestMethod.POST)
-    public ModelAndView saveTeacher(@ModelAttribute("teacher") @Validated PersonDTO personDTO, BindingResult bindingResult) {
+    public String saveTeacher(@ModelAttribute("teacher") @Validated PersonDTO personDTO, BindingResult bindingResult,
+                              Model model) throws SQLException {
         validator.validate(personDTO, bindingResult);
-        // проверка логина на уникальность
         User u = userService.findByUserLogin(personDTO.getLogin());
         if (u != null)
             bindingResult.rejectValue("login", "1", "Login already exist.");
@@ -69,7 +64,6 @@ public class TeacherController {
         if (!bindingResult.hasErrors()) {
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            try {
                 UserRole roleId = UserRole.ROLE_TEACHER;
 
                 Role role = roleService.getById(roleId.getRoleId());
@@ -91,29 +85,21 @@ public class TeacherController {
 
                 teacherService.insert(newTeacher);
 
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return showTeachers();
+            return "redirect:/teachers";
         } else {
-            return new ModelAndView(JspPath.TEACHER_ADD);
+            return "teachers/add";
         }
     }
 
     @RequestMapping(value = "/teacherSortByDate", method = RequestMethod.POST)
-    public ModelAndView filterTeachers() {
-        List<Teacher> teachers = Collections.EMPTY_LIST;
+    public String filterTeachers(Model model) throws SQLException {
         List<Person> persons=new ArrayList<>();
-        try {
-            teachers=teacherService.getSortedByRegistrationDate();
-            for (Teacher item : teachers){
-                persons.add(item.getPerson());
+        List<Teacher> teachers = teacherService.getSortedByRegistrationDate();
+        for (Teacher teacher: teachers){
+                persons.add(teacher.getPerson());
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        ModelAndView modelAndView=new ModelAndView(JspPath.TEACHER_ALL, "teachers", persons);
-        return modelAndView;
+            model.addAttribute("teachers", persons);
+        return "teachers/all";
     }
 
 }
