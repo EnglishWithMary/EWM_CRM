@@ -13,17 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.List;
-
-//import evg.testt.service.StateService;
+import java.util.*;
 
 @Controller
 public class LeadController {
@@ -41,75 +35,50 @@ public class LeadController {
     StateService stateService;
 
     @RequestMapping(value = "/leads", method = RequestMethod.GET)
-    public ModelAndView showLeads() {
-        List<Lead> leads = Collections.EMPTY_LIST;
-//        List<Lead> newleads = new ArrayList<>();
-        try {
-            leads = leadService.getAll();
-
-//            for (Lead item : leads){
-//                if(PersonState.STATE_DELETED.getStateId()!= item.getPerson().getState().getId()){
-//                    newleads.add(item);
-//                }
-//            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new ModelAndView(JspPath.LEAD_ALL, "leads", leads);
+    public String showLeads(Model model) throws SQLException {
+        List<Lead> leads = leadService.getAll();
+        model.addAttribute("leads", leads);
+        return "leads/all";
     }
+
     @RequestMapping(value = "/leadDelete")
     public ModelAndView deleteLead(@RequestParam Integer id) {
-        Lead lead= null;
-        try {
-            lead = leadService.getById(id);
-            Person person = lead.getPerson();
-            personService.delete(person);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return showLeads();
+        Lead lead = leadService.getById(id);
+        Person person = lead.getPerson();
+        personService.delete(person);
+        return "/leads";
     }
+
     @RequestMapping(value = "/leadAdd")
-    public ModelAndView addLead(Model model) {
+    public String addLead(Model model) {
         PersonDTO lead = new PersonDTO();
         model.addAttribute("lead", lead);
-        return new ModelAndView(JspPath.LEAD_ADD);
+        return "leads/add";
     }
 
     @RequestMapping(value = "/leadSave", method = RequestMethod.POST)
-    public ModelAndView saveLead(@ModelAttribute("lead") @Validated PersonDTO personDTO,
-                                 BindingResult bindingResult) {
+    public String saveLead(@ModelAttribute("lead") @Validated PersonDTO personDTO,
+                           BindingResult bindingResult, Model model) throws SQLException {
         validator.validate(personDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            return new ModelAndView(JspPath.LEAD_ADD);
+            return "leads/add";
         }
 
         Person newPerson = new Person();
         newPerson.setFirstName(personDTO.getFirstName());
         newPerson.setLastName(personDTO.getLastName());
         newPerson.setMiddleName(personDTO.getMiddleName());
-
         Lead newLead = new Lead();
-        try {
-            personService.insert(newPerson);
-            newLead.setPerson(newPerson);
-            leadService.insert(newLead);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return showLeads();
+        personService.insert(newPerson);
+        newLead.setPerson(newPerson);
+        leadService.insert(newLead);
+        return "redirect:/leads";
     }
 
     @RequestMapping(value = "/leadSortByDate", method = RequestMethod.POST)
-    public ModelAndView filterLeads() {
-        List<Lead> leads = Collections.EMPTY_LIST;
-        try {
-            leads=leadService.getSortedByRegistrationDate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        ModelAndView modelAndView=new ModelAndView(JspPath.LEAD_ALL, "leads", leads);
-        return modelAndView;
+    public String filterLeads(Model model) throws SQLException {
+        List<Lead> leads = leadService.getSortedByRegistrationDate();
+        model.addAttribute("leads", leads);
+        return "leads/all";
     }
 }

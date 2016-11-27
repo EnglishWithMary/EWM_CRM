@@ -4,7 +4,6 @@ import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
-import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -40,53 +39,48 @@ public class ManagerController {
     protected int pageSize;
 
     @RequestMapping(value = "/managers", method = RequestMethod.GET)
-    public ModelAndView showManagers(@RequestParam(required = false) Integer page,
-                                     @RequestParam(required = false) Boolean flagSorted
-    ) {
+    public String showManagers(@RequestParam(required = false) Integer page,
+                               @RequestParam(required = false) Boolean flagSorted,
+                               Model model) throws SQLException {
+
         if (flagSorted == null) flagSorted = false;
 
-        List<Manager> managers = Collections.EMPTY_LIST;
         int totalManagers = 0, pages = 0, currentPage = 1;
 
         if (page != null)
             if (page > 0)
                 currentPage = page;
 
-        try {
-            totalManagers = managerService.count();
+        totalManagers = managerService.count();
 
-            if (flagSorted == false) {
-                managers = managerService.getByPage(currentPage);
-            } else {
-                managers = managerService.getByPageSorted(currentPage);
-            }
-
-            pages = ((totalManagers / pageSize) + 1);
-
-            if (totalManagers % pageSize == 0)
-                pages--;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        List<Manager> managers = Collections.EMPTY_LIST;
+        if (flagSorted == false) {
+            managers = managerService.getByPage(currentPage);
+        } else {
+            managers = managerService.getByPageSorted(currentPage);
         }
 
-        ModelAndView model = new ModelAndView(JspPath.MANAGER_ALL);
-        model.addObject("managers", managers);
-        model.addObject("pages", pages);
-        model.addObject("flagSorted", flagSorted);
-        return model;
+        pages = ((totalManagers / pageSize) + 1);
+
+        if (totalManagers % pageSize == 0)
+            pages--;
+
+        model.addAttribute("managers", managers);
+        model.addAttribute("pages", pages);
+        model.addAttribute("flagSorted", flagSorted);
+        return "managers/all";
     }
 
     @RequestMapping(value = "/managerAdd")
-    public ModelAndView addManager(Model model) {
+    public String addManager(Model model) {
         PersonDTO person = new PersonDTO();
         model.addAttribute("manager", person);
-        return new ModelAndView(JspPath.MANAGER_ADD);
+        return "managers/add";
     }
 
     @RequestMapping(value = "/managerSave", method = RequestMethod.POST)
-    public ModelAndView saveManager(@ModelAttribute("manager") @Validated PersonDTO personDTO,
-                                    BindingResult bindingResult) {
+    public String saveManager(@ModelAttribute("manager") @Validated PersonDTO personDTO,
+                              BindingResult bindingResult, Model model) throws SQLException {
         validator.validate(personDTO, bindingResult);
         User u = userService.findByUserLogin(personDTO.getLogin());
         if (u != null)
@@ -95,18 +89,17 @@ public class ManagerController {
         if (!bindingResult.hasErrors()) {
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            try {
 
-                UserRole roleId = UserRole.ROLE_MANAGER;
+            UserRole roleId = UserRole.ROLE_MANAGER;
 
-                Role role = roleService.getById(roleId.getRoleId());
+            Role role = roleService.getById(roleId.getRoleId());
 
-                Person newPerson = new Person();
-                User newUser = new User();
-                Manager newManager = new Manager();
-                Email email = new Email();
+            Person newPerson = new Person();
+            User newUser = new User();
+            Manager newManager = new Manager();
+            Email email = new Email();
 
-                email.setEmail(personDTO.getEmail());
+            email.setEmail(personDTO.getEmail());
 
                 newPerson.setFirstName(personDTO.getFirstName());
                 newPerson.setLastName(personDTO.getLastName());
@@ -114,37 +107,26 @@ public class ManagerController {
                 newPerson.setEmail(email);
                 newPerson.setState(stateService.getById(PersonState.STATE_ACTIVE.getStateId()));
 
-                newUser.setRole(role);
-                newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
-                newUser.setLogin(personDTO.getLogin());
+            newUser.setRole(role);
+            newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
+            newUser.setLogin(personDTO.getLogin());
 
-                newManager.setPerson(newPerson);
-                newManager.setUser(newUser);
+            newManager.setPerson(newPerson);
+            newManager.setUser(newUser);
 
-                managerService.insert(newManager);
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return showManagers(1, false);
+            managerService.insert(newManager);
+            return "redirect:/managers";
         } else {
-            return new ModelAndView(JspPath.MANAGER_ADD);
+            return "manager/add";
         }
     }
 
     @RequestMapping(value = "/managerDelete")
-    public ModelAndView deleteManager(@RequestParam Integer id) {
-        try {
-
+    public ModelAndView deleteManager(@RequestParam Integer id) throws SQLException {
             Manager manager = managerService.getById(id);
             Person person = manager.getPerson();
             personService.delete(person);
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return showManagers(1, false);
+        return "managers/all";
     }
 
 }

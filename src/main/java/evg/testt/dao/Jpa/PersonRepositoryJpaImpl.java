@@ -34,7 +34,7 @@ public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> imple
 
         switch(role.getRole()) {
         case "ROLE_ADMIN":
-            query =em.createQuery("SELECT admin FROM admins admin WHERE user_id =:id");
+            query = em.createQuery("SELECT admin FROM admins admin WHERE user_id =:id");
             query.setParameter("id", user.getId());
             return ((Admin) query.getSingleResult()).getPerson();
         case "ROLE_MANAGER":
