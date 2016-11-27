@@ -1,7 +1,7 @@
-package evg.testt.repository.Jpa;
+package evg.testt.dao.Jpa;
 
 import evg.testt.model.Activity;
-import evg.testt.repository.ActivityRepository;
+import evg.testt.dao.ActivityRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository

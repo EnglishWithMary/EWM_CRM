@@ -1,4 +1,4 @@
-package evg.testt.repository;
+package evg.testt.dao;
 
 import evg.testt.model.Activity;
 

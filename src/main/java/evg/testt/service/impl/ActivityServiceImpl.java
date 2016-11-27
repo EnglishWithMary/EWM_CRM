@@ -1,7 +1,7 @@
 package evg.testt.service.impl;
 
 import evg.testt.model.Activity;
-import evg.testt.repository.ActivityRepository;
+import evg.testt.dao.ActivityRepository;
 import evg.testt.service.ActivityService;
 import org.springframework.stereotype.Service;
 
