@@ -10,11 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -36,6 +32,8 @@ public class StudentController {
     PersonService personService;
     @Autowired
     TeacherService teacherService;
+    @Autowired
+    StateService stateDeleteService;
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public String showStudent(@RequestParam(required = false) Integer teacher_id,
@@ -87,6 +85,7 @@ public class StudentController {
                 newPerson.setLastName(personDTO.getLastName());
                 newPerson.setMiddleName(personDTO.getMiddleName());
                 newPerson.setComments(personDTO.getComments());
+                newPerson.setState(stateDeleteService.getById(PersonState.STATE_ACTIVE.getStateId()));
 
                 newUser.setRole(role);
                 newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
@@ -105,6 +104,14 @@ public class StudentController {
         } else {
             return "students/add";
         }
+    }
+
+    @RequestMapping(value = "/studentDelete")
+    public String deleteStudent(@RequestParam Integer id) throws SQLException {
+            Student student = studentService.getById(id);
+            Person person = student.getPerson();
+            personService.delete(person);
+        return "redirect:/students";
     }
 
     @RequestMapping(value = "/studentSortByDate", method = RequestMethod.POST)

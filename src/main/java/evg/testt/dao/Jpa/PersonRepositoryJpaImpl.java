@@ -4,8 +4,10 @@ import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.*;
 import evg.testt.dao.PersonRepository;
 import evg.testt.service.PersonService;
+import evg.testt.service.StateService;
 import evg.testt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
@@ -20,6 +22,8 @@ public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> imple
     UserService userService;
     @Autowired
     PersonService personService;
+    @Autowired
+    StateService stateService;
 
     @Override
     public Person findPersonByUserLogin(String userLogin) throws PersonRoleNotFoundException {
@@ -61,4 +65,5 @@ public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> imple
         return null;
 
     }
+
 }

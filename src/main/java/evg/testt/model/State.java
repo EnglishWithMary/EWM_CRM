@@ -1,28 +1,12 @@
 package evg.testt.model;
 
-public enum State {
+import lombok.Data;
 
-	ACTIVE("Active"),
-	INACTIVE("Inactive"),
-	DELETED("Deleted"),
-	LOCKED("Locked");
-	
-	private String state;
+import javax.persistence.Entity;
 
-	private State(final String state){
-		this.state = state;
-	}
+@Entity(name = "states")
+public @Data class State extends BaseModel{
+        private String state;
 
-	public String getState(){
-		return this.state;
-	}
-
-	@Override
-	public String toString(){
-		return this.state;
-	}
-
-	public String getName(){
-		return this.name();
-	}
 }
+

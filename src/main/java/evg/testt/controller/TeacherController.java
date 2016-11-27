@@ -13,11 +13,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -33,6 +32,9 @@ public class TeacherController {
     RoleService roleService;
     @Autowired
     PersonService personService;
+    @Autowired
+    StateService stateService;
+
 
     @RequestMapping(value = "/teachers", method = RequestMethod.GET)
     public String showTeachers(Model model) throws SQLException{
@@ -60,7 +62,6 @@ public class TeacherController {
         User u = userService.findByUserLogin(personDTO.getLogin());
         if (u != null)
             bindingResult.rejectValue("login", "1", "Login already exist.");
-
         if (!bindingResult.hasErrors()) {
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -75,6 +76,7 @@ public class TeacherController {
                 newPerson.setFirstName(personDTO.getFirstName());
                 newPerson.setLastName(personDTO.getLastName());
                 newPerson.setMiddleName(personDTO.getMiddleName());
+                newPerson.setState(stateService.getById(PersonState.STATE_ACTIVE.getStateId()));
 
                 newUser.setRole(role);
                 newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
@@ -90,6 +92,14 @@ public class TeacherController {
             return "teachers/add";
         }
     }
+
+    @RequestMapping(value = "/teacherDelete")
+    public String deleteTeacher(@RequestParam Integer id) throws SQLException {
+            Person person = personService.getById(id);
+            personService.delete(person);
+        return "redirect:/teachers";
+    }
+
 
     @RequestMapping(value = "/teacherSortByDate", method = RequestMethod.POST)
     public String filterTeachers(Model model) throws SQLException {

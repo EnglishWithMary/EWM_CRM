@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -30,6 +31,7 @@
                     <th>Middle name</th>
                     <th>Registration Date</th>
                     <th>Comments</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbod>
@@ -40,6 +42,12 @@
                         <td>${student.person.middleName}</td>
                         <td>${student.person.registrationDate}</td>
                         <td><textarea>${student.person.comments}</textarea></td>
+                        <td>
+                            <security:authorize access="hasRole('ROLE_ADMIN')">
+                                <a href="/studentDelete?id=${student.id}">Delete</a>
+                            </security:authorize>
+                        </td>
+
                     </tr>
                 </c:forEach>
             </tbod>

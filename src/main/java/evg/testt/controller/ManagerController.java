@@ -3,10 +3,7 @@ package evg.testt.controller;
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
-import evg.testt.service.ManagerService;
-import evg.testt.service.PersonService;
-import evg.testt.service.RoleService;
-import evg.testt.service.UserService;
+import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -15,14 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @PropertySource(value = "classpath:standard.properties")
@@ -38,6 +31,8 @@ public class ManagerController {
     RoleService roleService;
     @Autowired
     PersonService personService;
+    @Autowired
+    StateService stateService;
 
     @Value("${pagination.page.size}")
     protected int pageSize;
@@ -105,10 +100,11 @@ public class ManagerController {
 
             email.setEmail(personDTO.getEmail());
 
-            newPerson.setFirstName(personDTO.getFirstName());
-            newPerson.setLastName(personDTO.getLastName());
-            newPerson.setMiddleName(personDTO.getMiddleName());
-            newPerson.setEmail(email);
+                newPerson.setFirstName(personDTO.getFirstName());
+                newPerson.setLastName(personDTO.getLastName());
+                newPerson.setMiddleName(personDTO.getMiddleName());
+                newPerson.setEmail(email);
+                newPerson.setState(stateService.getById(PersonState.STATE_ACTIVE.getStateId()));
 
             newUser.setRole(role);
             newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
@@ -123,4 +119,13 @@ public class ManagerController {
             return "manager/add";
         }
     }
+
+    @RequestMapping(value = "/managerDelete")
+    public String deleteManager(@RequestParam Integer id) throws SQLException {
+            Manager manager = managerService.getById(id);
+            Person person = manager.getPerson();
+            personService.delete(person);
+        return "redirect:/managers";
+    }
+
 }
