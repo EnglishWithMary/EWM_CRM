@@ -4,7 +4,6 @@ import evg.testt.model.User;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.RoleService;
 import evg.testt.service.UserService;
-import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

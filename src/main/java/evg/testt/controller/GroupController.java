@@ -6,7 +6,6 @@ import evg.testt.model.Teacher;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.GroupService;
 import evg.testt.service.TeacherService;
-import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
