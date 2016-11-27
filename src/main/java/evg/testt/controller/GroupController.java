@@ -35,74 +35,54 @@ public class GroupController {
     TeacherService teacherService;
 
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
-    public ModelAndView showGroups() {
-        List<Group> groups = Collections.EMPTY_LIST;
-        List<Teacher> teachers=Collections.EMPTY_LIST;
-        try {
-            teachers=teacherService.getAll();
-            groups = groupService.getAll();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        ModelAndView modelAndView=new ModelAndView(JspPath.GROUP_ALL, "groups", groups);
-        modelAndView.addObject("teachers",teachers);
-        modelAndView.addObject("groupFilter", new GroupDTO());
-        return modelAndView;
+    public String showGroups(Model model) throws SQLException {
+        List<Teacher> teachers = teacherService.getAll();
+        List<Group> groups = groupService.getAll();
+        model.addAttribute("groups", groups)
+                .addAttribute("teachers", teachers)
+                .addAttribute("groupFilter", new GroupDTO());
+        return "groups/all";
     }
 
     @RequestMapping(value = "/groupAdd")
-    public ModelAndView addGroup(Model model) {
-        ModelAndView modelAndView=new ModelAndView(JspPath.GROUP_ADD);
-        GroupDTO groupDTO =  new GroupDTO();
-        try {
-            List<Teacher> teachers=teacherService.getAll();
-            modelAndView.addObject("teachers",teachers);
-            groupDTO.setName("Default Group");
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
+    public String addGroup(Model model) throws SQLException {
+        List<Teacher> teachers = teacherService.getAll();
+        model.addAttribute("teachers", teachers);
+        GroupDTO groupDTO = new GroupDTO();
+        groupDTO.setName("Default Group");
         model.addAttribute("group", groupDTO);
-        return modelAndView;
+        return "groups/add";
     }
 
     @RequestMapping(value = "/groupSave")
-    public ModelAndView saveGroup(@ModelAttribute("group") @Validated GroupDTO groupDTO,
-                                  BindingResult bindingResult) {
-        if (bindingResult.hasErrors()){
-            return new ModelAndView(JspPath.GROUP_ADD);
+    public String saveGroup(Model model, @ModelAttribute("group") @Validated GroupDTO groupDTO,
+                            BindingResult bindingResult) throws SQLException {
+        if (bindingResult.hasErrors()) {
+            return "groups/add";
         }
-        Group newGroup =  new Group();
+        Group newGroup = new Group();
         newGroup.setName(groupDTO.getName());
-        try {
-            newGroup.setTeacher(teacherService.getById(groupDTO.getTeacherId()));
-            groupService.insert(newGroup);
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return showGroups();
+        newGroup.setTeacher(teacherService.getById(groupDTO.getTeacherId()));
+        groupService.insert(newGroup);
+        return "groups/all";
     }
 
     @RequestMapping(value = "/groupFilter", method = RequestMethod.POST)
-    public ModelAndView filterGroups(@RequestParam(required = false) Integer teacherId) {
+    public String filterGroups(Model model, @RequestParam(required = false) Integer teacherId)
+            throws SQLException {
 
-        GroupDTO groupFilter= new GroupDTO();
+        GroupDTO groupFilter = new GroupDTO();
+        List<Teacher> teachers = teacherService.getAll();
         List<Group> groups = Collections.EMPTY_LIST;
-        List<Teacher> teachers=Collections.EMPTY_LIST;
-        try {
-            teachers=teacherService.getAll();
-            if(teacherId!=null){
-                groupFilter.setTeacherId(teacherId);
-                Teacher teacher =teacherService.getById(teacherId);
-                groups = groupService.getByTeacher(teacher);
-            }else{
-                groups=groupService.getAll();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (teacherId != null) {
+            groupFilter.setTeacherId(teacherId);
+            Teacher teacher = teacherService.getById(teacherId);
+            groups = groupService.getByTeacher(teacher);
+        } else {
+            groups = groupService.getAll();
         }
-        ModelAndView modelAndView=new ModelAndView(JspPath.GROUP_ALL, "groups", groups);
-        modelAndView.addObject("teachers",teachers);
-        modelAndView.addObject("groupFilter", groupFilter);
-        return modelAndView;
+        model.addAttribute("teachers", teachers)
+                .addAttribute("groupFilter", groupFilter);
+        return "groups/all";
     }
 }

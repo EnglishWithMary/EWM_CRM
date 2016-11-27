@@ -38,22 +38,22 @@ public class PersonController {
     AvatarService avatarService;
 
     @RequestMapping(value = "/personProfile", method = RequestMethod.GET)
-    public ModelAndView profilePerson(@ModelAttribute("person") @Validated PersonDTO personDTO,
+    public String profilePerson(@ModelAttribute("person") @Validated PersonDTO personDTO,
                                       BindingResult bindingResult,
-                                      Principal principal) throws PersonRoleNotFoundException, SQLException{
+                                      Principal principal, Model model) throws PersonRoleNotFoundException, SQLException{
 
         validator.validate(personDTO, bindingResult);
 
         Person person = personService.getPersonByUserLogin(principal.getName());
 
-        return new ModelAndView(JspPath.PROFILE,"person", person);
+        model.addAttribute("person", person);
+        return "profile";
     }
 
     @RequestMapping(value = "/personUpdate", method = RequestMethod.POST)
-    public ModelAndView updatePerson(@ModelAttribute("person") @Validated PersonDTO personDTO,
-                                     BindingResult bindingResult,
-                                     @RequestParam("image") MultipartFile multipartFile,
-                                     Principal principal)
+    public String updatePerson(@ModelAttribute("person") @Validated PersonDTO personDTO, BindingResult bindingResult,
+                                     @RequestParam("image") MultipartFile multipartFile, Principal principal,
+                               Model model)
             throws IOException, PersonException, PersonRoleNotFoundException, BadAvatarNameException {
 
         //Person validate
@@ -80,31 +80,21 @@ public class PersonController {
             throw new PersonException("Can't update Person Profile with login" + login);
         }
 
-        return new ModelAndView(JspPath.HOME);
+        return "home";
     }
 
     @RequestMapping(value = "/persons", method = RequestMethod.GET)
-    public ModelAndView showGroups() {
-        List<Person> persons = Collections.EMPTY_LIST;
-        try {
-            persons=personService.getAll();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        ModelAndView modelAndView=new ModelAndView(JspPath.PERSON_ALL, "persons", persons);
-        return modelAndView;
+    public String showGroups(Model model) throws SQLException {
+        List<Person> persons = personService.getAll();
+        model.addAttribute("persons", persons);
+        return "persons/all";
     }
 
     @RequestMapping(value = "/personSortByDate", method = RequestMethod.POST)
-    public ModelAndView filterPersons() {
-        List<Person> persons = Collections.EMPTY_LIST;
-        try {
-            persons = personService.getSortedByRegistrationDate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        ModelAndView modelAndView=new ModelAndView(JspPath.PERSON_ALL, "persons", persons);
-        return modelAndView;
+    public String filterPersons(Model model) throws SQLException {
+        List<Person> persons = personService.getSortedByRegistrationDate();
+        model.addAttribute("persons", persons);
+        return "persons/all";
     }
 
 }

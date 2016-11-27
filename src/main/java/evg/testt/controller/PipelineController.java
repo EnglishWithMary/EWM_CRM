@@ -22,9 +22,6 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by DENNNN on 19.11.2016.
- */
 @Controller
 public class PipelineController {
 
@@ -37,15 +34,13 @@ public class PipelineController {
     @Autowired
     private CardService cs;
 
-
-
     @RequestMapping(value = "/pipeline", method = RequestMethod.GET)
     public String goToPipelinepage(Model model)
     {
         PipeType pt = new PipeType();
         model.addAttribute("pt", pt);
 
-        return JspPath.PIPELINE;
+        return "pipeline/pipeline";
     }
 
     @RequestMapping(value = "/addCard", method = RequestMethod.POST)
@@ -59,7 +54,6 @@ public class PipelineController {
         PipeType pt = new PipeType();
 
         try {
-
             pt = pts.getPipe(pipe);
             card.setUser(user);
             card.setType(pt);
@@ -70,7 +64,7 @@ public class PipelineController {
         }
 
         inserAttributes(model, principal, pipe);
-        return JspPath.PIPELINE;
+        return "pipeline/pipeline";
     }
 
 
@@ -78,14 +72,14 @@ public class PipelineController {
     public String takeStudent(Model model, Principal principal)
     {
         inserAttributes(model, principal, Pipe.STUDENT_PIPE);
-        return JspPath.PIPELINE;
+        return "pipeline/pipeline";
     }
 
     @RequestMapping(value = "/takeLeadtpipe", method = RequestMethod.GET)
     public String takeLead(Model model, Principal principal)
     {
         inserAttributes(model, principal, Pipe.LEAD_PIPE);
-        return JspPath.PIPELINE;
+        return "pipeline/pipeline";
     }
 
     @RequestMapping(value = "/deleteCard", method = RequestMethod.POST)
@@ -103,7 +97,7 @@ public class PipelineController {
         }
 
         inserAttributes(model, principal, pipe);
-        return JspPath.PIPELINE;
+        return "pipeline/pipeline";
     }
 
     @RequestMapping(value = "/editCardName", method = RequestMethod.POST)
@@ -122,7 +116,7 @@ public class PipelineController {
 
         inserAttributes(model, principal, pipe);
 
-        return JspPath.PIPELINE;
+        return "pipeline/pipeline";
     }
 
     private void inserAttributes(Model model, Principal principal, Pipe pipe)

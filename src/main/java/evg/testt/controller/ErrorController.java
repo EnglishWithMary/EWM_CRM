@@ -17,21 +17,21 @@ public class ErrorController {
     private String isTurnedOn;
 
     @ExceptionHandler(value = NoHandlerFoundException.class)
-    public ModelAndView error404(HttpServletRequest req, Exception ex) throws Exception {
+    public String error404(HttpServletRequest req, Exception ex) throws Exception {
         if(isTurnedOn.equals("true")) {
             ex.printStackTrace();
-            return new ModelAndView(JspPath.ERROR);
+            return "error";
         }
         else
             throw ex;
     }
 
     @ExceptionHandler(value = Exception.class)
-    public ModelAndView anyException(HttpServletRequest req, Exception ex) throws Exception {
+    public String anyException(HttpServletRequest req, Exception ex) throws Exception {
 
         if(isTurnedOn.equals("true")) {
             ex.printStackTrace();
-            return new ModelAndView(JspPath.ERROR);
+            return "error";
         }
         else
             throw ex;
