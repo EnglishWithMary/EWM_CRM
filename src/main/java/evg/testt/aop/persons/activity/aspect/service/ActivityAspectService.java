@@ -1,4 +1,4 @@
-package evg.testt.aop.persons.activity.service;
+package evg.testt.aop.persons.activity.aspect.service;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -8,10 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created by User on 27.11.2016.
  */
-@Transactional
-public interface ActivityAspect {
+
+public interface ActivityAspectService {
 
     void pointcut();
 
-    Object doActivity(ProceedingJoinPoint pjp) throws Throwable;
+    @Transactional
+    Object doAspect(ProceedingJoinPoint pjp) throws Throwable;
 }

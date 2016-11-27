@@ -1,7 +1,6 @@
-package evg.testt.aop.persons.activity;
+package evg.testt.aop.persons.activity.crud.aspects;
 
-import evg.testt.aop.persons.activity.service.ActivityAspect;
-import org.aspectj.lang.ProceedingJoinPoint;
+import evg.testt.aop.persons.activity.aspect.service.ActivityAspectService;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
@@ -11,10 +10,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Aspect
-public class DeleteActivity extends BaseAspect implements ActivityAspect{
+public class DeleteActivityService extends CRUDAspectService implements ActivityAspectService {
 
     @Override
     @Pointcut("execution(* evg.testt.service.impl.BaseService.delete(..))")
-    public void pointcut() {
-    }
+    public void pointcut() {}
 }
