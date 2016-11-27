@@ -118,7 +118,7 @@ public class ManagerController {
             newManager.setUser(newUser);
 
             managerService.insert(newManager);
-            return "/managers";
+            return "redirect:/managers";
         } else {
             return "manager/add";
         }

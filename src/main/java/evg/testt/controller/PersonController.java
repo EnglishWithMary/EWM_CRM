@@ -80,7 +80,7 @@ public class PersonController {
             throw new PersonException("Can't update Person Profile with login" + login);
         }
 
-        return "home";
+        return "redirect:/home";
     }
 
     @RequestMapping(value = "/persons", method = RequestMethod.GET)

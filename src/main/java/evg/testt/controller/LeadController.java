@@ -69,7 +69,7 @@ public class LeadController {
         personService.insert(newPerson);
         newLead.setPerson(newPerson);
         leadService.insert(newLead);
-        return "/leads";
+        return "redirect:/leads";
     }
 
     @RequestMapping(value = "/leadSortByDate", method = RequestMethod.POST)

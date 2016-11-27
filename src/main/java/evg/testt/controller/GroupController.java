@@ -73,7 +73,7 @@ public class GroupController {
 
         GroupDTO groupFilter = new GroupDTO();
         List<Teacher> teachers = teacherService.getAll();
-        List<Group> groups = Collections.EMPTY_LIST;
+        List<Group> groups;
         if (teacherId != null) {
             groupFilter.setTeacherId(teacherId);
             Teacher teacher = teacherService.getById(teacherId);
@@ -81,7 +81,8 @@ public class GroupController {
         } else {
             groups = groupService.getAll();
         }
-        model.addAttribute("teachers", teachers)
+        model.addAttribute("groups", groups)
+                .addAttribute("teachers", teachers)
                 .addAttribute("groupFilter", groupFilter);
         return "groups/all";
     }

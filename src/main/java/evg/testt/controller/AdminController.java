@@ -40,7 +40,7 @@ public class AdminController {
         /**
          * TODO: add logic
          */
-        return "admin";
+        return "redirect:/admin";
     }
 
 }
