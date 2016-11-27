@@ -1,6 +1,9 @@
-package evg.testt.controller.dashboard;
+package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
+import evg.testt.exception.BadAvatarNameException;
+import evg.testt.exception.PersonException;
+import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
@@ -21,7 +24,6 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,26 +33,19 @@ public class PersonController {
     @Autowired
     SpringOvalValidator validator;
     @Autowired
-    ManagerService managerService;
-    @Autowired
-    UserService userService;
-    @Autowired
-    RoleService roleService;
-    @Autowired
     PersonService personService;
     @Autowired
-    AvatarUploadController avatarUploadController;
+    AvatarService avatarService;
 
     @RequestMapping(value = "/personProfile", method = RequestMethod.GET)
-    public ModelAndView profilePerson(@ModelAttribute("person") @Validated PersonDTO personDTO, BindingResult bindingResult, Principal principal) {
+    public ModelAndView profilePerson(@ModelAttribute("person") @Validated PersonDTO personDTO,
+                                      BindingResult bindingResult,
+                                      Principal principal) throws PersonRoleNotFoundException, SQLException{
+
         validator.validate(personDTO, bindingResult);
-        // проверка логина на уникальность
-        Person person = new Person();
-        try {
-            person = personService.getPersonByUserLogin(principal.getName());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+        Person person = personService.getPersonByUserLogin(principal.getName());
+
         return new ModelAndView(JspPath.PROFILE,"person", person);
     }
 
@@ -58,30 +53,35 @@ public class PersonController {
     public ModelAndView updatePerson(@ModelAttribute("person") @Validated PersonDTO personDTO,
                                      BindingResult bindingResult,
                                      @RequestParam("image") MultipartFile multipartFile,
-                                     Principal principal) throws IOException, SQLException {
+                                     Principal principal)
+            throws IOException, PersonException, PersonRoleNotFoundException, BadAvatarNameException {
+
         //Person validate
         validator.validate(personDTO, bindingResult);
         //Create updated person
-        Person person = personService.getPersonByUserLogin(principal.getName());
-        person.setFirstName(personDTO.getFirstName());
-        person.setMiddleName(personDTO.getMiddleName());
-        person.setLastName(personDTO.getLastName());
-        //Update person in DB
+        String login = principal.getName();
         try {
+            Person person = personService.getPersonByUserLogin(login);
+
+            person.setFirstName(personDTO.getFirstName());
+            person.setMiddleName(personDTO.getMiddleName());
+            person.setLastName(personDTO.getLastName());
+
+            //Update person in DB
             personService.update(person);
+
+            //Update Avatar if exist
+            if (!multipartFile.isEmpty()) {
+
+                avatarService.changePersonAvatar(multipartFile, person);
+
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PersonException("Can't update Person Profile with login" + login);
         }
-        //Update Avatar if exist
-        if (!multipartFile.isEmpty()) {
-            avatarUploadController.updateAvatar(multipartFile,principal);
-        }
+
         return new ModelAndView(JspPath.HOME);
-
     }
-
-
-
 
     @RequestMapping(value = "/persons", method = RequestMethod.GET)
     public ModelAndView showGroups() {
@@ -99,7 +99,7 @@ public class PersonController {
     public ModelAndView filterPersons() {
         List<Person> persons = Collections.EMPTY_LIST;
         try {
-            persons=personService.getSortedByRegistrationDate();
+            persons = personService.getSortedByRegistrationDate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
