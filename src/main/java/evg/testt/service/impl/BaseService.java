@@ -1,13 +1,14 @@
 package evg.testt.service.impl;
 
+import evg.testt.model.BaseModel;
+import evg.testt.dao.BaseDao;
 import evg.testt.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public abstract class BaseService <T , P extends JpaRepository<T,Integer>> implements Service<T> {
+public abstract class BaseService <T extends BaseModel, P extends BaseDao<T>> implements Service<T> {
 
     protected  P dao;
 
@@ -17,7 +18,7 @@ public abstract class BaseService <T , P extends JpaRepository<T,Integer>> imple
     }
 
     public List<T> getAll() throws SQLException {
-        return dao.findAll();
+        return (List<T>)(dao.findAll());
     }
 
     public T getById(Integer id) throws SQLException {
@@ -38,5 +39,15 @@ public abstract class BaseService <T , P extends JpaRepository<T,Integer>> imple
 
     public boolean isExists(Integer id) throws SQLException {
         return dao.exists(id);
+    }
+
+    public int count()
+    {
+       return dao.count();
+    }
+
+    public List<T> getByPage(int pageNumber)
+    {
+        return dao.findByPage(pageNumber);
     }
 }
