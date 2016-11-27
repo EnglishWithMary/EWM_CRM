@@ -16,7 +16,7 @@ public @Data class Person extends BaseModel{
 
     private String avatarURL;
 
-    private String state;
+
 
     @Temporal(TemporalType.DATE)
     private Date birthdayDate;
@@ -36,6 +36,6 @@ public @Data class Person extends BaseModel{
     private String comments;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private StateDelete stateDelete;
+    private State state;
 
 }

@@ -13,10 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
@@ -37,7 +34,7 @@ public class ManagerController {
     @Autowired
     PersonService personService;
     @Autowired
-    StateDeleteService stateDeleteService;
+    StateService stateService;
 
     @Value("${pagination.page.size}")
     protected int pageSize;
@@ -115,7 +112,7 @@ public class ManagerController {
                 newPerson.setLastName(personDTO.getLastName());
                 newPerson.setMiddleName(personDTO.getMiddleName());
                 newPerson.setEmail(email);
-                newPerson.setStateDelete(stateDeleteService.getById(PersonStateDelete.STATE_ACTIVE.getStateId()));
+                newPerson.setState(stateService.getById(PersonState.STATE_ACTIVE.getStateId()));
 
                 newUser.setRole(role);
                 newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));

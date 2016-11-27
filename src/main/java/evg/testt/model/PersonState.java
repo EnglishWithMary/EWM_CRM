@@ -1,11 +1,11 @@
 package evg.testt.model;
 
-public enum PersonStateDelete {
-    STATE_ACTIVE(1), STATE_HIDDEN(2), STATE_TRASHED(3), STATE_DELETED(4);
+public enum PersonState {
+    STATE_ACTIVE(1), STATE_TRASHED(2), STATE_DELETED(3);
 
     private int stateId;
 
-        PersonStateDelete(int id){
+        PersonState(int id){
             stateId = id;
     }
 

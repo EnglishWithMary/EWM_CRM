@@ -78,7 +78,7 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
         long total = 0;
         Query query;
         if(hasPerson()) {
-            query = em.createQuery("SELECT count(t) FROM " + entityClass.getName() + " t join t.person p WHERE p.stateDelete.id!=4");
+            query = em.createQuery("SELECT count(t) FROM " + entityClass.getName() + " t join t.person p WHERE p.state.id!=3");
         } else {
             query = em.createQuery("SELECT count(t) FROM " + entityClass.getName() + " t");
         }
@@ -88,7 +88,7 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
 
     public List<T> findByPage(int pageNumber)
     {
-        Query query = em.createQuery("SELECT t FROM " + entityClass.getName() + " t join t.person p WHERE p.stateDelete.id!=4 " );
+        Query query = em.createQuery("SELECT t FROM " + entityClass.getName() + " t join t.person p WHERE p.state.id!=3 " );
         query.setFirstResult((pageNumber-1) * pageSize);
         query.setMaxResults(pageSize);
         return query.getResultList();
@@ -123,10 +123,23 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
         if(!hasPerson())throw new PersonFieldTypeNotFoundException(entityClass.getName() +
                 " has no field of " + Person.class.getName() + " type.");
         Query query = em.createQuery("select t from "+entityClass.getName()+
-                " t join t.person p WHERE p.stateDelete.id!=4 order by p.registrationDate asc");
+                " t join t.person p WHERE p.state.id!=3 order by p.registrationDate asc");
         query.setFirstResult((pageNumber-1) * pageSize);
         query.setMaxResults(pageSize);
         return query.getResultList();
     }
+
+//    @Override
+//    public List<T> findAllNotDeletedPersons() throws SQLException {
+//
+//        Query query = em.createQuery("SELECT person FROM persons person WHERE state_id !=:id");
+//        query.setParameter("id", PersonState.STATE_DELETED.getStateId());
+//        List<T> result = (List<T>) query.getResultList();
+//        if(result.size()>0) {
+//            return result;
+//        }
+//        return null;
+//
+//    }
 
 }

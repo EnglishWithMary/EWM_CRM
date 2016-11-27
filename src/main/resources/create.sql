@@ -3,14 +3,13 @@ INSERT INTO roles (id, role) VALUES (2, 'ROLE_MANAGER');
 INSERT INTO roles (id, role) VALUES (3, 'ROLE_TEACHER');
 INSERT INTO roles (id, role) VALUES (4, 'ROLE_STUDENT');
 
-INSERT INTO states (id, stateDelete) VALUES (1, 'STATE_ACTIVE');
-INSERT INTO states (id, stateDelete) VALUES (2, 'STATE_HIDDEN');
-INSERT INTO states (id, stateDelete) VALUES (3, 'STATE_TRASHED');
-INSERT INTO states (id, stateDelete) VALUES (4, 'STATE_DELETED');
+INSERT INTO states (id, state) VALUES (1, 'STATE_ACTIVE');
+INSERT INTO states (id, state) VALUES (2, 'STATE_TRASHED');
+INSERT INTO states (id, state) VALUES (3, 'STATE_DELETED');
 
-INSERT INTO persons (id, firstname, lastname, middlename,registrationdate, stateDelete_id)
+INSERT INTO persons (id, firstname, lastname, middlename,registrationdate, state_id)
 VALUES (1, 'Ivan', 'Ivanov', 'Ivanovich', now(), 1);
-UPDATE persons SET stateDelete_id=1 WHERE stateDelete_id IS NULL ;
+UPDATE persons SET state_id=1 WHERE state_id IS NULL ;
 
 INSERT INTO users (id, login, password,role_id)
 VALUES (1, 'admin', '$2a$08$4ozu21fedsIgpyrsIV1DOuGVVNkYyp6/KTLMil0gQdAz1r./qC3ri', 1); -- password-admin

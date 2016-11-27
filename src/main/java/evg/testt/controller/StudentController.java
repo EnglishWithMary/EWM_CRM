@@ -11,10 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
@@ -38,7 +35,7 @@ public class StudentController {
     @Autowired
     TeacherService teacherService;
     @Autowired
-    StateDeleteService stateDeleteService;
+    StateService stateDeleteService;
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public ModelAndView showStudent(@RequestParam(required = false) Integer teacher_id) {
@@ -61,7 +58,7 @@ public class StudentController {
 
 
             for (Student item : students) {
-                if (PersonStateDelete.STATE_DELETED.getStateId() != item.getPerson().getStateDelete().getId()) {
+                if (PersonState.STATE_DELETED.getStateId() != item.getPerson().getState().getId()) {
                     studentslist.add(item);
                 }
             }
@@ -116,7 +113,7 @@ public class StudentController {
                 newPerson.setLastName(personDTO.getLastName());
                 newPerson.setMiddleName(personDTO.getMiddleName());
                 newPerson.setComments(personDTO.getComments());
-                newPerson.setStateDelete(stateDeleteService.getById(PersonStateDelete.STATE_ACTIVE.getStateId()));
+                newPerson.setState(stateDeleteService.getById(PersonState.STATE_ACTIVE.getStateId()));
 
                 newUser.setRole(role);
                 newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));

@@ -3,11 +3,11 @@ package evg.testt.controller;
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.Lead;
 import evg.testt.model.Person;
-import evg.testt.model.PersonStateDelete;
+import evg.testt.model.PersonState;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.LeadService;
 import evg.testt.service.PersonService;
-import evg.testt.service.StateDeleteService;
+import evg.testt.service.StateService;
 import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,7 +40,7 @@ public class LeadController {
     PersonService personService;
 
     @Autowired
-    StateDeleteService stateDeleteService;
+    StateService stateService;
 
     @RequestMapping(value = "/leads", method = RequestMethod.GET)
     public ModelAndView showLeads() {
@@ -49,7 +49,7 @@ public class LeadController {
         try {
             leads = leadService.getAll();
             for (Lead item : leads){
-                if(PersonStateDelete.STATE_DELETED.getStateId()!= item.getPerson().getStateDelete().getId()){
+                if(PersonState.STATE_DELETED.getStateId()!= item.getPerson().getState().getId()){
                     newleads.add(item);
                 }
             }
