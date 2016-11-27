@@ -58,9 +58,9 @@ body {
     left: -10em;
 }
 .scroll_child{
-    width:99999px;
+    width: 999999px;
 }
-.scroll_child div{
+.scroll_child .card{
     height: 500px;
     border: solid #25a2c3;
     width: 250px;
@@ -68,6 +68,8 @@ body {
     float: left;
     background: #c4e3f3;
 }
+
+
 
 #header nav.right {
     width: 30em;

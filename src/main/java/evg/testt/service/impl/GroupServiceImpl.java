@@ -2,7 +2,7 @@ package evg.testt.service.impl;
 
 import evg.testt.model.Group;
 import evg.testt.model.Teacher;
-import evg.testt.repository.GroupRepository;
+import evg.testt.dao.GroupRepository;
 import evg.testt.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

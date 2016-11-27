@@ -2,6 +2,7 @@ package evg.testt.service.impl;
 
 import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.Person;
+import evg.testt.dao.PersonRepository;
 import evg.testt.model.PersonState;
 import evg.testt.model.State;
 
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+
 import java.util.List;
 
 @Service

@@ -1,6 +1,6 @@
 package evg.testt.service.impl;
 
-import evg.testt.repository.UserRepository;
+import evg.testt.dao.UserRepository;
 import evg.testt.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

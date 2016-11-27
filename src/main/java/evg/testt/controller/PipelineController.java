@@ -1,9 +1,6 @@
 package evg.testt.controller;
 
-import evg.testt.model.Card;
-import evg.testt.model.Pipe;
-import evg.testt.model.PipeType;
-import evg.testt.model.User;
+import evg.testt.model.*;
 import evg.testt.service.CardService;
 import evg.testt.service.PipeTypeService;
 import evg.testt.service.UserService;
@@ -14,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -31,9 +29,6 @@ import java.util.List;
 public class PipelineController {
 
     @Autowired
-    private EntityManager em;
-
-    @Autowired
     private UserService us;
 
     @Autowired
@@ -41,6 +36,8 @@ public class PipelineController {
 
     @Autowired
     private CardService cs;
+
+
 
     @RequestMapping(value = "/pipeline", method = RequestMethod.GET)
     public String goToPipelinepage(Model model)
@@ -55,21 +52,24 @@ public class PipelineController {
     public String addCard(Model model, Principal principal,@RequestParam(required = true) int pt_id)
     {
         Card card = new Card();
-        Pipe p = Pipe.valueOf(pt_id);
-        User user = us.findByUserLogin(principal.getName());
-        PipeType pt = getPipe(p);
+        Pipe pipe = Pipe.valueOf(pt_id);
 
-        card.setUser(user);
-        card.setType(pt);
+        User user = us.findByUserLogin(principal.getName());
+
+        PipeType pt = new PipeType();
 
         try {
+
+            pt = pts.getPipe(pipe);
+            card.setUser(user);
+            card.setType(pt);
             cs.insert(card);
-        } catch (SQLException e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        model.addAttribute("cards", getCards(principal, p));
-        model.addAttribute("pt", pt);
+        inserAttributes(model, principal, pipe);
         return JspPath.PIPELINE;
     }
 
@@ -77,16 +77,14 @@ public class PipelineController {
     @RequestMapping(value = "/takeStudentpipe", method = RequestMethod.GET)
     public String takeStudent(Model model, Principal principal)
     {
-        model.addAttribute("cards", getCards(principal, Pipe.STUDENT_PIPE));
-        model.addAttribute("pt", getPipe(Pipe.STUDENT_PIPE));
+        inserAttributes(model, principal, Pipe.STUDENT_PIPE);
         return JspPath.PIPELINE;
     }
 
     @RequestMapping(value = "/takeLeadtpipe", method = RequestMethod.GET)
     public String takeLead(Model model, Principal principal)
     {
-        model.addAttribute("cards", getCards(principal, Pipe.LEAD_PIPE));
-        model.addAttribute("pt", getPipe(Pipe.LEAD_PIPE));
+        inserAttributes(model, principal, Pipe.LEAD_PIPE);
         return JspPath.PIPELINE;
     }
 
@@ -99,41 +97,47 @@ public class PipelineController {
         try {
             card = cs.getById(card_id);
             cs.delete(card);
-        } catch (SQLException e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
 
-
-        model.addAttribute("cards", getCards(principal, pipe));
-        model.addAttribute("pt", getPipe(pipe));
+        inserAttributes(model, principal, pipe);
         return JspPath.PIPELINE;
     }
 
-    /*
-    Get cards that related to user. With chosen pipe type.
-     */
-    private List<Card> getCards(Principal principal, Pipe pipe)
+    @RequestMapping(value = "/editCardName", method = RequestMethod.POST)
+    public String editCardName(Model model, String cardName, int card_id, int pt_id, Principal principal)
     {
-        List<Card> cards = Collections.EMPTY_LIST;
+        Card card = null;
+        Pipe pipe = Pipe.valueOf(pt_id);
 
-        User user = us.findByUserLogin(principal.getName());
-
-        Query query = em.createQuery("from cards where user_id = :uid and type_id = :tid");
-        query.setParameter("uid", user.getId());
-        query.setParameter("tid", pipe.getPipeId());
-        cards = query.getResultList();
-
-        return cards;
-    }
-
-    private PipeType getPipe(Pipe pipe)
-    {
-        PipeType pt = new PipeType();
         try {
-            pt = pts.getById(pipe.getPipeId());
-        } catch (SQLException e) {
+            card = cs.getById(card_id);
+            card.setCardName(cardName);
+            cs.update(card);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return pt;
+
+        inserAttributes(model, principal, pipe);
+
+        return JspPath.PIPELINE;
+    }
+
+    private void inserAttributes(Model model, Principal principal, Pipe pipe)
+    {
+        PipeType pt = new PipeType();
+        List<Card> cards = Collections.EMPTY_LIST;
+
+        try {
+            cards = cs.getCards(principal, pipe);
+            pt = pts.getPipe(pipe);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        model.addAttribute("cards", cards);
+        model.addAttribute("pt", pt);
     }
 }

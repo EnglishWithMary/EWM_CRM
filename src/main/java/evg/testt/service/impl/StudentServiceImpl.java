@@ -1,7 +1,7 @@
 package evg.testt.service.impl;
 
 import evg.testt.model.Student;
-import evg.testt.repository.StudentRepository;
+import evg.testt.dao.StudentRepository;
 import evg.testt.service.StudentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
