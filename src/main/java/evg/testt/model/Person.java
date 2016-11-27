@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity (name = "persons")
 public @Data class Person extends BaseModel{
@@ -38,4 +39,7 @@ public @Data class Person extends BaseModel{
     @OneToOne
     private State state;
 
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+    List<Activity> activities;
 }

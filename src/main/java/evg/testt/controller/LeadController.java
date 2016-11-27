@@ -48,7 +48,7 @@ public class LeadController {
         Lead lead = leadService.getById(id);
         Person person = lead.getPerson();
         personService.delete(person);
-        return "leads/all";
+        return "redirect:/leads";
     }
 
     @RequestMapping(value = "/leadAdd")

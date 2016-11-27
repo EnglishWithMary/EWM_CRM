@@ -10,7 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -41,13 +44,12 @@ public class TeacherController {
         for (Teacher teacher : teachers){
                 persons.add(teacher.getPerson());
             }
-        model.addAttribute("teachers", teachers);
-
+        model.addAttribute("teachers", persons);
         return "teachers/all";
     }
 
     @RequestMapping(value = "/teacherAdd")
-    public String addTeacher(Model model) throws SQLException {
+    public String addTeacher(Model model) {
         PersonDTO person =  new PersonDTO();
         model.addAttribute("teacher", person);
         return "teachers/add";
@@ -85,7 +87,7 @@ public class TeacherController {
 
                 teacherService.insert(newTeacher);
 
-            return "teachers/all";
+            return "redirect:/teachers";
         } else {
             return "teachers/add";
         }
@@ -95,7 +97,7 @@ public class TeacherController {
     public String deleteTeacher(@RequestParam Integer id) throws SQLException {
             Person person = personService.getById(id);
             personService.delete(person);
-        return "teachers/all";
+        return "redirect:/teachers";
     }
 
 

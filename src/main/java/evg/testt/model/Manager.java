@@ -8,7 +8,7 @@ import javax.persistence.OneToOne;
 
 @Entity(name = "managers")
 
-public @Data class Manager extends BaseModel {
+public @Data class Manager extends BaseModel implements BelongsToPerson{
 
     @OneToOne(cascade = CascadeType.ALL)
     private Person person;
