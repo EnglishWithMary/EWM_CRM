@@ -12,6 +12,7 @@
                  <th>First name</th>
                  <th>Last name</th>
                  <th>Middle name</th>
+                 <th>Role</th>
              </tr>
              </thead>
              <tbod>
@@ -20,6 +21,8 @@
                          <td>${person.firstName}</td>
                          <td>${person.lastName}</td>
                          <td>${person.middleName}</td>
+                         <td>${person.role}</td>
+
                      </tr>
                  </c:forEach>
              </tbod>

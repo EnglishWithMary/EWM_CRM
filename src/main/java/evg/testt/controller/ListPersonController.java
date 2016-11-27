@@ -1,6 +1,7 @@
 package evg.testt.controller;
 
 import evg.testt.model.Person;
+import evg.testt.service.EWMcrmSecurityService;
 import evg.testt.service.PersonService;
 import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class ListPersonController {
 
     @Autowired
     PersonService personService;
+
+    @Autowired
+    EWMcrmSecurityService ewMcrmSecurityService;
 
     @RequestMapping(value = {"","/","/home"}, method = RequestMethod.GET)
     public ModelAndView showPerson() {

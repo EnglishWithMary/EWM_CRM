@@ -5,7 +5,7 @@
 
 <tiles-definitions>
     <definition name="listPerson" extends="home">
-        <put-attribute name="body" value="/WEB-INF/pages/listPerson.jsp" />
+        <!--<put-attribute name="body" value="/WEB-INF/pages/listPerson.jsp" />-->
         <put-attribute name="title" value="List persons" />
     </definition>
 </tiles-definitions>
