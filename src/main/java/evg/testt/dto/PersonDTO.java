@@ -7,6 +7,7 @@ import net.sf.oval.constraint.Length;
 import net.sf.oval.constraint.MatchPattern;
 
 import javax.persistence.Transient;
+import java.util.Date;
 import java.util.Set;
 
 public @Data class PersonDTO {
@@ -37,4 +38,8 @@ public @Data class PersonDTO {
 
 //    @Length(min = 3, max = 20, message = "Wrong middle name.")
     private String comments;
+
+    private String organization;
+
+    private Date birthdayDate;
 }

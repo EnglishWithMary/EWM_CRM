@@ -27,6 +27,7 @@ public @Data class Person extends BaseModel{
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifyDate;
 
+    @Column(columnDefinition = "text")
     private String organization;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -34,4 +35,5 @@ public @Data class Person extends BaseModel{
 
     @Column(columnDefinition = "text")
     private String comments;
+
 }

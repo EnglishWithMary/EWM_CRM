@@ -1,5 +1,6 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="12u">
     <h3>Update profile</h3>
@@ -51,6 +52,15 @@
                 <div class="6u 12u$(xsmall)">
                     <sf:input path="middleName"/>
                     <sf:errors path="middleName"/>
+                </div>
+
+                <div class="6u 12u$(xsmall)">
+                    <sf:label path="birthdayDate">Birthday:</sf:label>
+                </div>
+
+                <div class="6u 12u$(xsmall)">
+                    <sf:input path="birthdayDate" type = "date"/>
+                    <sf:errors path="birthdayDate"/>
                 </div>
 
                 <div class="6u 12u$(xsmall)">
