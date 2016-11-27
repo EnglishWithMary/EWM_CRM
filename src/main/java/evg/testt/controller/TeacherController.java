@@ -42,7 +42,7 @@ public class TeacherController {
         for (Teacher teacher : teachers){
                 persons.add(teacher.getPerson());
             }
-        model.addAttribute("teachers", teachers);
+        model.addAttribute("teachers", persons);
         return "teachers/all";
     }
 
@@ -60,6 +60,7 @@ public class TeacherController {
         User u = userService.findByUserLogin(personDTO.getLogin());
         if (u != null)
             bindingResult.rejectValue("login", "1", "Login already exist.");
+
         if (!bindingResult.hasErrors()) {
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -84,7 +85,7 @@ public class TeacherController {
 
                 teacherService.insert(newTeacher);
 
-            return "teachers/all";
+            return "redirect:/teachers";
         } else {
             return "teachers/add";
         }
