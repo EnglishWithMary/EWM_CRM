@@ -1,7 +1,7 @@
 package evg.testt.service.impl;
 
 import evg.testt.model.BaseModel;
-import evg.testt.repository.BaseRepository;
+import evg.testt.dao.BaseRepository;
 import evg.testt.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 

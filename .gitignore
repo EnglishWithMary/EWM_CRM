@@ -2,5 +2,6 @@
 *.iml
 database_rdbms.dev.properties
 database_rdbms.staging.properties
+amazon.properties
 
 
