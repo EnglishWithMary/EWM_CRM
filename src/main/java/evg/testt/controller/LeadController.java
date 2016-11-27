@@ -3,7 +3,6 @@ package evg.testt.controller;
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.Lead;
 import evg.testt.model.Person;
-import evg.testt.model.PersonState;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.LeadService;
 import evg.testt.service.PersonService;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,18 +43,19 @@ public class LeadController {
     @RequestMapping(value = "/leads", method = RequestMethod.GET)
     public ModelAndView showLeads() {
         List<Lead> leads = Collections.EMPTY_LIST;
-        List<Lead> newleads = new ArrayList<>();
+//        List<Lead> newleads = new ArrayList<>();
         try {
             leads = leadService.getAll();
-            for (Lead item : leads){
-                if(PersonState.STATE_DELETED.getStateId()!= item.getPerson().getState().getId()){
-                    newleads.add(item);
-                }
-            }
+
+//            for (Lead item : leads){
+//                if(PersonState.STATE_DELETED.getStateId()!= item.getPerson().getState().getId()){
+//                    newleads.add(item);
+//                }
+//            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new ModelAndView(JspPath.LEAD_ALL, "leads", newleads);
+        return new ModelAndView(JspPath.LEAD_ALL, "leads", leads);
     }
     @RequestMapping(value = "/leadDelete")
     public ModelAndView deleteLead(@RequestParam Integer id) {

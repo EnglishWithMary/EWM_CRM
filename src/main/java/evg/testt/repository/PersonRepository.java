@@ -12,5 +12,5 @@ public interface PersonRepository extends BaseRepository <Person>{
 
     List<Person> findSortedByRegistrationDate() throws SQLException;
 
-    public List<Person> findAllNotDeletedPersons() throws SQLException;
+
 }

@@ -42,7 +42,6 @@ public class StudentController {
         List<Student> students = Collections.EMPTY_LIST;
         List<Teacher> teachers = Collections.EMPTY_LIST;
 
-        List<Student> studentslist = new ArrayList<>();
 
         try {
             teachers = teacherService.getAll();
@@ -56,17 +55,11 @@ public class StudentController {
                 students = studentService.getAll();
             }
 
-
-            for (Student item : students) {
-                if (PersonState.STATE_DELETED.getStateId() != item.getPerson().getState().getId()) {
-                    studentslist.add(item);
-                }
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return new ModelAndView(JspPath.STUDENT_ALL, "students", studentslist).addObject("teachers", teachers);
+        return new ModelAndView(JspPath.STUDENT_ALL, "students", students).addObject("teachers", teachers);
     }
 
     @RequestMapping(value = "/studentAdd")

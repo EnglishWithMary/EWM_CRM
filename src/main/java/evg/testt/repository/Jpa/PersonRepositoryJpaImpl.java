@@ -4,8 +4,10 @@ import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.*;
 import evg.testt.repository.PersonRepository;
 import evg.testt.service.PersonService;
+import evg.testt.service.StateService;
 import evg.testt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
@@ -20,6 +22,8 @@ public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> imple
     UserService userService;
     @Autowired
     PersonService personService;
+    @Autowired
+    StateService stateService;
 
     @Override
     public Person findPersonByUserLogin(String userLogin) throws PersonRoleNotFoundException {
@@ -62,17 +66,30 @@ public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> imple
 
     }
 
-    @Override
-    public List<Person> findAllNotDeletedPersons() throws SQLException {
+//    public void deletePerson(Person person) throws SQLException {
+//        Query query;
+//        if (hasPerson()) {
+//            PersonState stateId = PersonState.STATE_DELETED;
+//            State state = stateService.getById(stateId.getStateId());
+//            person.setState(state);
+////            query.set("state_id", stateId);
+//            query = em.createQuery("UPDATE person FROM persons.state_id");
+//            em.merge(Person person);
+//        }
+//    }
 
-        Query query = em.createQuery("SELECT person FROM persons person WHERE state_id !=:id");
-        query.setParameter("id", PersonState.STATE_DELETED.getStateId());
-        List<Person> result = (List<Person>) query.getResultList();
-        if(result.size()>0) {
-            return result;
-        }
-        return null;
 
-    }
+//    @Override
+//    public List<Person> findAllNotDeletedPersons() throws SQLException {
+//
+//        Query query = em.createQuery("SELECT person FROM persons person WHERE state_id !=:id");
+//        query.setParameter("id", PersonState.STATE_DELETED.getStateId());
+//        List<Person> result = (List<Person>) query.getResultList();
+//        if(result.size()>0) {
+//            return result;
+//        }
+//        return null;
+//
+//    }
 
 }

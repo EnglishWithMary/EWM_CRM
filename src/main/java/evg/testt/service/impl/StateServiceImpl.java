@@ -8,4 +8,5 @@ import org.springframework.stereotype.Service;
 @Service
 public class StateServiceImpl extends BaseService<State, StateRepository> implements StateService {
 
+
 }

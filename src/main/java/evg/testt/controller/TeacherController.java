@@ -43,10 +43,10 @@ public class TeacherController {
         try {
             teachers = teacherService.getAll();
             for (Teacher item : teachers){
-                if(PersonState.STATE_DELETED.getStateId()!= item.getPerson().getState().getId()){
+////                if(PersonState.STATE_DELETED.getStateId()!= item.getPerson().getState().getId()){
                     persons.add(item.getPerson());
                 }
-            }
+//            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

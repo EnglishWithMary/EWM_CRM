@@ -38,7 +38,7 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
 
     public Collection<T> findAll() {
 
-        Query query = em.createQuery("SELECT t FROM " + entityClass.getName() + " t");
+        Query query = em.createQuery("SELECT t FROM " + entityClass.getName() + " t join t.person p WHERE p.state.id!=3 ");
         return (List<T>)query.getResultList();
 
     }
@@ -66,7 +66,7 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
     }
 
     public void delete(T t){
-        em.remove(t);
+       em.remove(t);
     }
 
     public boolean exists(Integer id){
@@ -129,17 +129,6 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
         return query.getResultList();
     }
 
-//    @Override
-//    public List<T> findAllNotDeletedPersons() throws SQLException {
-//
-//        Query query = em.createQuery("SELECT person FROM persons person WHERE state_id !=:id");
-//        query.setParameter("id", PersonState.STATE_DELETED.getStateId());
-//        List<T> result = (List<T>) query.getResultList();
-//        if(result.size()>0) {
-//            return result;
-//        }
-//        return null;
-//
-//    }
+
 
 }

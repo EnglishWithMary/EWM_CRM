@@ -33,15 +33,9 @@ public class PersonServiceImpl extends BaseService<Person, PersonRepository> imp
         return personRepository.findSortedByRegistrationDate();
     }
 
-    @Override
-    public void insert(Person person) throws SQLException {
-        PersonState stateId = PersonState.STATE_ACTIVE;
-        State state = stateService.getById(stateId.getStateId());
-        person.setState(state);
-        update(person);
-    }
 
-    @Override
+
+        @Override
     public void delete(Person person) throws SQLException {
         PersonState stateId = PersonState.STATE_DELETED;
         State state = stateService.getById(stateId.getStateId());
@@ -50,7 +44,13 @@ public class PersonServiceImpl extends BaseService<Person, PersonRepository> imp
     }
 
     @Override
-    public List<Person> getAll() throws SQLException {
-        return personRepository.findAllNotDeletedPersons();
+    public void insert(Person person) throws SQLException {
+        PersonState stateId = PersonState.STATE_ACTIVE;
+        State state = stateService.getById(stateId.getStateId());
+        person.setState(state);
+        update(person);
     }
+
+
+
 }
