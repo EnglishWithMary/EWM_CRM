@@ -3,21 +3,23 @@ package evg.testt.controller;
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.Lead;
 import evg.testt.model.Person;
+import evg.testt.model.PersonState;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.LeadService;
 import evg.testt.service.PersonService;
 import evg.testt.service.StateService;
-import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.List;
 
 @Controller
 public class LeadController {
@@ -42,11 +44,11 @@ public class LeadController {
     }
 
     @RequestMapping(value = "/leadDelete")
-    public ModelAndView deleteLead(@RequestParam Integer id) {
+    public String deleteLead(@RequestParam Integer id) throws SQLException {
         Lead lead = leadService.getById(id);
         Person person = lead.getPerson();
         personService.delete(person);
-        return "/leads";
+        return "leads/all";
     }
 
     @RequestMapping(value = "/leadAdd")
@@ -68,6 +70,8 @@ public class LeadController {
         newPerson.setFirstName(personDTO.getFirstName());
         newPerson.setLastName(personDTO.getLastName());
         newPerson.setMiddleName(personDTO.getMiddleName());
+        newPerson.setState(stateService.getById(PersonState.STATE_ACTIVE.getStateId()));
+
         Lead newLead = new Lead();
         personService.insert(newPerson);
         newLead.setPerson(newPerson);

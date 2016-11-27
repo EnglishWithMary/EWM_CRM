@@ -4,7 +4,6 @@ import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
-import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -12,11 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -45,11 +42,12 @@ public class TeacherController {
                 persons.add(teacher.getPerson());
             }
         model.addAttribute("teachers", teachers);
+
         return "teachers/all";
     }
 
     @RequestMapping(value = "/teacherAdd")
-    public String addTeacher(Model model) {
+    public String addTeacher(Model model) throws SQLException {
         PersonDTO person =  new PersonDTO();
         model.addAttribute("teacher", person);
         return "teachers/add";
@@ -94,7 +92,7 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/teacherDelete")
-    public ModelAndView deleteTeacher(@RequestParam Integer id) throws SQLException {
+    public String deleteTeacher(@RequestParam Integer id) throws SQLException {
             Person person = personService.getById(id);
             personService.delete(person);
         return "teachers/all";

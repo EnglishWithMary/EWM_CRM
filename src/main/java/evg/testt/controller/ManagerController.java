@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -122,11 +121,11 @@ public class ManagerController {
     }
 
     @RequestMapping(value = "/managerDelete")
-    public ModelAndView deleteManager(@RequestParam Integer id) throws SQLException {
+    public String deleteManager(@RequestParam Integer id) throws SQLException {
             Manager manager = managerService.getById(id);
             Person person = manager.getPerson();
             personService.delete(person);
-        return "managers/all";
+        return "redirect:/managers";
     }
 
 }

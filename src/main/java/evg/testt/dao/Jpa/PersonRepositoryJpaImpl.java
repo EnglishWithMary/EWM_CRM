@@ -66,30 +66,4 @@ public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> imple
 
     }
 
-//    public void deletePerson(Person person) throws SQLException {
-//        Query query;
-//        if (hasPerson()) {
-//            PersonState stateId = PersonState.STATE_DELETED;
-//            State state = stateService.getById(stateId.getStateId());
-//            person.setState(state);
-////            query.set("state_id", stateId);
-//            query = em.createQuery("UPDATE person FROM persons.state_id");
-//            em.merge(Person person);
-//        }
-//    }
-
-
-//    @Override
-//    public List<Person> findAllNotDeletedPersons() throws SQLException {
-//
-//        Query query = em.createQuery("SELECT person FROM persons person WHERE state_id !=:id");
-//        query.setParameter("id", PersonState.STATE_DELETED.getStateId());
-//        List<Person> result = (List<Person>) query.getResultList();
-//        if(result.size()>0) {
-//            return result;
-//        }
-//        return null;
-//
-//    }
-
 }

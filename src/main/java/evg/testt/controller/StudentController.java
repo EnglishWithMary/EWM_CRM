@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -108,7 +107,7 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/studentDelete")
-    public ModelAndView deleteStudent(@RequestParam Integer id) throws SQLException {
+    public String deleteStudent(@RequestParam Integer id) throws SQLException {
             Student student = studentService.getById(id);
             Person person = student.getPerson();
             personService.delete(person);
