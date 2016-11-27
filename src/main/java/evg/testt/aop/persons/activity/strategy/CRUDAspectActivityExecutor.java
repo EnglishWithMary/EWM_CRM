@@ -58,7 +58,7 @@ public class CRUDAspectActivityExecutor implements StrategyAspectActivityExecuto
 
                 // Make string for activity.
                 activ.append(name);
-                activ.append(" is ");
+                activ.append(" have ");
                 activ.append(pjp.getSignature().getName());
                 activ.append(pjp.getSignature().getName().endsWith("e")? "d ": "ed ");
                 activ.append("\"");
