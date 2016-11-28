@@ -45,8 +45,17 @@ public class PersonController {
         validator.validate(personDTO, bindingResult);
 
         Person person = personService.getPersonByUserLogin(principal.getName());
+        personDTO = new PersonDTO();
+        personDTO.setEmail(person.getEmail().getEmail());
+        personDTO.setFirstName(person.getFirstName());
+        personDTO.setLastName(person.getLastName());
+        personDTO.setMiddleName(person.getMiddleName());
+        personDTO.setComments(person.getComments());
+        personDTO.setOrganization(person.getOrganization());
+        personDTO.setAvatarURL(person.getAvatarURL());
+        personDTO.setBirthdayDateStr(person.getBirthdayDate());
 
-        return new ModelAndView(JspPath.PROFILE,"person", person);
+        return new ModelAndView(JspPath.PROFILE,"person", personDTO);
     }
 
     @RequestMapping(value = "/personUpdate", method = RequestMethod.POST)
@@ -68,6 +77,7 @@ public class PersonController {
             person.setLastName(personDTO.getLastName());
             person.setComments(personDTO.getComments());
             person.setOrganization(personDTO.getOrganization());
+            person.setBirthdayDate(personDTO.getBirthdayDateStr());
 
             Email email = person.getEmail();
             if (email == null) {

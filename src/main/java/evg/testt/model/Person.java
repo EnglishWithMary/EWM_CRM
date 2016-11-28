@@ -49,4 +49,14 @@ public @Data class Person extends BaseModel{
         birthdayDate=d;
     }
 
+    public String getBirthdayDate() {
+        SimpleDateFormat sdtf = new SimpleDateFormat("yyyy-MM-dd");
+
+        String stringDate;
+
+        stringDate = sdtf.format(birthdayDate);
+
+        return stringDate;
+    }
+
 }

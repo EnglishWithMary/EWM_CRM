@@ -47,6 +47,7 @@ public @Data class PersonDTO {
 
     private Date birthdayDate;
 
+    private String avatarURL;
 
  public String getBirthdayDate() {
 //        SimpleDateFormat sdtf = new SimpleDateFormat("dd.MM.yyyy");
