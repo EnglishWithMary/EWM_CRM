@@ -13,3 +13,7 @@ INSERT INTO admins (id, person_id, user_id) VALUES (1, 1, 1);
 
 INSERT INTO pipetypes (id, type) VALUES (1, 'LEAD_PIPE');
 INSERT INTO pipetypes (id, type) VALUES (2, 'STUDENT_PIPE');
+
+CREATE OR REPLACE VIEW staffview AS SELECT persons.* FROM persons LEFT JOIN admins ON persons.id = admins.person_id
+  LEFT JOIN managers ON persons.id = managers.person_id LEFT JOIN students ON persons.id = students.person_id
+  LEFT JOIN leads ON persons.id = leads.person_id;
