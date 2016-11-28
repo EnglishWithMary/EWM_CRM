@@ -1,11 +1,9 @@
 package evg.testt.controller;
 
-import com.sun.org.apache.bcel.internal.generic.LADD;
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
-import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,12 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
-import javax.transaction.Transaction;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -176,7 +169,7 @@ public class PipelineController {
             e.printStackTrace();
         }
         inserAttributes(model, principal, pipe);
-        return JspPath.PIPELINE;
+        return "pipeline/pipeline";
     }
 
     @RequestMapping(value = "/leadAddOnPipe", method = RequestMethod.POST)
@@ -187,7 +180,7 @@ public class PipelineController {
         model.addAttribute("lead", lead);
         model.addAttribute("card_id", card_id);
         model.addAttribute("pt_id",pt_id);
-        return JspPath.LEAD_ADD_ON_PIPE;
+        return "leads/addLeadOnPipe";
     }
 
 
@@ -198,7 +191,7 @@ public class PipelineController {
                                  @RequestParam(required = true) Integer pt_id) {
         validator.validate(personDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            return JspPath.LEAD_ADD_ON_PIPE;
+            return "leads/addLeadOnPipe";
         }
 
         Person newPerson = new Person();
