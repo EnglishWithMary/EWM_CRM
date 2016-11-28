@@ -10,7 +10,7 @@
         <ul class="mainmenu">
             <li style="float: right;"><a href="/logout" class="button alt">Log out</a></li>
             <li style="float: right;"><a href="/personProfile" class="button alt" >Profile</a></li>
-            <li><a href="/pipeline" class="button alt">Pipeline</a>
+            <li><a href="#" class="button alt">Pipeline</a><!--/pipeline-->
                 <ul class="submenu">
                 <li><a href="/takeLeadtpipe" class="button alt">Leads</a></li>
                 <li><a href="/takeStudentpipe" class="button alt">Students</a></li>
