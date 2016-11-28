@@ -54,14 +54,14 @@
                     <sf:errors path="middleName"/>
                 </div>
 
-                <div class="6u 12u$(xsmall)">
-                    <sf:label path="birthdayDate">Birthday:</sf:label>
-                </div>
+                <%--<div class="6u 12u$(xsmall)">--%>
+                    <%--<sf:label path="birthdayDate">Birthday:</sf:label>--%>
+                <%--</div>--%>
 
-                <div class="6u 12u$(xsmall)">
-                    <sf:input path="birthdayDate" type = "date"/>
-                    <sf:errors path="birthdayDate"/>
-                </div>
+                <%--<div class="6u 12u$(xsmall)">--%>
+                    <%--<sf:input path="birthdayDate"/>--%>
+                    <%--<sf:errors path="birthdayDate"/>--%>
+                <%--</div>--%>
 
                 <div class="6u 12u$(xsmall)">
                     <sf:label path="comments">Comment:</sf:label>

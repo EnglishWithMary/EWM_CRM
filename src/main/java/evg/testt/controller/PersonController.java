@@ -68,8 +68,13 @@ public class PersonController {
             person.setLastName(personDTO.getLastName());
             person.setComments(personDTO.getComments());
             person.setOrganization(personDTO.getOrganization());
-            //person.setEmail(personDTO.getEmail());
-            person.setBirthdayDate(personDTO.getBirthdayDate());
+
+            Email email = person.getEmail();
+            if (email == null) {
+                email = new Email();
+            }
+            email.setEmail(personDTO.getEmail());
+            person.setEmail(email);
 
             //Update person in DB
             personService.update(person);

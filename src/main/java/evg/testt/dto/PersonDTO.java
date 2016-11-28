@@ -7,6 +7,8 @@ import net.sf.oval.constraint.Length;
 import net.sf.oval.constraint.MatchPattern;
 
 import javax.persistence.Transient;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
@@ -41,5 +43,20 @@ public @Data class PersonDTO {
 
     private String organization;
 
+    private String birthdayDateStr;
+
     private Date birthdayDate;
+
+
+ public String getBirthdayDate() {
+//        SimpleDateFormat sdtf = new SimpleDateFormat("dd.MM.yyyy");
+//        String d = birthdayDate;
+//
+//        String stringDate;
+
+        //stringDate = sdtf.format(d);
+
+        return birthdayDateStr;
+    }
+
 }

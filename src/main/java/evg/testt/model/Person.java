@@ -3,6 +3,8 @@ package evg.testt.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity (name = "persons")
@@ -35,5 +37,16 @@ public @Data class Person extends BaseModel{
 
     @Column(columnDefinition = "text")
     private String comments;
+
+    public void setBirthdayDate(String dateS) {
+        SimpleDateFormat sdtf = new SimpleDateFormat("yyyy-MM-dd");
+        Date d = new Date();
+        try {
+            d = sdtf.parse(dateS);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        birthdayDate=d;
+    }
 
 }
