@@ -15,7 +15,7 @@ public @Data class Person extends BaseModel{
 
     private String middleName;
 
-    private String avatarURL;
+    private String avatarURL="http://feelgrafix.com/data/pictures/pictures-16.jpg";
 
     private String state;
 

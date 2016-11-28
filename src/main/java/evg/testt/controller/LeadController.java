@@ -1,9 +1,11 @@
 package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
+import evg.testt.model.Email;
 import evg.testt.model.Lead;
 import evg.testt.model.Person;
 import evg.testt.oval.SpringOvalValidator;
+import evg.testt.service.EmailService;
 import evg.testt.service.LeadService;
 import evg.testt.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class LeadController {
 
     @Autowired
     PersonService personService;
+
+    @Autowired
+    EmailService emailService;
 
     @RequestMapping(value = "/leads", method = RequestMethod.GET)
     public String showLeads(Model model) throws SQLException {
