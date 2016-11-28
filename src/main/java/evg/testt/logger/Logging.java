@@ -24,25 +24,25 @@ public class Logging //implements MethodInterceptor
 {
 //    @Pointcut("execution(* evg.testt.service.impl.DepartmentServiceImpl.*(..))" +
 //            "|| execution(* evg.testt.controller.DepartmentController.*(..))")
-    @Pointcut("execution(* evg.testt..*(..))")
-    public void logMethods() {}
-
-    @Around(value="logMethods()")
-    public Object methodsInterceptor(ProceedingJoinPoint pjp) throws Throwable
-    {
-        Logger logger = LoggerFactory.getLogger(pjp.getClass());
-        Object ret = null;
-
-        logger.info("Class: " + pjp.getTarget().getClass().getName());
-        logger.info("Method: " + pjp.getSignature().getName() + " starting proceed.");
-
-        ret = pjp.proceed(); // Performs intercepted method and returns the value if it is.
-
-        logger.info("Class: " + pjp.getTarget().getClass().getName());
-        logger.info("Method: " + pjp.getSignature().getName() + " have done.");
-
-        return ret;
-    }
+//    @Pointcut("execution(* evg.testt..*(..))")
+//    public void logMethods() {}
+//
+//    @Around(value="logMethods()")
+//    public Object methodsInterceptor(ProceedingJoinPoint pjp) throws Throwable
+//    {
+//        Logger logger = LoggerFactory.getLogger(pjp.getClass());
+//        Object ret = null;
+//
+//        logger.info("Class: " + pjp.getTarget().getClass().getName());
+//        logger.info("Method: " + pjp.getSignature().getName() + " starting proceed.");
+//
+//        ret = pjp.proceed(); // Performs intercepted method and returns the value if it is.
+//
+//        logger.info("Class: " + pjp.getTarget().getClass().getName());
+//        logger.info("Method: " + pjp.getSignature().getName() + " have done.");
+//
+//        return ret;
+//    }
 
     @AfterThrowing(
             pointcut = "execution(* evg.testt..*(..))",
