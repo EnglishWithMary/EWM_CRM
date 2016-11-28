@@ -103,17 +103,3 @@ public class TeacherController {
     }
 
 }
-/*
-        List<Teacher> teachers = Collections.EMPTY_LIST;
-        List<Person> persons = new ArrayList<Person>();
-        try {
-            teachers = teacherService.getAll();
-            for (Teacher item : teachers){
-                persons.add(item.getPerson());
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return new ModelAndView(JspPath.TEACHER_ALL, "teachers", persons);
-*/

@@ -23,10 +23,45 @@
                                 <input type="hidden" name="pt_id" value="${pt.id}">
                             </form>
                         </div>
+                        <form method="post" action="/leadAddOnPipe">
+                            <input type="hidden" value="${card.id}" name="card_id">
+                            <input type="hidden" name="pt_id" value="${pt.id}">
+                            <button type="submit" class="add">
+                                <span>Add Lead</span>
+                            </button>
+                        </form>
 
-                        <button type="submit" class="add"><span>Add Lead</span>
-                        </button>
 
+
+                        <c:forEach items="${card.cardPersons}" var="cardPerson">
+                            <div>
+                                <div class="col-md-3">
+                                    <c:if test="${cardPerson.person.avatarURL==null}">
+                                        <span class="glyphicon glyphicon-picture" />
+                                    </c:if>
+                                    <c:if test="${cardPerson.person.avatarURL!=null}">
+                                        <img src="${cardPerson.person.avatarURL}" class="img-responsive"/>
+                                    </c:if>
+                                </div>
+                                <div class="col-md-7">
+                                        ${cardPerson.person.firstName}
+                                        ${cardPerson.person.middleName}
+                                        ${cardPerson.person.lastName}
+                                </div>
+                                <div class="col-md-2">
+                                    <form method="post" action="/deleteLeadFromPipe">
+                                        <button type="submit" class="btn btn-default btn-xs">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                        <input type="hidden" name="cardPersonId" value="${cardPerson.id}" >
+                                        <input type="hidden" name="card_id" value="${card.id}" >
+                                        <input type="hidden" name="pt_id" value="${pt.id}">
+                                    </form>
+                                </div>
+                            </div>
+
+
+                        </c:forEach>
                     </div>
                 </div>
             </c:forEach>
@@ -46,3 +81,47 @@
         overflow-y: hidden;
     }
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%--c:forEach items="${card.cardPersons}" var="cardPerson">
+    <div>
+        <div class="col-md-3">
+            <c:if test="${cardPerson.person.avatarURL==null}">
+                <span class="glyphicon glyphicon-picture" />
+            </c:if>
+            <c:if test="${cardPerson.person.avatarURL!=null}">
+                <img src="${cardPerson.person.avatarURL}" class="img-responsive"/>
+            </c:if>
+        </div>
+        <div class="col-md-7">
+                ${cardPerson.person.firstName}
+                ${cardPerson.person.middleName}
+                ${cardPerson.person.lastName}
+        </div>
+        <div class="col-md-2">
+            <form method="post" action="/deleteLeadFromPipe">
+                <button type="submit" class="btn btn-default btn-xs">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+                <input type="hidden" name="cardPersonId" value="${cardPerson.id}" >
+                <input type="hidden" name="card_id" value="${card.id}" >
+                <input type="hidden" name="pt_id" value="${pt.id}">
+            </form>
+        </div>
+    </div>
+
+
+</c:forEach--%>
