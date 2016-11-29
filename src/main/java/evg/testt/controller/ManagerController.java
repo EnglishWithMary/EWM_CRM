@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -122,5 +123,12 @@ public class ManagerController {
         } else {
             return "manager/add";
         }
+    }
+
+    @RequestMapping(value = "/managerDelete")
+    public String managerDelete(@RequestParam Integer id) throws SQLException {
+        Manager manager = managerService.getById(id);
+        managerService.delete(manager);
+        return "managers/all";
     }
 }

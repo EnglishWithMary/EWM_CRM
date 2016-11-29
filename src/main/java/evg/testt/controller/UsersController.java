@@ -29,10 +29,8 @@ public class UsersController {
 
     @Autowired
     UserService userService;
-
     @Autowired
     RoleService roleService;
-
     @Autowired
     SpringOvalValidator validator;
 

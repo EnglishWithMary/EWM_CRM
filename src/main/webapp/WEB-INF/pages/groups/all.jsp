@@ -23,18 +23,25 @@
         <tr>
             <td>Group Name</td>
             <td>Group's Teacher</td>
+            <security:authorize access="hasRole('ROLE_ADMIN')">
+                <td>Delete Group</td>
+            </security:authorize>
         </tr>
         <c:forEach var="group" items="${groups}">
         <tr>
             <td>${group.name}</td>
             <td>
-                ${group.teacher.user.login}
-                (${group.teacher.person.firstName}
+                ${group.teacher.person.firstName}
                 ${group.teacher.person.middleName}
-                ${group.teacher.person.lastName})
+                ${group.teacher.person.lastName}
             </td>
+            <security:authorize access="hasRole('ROLE_ADMIN')">
+                <td>
+                    <a href="/teacherDelete?id=${teacher.id}">Delete</a>
+                </td>
+            </security:authorize>
         </tr>
         </c:forEach>
     </table>
-    <p><a href="/groupAdd">Add Group</a></p>
+    <p><a class="button alt" href="/groupAdd">Add Group</a></p>
 </div>

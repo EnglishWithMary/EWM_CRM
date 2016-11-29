@@ -17,7 +17,8 @@ public @Data class Person extends BaseModel{
 
     private String avatarURL;
 
-    private String state;
+    @Embedded
+    private State state;
 
     @Temporal(TemporalType.DATE)
     private Date birthdayDate;

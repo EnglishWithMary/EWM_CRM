@@ -15,9 +15,7 @@
     <tiles:insertAttribute name="authentification"/>
 </header>
 <security:authorize access="isAuthenticated()">
-    <nav id="menu">
         <tiles:insertAttribute name="menu"/>
-    </nav>
 </security:authorize>
 <section id="main" class="wrapper">
     <div class="inner">

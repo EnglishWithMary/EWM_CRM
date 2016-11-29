@@ -24,13 +24,10 @@ public class PipelineController {
 
     @Autowired
     private UserService userService;
-
     @Autowired
     private PipeTypeService pipeTypeService;
-
     @Autowired
     private CardService cardService;
-
     @Autowired
     CardPersonService cardPersonService;
 
@@ -188,7 +185,7 @@ public class PipelineController {
     public String saveLeadOnPipe(Model model, Principal principal,
                                        @ModelAttribute("lead") @Validated PersonDTO personDTO,
                                        BindingResult bindingResult,@RequestParam(required = true) Integer card_id,
-                                 @RequestParam(required = true) Integer pt_id) {
+                                        @RequestParam(required = true) Integer pt_id) {
         validator.validate(personDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             return "leads/addLeadOnPipe";
