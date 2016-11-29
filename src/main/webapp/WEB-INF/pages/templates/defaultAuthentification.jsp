@@ -17,9 +17,5 @@
                 </ul>
             </li>
         </ul>
-
-        <%--<security:authentication var="user" property="principal"/>--%>
-        <%--<p>${user.username}</p>--%>
-
     </security:authorize>
 </nav>

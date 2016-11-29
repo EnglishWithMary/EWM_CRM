@@ -1,8 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="pipe_line_canvas">
-    <c:if test="${not empty cards}">
-        <div class="scroll">
+
+    <div class="scroll">
+        <c:if test="${not empty cards}">
             <c:forEach items="${cards}" var="card">
                 <div class="pipe_wrapper">
                     <div class="pipe">
@@ -23,6 +24,31 @@
                                 <input type="hidden" name="pt_id" value="${pt.id}">
                             </form>
                         </div>
+                        <c:forEach items="${card.cardPersons}" var="cardPerson">
+                            <div>
+                                <div class="col-md-3">
+                                    <c:if test="${cardPerson.person.avatarURL==null}">
+                                        <span class="glyphicon glyphicon-picture"/>
+                                    </c:if>
+                                    <c:if test="${cardPerson.person.avatarURL!=null}">
+                                        <img src="${cardPerson.person.avatarURL}" class="img-responsive"/>
+                                    </c:if>
+                                </div>
+                                <div class="col-md-7">
+                                    <p style="width: 100%"> ${cardPerson.person.firstName} ${cardPerson.person.middleName} ${cardPerson.person.lastName}</p>
+                                </div>
+                                <div class="col-md-2">
+                                    <form method="post" action="/deleteLeadFromPipe">
+                                        <button type="submit" class="btn btn-default btn-xs">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                        <input type="hidden" name="cardPersonId" value="${cardPerson.id}">
+                                        <input type="hidden" name="card_id" value="${card.id}">
+                                        <input type="hidden" name="pt_id" value="${pt.id}">
+                                    </form>
+                                </div>
+                            </div>
+                        </c:forEach>
                         <form method="post" action="/leadAddOnPipe">
                             <input type="hidden" value="${card.id}" name="card_id">
                             <input type="hidden" name="pt_id" value="${pt.id}">
@@ -30,98 +56,22 @@
                                 <span>Add Lead</span>
                             </button>
                         </form>
-
-
-
-                        <c:forEach items="${card.cardPersons}" var="cardPerson">
-                            <div>
-                                <div class="col-md-3">
-                                    <c:if test="${cardPerson.person.avatarURL==null}">
-                                        <span class="glyphicon glyphicon-picture" />
-                                    </c:if>
-                                    <c:if test="${cardPerson.person.avatarURL!=null}">
-                                        <img src="${cardPerson.person.avatarURL}" class="img-responsive"/>
-                                    </c:if>
-                                </div>
-                                <div class="col-md-7">
-                                        ${cardPerson.person.firstName}
-                                        ${cardPerson.person.middleName}
-                                        ${cardPerson.person.lastName}
-                                </div>
-                                <div class="col-md-2">
-                                    <form method="post" action="/deleteLeadFromPipe">
-                                        <button type="submit" class="btn btn-default btn-xs">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </button>
-                                        <input type="hidden" name="cardPersonId" value="${cardPerson.id}" >
-                                        <input type="hidden" name="card_id" value="${card.id}" >
-                                        <input type="hidden" name="pt_id" value="${pt.id}">
-                                    </form>
-                                </div>
-                            </div>
-
-
-                        </c:forEach>
                     </div>
                 </div>
             </c:forEach>
-            <c:if test="${pt.id > 0 || pt.id != null}">
-                <div class="pipe_wrapper">
-                    <form class="pipe" method="post" action="/addCard">
-                        <input type="submit" value="Add Card" class="add_pipe">
-                        <input type="hidden" name="pt_id" value="${pt.id}">
-                    </form>
-                </div>
-            </c:if>
-        </div>
-    </c:if>
+        </c:if>
+        <c:if test="${pt.id > 0 || pt.id != null}">
+            <div class="pipe_wrapper">
+                <form class="pipe" method="post" action="/addCard">
+                    <input type="submit" value="Add Pipe" class="add_pipe">
+                    <input type="hidden" name="pt_id" value="${pt.id}">
+                </form>
+            </div>
+        </c:if>
+    </div>
 </div>
 <style media="screen" type="text/css">
     body {
         overflow-y: hidden;
     }
 </style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<%--c:forEach items="${card.cardPersons}" var="cardPerson">
-    <div>
-        <div class="col-md-3">
-            <c:if test="${cardPerson.person.avatarURL==null}">
-                <span class="glyphicon glyphicon-picture" />
-            </c:if>
-            <c:if test="${cardPerson.person.avatarURL!=null}">
-                <img src="${cardPerson.person.avatarURL}" class="img-responsive"/>
-            </c:if>
-        </div>
-        <div class="col-md-7">
-                ${cardPerson.person.firstName}
-                ${cardPerson.person.middleName}
-                ${cardPerson.person.lastName}
-        </div>
-        <div class="col-md-2">
-            <form method="post" action="/deleteLeadFromPipe">
-                <button type="submit" class="btn btn-default btn-xs">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </button>
-                <input type="hidden" name="cardPersonId" value="${cardPerson.id}" >
-                <input type="hidden" name="card_id" value="${card.id}" >
-                <input type="hidden" name="pt_id" value="${pt.id}">
-            </form>
-        </div>
-    </div>
-
-
-</c:forEach--%>
