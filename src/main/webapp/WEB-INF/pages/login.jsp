@@ -3,8 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div id="container">
-    <form class="form-signin" name='loginForm'
-          action='/security_check' method='POST'>
+    <form class="form-signin" name='loginForm' action='/security_check' id="formLogin" method='POST'>
         <h3 class="form-signin-heading">Enter your login</h3>
 
         <c:if test="${not empty error}">
@@ -16,8 +15,8 @@
 
         <hr class="colorgraph">
         <br>
-        <input type="text" class="form-control" name="username" placeholder="Login" required="" autofocus=""/>
-        <input type="password" class="form-control" name="password" placeholder="Password" required=""/>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Login" required="" autofocus=""/>
+        <input type="password" class="form-control" id="pass" name="password" placeholder="Password" required=""/>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
     </form>
 </div>

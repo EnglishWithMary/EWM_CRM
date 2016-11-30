@@ -1,3 +1,4 @@
+*.propeties
 .idea
 *.iml
 database_rdbms.dev.properties

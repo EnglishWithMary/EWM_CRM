@@ -21,4 +21,6 @@ public @Data class Card extends BaseModel{
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
     private List<CardPerson> cardPersons;
+
+
 }

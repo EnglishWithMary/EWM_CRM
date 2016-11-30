@@ -7,5 +7,6 @@
     <definition name="login" extends="home">
         <put-attribute name="body" value="/WEB-INF/pages/login.jsp" />
         <put-attribute name="title" value="Login page" />
+        <put-attribute name="formValidationScripts" value="/WEB-INF/pages/templates/defaultFormValidationScripts.jsp" />
     </definition>
 </tiles-definitions>

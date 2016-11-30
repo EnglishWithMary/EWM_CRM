@@ -8,3 +8,4 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/assets/css/bootstrap-3.3.5/css/styles.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/assets/css/main.css" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/assets/css/style.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/assets/css/loginFormValidation.css" />

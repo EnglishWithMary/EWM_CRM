@@ -4,4 +4,5 @@
 <%-- JQuery Validation--%>
 
 <script src="${pageContext.request.contextPath}/resources/assets/js/jquery.validate.js"></script>
-<script src="${pageContext.request.contextPath}/resources/assets/js/JSValidtationWithJQuery.js"></script>
+<%--<script src="${pageContext.request.contextPath}/resources/assets/js/JSValidtationWithJQuery.js"></script>--%>
+<script src="${pageContext.request.contextPath}/resources/assets/js/JQueryValidationLoginForm.js"></script>
