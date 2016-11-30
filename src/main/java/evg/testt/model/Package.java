@@ -1,4 +1,3 @@
 package evg.testt.model;
 
-public class Package extends BaseModel{
-}
+public class Package extends BaseModel{}

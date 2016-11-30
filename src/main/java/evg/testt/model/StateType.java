@@ -1,15 +1,16 @@
 package evg.testt.model;
 
 public enum StateType {
-    STATE_ACTIVE(1), STATE_TRASHED(2), STATE_DELETED(3);
+    STATE_ACTIVE("ACTIVE"), STATE_TRASHED("TRASHED"), STATE_DELETED("DELETED");
 
-    private int stateId;
+    private String state;
 
-    StateType(int id) {
-        stateId = id;
+    StateType(String state) {
+        this.state = state;
     }
 
-    public int getStateId() {
-        return stateId;
+    public String getState() {
+        return state;
     }
 }
+

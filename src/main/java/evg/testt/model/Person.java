@@ -18,7 +18,7 @@ public @Data class Person extends BaseModel{
     private String avatarURL;
 
     @Embedded
-    private State state;
+    private State state = new State(StateType.STATE_ACTIVE.getState());
 
     @Temporal(TemporalType.DATE)
     private Date birthdayDate;

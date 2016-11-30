@@ -128,7 +128,8 @@ public class ManagerController {
     @RequestMapping(value = "/managerDelete")
     public String managerDelete(@RequestParam Integer id) throws SQLException {
         Manager manager = managerService.getById(id);
-        managerService.delete(manager);
+        Person person = manager.getPerson();
+        personService.delete(person);
         return "managers/all";
     }
 }
