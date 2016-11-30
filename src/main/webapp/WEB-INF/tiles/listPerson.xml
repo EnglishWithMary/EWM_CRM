@@ -4,8 +4,8 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-    <definition name="listView" extends="home">
-        <put-attribute name="body" value="/WEB-INF/pages/listView.jsp" />
-        <put-attribute name="title" value="List pages" />
+    <definition name="listPerson" extends="home">
+        <!--<put-attribute name="body" value="/WEB-INF/pages/listPerson.jsp" />-->
+        <put-attribute name="title" value="List persons" />
     </definition>
 </tiles-definitions>
