@@ -37,4 +37,6 @@ public @Data class PersonDTO {
 
 //    @Length(min = 3, max = 20, message = "Wrong middle name.")
     private String comments;
+
+    private Integer cardId;
 }
