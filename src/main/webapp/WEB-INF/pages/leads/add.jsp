@@ -25,14 +25,20 @@
                 <td><sf:input path="middleName"/><br/>
                     <sf:errors path="middleName"/></td>
             </tr>
-            <c:if test="${lead.cardId!=null}">
+            <tr>
+                <td><sf:label path="email">Email:</sf:label></td>
+                <td><sf:input path="email"/><br/>
+                    <sf:errors path="email"/></td>
+            </tr>
+
+            <c:if test="${lead.cardId!=null || card_id==null}">
                 <tr>
                     <td><sf:label path="cardId">Pipe card:</sf:label></td>
                     <td>
                         <sf:select path="cardId" class="form-control">
                             <c:forEach items="${cards}" var="card">
                                 <option value="${card.id}" <c:if test="${card.id == card_id}">selected</c:if>>
-                                        ${card.cardName} (id=${card.id})
+                                    ${card.cardName} (id=${card.id})
                                 </option>
                             </c:forEach>
                         </sf:select>
@@ -40,7 +46,7 @@
                     </td>
                 </tr>
             </c:if>
-            <c:if test="${lead.cardId==null}">
+            <c:if test="${lead.cardId==null && card_id!=null}">
                 <sf:hidden path="cardId" value="${card_id}"/>
             </c:if>
 
