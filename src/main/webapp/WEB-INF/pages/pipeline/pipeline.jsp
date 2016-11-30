@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <div class="pipe_line_canvas">
     <c:if test="${not empty cards}">
@@ -35,13 +36,14 @@
                                     </c:if>
                                 </div>
                                 <div class="col-md-6">
-                                        ${cardPerson.person.firstName}
-                                        ${cardPerson.person.middleName}
+                                    <p>
                                         ${cardPerson.person.lastName}
+                                        ${fn:substring(cardPerson.person.firstName,0,1)}.${fn:substring(cardPerson.person.middleName,0,1)}.
+                                    </p>
                                 </div>
 
                                 <div class="col-md-2">
-                                    <form method="post" action="/leadAddOnPipe">
+                                    <form method="post" action="/leadAdd">
                                         <input type="hidden" value="${cardPerson.id}" name="cardPersonId">
                                         <input type="hidden" value="${card.id}" name="card_id">
                                         <input type="hidden" value="${pt.id}" name="pt_id">
@@ -52,7 +54,7 @@
                                 </div>
 
                                 <div class="col-md-2">
-                                    <form method="post" action="/deleteLeadFromPipe">
+                                    <form method="post" action="/deleteLead">
                                         <button type="submit" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
@@ -63,7 +65,7 @@
                                 </div>
                             </div>
                         </c:forEach>
-                        <form method="post" action="/leadAddOnPipe">
+                        <form method="post" action="/leadAdd">
                             <input type="hidden" name="card_id" value="${card.id}">
                             <input type="hidden" name="pt_id" value="${pt.id}">
                             <button type="submit" class="add">

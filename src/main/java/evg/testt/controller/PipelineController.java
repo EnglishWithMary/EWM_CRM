@@ -137,8 +137,8 @@ public class PipelineController {
         model.addAttribute("cards", cards);
         model.addAttribute("pt", pt);
     }
-
-    @RequestMapping(value = "/deleteLeadFromPipe", method = RequestMethod.POST)
+/*
+    @RequestMapping(value = "/deleteLead", method = RequestMethod.POST)
     public String deleteLeadFromPipe(Model model, Principal principal,
                                      @RequestParam(required = true) Integer cardPersonId,
                                      @RequestParam(required = true) Integer card_id,
@@ -157,7 +157,7 @@ public class PipelineController {
         return "pipeline/pipeline";
     }
 
-    @RequestMapping(value = "/leadAddOnPipe", method = RequestMethod.POST)
+    @RequestMapping(value = "/leadAdd", method = RequestMethod.POST)
     public String addLeadOnPipe(Model model, Principal principal,
                                 @RequestParam(required = true) Integer card_id,
                                 @RequestParam(required = true) Integer pt_id,
@@ -180,10 +180,10 @@ public class PipelineController {
         model.addAttribute("cardPersonId", cardPersonId);
         Pipe pipe = Pipe.valueOf(pt_id);
         inserAttributes(model, principal, pipe);
-        return "leads/addLeadOnPipe";
+        return "leads/add";
     }
 
-    @RequestMapping(value = "/leadSaveOnPipe", method = RequestMethod.POST)
+    @RequestMapping(value = "/leadSave", method = RequestMethod.POST)
     public String saveLeadOnPipe(Model model, Principal principal,
                                  @ModelAttribute("lead") @Validated PersonDTO personDTO,
                                  BindingResult bindingResult,
@@ -201,7 +201,7 @@ public class PipelineController {
             model.addAttribute("card_id", card_id);
             model.addAttribute("pt_id", pt_id);
             model.addAttribute("cardPersonId", cardPersonId);
-            return "leads/addLeadOnPipe";
+            return "leads/add";
         }
 
         if (cardPersonId == null) {
@@ -246,4 +246,5 @@ public class PipelineController {
 
         return takeLead(model, principal);
     }
+    */
 }
