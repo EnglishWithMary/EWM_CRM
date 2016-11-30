@@ -8,8 +8,3 @@
 
 </nav>
 <a href="/home" class="logo">Mary</a>
-
-<security:authorize access="isAuthenticated()">
-    <security:authentication var="user" property="principal"/>
-    <p>${user.username}</p>
-</security:authorize>
