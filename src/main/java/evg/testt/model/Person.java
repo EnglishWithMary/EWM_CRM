@@ -17,6 +17,9 @@ public @Data class Person extends BaseModel{
 
     private String avatarURL;
 
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Role role;
+
     @Embedded
     private State state;
 
