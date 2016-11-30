@@ -185,34 +185,40 @@ public class PipelineController {
 
     @RequestMapping(value = "/leadSaveOnPipe", method = RequestMethod.POST)
     public String saveLeadOnPipe(Model model, Principal principal,
-                                 @ModelAttribute("lead") @Validated PersonDTO PersonDTO,
+                                 @ModelAttribute("lead") @Validated PersonDTO personDTO,
                                  BindingResult bindingResult,
                                  @RequestParam(required = true) Integer card_id,
                                  @RequestParam(required = true) Integer pt_id,
                                  @RequestParam(required = false) Integer cardPersonId)
             throws SQLException {
 
-        validator.validate(PersonDTO, bindingResult);
+        Pipe pipe = Pipe.valueOf(pt_id);
+
+        inserAttributes(model, principal, pipe);
+
+        validator.validate(personDTO, bindingResult);
         if (bindingResult.hasErrors()) {
+            model.addAttribute("card_id", card_id);
+            model.addAttribute("pt_id", pt_id);
+            model.addAttribute("cardPersonId", cardPersonId);
             return "leads/addLeadOnPipe";
         }
 
         if (cardPersonId == null) {
             Person newPerson = new Person();
-            newPerson.setFirstName(PersonDTO.getFirstName());
-            newPerson.setLastName(PersonDTO.getLastName());
-            newPerson.setMiddleName(PersonDTO.getMiddleName());
+            newPerson.setFirstName(personDTO.getFirstName());
+            newPerson.setLastName(personDTO.getLastName());
+            newPerson.setMiddleName(personDTO.getMiddleName());
             Email newEmail = new Email();
-            newEmail.setEmail(PersonDTO.getEmail());
+            newEmail.setEmail(personDTO.getEmail());
             Lead newLead = new Lead();
-            Card card = null;
             CardPerson cardPerson = new CardPerson();
             emailService.insert(newEmail);
             newPerson.setEmail(newEmail);
             personService.insert(newPerson);
             newLead.setPerson(newPerson);
             leadService.insert(newLead);
-            card = cardService.getById(PersonDTO.getCardId());
+            Card card = cardService.getById(personDTO.getCardId());
             cardPerson.setPerson(newPerson);
             cardPerson.setCard(card);
             cardPersonService.insert(cardPerson);
@@ -220,23 +226,23 @@ public class PipelineController {
             cardService.update(card);
         } else {
             CardPerson cardPerson = cardPersonService.getById(cardPersonId);
-            Card newCard = cardService.getById(PersonDTO.getCardId());
+            Card newCard = cardService.getById(personDTO.getCardId());
             Card oldCard = cardService.getById(card_id);
             cardPerson.setCard(newCard);
-            cardPerson.getPerson().setFirstName(PersonDTO.getFirstName());
+            cardPerson.getPerson().setFirstName(personDTO.getFirstName());
             cardPerson.getPerson().setMiddleName(cardPerson.getPerson().getMiddleName());
             cardPerson.getPerson().setLastName(cardPerson.getPerson().getLastName());
-            cardPerson.getPerson().getEmail().setEmail(PersonDTO.getEmail());
-            newCard.getCardPersons().add(cardPerson);
-            cardService.update(newCard);
-            oldCard.getCardPersons().remove(cardPerson);
-            cardService.update(oldCard);
+            cardPerson.getPerson().getEmail().setEmail(personDTO.getEmail());
+            if(!newCard.getId().equals(oldCard.getId())){
+                newCard.getCardPersons().add(cardPerson);
+                cardService.update(newCard);
+                oldCard.getCardPersons().remove(cardPerson);
+                cardService.update(oldCard);
+            }else{
+                cardService.update(newCard);
+            }
             cardPersonService.update(cardPerson);
         }
-
-        Pipe pipe = Pipe.valueOf(pt_id);
-
-        inserAttributes(model, principal, pipe);
 
         return takeLead(model, principal);
     }
