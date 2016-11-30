@@ -53,12 +53,18 @@ public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> imple
     @Override
     public List<Person> findSortedByRegistrationDate() throws SQLException {
 
-        Query query = em.createQuery("SELECT person FROM persons person ORDER BY person.registrationDate ASC");
+        Query query = em.createQuery("UPDATE person.state FROM persons person ");
         List<Person> result = (List<Person>) query.getResultList();
         if(result.size()>0) {
             return result;
         }
         return null;
-
     }
+
+    @Override
+    public void delete(Person person){
+//        Query query = em.createQuery("UPDATE persons SET person.state='STATE_DELETED' FROM persons WHERE person.id =:id");
+//        query.setParameter("id", person.getId());
+    }
+
 }

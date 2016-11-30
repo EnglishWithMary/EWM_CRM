@@ -1,9 +1,11 @@
 package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
+import evg.testt.model.Email;
 import evg.testt.model.Lead;
 import evg.testt.model.Person;
 import evg.testt.oval.SpringOvalValidator;
+import evg.testt.service.EmailService;
 import evg.testt.service.LeadService;
 import evg.testt.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +27,12 @@ public class LeadController {
 
     @Autowired
     SpringOvalValidator validator;
-
     @Autowired
     LeadService leadService;
-
     @Autowired
     PersonService personService;
+    @Autowired
+    EmailService emailService;
 
     @RequestMapping(value = "/leads", method = RequestMethod.GET)
     public String showLeads(Model model) throws SQLException {
@@ -40,10 +42,10 @@ public class LeadController {
     }
 
     @RequestMapping(value = "/leadDelete")
-    public String deleteLead(@RequestParam Integer id) throws SQLException {
+    public String leadDelete(@RequestParam Integer id) throws SQLException {
         Lead lead = leadService.getById(id);
         leadService.delete(lead);
-        return "/leads";
+        return "leads/all";
     }
 
     @RequestMapping(value = "/leadAdd")
@@ -69,13 +71,13 @@ public class LeadController {
         personService.insert(newPerson);
         newLead.setPerson(newPerson);
         leadService.insert(newLead);
-        return "redirect:/leads";
+        return "redirect:leads";
     }
 
     @RequestMapping(value = "/leadSortByDate", method = RequestMethod.POST)
     public String filterLeads(Model model) throws SQLException {
         List<Lead> leads = leadService.getSortedByRegistrationDate();
         model.addAttribute("leads", leads);
-        return "leads/all";
+        return "leads";
     }
 }

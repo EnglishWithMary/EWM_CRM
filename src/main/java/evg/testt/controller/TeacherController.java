@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
@@ -102,18 +103,10 @@ public class TeacherController {
         return "teachers/all";
     }
 
+    @RequestMapping(value = "/teacherDelete")
+    public String teacherDelete(@RequestParam Integer id) throws SQLException {
+        Teacher teacher = teacherService.getById(id);
+        teacherService.delete(teacher);
+        return "teachers/all";
+    }
 }
-/*
-        List<Teacher> teachers = Collections.EMPTY_LIST;
-        List<Person> persons = new ArrayList<Person>();
-        try {
-            teachers = teacherService.getAll();
-            for (Teacher item : teachers){
-                persons.add(item.getPerson());
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return new ModelAndView(JspPath.TEACHER_ALL, "teachers", persons);
-*/

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <div class="12u">
 <h3>Managers list</h3>
@@ -12,10 +13,13 @@
         <table class="alt">
             <thead>
                 <tr>
-                    <th>First name</th>
-                    <th>Last name</th>
-                    <th>Middle name</th>
-                    <th>Registration Date</th>
+                    <td>First name</td>
+                    <td>Last name</td>
+                    <td>Middle name</td>
+                    <td>Registration Date</td>
+                    <security:authorize access="hasRole('ROLE_ADMIN')">
+                        <td>Delete Manager</td>
+                    </security:authorize>
                 </tr>
             </thead>
             <tbod>
@@ -25,12 +29,17 @@
                         <td>${manager.person.lastName}</td>
                         <td>${manager.person.middleName}</td>
                         <td>${manager.person.registrationDate}</td>
+                        <security:authorize access="hasRole('ROLE_ADMIN')">
+                        <td>
+                            <a href="/managerDelete?id=${manager.id}">Delete</a>
+                        </td>
+                        </security:authorize>
                     </tr>
                 </c:forEach>
             </tbod>
         </table>
     </div>
-    <p><a href="/managerAdd" class="button">Add Manager</a></p><br>
+    <p><a href="/managerAdd" class="button alt">Add Manager</a></p><br>
     <p>Pages</p>
 
     <table>

@@ -1,5 +1,6 @@
 package evg.testt.dao.Jpa;
 
+import evg.testt.dao.Jpa.BaseRepositoryJpaImpl;
 import evg.testt.model.Activity;
 import evg.testt.dao.ActivityRepository;
 import org.springframework.stereotype.Repository;
@@ -8,12 +9,10 @@ import org.springframework.stereotype.Repository;
 public class ActivityRepositoryJpaImpl extends BaseRepositoryJpaImpl<Activity> implements ActivityRepository{
     @Override
     public void saveActivity(Activity activity) {
-        if(activity.getId() == null)
-        {
+        if(activity.getId() == null) {
             em.persist(activity);
         }
-        else
-        {
+        else {
             em.merge(activity);
         }
     }
