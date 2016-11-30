@@ -4,3 +4,5 @@ database_rdbms.dev.properties
 database_rdbms.staging.properties
 
 
+Будет удалено target/
+/src/main/resources/database_rdbms.dev.properties

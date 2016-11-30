@@ -18,6 +18,9 @@ public @Data class Person extends BaseModel{
 
     private String state;
 
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Role role;
+
     @Temporal(TemporalType.DATE)
     private Date birthdayDate;
 
