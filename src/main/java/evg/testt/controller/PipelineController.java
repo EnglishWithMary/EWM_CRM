@@ -212,14 +212,13 @@ public class PipelineController {
             Email newEmail = new Email();
             newEmail.setEmail(personDTO.getEmail());
             Lead newLead = new Lead();
-            Card card = null;
             CardPerson cardPerson = new CardPerson();
             emailService.insert(newEmail);
             newPerson.setEmail(newEmail);
             personService.insert(newPerson);
             newLead.setPerson(newPerson);
             leadService.insert(newLead);
-            card = cardService.getById(personDTO.getCardId());
+            Card card = cardService.getById(personDTO.getCardId());
             cardPerson.setPerson(newPerson);
             cardPerson.setCard(card);
             cardPersonService.insert(cardPerson);
