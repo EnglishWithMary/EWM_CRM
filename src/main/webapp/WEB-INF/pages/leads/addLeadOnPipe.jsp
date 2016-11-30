@@ -11,29 +11,29 @@
     <fieldset>
         <table>
             <tr>
-                <th><sf:label path="firstName">First Name:</sf:label></th>
+                <td><sf:label path="firstName">First Name:</sf:label></td>
                 <td><sf:input path="firstName"/><br/>
                     <sf:errors path="firstName"/></td>
             </tr>
             <tr>
-                <th><sf:label path="lastName">Last Name:</sf:label></th>
+                <td><sf:label path="lastName">Last Name:</sf:label></td>
                 <td><sf:input path="lastName"/><br/>
                     <sf:errors path="lastName"/></td>
             </tr>
             <tr>
-                <th><sf:label path="middleName">Middle Name:</sf:label></th>
+                <td><sf:label path="middleName">Middle Name:</sf:label></td>
                 <td><sf:input path="middleName"/><br/>
                     <sf:errors path="middleName"/></td>
             </tr>
             <tr>
-                <th><sf:label path="email">Email:</sf:label></th>
+                <td><sf:label path="email">Email:</sf:label></td>
                 <td><sf:input path="email"/><br/>
                     <sf:errors path="email"/></td>
             </tr>
 
             <c:if test="${lead.cardId!=null}">
                 <tr>
-                    <th><sf:label path="cardId">Pipe card:</sf:label></th>
+                    <td><sf:label path="cardId">Pipe card:</sf:label></td>
                     <td>
                         <sf:select path="cardId" class="form-control">
                             <c:forEach items="${cards}" var="card">

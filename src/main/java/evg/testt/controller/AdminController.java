@@ -23,21 +23,5 @@ public class AdminController {
         return "admin";
     }
 
-    @RequestMapping(value = "/adminAdd", method = RequestMethod.GET)
-    public String adminAdd(){
-        /**
-         * TODO: add logic
-         */
-        return "adminAdd";
-    }
-
-    @RequestMapping(value = "/adminAdd", method = RequestMethod.POST)
-    public String adminSave(){
-        /**
-         * TODO: add logic
-         */
-        return "redirect:/admin";
-    }
-
 }
 

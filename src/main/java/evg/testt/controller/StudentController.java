@@ -117,4 +117,11 @@ public class StudentController {
             model.addAttribute("students", students);
         return "students/all";
     }
+
+    @RequestMapping(value = "/studentDelete")
+    public String studentDelete(@RequestParam Integer id) throws SQLException {
+        Student student = studentService.getById(id);
+        studentService.delete(student);
+        return "students/all";
+    }
 }

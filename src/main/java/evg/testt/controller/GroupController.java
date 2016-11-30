@@ -26,10 +26,8 @@ public class GroupController {
 
     @Autowired
     SpringOvalValidator validator;
-
     @Autowired
     GroupService groupService;
-
     @Autowired
     TeacherService teacherService;
 
@@ -56,14 +54,23 @@ public class GroupController {
     @RequestMapping(value = "/groupSave")
     public String saveGroup(Model model, @ModelAttribute("group") @Validated GroupDTO groupDTO,
                             BindingResult bindingResult) throws SQLException {
+
         if (bindingResult.hasErrors()) {
             return "groups/add";
         }
         Group newGroup = new Group();
+
         newGroup.setName(groupDTO.getName());
-        newGroup.setTeacher(teacherService.getById(groupDTO.getTeacherId()));
+
+        if (!(groupDTO.getTeacherId() == null)) {
+
+            newGroup.setTeacher(teacherService.getById(groupDTO.getTeacherId()));
+
+        }
+
         groupService.insert(newGroup);
-        return "groups/all";
+
+        return "redirect:/groups";
     }
 
     @RequestMapping(value = "/groupFilter", method = RequestMethod.POST)
@@ -85,4 +92,5 @@ public class GroupController {
                 .addAttribute("groupFilter", groupFilter);
         return "groups/all";
     }
+
 }

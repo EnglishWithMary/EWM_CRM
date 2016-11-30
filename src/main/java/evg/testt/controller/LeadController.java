@@ -27,13 +27,10 @@ public class LeadController {
 
     @Autowired
     SpringOvalValidator validator;
-
     @Autowired
     LeadService leadService;
-
     @Autowired
     PersonService personService;
-
     @Autowired
     EmailService emailService;
 
@@ -45,10 +42,10 @@ public class LeadController {
     }
 
     @RequestMapping(value = "/leadDelete")
-    public String deleteLead(@RequestParam Integer id) throws SQLException {
+    public String leadDelete(@RequestParam Integer id) throws SQLException {
         Lead lead = leadService.getById(id);
         leadService.delete(lead);
-        return "/leads";
+        return "leads/all";
     }
 
     @RequestMapping(value = "/leadAdd")
@@ -74,13 +71,13 @@ public class LeadController {
         personService.insert(newPerson);
         newLead.setPerson(newPerson);
         leadService.insert(newLead);
-        return "redirect:/leads";
+        return "redirect:leads";
     }
 
     @RequestMapping(value = "/leadSortByDate", method = RequestMethod.POST)
     public String filterLeads(Model model) throws SQLException {
         List<Lead> leads = leadService.getSortedByRegistrationDate();
         model.addAttribute("leads", leads);
-        return "leads/all";
+        return "leads";
     }
 }

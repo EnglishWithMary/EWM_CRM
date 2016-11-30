@@ -183,7 +183,6 @@ public class PipelineController {
         return "leads/addLeadOnPipe";
     }
 
-
     @RequestMapping(value = "/leadSaveOnPipe", method = RequestMethod.POST)
     public String saveLeadOnPipe(Model model, Principal principal,
                                  @ModelAttribute("lead") @Validated PersonDTO personDTO,

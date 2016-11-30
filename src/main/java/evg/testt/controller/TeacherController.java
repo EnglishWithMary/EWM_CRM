@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
@@ -102,4 +103,10 @@ public class TeacherController {
         return "teachers/all";
     }
 
+    @RequestMapping(value = "/teacherDelete")
+    public String teacherDelete(@RequestParam Integer id) throws SQLException {
+        Teacher teacher = teacherService.getById(id);
+        teacherService.delete(teacher);
+        return "teachers/all";
+    }
 }

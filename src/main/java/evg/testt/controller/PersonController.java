@@ -37,7 +37,8 @@ public class PersonController {
     @RequestMapping(value = "/personProfile", method = RequestMethod.GET)
     public String profilePerson(@ModelAttribute("person") @Validated PersonDTO personDTO,
                                       BindingResult bindingResult,
-                                      Principal principal, Model model) throws PersonRoleNotFoundException, SQLException{
+                                      Principal principal, Model model)
+            throws PersonRoleNotFoundException, SQLException{
 
         validator.validate(personDTO, bindingResult);
 
@@ -48,8 +49,10 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/personUpdate", method = RequestMethod.POST)
-    public String updatePerson(@ModelAttribute("person") @Validated PersonDTO personDTO, BindingResult bindingResult,
-                                     @RequestParam("image") MultipartFile multipartFile, Principal principal,
+    public String updatePerson(@ModelAttribute("person") @Validated PersonDTO personDTO,
+                               BindingResult bindingResult,
+                               @RequestParam("image") MultipartFile multipartFile,
+                               Principal principal,
                                Model model)
             throws IOException, PersonException, PersonRoleNotFoundException, BadAvatarNameException {
 
@@ -91,6 +94,13 @@ public class PersonController {
     public String filterPersons(Model model) throws SQLException {
         List<Person> persons = personService.getSortedByRegistrationDate();
         model.addAttribute("persons", persons);
+        return "persons/all";
+    }
+
+    @RequestMapping(value = "/personDelete")
+    public String personDelete(@RequestParam Integer id) throws SQLException {
+        Person person = personService.getById(id);
+        personService.delete(person);
         return "persons/all";
     }
 
