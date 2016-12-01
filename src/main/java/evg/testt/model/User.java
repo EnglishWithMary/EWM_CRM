@@ -16,6 +16,7 @@ public @Data class User extends BaseModel {
     @Length(min = 6, max = 20, message = "Password should be at least 3 and less than 20 symbols")
     private String password;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
+//            (cascade = CascadeType.PERSIST)
     private Role role;
 }

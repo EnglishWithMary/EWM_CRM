@@ -32,8 +32,8 @@
                                 Delete
                             </button>
                             <input type="hidden" name="id" value="${lead.id}">
-                            <input type="hidden" name="card_id" value="${card.id}">
-                            <input type="hidden" name="pt_id" value="${pt.id}">
+                            <input type="hidden" name="cardId" value="${card.id}">
+                            <input type="hidden" name="pipeTipeId" value="${pt.id}">
                         </form>
                     </td>
                 </security:authorize>
@@ -41,8 +41,8 @@
         </c:forEach>
     </table>
     <form method="post" action="/leadAdd">
-        <input type="hidden" value="${pt.id}" name="pt_id">
-        <input type="hidden" value="${card.id}" name="card_id">
+        <input type="hidden" value="${pt.id}" name="pipeTipeId">
+        <input type="hidden" value="${card.id}" name="cardId">
         <button type="submit" class="button alt">Add Lead</button>
     </form>
 </div>

@@ -37,18 +37,12 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
     }
 
     public Collection<T> findAll() {
-
-//        Query query = em.createQuery("SELECT t FROM " + entityClass.getName() + " t");
-        Query query = em.createQuery("SELECT t FROM " + entityClass.getName() + " t join t.person p WHERE p.state = 'ACTIVE'");
-
+        Query query = em.createQuery("SELECT t FROM " + entityClass.getName() + " t");
         return (List<T>)query.getResultList();
-
     }
 
     public T findOne(Integer id) {
-
         return em.find(entityClass, id);
-
     }
 
     public void save(T t) {
@@ -93,6 +87,7 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
         }
         return hasPerson;
     }
+
     @Override
     public List<T> findSortedByRegistrationDate() throws SQLException {
         if(!hasPerson())throw new PersonFieldTypeNotFoundException(entityClass.getName() +
@@ -116,5 +111,4 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
         query.setMaxResults(pageSize);
         return query.getResultList();
     }
-
 }

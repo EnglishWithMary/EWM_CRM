@@ -5,10 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Date;
 
-/**
- * Created by User on 27.11.2016.
- */
-@Entity(name = "personActivities")
+@Entity(name = "activities")
 public @Data class Activity extends BaseModel{
 
     private String activity;
@@ -16,6 +13,6 @@ public @Data class Activity extends BaseModel{
     @Temporal(TemporalType.TIMESTAMP)
     private Date date = new Date();
 
-    @ManyToOne
-    private Person person;
+//    @ManyToOne
+//    private Person person;
 }
