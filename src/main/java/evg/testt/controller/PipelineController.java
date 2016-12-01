@@ -29,7 +29,6 @@ public class PipelineController {
     @Autowired
     private CardService cardService;
 
-
     @Autowired
     SpringOvalValidator validator;
 
@@ -64,7 +63,7 @@ public class PipelineController {
             throw e;
         }
         inserAttributes(model, principal, pipe);
-        return "pipeline/pipeline";
+        return "redirect:/takeLeadtpipe";
     }
 
 
@@ -93,7 +92,7 @@ public class PipelineController {
         }
 
         inserAttributes(model, principal, pipe);
-        return "pipeline/pipeline";
+        return "redirect:/takeLeadtpipe";
     }
 
     @RequestMapping(value = "/editCardName", method = RequestMethod.POST)
@@ -111,7 +110,7 @@ public class PipelineController {
 
         inserAttributes(model, principal, pipe);
 
-        return "redirect:pipeline/pipeline";
+        return "redirect:/takeLeadtpipe";
     }
 
     private void inserAttributes(Model model, Principal principal, Pipe pipe) {

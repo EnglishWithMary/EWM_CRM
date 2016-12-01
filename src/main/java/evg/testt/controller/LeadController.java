@@ -56,95 +56,49 @@ public class LeadController {
     }
 
     @RequestMapping(value = "/leadAdd", method = RequestMethod.POST)
-    public String addLeadOnPipe(Model model, Principal principal,
+    public String addLeadOnPipe(Model model,
                                 @RequestParam(required = true) Integer cardId,
                                 @RequestParam(required = true) Integer pipeTypeId
-//                                @RequestParam(required = false) Integer cardId
                                 ) throws SQLException {
 
         PersonDTO lead = new PersonDTO();
-//        Pipe pipe = Pipe.valueOf(pipeTypeId);
-//        insertAttributes(model, principal, pipe);
-
         model.addAttribute("cards", cardService.getCards(Pipe.valueOf(pipeTypeId)));
         model.addAttribute("pt", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
-
-//        if (cardId != null) {
-//            Card card = cardService.getById(cardId);
-//            lead.setFirstName(cardPerson.getPerson().getFirstName());
-//            lead.setMiddleName(cardPerson.getPerson().getMiddleName());
-//            lead.setLastName(cardPerson.getPerson().getLastName());
-//            lead.setEmail(cardPerson.getPerson().getEmail().getEmail());
-//            lead.setCardId(cardId);
-//        }
-
         model.addAttribute("lead", lead);
         model.addAttribute("pt_id", pipeTypeId);
-//        model.addAttribute("cardPersonId", cardId);
         model.addAttribute("card_id", cardId);
         return "leads/add";
     }
 
     @RequestMapping(value = "/leadSave", method = RequestMethod.POST)
-    public String saveLeadOnPipe(Model model, Principal principal,
-                                 @ModelAttribute("lead") @Validated PersonDTO personDTO,
+    public String saveLeadOnPipe(Model model, @ModelAttribute("lead") @Validated PersonDTO personDTO,
                                  BindingResult bindingResult,
                                  @RequestParam(required = true) Integer cardId,
-                                 @RequestParam(required = true) Integer pipeTypeId,
-                                 @RequestParam(required = false) Integer cardPersonId)
-            throws SQLException {
+                                 @RequestParam(required = true) Integer pipeTypeId)
+                                    throws SQLException {
 
-//        Pipe pipe = Pipe.valueOf(pipeTypeId);
         model.addAttribute("cards", cardService.getCards(Pipe.valueOf(pipeTypeId)));
         model.addAttribute("pt", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
-//        insertAttributes(model, principal, pipe);
-
         validator.validate(personDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("card_id", cardId);
             model.addAttribute("pt_id", pipeTypeId);
-            model.addAttribute("cardPersonId", cardPersonId);
             return "leads/add";
         }
-
-        if (cardPersonId == null) {
-
             Person newPerson = new Person();
-
             newPerson.setFirstName(personDTO.getFirstName());
             newPerson.setLastName(personDTO.getLastName());
             newPerson.setMiddleName(personDTO.getMiddleName());
-
             Email newEmail = new Email();
-
             newEmail.setEmail(personDTO.getEmail());
-
             Lead newLead = new Lead();
-
-//            CardPerson cardPerson = new CardPerson();
-
-//            emailService.insert(newEmail);
-
             newPerson.setEmail(newEmail);
-//            personService.insert(newPerson);
-
             newLead.setPerson(newPerson);
-
             leadService.insert(newLead);
-
             Card card = cardService.getById(personDTO.getCardId());
-
             card.getPersons().add(personService.getById(newPerson.getId()));
-//            cardPerson.setCard(card);
-
             cardService.update(card);
-
-//            card.getCardPersons().add(cardPerson);
-
-//            cardService.update(card);
-
-        } else {
 //            CardPerson cardPerson = cardPersonService.getById(cardId);
 //            Card newCard = cardService.getById(personDTO.getCardId());
 //            Card oldCard = cardService.getById(cardId);
@@ -168,12 +122,9 @@ public class LeadController {
 //                cardService.update(newCard);
 //            }
 //            cardPersonService.update(cardPerson);
-        }
-
-        if (cardId ==null) return showLeads(model, principal);
-        return "pipeline/pipeline";
+//        if (cardId ==null) return showLeads(model, principal);
+        return "redirect:/takeLeadtpipe";
     }
-
 
     @RequestMapping(value = "/deleteLead", method = RequestMethod.POST)
     public String deleteLeadFromPipe(Model model, Principal principal,
@@ -181,7 +132,7 @@ public class LeadController {
                                      @RequestParam(required = true) Integer cardId,
                                      @RequestParam(required = true) Integer pipeTypeId,
                                      @RequestParam(required = false) Integer id)
-            throws SQLException {
+                                        throws SQLException {
 
 //        Pipe pipe = Pipe.valueOf(pipeTypeId);
         model.addAttribute("cards", cardService.getCards(Pipe.valueOf(pipeTypeId)));
@@ -203,7 +154,7 @@ public class LeadController {
             leadService.delete(lead);
             return showLeads(model,principal);
         }
-        return "pipeline/pipeline";
+        return "redirect:/takeLeadtpipe";
     }
 
 //    private void insertAttributes(Model model, Principal principal, Pipe pipe) {
