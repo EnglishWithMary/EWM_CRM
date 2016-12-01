@@ -2,6 +2,7 @@ package evg.testt.dao.Jpa;
 
 import evg.testt.model.Card;
 import evg.testt.model.Pipe;
+import evg.testt.model.PipeType;
 import evg.testt.model.User;
 import evg.testt.dao.CardRepository;
 import evg.testt.service.UserService;
@@ -17,19 +18,13 @@ import java.util.List;
 @Repository
 public class CardRepositoryJpaImpl extends BaseRepositoryJpaImpl<Card> implements CardRepository {
 
-    @Autowired
-    private UserService us;
-
     @Override
-    public List<Card> findCards(Principal principal, Pipe pipe) throws SQLException {
+    public List<Card> findCards(PipeType pipe) throws SQLException {
         List<Card> cards = Collections.EMPTY_LIST;
-
-        User user = us.findByUserLogin(principal.getName());
-
-        Query query = em.createQuery("from cards where type_id = :tid order by id ASC");
-        query.setParameter("tid", pipe.getPipeId());
+        Query query = em.createQuery("select card from cards card left join fetch card.persons " +
+                "where card.type = :pipe order by card.id ASC");
+        query.setParameter("pipe", pipe);
         cards = query.getResultList();
-
         return cards;
     }
 }

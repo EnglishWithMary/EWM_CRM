@@ -25,28 +25,28 @@
                             </form>
                         </div>
 
-                        <c:forEach items="${card.cardPersons}" var="cardPerson">
+                        <c:forEach items="${card.persons}" var="person">
                             <div class="editToolbar">
                                 <div class="col-md-2">
-                                    <c:if test="${cardPerson.person.avatarURL==null}">
+                                    <c:if test="${person.avatarURL==null}">
                                         <span class="glyphicon glyphicon-picture"/>
                                     </c:if>
-                                    <c:if test="${cardPerson.person.avatarURL!=null}">
-                                        <img src="${cardPerson.person.avatarURL}" class="img-responsive"/>
+                                    <c:if test="${person.avatarURL!=null}">
+                                        <img src="${person.avatarURL}" class="img-responsive"/>
                                     </c:if>
                                 </div>
                                 <div class="col-md-6">
                                     <p>
-                                        ${cardPerson.person.lastName}
-                                        ${fn:substring(cardPerson.person.firstName,0,1)}.${fn:substring(cardPerson.person.middleName,0,1)}.
+                                        ${person.lastName}
+                                        ${fn:substring(person.firstName,0,1)}.${fn:substring(person.middleName,0,1)}.
                                     </p>
                                 </div>
 
                                 <div class="col-md-2">
                                     <form method="post" action="/leadAdd">
-                                        <input type="hidden" value="${cardPerson.id}" name="cardPersonId">
-                                        <input type="hidden" value="${card.id}" name="card_id">
-                                        <input type="hidden" value="${pt.id}" name="pt_id">
+                                        <%--<input type="hidden" value="${person.id}" name="personId">--%>
+                                        <input type="hidden" value="${card.id}" name="cardId">
+                                        <input type="hidden" value="${pt.id}" name="pipeTypeId">
                                         <button type="submit" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </button>
@@ -58,7 +58,7 @@
                                         <button type="submit" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
-                                        <input type="hidden" name="cardPersonId" value="${cardPerson.id}">
+                                        <%--<input type="hidden" name="cardPersonId" value="${cardPerson.id}">--%>
                                         <input type="hidden" name="card_id" value="${card.id}">
                                         <input type="hidden" name="pt_id" value="${pt.id}">
                                     </form>
