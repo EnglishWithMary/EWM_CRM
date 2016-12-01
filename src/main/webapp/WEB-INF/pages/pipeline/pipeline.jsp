@@ -12,7 +12,7 @@
                                 <input type="text" value="${card.cardName}" name="cardName"
                                        style="width: 83%; float: left; height: 44px">
                                 <input type="hidden" value="${card.id}" name="cardId">
-                                <input type="hidden" value="${pt.id}" name="pipeTypeId">
+                                <input type="hidden" value="${pypeType.id}" name="pipeTypeId">
                                 <button type="submit" class="btn btn-default btn-xs" style="width: 12%"><span
                                         class="glyphicon glyphicon-pencil"></span></button>
                             </form>
@@ -21,7 +21,7 @@
                                 <button type="submit" class="btn btn-default btn-xs"><span
                                         class="glyphicon glyphicon-remove"></span></button>
                                 <input type="hidden" value="${card.id}" name="cardId">
-                                <input type="hidden" name="pipeTypeId" value="${pt.id}">
+                                <input type="hidden" name="pipeTypeId" value="${pypeType.id}">
                             </form>
                         </div>
 
@@ -44,9 +44,8 @@
 
                                 <div class="col-md-2">
                                     <form method="post" action="/leadAdd">
-                                        <%--<input type="hidden" value="${person.id}" name="personId">--%>
                                         <input type="hidden" value="${card.id}" name="cardId">
-                                        <input type="hidden" value="${pt.id}" name="pipeTypeId">
+                                        <input type="hidden" value="${pypeType.id}" name="pipeTypeId">
                                         <button type="submit" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </button>
@@ -58,16 +57,15 @@
                                         <button type="submit" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
-                                        <%--<input type="hidden" name="cardPersonId" value="${cardPerson.id}">--%>
                                         <input type="hidden" name="cardId" value="${card.id}">
-                                        <input type="hidden" name="pipeTypeId" value="${pt.id}">
+                                        <input type="hidden" name="pipeTypeId" value="${pypeType.id}">
                                     </form>
                                 </div>
                             </div>
                         </c:forEach>
                         <form method="post" action="/leadAdd">
                             <input type="hidden" name="cardId" value="${card.id}">
-                            <input type="hidden" name="pipeTypeId" value="${pt.id}">
+                            <input type="hidden" name="pipeTypeId" value="${pypeType.id}">
                             <button type="submit" class="add">
                                 <span>Add Lead</span>
                             </button>
@@ -81,7 +79,7 @@
             <div class="pipe_wrapper">
                 <form class="pipe" method="post" action="/addCard">
                     <input type="submit" value="Add Card" class="add_pipe">
-                    <input type="hidden" name="pipeTypeId" value="${pt.id}">
+                    <input type="hidden" name="pipeTypeId" value="${pypeType.id}">
                 </form>
             </div>
         </c:if>

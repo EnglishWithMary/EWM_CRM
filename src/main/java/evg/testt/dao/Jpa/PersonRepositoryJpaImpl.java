@@ -61,10 +61,10 @@ public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> imple
         return null;
     }
 
-    @Override
-    public void delete(Person person){
-//        Query query = em.createQuery("UPDATE persons SET person.state='STATE_DELETED' FROM persons WHERE person.id =:id");
-//        query.setParameter("id", person.getId());
-    }
+//    @Override
+//    public void delete(Person person){
+////        Query query = em.createQuery("UPDATE persons SET person.state='STATE_DELETED' FROM persons WHERE person.id =:id");
+////        query.setParameter("id", person.getId());
+//    }
 
 }

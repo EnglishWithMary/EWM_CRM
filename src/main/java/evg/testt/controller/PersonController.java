@@ -54,7 +54,7 @@ public class PersonController {
                                @RequestParam("image") MultipartFile multipartFile,
                                Principal principal,
                                Model model)
-            throws IOException, PersonException, PersonRoleNotFoundException, BadAvatarNameException {
+            throws IOException, PersonException, PersonRoleNotFoundException, BadAvatarNameException, SQLException {
 
         //Person validate
         validator.validate(personDTO, bindingResult);
@@ -74,7 +74,6 @@ public class PersonController {
             if (!multipartFile.isEmpty()) {
 
                 avatarService.changePersonAvatar(multipartFile, person);
-
             }
         } catch (SQLException e) {
             throw new PersonException("Can't update Person Profile with login" + login);

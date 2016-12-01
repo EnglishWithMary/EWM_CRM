@@ -29,12 +29,11 @@ public class PersonServiceImpl extends BaseService<Person, PersonRepository> imp
         return personRepository.findSortedByRegistrationDate();
     }
 
-    @Override
-    public void delete(Person person) throws SQLException {
-
-        State state = new State(StateType.STATE_DELETED.getState());
-
-        person.setState(state);
-        update(person);
-    }
+//    @Override
+//    public void delete(Person person) throws SQLException {
+//
+//        State state = new State(StateType.STATE_DELETED);
+//        person.setState(state);
+//        update(person);
+//    }
 }

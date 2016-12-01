@@ -4,6 +4,7 @@ import evg.testt.exception.PersonFieldTypeNotFoundException;
 import evg.testt.model.BaseModel;
 import evg.testt.model.Person;
 import evg.testt.dao.BaseRepository;
+import evg.testt.model.StateType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
@@ -54,7 +55,18 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
     }
 
     public void delete(T t){
-        em.remove(t);
+//        Query query;
+//        if (hasPerson()){
+//
+//            String state = StateType.STATE_DELETED.getState();
+//            query = em.createQuery("UPDATE persons SET state=:state WHERE id =:id");
+//            query.setParameter(state,state);
+//            query.setParameter(id,t.get)
+//
+//        }
+//        else {
+            em.remove(t);
+//        }
     }
 
     public boolean exists(Integer id){
