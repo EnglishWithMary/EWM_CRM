@@ -71,14 +71,19 @@ public class CRUDAspectActivityExecutor implements StrategyAspectActivityExecuto
 
                 // Insert all in database.
                 try {
-                    activity.setPerson(personService.getPersonByUserLogin(name));
-                    activity.setActivity(activ.toString());
+                    /**
+                     * TODO: don't FORGET!!!!!
+                     */
+//                    activity.setPerson(personService.getPersonByUserLogin(name));
+//                    activity.setActivity(activ.toString());
                     activityService.insertActivity(activity);
                 } catch (SQLException e) {
                     e.printStackTrace();
-                } catch (PersonRoleNotFoundException e) {
-                    e.printStackTrace();
+//                    throw e;
                 }
+//                catch (PersonRoleNotFoundException e) {
+//                    e.printStackTrace();
+//                }
             }
         }
 

@@ -52,24 +52,18 @@ public class GroupController {
     }
 
     @RequestMapping(value = "/groupSave")
-    public String saveGroup(Model model, @ModelAttribute("group") @Validated GroupDTO groupDTO,
+    public String saveGroup(@ModelAttribute("group") @Validated GroupDTO groupDTO,
                             BindingResult bindingResult) throws SQLException {
-
         if (bindingResult.hasErrors()) {
             return "groups/add";
         }
         Group newGroup = new Group();
-
         newGroup.setName(groupDTO.getName());
-
-        if (!(groupDTO.getTeacherId() == null)) {
-
-            newGroup.setTeacher(teacherService.getById(groupDTO.getTeacherId()));
-
-        }
-
         groupService.insert(newGroup);
-
+        if (groupDTO.getTeacherId() != null) {
+            newGroup.setTeacher(teacherService.getById(groupDTO.getTeacherId()));
+            groupService.update(newGroup);
+        }
         return "redirect:/groups";
     }
 
