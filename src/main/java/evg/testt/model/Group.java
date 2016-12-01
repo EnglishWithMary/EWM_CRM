@@ -11,6 +11,6 @@ public @Data class Group extends BaseModel {
 
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Teacher teacher;
 }
