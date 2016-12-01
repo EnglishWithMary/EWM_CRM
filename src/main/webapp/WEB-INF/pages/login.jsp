@@ -12,7 +12,6 @@
         <c:if test="${not empty msg}">
             <div class="msg">${msg}</div>
         </c:if>
-
         <hr class="colorgraph">
         <br>
         <input type="text" class="form-control" id="username" name="username" placeholder="Login" required="" autofocus=""/>
