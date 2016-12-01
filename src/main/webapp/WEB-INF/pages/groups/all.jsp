@@ -19,6 +19,7 @@
             <input type="submit" value="filter">
         </div>
     </sf:form>
+
     <table>
         <tr>
             <td>Group Name</td>
@@ -34,6 +35,23 @@
                 ${group.teacher.person.lastName})
             </td>
         </tr>
+        </c:forEach>
+    </table>
+    <table>
+        <tr>
+            <td>Group Name</td>
+            <td>Student's name</td>
+        </tr>
+        <c:forEach var="group" items="${groups}">
+            <tr>
+                <td>${group.name}</td>
+                <td>
+                        ${student.user.login}
+                    (${student.person.firstName}
+                        ${student.person.middleName}
+                        ${student.person.lastName})
+                </td>
+            </tr>
         </c:forEach>
     </table>
     <p><a href="/groupAdd">Add Group</a></p>

@@ -2,11 +2,14 @@ package evg.testt.controller;
 
 import evg.testt.dto.GroupDTO;
 import evg.testt.model.Group;
+import evg.testt.model.Student;
 import evg.testt.model.Teacher;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.GroupService;
+import evg.testt.service.StudentService;
 import evg.testt.service.TeacherService;
 import evg.testt.util.JspPath;
+import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,19 +37,27 @@ public class GroupController {
     @Autowired
     TeacherService teacherService;
 
+    @Autowired
+    StudentService studentService;
+
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
     public ModelAndView showGroups() {
         List<Group> groups = Collections.EMPTY_LIST;
         List<Teacher> teachers=Collections.EMPTY_LIST;
+        List<Student> students= Collections.EMPTY_LIST;
+
         try {
             teachers=teacherService.getAll();
             groups = groupService.getAll();
+            students=studentService.getAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         ModelAndView modelAndView=new ModelAndView(JspPath.GROUP_ALL, "groups", groups);
         modelAndView.addObject("teachers",teachers);
+        modelAndView.addObject("students", students);
         modelAndView.addObject("groupFilter", new GroupDTO());
+        modelAndView.addObject("groupFilterStudentsByGroup", new GroupDTO());
         return modelAndView;
     }
 
@@ -105,4 +116,29 @@ public class GroupController {
         modelAndView.addObject("groupFilter", groupFilter);
         return modelAndView;
     }
+
+//    @RequestMapping(value = "/groupFilterStudentsByGroup", method = RequestMethod.POST)
+//    public ModelAndView filterGroupsByStudent(@RequestParam(required = false) Integer groupId) {
+//
+//
+//        GroupDTO groupFilter = new GroupDTO();
+//        List<Group> groups = Collections.EMPTY_LIST;
+//
+//        try {
+//            groups = groupService.getAll();
+//            if (groupId != null) {
+//
+//                groups = groupService.getByTeacher(groupId);
+//
+//            } else {
+//                groups = groupService.getAll();
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        ModelAndView modelAndView = new ModelAndView(JspPath.GROUP_ALL, "groups", groups);
+//        modelAndView.addObject("groupFilterStudentsByGroup", groupFilter);
+//
+//        return modelAndView;
+//    }
 }

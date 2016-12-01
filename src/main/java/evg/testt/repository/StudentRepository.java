@@ -9,4 +9,7 @@ import java.sql.SQLException;
 public interface StudentRepository extends BaseRepository<Student>{
     List<Student> findStudensByTeacher(int teacher_id);
     List<Student> findStudentsWithoutTeacher();
+    List<Student> findStudentsByGroup(int group_id);
+    List<Student> findStudentWithoutGroup();
+
 }

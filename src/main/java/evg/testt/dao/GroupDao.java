@@ -9,4 +9,6 @@ import java.util.List;
 public interface GroupDao extends JpaRepository<Group, Integer> {
 
     List<Group> findByTeacher(Teacher teacher);
+
+    List<Group> findByGroup (Group group);
 }

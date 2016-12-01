@@ -28,4 +28,21 @@ public class StudentRepositoryJpaImpl extends BaseRepositoryJpaImpl<Student> imp
             students = query.getResultList();
         return students;
     }
+
+    @Override
+    public List<Student> findStudentsByGroup(int group_id) {
+        List<Student> students = Collections.EMPTY_LIST;
+        TypedQuery<Student> query = em.createQuery("SELECT student FROM students student where student.group.id = :id", Student.class);
+        query.setParameter("id", group_id);
+        students = query.getResultList();
+        return students;
+    }
+
+    @Override
+    public List<Student> findStudentWithoutGroup() {
+        List<Student> students = Collections.EMPTY_LIST;
+        TypedQuery<Student> query = em.createQuery("SELECT student FROM students student where student.group.id is null", Student.class);
+        students = query.getResultList();
+        return students;
+    }
 }
