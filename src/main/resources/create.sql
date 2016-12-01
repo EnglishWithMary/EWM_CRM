@@ -1,21 +1,15 @@
-DROP TABLE 'testT'.'users';
-CREATE TABLE `testT`.`users` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `login` VARCHAR(20) CHARACTER SET 'utf8' NOT NULL,
-  `password` VARCHAR(60) CHARACTER SET 'utf8' NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  UNIQUE INDEX `login_UNIQUE` (`login` ASC));
+INSERT INTO roles (id, role) VALUES (1, 'ROLE_ADMIN');
+INSERT INTO roles (id, role) VALUES (2, 'ROLE_MANAGER');
+INSERT INTO roles (id, role) VALUES (3, 'ROLE_TEACHER');
+INSERT INTO roles (id, role) VALUES (4, 'ROLE_STUDENT');
 
-DROP TABLE 'testT'.'roles';
-CREATE TABLE `testT`.`roles` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `role` VARCHAR(15) CHARACTER SET 'utf8' NOT NULL,
-  `user_id` INT NOT NULL,
-  PRIMARY KEY (`id`));
+INSERT INTO persons (id, firstname, lastname, middlename,registrationdate)
+VALUES (1, 'Ivan', 'Ivanov', 'Ivanovich', now());
 
-INSERT INTO `testT`.`users` (`login`, `password`)
-VALUES ('admin', '$2a$08$gfKJLDxbYkl8KgWtec7Lw.Ayh/QFj3cDKOCMXpSsPD0FQD0fk/DNu');
+INSERT INTO users (id, login, password,role_id)
+VALUES (1, 'admin', '$2a$08$4ozu21fedsIgpyrsIV1DOuGVVNkYyp6/KTLMil0gQdAz1r./qC3ri', 1); -- password-admin
 
-INSERT INTO `testT`.`roles` (`role`, `user_id`)
-VALUES ('ROLE_ADMIN', 1);
+INSERT INTO admins (id, person_id, user_id) VALUES (1, 1, 1);
+
+INSERT INTO pipetypes (id, type) VALUES (1, 'LEAD_PIPE');
+INSERT INTO pipetypes (id, type) VALUES (2, 'STUDENT_PIPE');
