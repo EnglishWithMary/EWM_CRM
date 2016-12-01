@@ -59,7 +59,7 @@ public class LeadController {
     public String addLeadOnPipe(Model model,
                                 @RequestParam(required = true) Integer cardId,
                                 @RequestParam(required = true) Integer pipeTypeId
-                                ) throws SQLException {
+    ) throws SQLException {
 
         PersonDTO lead = new PersonDTO();
         model.addAttribute("cards", cardService.getCards(Pipe.valueOf(pipeTypeId)));
@@ -75,7 +75,7 @@ public class LeadController {
                                  BindingResult bindingResult,
                                  @RequestParam(required = true) Integer cardId,
                                  @RequestParam(required = true) Integer pipeTypeId)
-                                    throws SQLException {
+            throws SQLException {
 
         model.addAttribute("cards", cardService.getCards(Pipe.valueOf(pipeTypeId)));
         model.addAttribute("pt", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
@@ -86,88 +86,42 @@ public class LeadController {
             model.addAttribute("pt_id", pipeTypeId);
             return "leads/add";
         }
-            Person newPerson = new Person();
-            newPerson.setFirstName(personDTO.getFirstName());
-            newPerson.setLastName(personDTO.getLastName());
-            newPerson.setMiddleName(personDTO.getMiddleName());
-            Email newEmail = new Email();
-            newEmail.setEmail(personDTO.getEmail());
-            Lead newLead = new Lead();
-            newPerson.setEmail(newEmail);
-            newLead.setPerson(newPerson);
-            leadService.insert(newLead);
-            Card card = cardService.getById(personDTO.getCardId());
-            card.getPersons().add(personService.getById(newPerson.getId()));
-            cardService.update(card);
-//            CardPerson cardPerson = cardPersonService.getById(cardId);
-//            Card newCard = cardService.getById(personDTO.getCardId());
-//            Card oldCard = cardService.getById(cardId);
-//
-//            cardPerson.setCard(newCard);
-//
-//            cardPerson.getPerson().setFirstName(personDTO.getFirstName());
-//            cardPerson.getPerson().setMiddleName(cardPerson.getPerson().getMiddleName());
-//            cardPerson.getPerson().setLastName(cardPerson.getPerson().getLastName());
-//            cardPerson.getPerson().getEmail().setEmail(personDTO.getEmail());
-//
-//            if(!newCard.getId().equals(oldCard.getId())){
-//                newCard.getCardPersons().add(cardPerson);
-//
-//                cardService.update(newCard);
-//                oldCard.getCardPersons().remove(cardPerson);
-//
-//                cardService.update(oldCard);
-//
-//            }else{
-//                cardService.update(newCard);
-//            }
-//            cardPersonService.update(cardPerson);
-//        if (cardId ==null) return showLeads(model, principal);
+        Person newPerson = new Person();
+        newPerson.setFirstName(personDTO.getFirstName());
+        newPerson.setLastName(personDTO.getLastName());
+        newPerson.setMiddleName(personDTO.getMiddleName());
+        Email newEmail = new Email();
+        newEmail.setEmail(personDTO.getEmail());
+        Lead newLead = new Lead();
+        newPerson.setEmail(newEmail);
+        newLead.setPerson(newPerson);
+        leadService.insert(newLead);
+        Card card = cardService.getById(personDTO.getCardId());
+        card.getPersons().add(personService.getById(newPerson.getId()));
+        cardService.update(card);
         return "redirect:/takeLeadtpipe";
     }
 
     @RequestMapping(value = "/deleteLead", method = RequestMethod.POST)
-    public String deleteLeadFromPipe(Model model, Principal principal,
-                                     @RequestParam(required = false) Integer cardPersonId,
-                                     @RequestParam(required = true) Integer cardId,
-                                     @RequestParam(required = true) Integer pipeTypeId,
-                                     @RequestParam(required = false) Integer id)
-                                        throws SQLException {
-
-//        Pipe pipe = Pipe.valueOf(pipeTypeId);
-        model.addAttribute("cards", cardService.getCards(Pipe.valueOf(pipeTypeId)));
-        model.addAttribute("pt", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
-//        insertAttributes(model, principal, pipe);
-
-        Lead lead=null;
-
-        if (cardPersonId!=null) {
-//            CardPerson cardPerson = cardPersonService.getById(cardId);
-//            Person person = cardPerson.getPerson();
-//            lead = leadService.getByPerson(person);
-//            cardPersonService.delete(cardPerson);
-//            personService.delete(person);
-            leadService.delete(lead);
-        }
-        if(id!=null){
-            lead= leadService.getById(id);
-            leadService.delete(lead);
-            return showLeads(model,principal);
-        }
+    public String deleteLead(Model model,
+                             @RequestParam(required = false) Integer cardId,
+                             @RequestParam(required = false) Integer pipeTypeId,
+                             @RequestParam(required = true) Integer id)
+            throws SQLException {
         return "redirect:/takeLeadtpipe";
     }
 
-//    private void insertAttributes(Model model, Principal principal, Pipe pipe) {
-//        PipeType pt = new PipeType();
-//        List<Card> cards = Collections.EMPTY_LIST;
-//        try {
-//            cards = cardService.getCards(principal, pipe);
-//            pt = pipeTypeService.getPipe(pipe);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        model.addAttribute("cards", cards);
-//        model.addAttribute("pt", pt);
-//    }
-
+    @RequestMapping(value = "/deleteLeadFromPipe", method = RequestMethod.POST)
+    public String deleteLeadFromPipe(
+                             @RequestParam(required = false) Integer cardId,
+                             @RequestParam(required = false) Integer pipeTypeId,
+                             @RequestParam(required = true) Integer id)
+            throws SQLException {
+        if (cardId != null) {
+            Card card = cardService.getById(cardId);
+            card.getPersons().remove(personService.getById(leadService.getById(id).getId()));
+            cardService.update(card);
+        }
+        return "redirect:/takeLeadtpipe";
+    }
 }

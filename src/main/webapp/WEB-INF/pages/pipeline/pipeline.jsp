@@ -11,8 +11,8 @@
                             <form method="post" action="/editCardName" style="width: 90%; float: left;">
                                 <input type="text" value="${card.cardName}" name="cardName"
                                        style="width: 83%; float: left; height: 44px">
-                                <input type="hidden" value="${card.id}" name="card_id">
-                                <input type="hidden" value="${pt.id}" name="pt_id">
+                                <input type="hidden" value="${card.id}" name="cardId">
+                                <input type="hidden" value="${pt.id}" name="pipeTypeId">
                                 <button type="submit" class="btn btn-default btn-xs" style="width: 12%"><span
                                         class="glyphicon glyphicon-pencil"></span></button>
                             </form>
@@ -20,8 +20,8 @@
                             <form method="post" action="/deleteCard" style="width: 9%; float: right; margin-right: 1%">
                                 <button type="submit" class="btn btn-default btn-xs"><span
                                         class="glyphicon glyphicon-remove"></span></button>
-                                <input type="hidden" value="${card.id}" name="card_id">
-                                <input type="hidden" name="pt_id" value="${pt.id}">
+                                <input type="hidden" value="${card.id}" name="cardId">
+                                <input type="hidden" name="pipeTypeId" value="${pt.id}">
                             </form>
                         </div>
 
@@ -54,7 +54,7 @@
                                 </div>
 
                                 <div class="col-md-2">
-                                    <form method="post" action="/deleteLead">
+                                    <form method="post" action="/deleteLeadFromPipe">
                                         <button type="submit" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
@@ -81,7 +81,7 @@
             <div class="pipe_wrapper">
                 <form class="pipe" method="post" action="/addCard">
                     <input type="submit" value="Add Card" class="add_pipe">
-                    <input type="hidden" name="pt_id" value="${pt.id}">
+                    <input type="hidden" name="pipeTypeId" value="${pt.id}">
                 </form>
             </div>
         </c:if>
