@@ -135,7 +135,6 @@ public class StudentController {
                     }
 
                     studentService.insert(newStudent);
-
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
