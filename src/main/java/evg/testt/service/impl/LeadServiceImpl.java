@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Service
-@Transactional
 public class LeadServiceImpl extends BaseService<Lead, LeadRepository> implements LeadService {
     @Override
     public Lead getByPerson(Person person) throws SQLException {

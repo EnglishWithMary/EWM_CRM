@@ -58,7 +58,7 @@ public class ManagerController {
 
         totalManagers = managerService.count();
 
-        List<Human> managers = Collections.EMPTY_LIST;
+        List<Manager> managers = Collections.EMPTY_LIST;
         if (flagSorted == false) {
             managers = managerService.getByPage(currentPage);
         } else {
@@ -127,7 +127,8 @@ public class ManagerController {
 
     @RequestMapping(value = "/managerDelete")
     public String managerDelete(@RequestParam Integer id) throws SQLException {
-        Human manager = managerService.getById(id);
+        Manager manager = managerService.getById(id);
+
         managerService.delete(manager);
         return "managers/all";
     }

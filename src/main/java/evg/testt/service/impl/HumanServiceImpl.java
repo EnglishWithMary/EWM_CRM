@@ -1,6 +1,9 @@
 package evg.testt.service.impl;
 
+import evg.testt.dao.BaseRepository;
 import evg.testt.dao.HumanRepository;
+import evg.testt.dao.Jpa.BaseRepositoryJpaImpl;
+import evg.testt.model.BaseModel;
 import evg.testt.model.Human;
 import evg.testt.model.Manager;
 import evg.testt.service.HumanService;
@@ -10,7 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.SQLException;
 
 @Service
-@Transactional
-public abstract class HumanServiceImpl<T extends Human, P extends HumanRepository<T>> extends BaseService<Human, HumanRepository> implements HumanService {
+public abstract
+class HumanServiceImpl <T extends Human, P extends HumanRepository<T>>
+        extends BaseService<T, P> implements HumanService<T>{
 
+    @Override
+    public void delete (T o) throws SQLException{
+        o.getPerson().getState().setState("DELETED");
+        dao.save(o);
+    }
 }

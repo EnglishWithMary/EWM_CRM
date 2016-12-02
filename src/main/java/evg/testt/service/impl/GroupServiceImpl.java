@@ -13,7 +13,8 @@ import java.util.List;
 
 @Service
 @Transactional
-public class GroupServiceImpl extends BaseService<Group, GroupRepository> implements GroupService{
+public class GroupServiceImpl extends BaseService<Group, GroupRepository>
+        implements GroupService{
 
     @Autowired
     GroupRepository groupRepository;

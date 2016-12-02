@@ -22,7 +22,8 @@ import java.util.List;
 @Transactional
 @Repository
 @PropertySource(value = "classpath:standard.properties")
-public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements BaseRepository<T>{
+public abstract class BaseRepositoryJpaImpl<T extends BaseModel>
+        implements BaseRepository<T>{
 
     protected Class<T> entityClass;
 

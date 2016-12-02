@@ -1,5 +1,6 @@
 package evg.testt.service.impl;
 
+import evg.testt.dao.Jpa.BaseRepositoryJpaImpl;
 import evg.testt.model.Human;
 import evg.testt.model.Manager;
 import evg.testt.dao.ManagerRepository;
@@ -11,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.SQLException;
 
 @Service
-@Transactional
-public class ManagerServiceImpl extends HumanServiceImpl<Manager, ManagerRepository<Manager>> implements ManagerService {
-
+public class ManagerServiceImpl extends HumanServiceImpl<Manager, ManagerRepository>
+        implements ManagerService {
 }
