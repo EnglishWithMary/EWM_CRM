@@ -6,13 +6,23 @@
 <sf:form method="post" modelAttribute="student" action="/studentSave">
     <fieldset>
         <div class="row uniform">
+
             <div class="6u 12u$(xsmall)">
                 <sf:label path="firstName">First Name:</sf:label>
             </div>
 
             <div class="6u 12u$(xsmall)">
-                <sf:input path="firstName"/>
-                <sf:errors path="firstName"/>
+                <c:choose>
+                    <c:when test="${lead.id!=0}">
+                        <input type="text" value="${lead.person.firstName}" name="firstName"/>
+                        <input type="hidden" value="${lead.id}" name="id"/>
+                        <sf:errors path="firstName"/>
+                    </c:when>
+                    <c:otherwise>
+                        <sf:input path="firstName"/>
+                        <sf:errors path="firstName"/>
+                    </c:otherwise>
+                </c:choose>
             </div>
 
             <div class="6u 12u$(xsmall)">
@@ -20,16 +30,32 @@
             </div>
 
             <div class="6u 12u$(xsmall)">
-                <sf:input path="lastName"/>
-                <sf:errors path="lastName"/>
+                <c:choose>
+                    <c:when test="${lead.id!=0}">
+                        <input type="text" value="${lead.person.lastName}" name="lastName"/>
+                        <sf:errors path="lastName"/>
+                    </c:when>
+                    <c:otherwise>
+                        <sf:input path="lastName"/>
+                        <sf:errors path="lastName"/>
+                    </c:otherwise>
+                </c:choose>
             </div>
             <div class="6u 12u$(xsmall)">
                 <sf:label path="middleName">Middle Name:</sf:label>
             </div>
 
             <div class="6u 12u$(xsmall)">
-                <sf:input path="middleName"/>
-                <sf:errors path="middleName"/>
+                <c:choose>
+                    <c:when test="${lead.id!=0}">
+                        <input type="text" value="${lead.person.middleName}" name="middleName"/>
+                        <sf:errors path="middleName"/>
+                    </c:when>
+                    <c:otherwise>
+                        <sf:input path="middleName"/>
+                        <sf:errors path="middleName"/>
+                    </c:otherwise>
+                </c:choose>
             </div>
 
             <div class="6u 12u$(xsmall)">

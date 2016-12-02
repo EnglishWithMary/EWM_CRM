@@ -38,6 +38,8 @@ public class StudentController {
     PersonService personService;
     @Autowired
     TeacherService teacherService;
+    @Autowired
+    LeadService leadService;
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public ModelAndView showStudent(@RequestParam(required = false) Integer teacher_id) {
@@ -65,9 +67,19 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/studentAdd")
-    public ModelAndView addStudent(Model model) {
+    public ModelAndView addStudent(@RequestParam(required = false) Integer id, Model model) {
         PersonDTO person = new PersonDTO();
         List<Teacher> teachers = Collections.EMPTY_LIST;
+        Lead lead= null;
+
+        try {
+            if (id != null && id > 0) {
+                lead = leadService.getById(id);
+                model.addAttribute("lead", lead);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         try {
             teachers = teacherService.getAll();
@@ -78,14 +90,17 @@ public class StudentController {
         ModelAndView mav = new ModelAndView(JspPath.STUDENT_ADD);
         model.addAttribute("student", person);
         model.addAttribute("teachers", teachers);
+
         return mav;
     }
 
         @RequestMapping(value = "/studentSave", method = RequestMethod.POST)
         public ModelAndView saveStudent (@ModelAttribute("student") @Validated PersonDTO personDTO,
                                          BindingResult bindingResult,
-                                         @RequestParam(required = false) Integer teacher_id){
+                                         @RequestParam(required = false) Integer teacher_id,
+                                         @RequestParam(required = false) Integer id){
             validator.validate(personDTO, bindingResult);
+
             // проверка логина на уникальность
             User u = userService.findByUserLogin(personDTO.getLogin());
             if (u != null)
@@ -125,6 +140,14 @@ public class StudentController {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+
+                try {
+                    Lead lead = leadService.getById(id);
+                    leadService.delete(lead);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
                 return new ModelAndView("redirect:/students");
             } else {
                 return new ModelAndView(JspPath.STUDENT_ADD);

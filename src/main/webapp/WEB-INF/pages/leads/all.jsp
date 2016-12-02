@@ -23,6 +23,7 @@
                 <td><label>${lead.person.middleName}</label></td>
                 <td><label>${lead.person.registrationDate}</label></td>
                 <td><a href="/leadDelete?id=${lead.id}">Delete</a></td>
+                <td><a href="/studentAdd?id=${lead.id}">Move to a student</a></td>
             </tr>
         </c:forEach>
     </table>
