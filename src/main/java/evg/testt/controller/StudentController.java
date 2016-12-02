@@ -42,32 +42,28 @@ public class StudentController {
     LeadService leadService;
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
-    public ModelAndView showStudent(@RequestParam(required = false) Integer teacher_id) {
+    public String showStudent(@RequestParam(required = false) Integer teacher_id,
+                              Model model) throws SQLException {
         List<Student> students = Collections.EMPTY_LIST;
-        List<Teacher> teachers = Collections.EMPTY_LIST;
+        List<Teacher> teachers = teacherService.getAll();
 
-        try {
-            teachers = teacherService.getAll();
-
-            if(teacher_id != null)
-            {
-                if(teacher_id > 0)
-                    students = studentService.getAllByTeacher(teacher_id);
-                else if(teacher_id == -1)
-                    students = studentService.getStudentsWithoutTeacher();
+        if (teacher_id != null) {
+            if (teacher_id > 0) {
+                students = studentService.getAllByTeacher(teacher_id);
+            } else if (teacher_id == -1) {
+                students = studentService.getStudentsWithoutTeacher();
             }
-            else
-                students = studentService.getAll();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } else {
+            students = studentService.getAll();
         }
-
-        return new ModelAndView(JspPath.STUDENT_ALL, "students", students).addObject("teachers", teachers);
+        model.addAttribute("students", students)
+                .addAttribute("teachers", teachers);
+        return "students/all";
     }
 
     @RequestMapping(value = "/studentAdd")
     public ModelAndView addStudent(@RequestParam(required = false) Integer id, Model model) {
+    public String addStudent(Model model) throws SQLException {
         PersonDTO person = new PersonDTO();
         List<Teacher> teachers = Collections.EMPTY_LIST;
         Lead lead= null;
@@ -117,27 +113,40 @@ public class StudentController {
                     User newUser = new User();
                     Student newStudent = new Student();
                     Teacher teacher;
+    @RequestMapping(value = "/studentSave", method = RequestMethod.POST)
+    public String saveStudent(@ModelAttribute("student") @Validated PersonDTO personDTO,
+                                    BindingResult bindingResult, Model model,
+                                    @RequestParam(required = false) Integer teacher_id) throws SQLException {
+        validator.validate(personDTO, bindingResult);
+        User u = userService.findByUserLogin(personDTO.getLogin());
+        if (u != null)
+            bindingResult.rejectValue("login", "1", "Login already exist.");
+        if (!bindingResult.hasErrors()) {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+                UserRole roleId = UserRole.ROLE_STUDENT;
+                Role role = roleService.getById(roleId.getRoleId());
+                Person newPerson = new Person();
+                User newUser = new User();
+                Student newStudent = new Student();
+                Teacher teacher;
 
-                    newPerson.setFirstName(personDTO.getFirstName());
-                    newPerson.setLastName(personDTO.getLastName());
-                    newPerson.setMiddleName(personDTO.getMiddleName());
-                    newPerson.setComments(personDTO.getComments());
+                newPerson.setFirstName(personDTO.getFirstName());
+                newPerson.setLastName(personDTO.getLastName());
+                newPerson.setMiddleName(personDTO.getMiddleName());
+                newPerson.setComments(personDTO.getComments());
 
-                    newUser.setRole(role);
-                    newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
-                    newUser.setLogin(personDTO.getLogin());
-                    newStudent.setPerson(newPerson);
-                    newStudent.setUser(newUser);
+                newUser.setRole(role);
+                newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
+                newUser.setLogin(personDTO.getLogin());
+                newStudent.setPerson(newPerson);
+                newStudent.setUser(newUser);
 
-                    if(teacher_id != null && teacher_id  > 0) {
-                        teacher = teacherService.getById(teacher_id);
-                        newStudent.setTeacher(teacher);
-                    }
-
-                    studentService.insert(newStudent);
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                if (teacher_id != null && teacher_id > 0) {
+                    teacher = teacherService.getById(teacher_id);
+                    newStudent.setTeacher(teacher);
                 }
+
+                studentService.insert(newStudent);
 
                 try {
                     Lead lead = leadService.getById(id);
@@ -151,20 +160,27 @@ public class StudentController {
                 return new ModelAndView(JspPath.STUDENT_ADD);
             }
         }
+            return "redirect:/students";
+        } else {
+            return "students/add";
+        }
+    }
 
     @RequestMapping(value = "/studentSortByDate", method = RequestMethod.POST)
-    public ModelAndView filterStudents() {
-        List<Student> students = Collections.EMPTY_LIST;
+    public String filterStudents(Model model) throws SQLException{
         List<Person> persons = new ArrayList<Person>();
-        try {
-            students=studentService.getSortedByRegistrationDate();
-            for (Student item : students){
+        List<Student> students = studentService.getSortedByRegistrationDate();
+            for (Student item : students) {
                 persons.add(item.getPerson());
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        ModelAndView modelAndView=new ModelAndView(JspPath.STUDENT_ALL, "students", students);
-        return modelAndView;
+            model.addAttribute("students", students);
+        return "students/all";
+    }
+
+    @RequestMapping(value = "/studentDelete")
+    public String studentDelete(@RequestParam Integer id) throws SQLException {
+        Student student = studentService.getById(id);
+        studentService.delete(student);
+        return "students/all";
     }
 }

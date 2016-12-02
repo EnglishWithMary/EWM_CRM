@@ -1,25 +1,31 @@
 package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
-import evg.testt.model.Lead;
-import evg.testt.model.Person;
+import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
-import evg.testt.service.LeadService;
-import evg.testt.service.PersonService;
-import evg.testt.util.JspPath;
+import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.List;
 
 @Controller
 public class LeadController {
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private PipeTypeService pipeTypeService;
+    @Autowired
+    private CardService cardService;
 
     @Autowired
     SpringOvalValidator validator;
@@ -30,66 +36,92 @@ public class LeadController {
     @Autowired
     PersonService personService;
 
+    @Autowired
+    EmailService emailService;
+
+
     @RequestMapping(value = "/leads", method = RequestMethod.GET)
-    public ModelAndView showLeads() {
-        List<Lead> leads = Collections.EMPTY_LIST;
-        try {
-            leads = leadService.getAll();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new ModelAndView(JspPath.LEAD_ALL, "leads", leads);
+    public String showLeads(Model model, Principal principal) throws SQLException {
+        List<Lead> leads = leadService.getAll();
+        model.addAttribute("leads", leads);
+//        insertAttributes(model, principal, Pipe.LEAD_PIPE);
+        return "leads/all";
     }
-    @RequestMapping(value = "/leadDelete")
-    public ModelAndView deleteLead(@RequestParam Integer id) {
-        Lead lead= null;
-        try {
-            lead = leadService.getById(id);
-            leadService.delete(lead);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return showLeads();
+
+    @RequestMapping(value = "/leadSortByDate", method = RequestMethod.POST)
+    public String filterLeads(Model model) throws SQLException {
+        List<Lead> leads = leadService.getSortedByRegistrationDate();
+        model.addAttribute("leads", leads);
+        return "leads/all";
     }
-    @RequestMapping(value = "/leadAdd")
-    public ModelAndView addLead(Model model) {
+
+    @RequestMapping(value = "/leadAdd", method = RequestMethod.POST)
+    public String addLeadOnPipe(Model model,
+                                @RequestParam(required = true) Integer cardId,
+                                @RequestParam(required = true) Integer pipeTypeId
+    ) throws SQLException {
+
         PersonDTO lead = new PersonDTO();
+        model.addAttribute("cards", cardService.getCards(Pipe.valueOf(pipeTypeId)));
+        model.addAttribute("pt", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
         model.addAttribute("lead", lead);
-        return new ModelAndView(JspPath.LEAD_ADD);
+        model.addAttribute("pt_id", pipeTypeId);
+        model.addAttribute("card_id", cardId);
+        return "leads/add";
     }
 
     @RequestMapping(value = "/leadSave", method = RequestMethod.POST)
-    public ModelAndView saveLead(@ModelAttribute("lead") @Validated PersonDTO personDTO,
-                                 BindingResult bindingResult) {
-        validator.validate(personDTO, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return new ModelAndView(JspPath.LEAD_ADD);
-        }
+    public String saveLeadOnPipe(Model model, @ModelAttribute("lead") @Validated PersonDTO personDTO,
+                                 BindingResult bindingResult,
+                                 @RequestParam(required = true) Integer cardId,
+                                 @RequestParam(required = true) Integer pipeTypeId)
+            throws SQLException {
 
+        model.addAttribute("cards", cardService.getCards(Pipe.valueOf(pipeTypeId)));
+        model.addAttribute("pt", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
+        validator.validate(personDTO, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("card_id", cardId);
+            model.addAttribute("pt_id", pipeTypeId);
+            return "leads/add";
+        }
         Person newPerson = new Person();
         newPerson.setFirstName(personDTO.getFirstName());
         newPerson.setLastName(personDTO.getLastName());
         newPerson.setMiddleName(personDTO.getMiddleName());
+        Email newEmail = new Email();
+        newEmail.setEmail(personDTO.getEmail());
         Lead newLead = new Lead();
-        try {
-            personService.insert(newPerson);
-            newLead.setPerson(newPerson);
-            leadService.insert(newLead);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return showLeads();
+        newPerson.setEmail(newEmail);
+        newLead.setPerson(newPerson);
+        leadService.insert(newLead);
+        Card card = cardService.getById(personDTO.getCardId());
+        card.getPersons().add(personService.getById(newPerson.getId()));
+        cardService.update(card);
+        return "redirect:/takeLeadtpipe";
     }
 
-    @RequestMapping(value = "/leadSortByDate", method = RequestMethod.POST)
-    public ModelAndView filterLeads() {
-        List<Lead> leads = Collections.EMPTY_LIST;
-        try {
-            leads=leadService.getSortedByRegistrationDate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    @RequestMapping(value = "/deleteLead", method = RequestMethod.POST)
+    public String deleteLead(Model model,
+                             @RequestParam(required = false) Integer cardId,
+                             @RequestParam(required = false) Integer pipeTypeId,
+                             @RequestParam(required = true) Integer id)
+            throws SQLException {
+        return "redirect:/takeLeadtpipe";
+    }
+
+    @RequestMapping(value = "/deleteLeadFromPipe", method = RequestMethod.POST)
+    public String deleteLeadFromPipe(
+                             @RequestParam(required = false) Integer cardId,
+                             @RequestParam(required = false) Integer pipeTypeId,
+                             @RequestParam(required = true) Integer id)
+            throws SQLException {
+        if (cardId != null) {
+            Card card = cardService.getById(cardId);
+            card.getPersons().remove(personService.getById(leadService.getById(id).getId()));
+            cardService.update(card);
         }
-        ModelAndView modelAndView=new ModelAndView(JspPath.LEAD_ALL, "leads", leads);
-        return modelAndView;
+        return "redirect:/takeLeadtpipe";
     }
 }

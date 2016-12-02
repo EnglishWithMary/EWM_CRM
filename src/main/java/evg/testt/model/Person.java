@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity (name = "persons")
 public @Data class Person extends BaseModel{
@@ -16,7 +17,8 @@ public @Data class Person extends BaseModel{
 
     private String avatarURL;
 
-    private String state;
+    @Embedded
+    private State state;
 
     @Temporal(TemporalType.DATE)
     private Date birthdayDate;
@@ -29,9 +31,12 @@ public @Data class Person extends BaseModel{
 
     private String organization;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     Email email;
 
     @Column(columnDefinition = "text")
     private String comments;
+
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personActivities")
+//    List<Activity> activities;
 }

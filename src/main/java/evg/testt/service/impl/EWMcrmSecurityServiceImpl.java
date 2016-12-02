@@ -2,8 +2,8 @@ package evg.testt.service.impl;
 
 import evg.testt.model.Role;
 import evg.testt.model.User;
-import evg.testt.repository.RoleRepository;
-import evg.testt.repository.UserRepository;
+import evg.testt.dao.RoleRepository;
+import evg.testt.dao.UserRepository;
 import evg.testt.service.EWMcrmSecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
