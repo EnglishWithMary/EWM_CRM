@@ -55,18 +55,7 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
     }
 
     public void delete(T t){
-//        Query query;
-//        if (hasPerson()){
-//
-//            String state = StateType.STATE_DELETED.getState();
-//            query = em.createQuery("UPDATE persons SET state=:state WHERE id =:id");
-//            query.setParameter(state,state);
-//            query.setParameter(id,t.get)
-//
-//        }
-//        else {
             em.remove(t);
-//        }
     }
 
     public boolean exists(Integer id){
