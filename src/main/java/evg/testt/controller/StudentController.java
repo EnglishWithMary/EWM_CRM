@@ -100,7 +100,6 @@ public class StudentController {
                                          @RequestParam(required = false) Integer teacher_id,
                                          @RequestParam(required = false) Integer id){
             validator.validate(personDTO, bindingResult);
-
             // проверка логина на уникальность
             User u = userService.findByUserLogin(personDTO.getLogin());
             if (u != null)
