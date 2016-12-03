@@ -1,9 +1,11 @@
 package evg.testt.controller;
 
+import evg.testt.dto.PersonDTO;
 import evg.testt.model.Person;
-import evg.testt.service.EWMcrmSecurityService;
-import evg.testt.service.PersonService;
-import evg.testt.util.JspPath;
+import evg.testt.model.Teacher;
+import evg.testt.model.User;
+import evg.testt.model.UserRole;
+import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,17 +22,28 @@ public class ListPersonController {
 
     @Autowired
     PersonService personService;
+    @Autowired
+    UserService userService;
 
     @Autowired
     EWMcrmSecurityService ewMcrmSecurityService;
 
-    @RequestMapping(value = {"","/","/home"}, method = RequestMethod.GET)
-    public String showPerson(Model model) {
+    @Autowired
+    TeacherService teacherService;
+
+    @Autowired
+    RoleService roleService;
+
+    @RequestMapping(value = {"","/", "/home"}, method = RequestMethod.GET)
+    public String showPersonOnHomePage(Model model) {
+        List<User> users;
         List<Person> persons ;
+        PersonDTO person = new PersonDTO();
         try {
             persons = personService.getAll();
         } catch (SQLException e) {
             persons = Collections.emptyList();
+            users = Collections.emptyList();
             e.printStackTrace();
         }
         model.addAttribute("persons", persons);

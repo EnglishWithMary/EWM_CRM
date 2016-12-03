@@ -37,24 +37,12 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
     }
 
     public Collection<T> findAll() {
-
         Query query = em.createQuery("SELECT t FROM " + entityClass.getName() + " t");
         return (List<T>)query.getResultList();
-
     }
 
     public T findOne(Integer id) {
-//        Query query = em.createQuery("SELECT T FROM T" + "s" + " T WHERE T.id =:id");
-//        query.setParameter("id", id);
-//        Collection<T> result = query.getResultList();
-
         return em.find(entityClass, id);
-
-//        if (result.size() > 0) {
-//            return (T)result.toArray()[0];
-//        }else {
-//            return null;
-//        }
     }
 
     public void save(T t) {
@@ -100,6 +88,7 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
         }
         return hasPerson;
     }
+
     @Override
     public List<T> findSortedByRegistrationDate() throws SQLException {
         if(!hasPerson())throw new PersonFieldTypeNotFoundException(entityClass.getName() +
@@ -123,5 +112,4 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
         query.setMaxResults(pageSize);
         return query.getResultList();
     }
-
 }

@@ -26,11 +26,23 @@
                 <td><label>${lead.person.registrationDate}</label></td>
                 <security:authorize access="hasRole('ROLE_ADMIN')">
                     <td>
-                        <a href="/leadDelete?id=${lead.id}">Delete</a>
+
+                        <form method="post" action="/deleteLead">
+                            <button type="submit" class="btn btn-default btn-xs">
+                                Delete
+                            </button>
+                            <input type="hidden" name="id" value="${lead.id}">
+                            <input type="hidden" name="cardId" value="${card.id}">
+                            <input type="hidden" name="pipeTipeId" value="${pt.id}">
+                        </form>
                     </td>
                 </security:authorize>
             </tr>
         </c:forEach>
     </table>
-    <p><a class="button alt" href="/leadAdd">Add Lead</a></p>
+    <form method="post" action="/leadAdd">
+        <input type="hidden" value="${pt.id}" name="pipeTipeId">
+        <input type="hidden" value="${card.id}" name="cardId">
+        <button type="submit" class="button alt">Add Lead</button>
+    </form>
 </div>
