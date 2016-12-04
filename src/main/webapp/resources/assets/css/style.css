@@ -70,7 +70,7 @@ body {
 }
 
 .pipe_wrapper{
-    width: 270px;
+    width: 20%;
     margin: 0 5px;
     height: 100%;
     -moz-box-sizing: border-box;
@@ -83,6 +83,7 @@ body {
 .pipe{
     display: inline-block;
     height: auto;
+    min-height: 5%;
     width: 100%;
     background: #E2E4E6;
 }
