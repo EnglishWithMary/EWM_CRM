@@ -10,5 +10,6 @@ import java.util.List;
 public interface GroupService extends Service<Group> {
 
     public List<Group> getByTeacher(Teacher teacher) throws SQLException;
+
 }
 

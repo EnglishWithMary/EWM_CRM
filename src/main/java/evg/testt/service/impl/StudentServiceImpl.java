@@ -21,4 +21,13 @@ public class StudentServiceImpl extends BaseService<Student, StudentRepository> 
     public List<Student> getStudentsWithoutTeacher() {
         return dao.findStudentsWithoutTeacher();
     }
+    @Override
+    public List<Student> getAllByGroup(int group_id) {
+        return dao.findStudentsByGroup(group_id);
+    }
+
+    @Override
+    public List<Student> getStudentWithoutGroup() {
+        return dao.findStudentWithoutGroup();
+    }
 }

@@ -80,6 +80,17 @@
                 </div>
             </div>
             <div class="12u$">
+                <div class="12u$">
+                    <div class="select-wrapper">
+                        <select name="group_id">
+                            <option value="">Set group later...</option>
+                            <c:forEach var="group" items="${groups}">
+                                <option value="${group.id}">${group.name}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+            <div class="12u$">
                     <input type="submit" value="Add student"/>
             </div>
 
