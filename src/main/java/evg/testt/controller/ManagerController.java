@@ -94,31 +94,10 @@ public class ManagerController {
         if (!bindingResult.hasErrors()) {
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
             UserRole roleId = UserRole.ROLE_MANAGER;
-
             Role role = roleService.getById(roleId.getRoleId());
 
-            Person newPerson = new Person();
-            User newUser = new User();
-            Manager newManager = new Manager();
-            Email email = new Email();
-
-            email.setEmail(personDTO.getEmail());
-
-            newPerson.setFirstName(personDTO.getFirstName());
-            newPerson.setLastName(personDTO.getLastName());
-            newPerson.setMiddleName(personDTO.getMiddleName());
-            newPerson.setEmail(email);
-
-            newUser.setRole(role);
-            newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
-            newUser.setLogin(personDTO.getLogin());
-
-            newManager.setPerson(newPerson);
-            newManager.setUser(newUser);
-
-            managerService.insert(newManager);
+            managerService.insert(personDTO.getManager(role, passwordEncoder));
             return "redirect:/managers";
         } else {
             return "manager/add";
