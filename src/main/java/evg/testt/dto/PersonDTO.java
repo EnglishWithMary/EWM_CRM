@@ -1,6 +1,7 @@
 package evg.testt.dto;
 
 import evg.testt.model.Email;
+import evg.testt.model.Person;
 import lombok.Data;
 import net.sf.oval.constraint.EqualToField;
 import net.sf.oval.constraint.Length;
@@ -35,8 +36,21 @@ public @Data class PersonDTO {
     @Length(min = 3, max = 20, message = "Middle Name should be between 3 and 20 chars.")
     private String middleName;
 
-//    @Length(min = 3, max = 20, message = "Wrong middle name.")
     private String comments;
 
     private Integer cardId;
+
+    public Person getFulledPerson()
+    {
+        return new Person()
+        {
+            {
+                setFirstName(firstName);
+                setLastName(lastName);
+                setMiddleName(middleName);
+            }
+        };
+    }
+
+
 }
