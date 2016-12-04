@@ -10,4 +10,6 @@ import java.util.List;
 public interface StudentService extends Service<Student> {
     List<Student> getAllByTeacher(int teacher_id);
     List<Student> getStudentsWithoutTeacher();
+    List<Student> getAllByGroup(int group_id);
+    List<Student> getStudentWithoutGroup();
 }

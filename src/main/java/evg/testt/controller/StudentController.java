@@ -36,19 +36,19 @@ public class StudentController {
     PersonService personService;
     @Autowired
     TeacherService teacherService;
+    @Autowired
+    GroupService groupService;
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public String showStudent(@RequestParam(required = false) Integer teacher_id,
                               Model model) throws SQLException {
         List<Student> students = Collections.EMPTY_LIST;
         List<Teacher> teachers = teacherService.getAll();
-
         if (teacher_id != null) {
             if (teacher_id > 0) {
                 students = studentService.getAllByTeacher(teacher_id);
             } else if (teacher_id == -1) {
-                students = studentService.getStudentsWithoutTeacher();
-            }
+                students = studentService.getStudentsWithoutTeacher();}
         } else {
             students = studentService.getAll();
         }
@@ -61,15 +61,18 @@ public class StudentController {
     public String addStudent(Model model) throws SQLException {
         PersonDTO person = new PersonDTO();
         List<Teacher> teachers = teacherService.getAll();
+        List<Group> groups = groupService.getAll();
         model.addAttribute("student", person)
-                .addAttribute("teachers", teachers);
+                .addAttribute("teachers", teachers)
+                .addAttribute("groups", groups);
         return "students/add";
     }
 
     @RequestMapping(value = "/studentSave", method = RequestMethod.POST)
     public String saveStudent(@ModelAttribute("student") @Validated PersonDTO personDTO,
                                     BindingResult bindingResult, Model model,
-                                    @RequestParam(required = false) Integer teacher_id) throws SQLException {
+                                    @RequestParam(required = false) Integer teacher_id,
+                                    @RequestParam(required = false) Integer group_id) throws SQLException {
         validator.validate(personDTO, bindingResult);
         User u = userService.findByUserLogin(personDTO.getLogin());
         if (u != null)
@@ -82,7 +85,7 @@ public class StudentController {
                 User newUser = new User();
                 Student newStudent = new Student();
                 Teacher teacher;
-
+                Group group;
                 newPerson.setFirstName(personDTO.getFirstName());
                 newPerson.setLastName(personDTO.getLastName());
                 newPerson.setMiddleName(personDTO.getMiddleName());
@@ -98,6 +101,11 @@ public class StudentController {
                     teacher = teacherService.getById(teacher_id);
                     newStudent.setTeacher(teacher);
                 }
+                if (group_id != null && group_id > 0) {
+                group = groupService.getById(group_id);
+                newStudent.setGroup(group);
+
+            }
 
                 studentService.insert(newStudent);
 
@@ -117,6 +125,29 @@ public class StudentController {
             model.addAttribute("students", students);
         return "students/all";
     }
+
+
+
+    @RequestMapping(value = "/studentsSortedByGroup", method = RequestMethod.GET)
+    public String showSortedStudent(@RequestParam(required = false) Integer group_id,
+                                          Model model) throws SQLException {
+            List<Student> students = Collections.EMPTY_LIST;
+            List<Group> groups = groupService.getAll();
+            if (group_id != null) {
+                if (group_id > 0){
+                    students = studentService.getAllByGroup(group_id);
+            } else if (group_id == -1) {
+                students = studentService.getStudentWithoutGroup();}
+            } else {
+                students = studentService.getAll();
+            }
+            model.addAttribute("students", students)
+                    .addAttribute("groups", groups);
+
+            return "students/all";
+
+    }
+
 
     @RequestMapping(value = "/studentDelete")
     public String studentDelete(@RequestParam Integer id) throws SQLException {

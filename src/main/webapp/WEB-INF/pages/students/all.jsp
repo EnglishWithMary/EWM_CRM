@@ -22,12 +22,25 @@
             <input type="submit" class="button" value="Find"/>
         </form>
 
+        <form action="/studentsSortedByGroup" method="get">
+            <select name="group_id">
+                <option value="">All groups</option>
+                <option value="-1">Students without group</option>
+                <c:forEach var="group" items="${groups}">
+                    <option value="${group.id}">
+                            ${group.name}</option>
+                </c:forEach>
+            </select>
+            <input type="submit" class="button" value="Find"/>
+        </form>
+
         <table class="alt">
             <thead>
             <tr>
                 <td>First name</td>
                 <td>Last name</td>
                 <td>Middle name</td>
+                <td>Student group</td>
                 <td>Registration Date</td>
                 <td>Comments</td>
                 <security:authorize access="hasRole('ROLE_ADMIN')">
@@ -41,6 +54,7 @@
                         <td>${student.person.firstName}</td>
                         <td>${student.person.lastName}</td>
                         <td>${student.person.middleName}</td>
+                        <td>${student.group.name}</td>
                         <td>${student.person.registrationDate}</td>
                         <td><textarea>${student.person.comments}</textarea></td>
                         <security:authorize access="hasRole('ROLE_ADMIN')">

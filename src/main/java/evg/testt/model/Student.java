@@ -15,4 +15,7 @@ public @Data class Student extends RegistratedUser implements BelongsToPerson{
 
     @OneToOne
     private Teacher teacher;
+
+    @ManyToOne (cascade = CascadeType.ALL)
+    private Group group;
 }
