@@ -1,12 +1,12 @@
 package evg.testt.model;
 
-public enum TypeLevelHistory {
+public enum CheckpointTypeEnum {
 
     ENTRY_TEST(1), CURRENT_TEST(2);
 
     private int testId;
 
-    TypeLevelHistory(int id){
+    CheckpointTypeEnum(int id){
         testId = id;
     }
 
