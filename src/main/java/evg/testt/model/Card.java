@@ -10,9 +10,6 @@ public @Data class Card extends BaseModel{
 
     private String cardName = "No name.";
 
-//    @OneToOne
-//    private User user;
-
     @OneToOne
     private PipeType type;
 

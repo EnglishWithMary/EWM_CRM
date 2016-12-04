@@ -9,9 +9,9 @@
     <c:if test="${not empty cards}">
     <div class="scroll">
         <c:forEach items="${cards}" var="card">
-            <div class="pipe_wrapper">
+            <div class="pipe_wrapper ui-widget ui-helper-clearfix">
 
-                <div class="pipe ui-widget ui-helper-clearfix ui-helper-reset ">
+                <div class="pipe ui-helper-clearfix ui-helper-reset">
 
                     <div class="editToolbar">
                         <form method="post" action="/editCardName" id="cardNameForm">
@@ -33,6 +33,9 @@
                     <c:forEach items="${card.persons}" var="person">
 
                         <div class="person ui-widget-content ui-corner-tr">
+
+                            <input type="hidden" id="from" name="from" value="${card.id}">
+
                             <div class="avatar">
                                 <c:if test="${person.avatarURL==null}">
                                     <span class="glyphicon glyphicon-picture"/>
@@ -41,7 +44,8 @@
                                     <img src="${person.avatarURL}" class="img-responsive"/>
                                 </c:if>
                             </div>
-                            <div class="personData">
+                            <div class="personData ui-widget-header">
+                                <input type="hidden" id="personId" name="personId" value="${person.id}">
                                 <p>
                                         ${person.lastName}
                                         ${fn:substring(person.firstName,0,1)}.${fn:substring(person.middleName,0,1)}.
@@ -69,6 +73,8 @@
                         </div> <%-- end person --%>
 
                     </c:forEach>
+
+                    <input type="hidden" id="destination" name="destination" value="${card.id}">
                 </div>
 
                 <form method="post" action="/leadAdd">
@@ -97,78 +103,9 @@
     body {
         overflow-y: hidden;
     }
-
-    .editToolbar {
-        margin: 0;
-        padding: 0;
-
-        height: 50px;
-        border: solid #0f0f0f;
-    }
-
-    .editToolbar from {
-        height: 50px;
-        margin: 0px;
-        padding: 0px;
-    }
-
-    .editToolbar #cardNameForm {
-        width: 90%;
-        float: left;
-    }
-
-    .editToolbar #cardName {
-        width: 83%;
-        float: left;
-        height: 44px;
-    }
-
-    .editToolbar #submitCardName {
-        width: 12%;
-    }
-
-    .editToolbar #deleteCardForm {
-        width: 9%;
-        float: right;
-        margin-right: 1%
-    }
-
-
-    .pipe .person {
-        float: left;
-        width: 100%;
-        height: 10%;
-        border: solid #0f0f0f;
-        margin-bottom: 10px;
-        margin-top: 10px;
-    }
-
-    .editPersonFrom {
-        width: 12%;
-        margin: 0%;
-        padding: 0%;
-        float: left;
-    }
-
-    .deletePersonForm {
-        width: 12%;
-        margin: 0%;
-        padding: 0%;
-    }
-
-    .avatar {
-        width: 10%;
-        float: left;
-    }
-
-    .personData {
-        float: left;
-    }
-
 </style>
 <script>
     $(document).ready(function () {
-        $("#cardName").datepicker();
 
         $(".pipe .person").draggable({
             cancel: "a.ui-icon",
@@ -185,10 +122,36 @@
                 "ui-droppable-active": "ui-state-highlight"
             },
 
+            drop: function( event, ui ) {
+                movePerson( ui.draggable, $(event.target) );
 
+                //personId
+                var $draggable_item = ui.draggable;
+                //var $from_input = $($draggable_item).find("#from");
 
-            drop: function (event, ui) {
-                movePerson(ui.draggable, $(event.target));
+                var from = $($draggable_item).find("#from").val(); // Source card number
+                var personId = $($draggable_item).find("#personId").val(); // Draggable person
+
+                var $target = $(event.target); // Pipe where we drag person
+
+                var destination = $($target).find("#destination").val(); // Destination card number
+
+                $($draggable_item).find("#from").attr("value", destination);
+
+                var json = { "destination" : destination, "from" : from, "personId" : personId};
+
+                if(destination != from) {
+                    $.ajax({
+                        url: '/moveLeadAjax',
+                        dataType: 'json',
+                        type: 'POST',
+                        data: JSON.stringify(json),
+                        contentType: 'application/json',
+
+                        success: function (data) {
+                        }
+                    });
+                }
             }
         });
 
@@ -200,5 +163,8 @@
 
         $('.pipe_wrapper #deleteCardForm').first().remove();
 
+
+
     });
+
 </script>

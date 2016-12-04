@@ -155,3 +155,69 @@ body {
     height: 3.25em;
     line-height: 3.25em;
 }
+
+.editToolbar {
+    margin: 0;
+    padding: 0;
+
+    height: 50px;
+    border: solid #0f0f0f;
+}
+
+.editToolbar from {
+    height: 50px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.editToolbar #cardNameForm {
+    width: 90%;
+    float: left;
+}
+
+.editToolbar #cardName {
+    width: 83%;
+    float: left;
+    height: 44px;
+}
+
+.editToolbar #submitCardName {
+    width: 12%;
+}
+
+.editToolbar #deleteCardForm {
+    width: 9%;
+    float: right;
+    margin-right: 1%
+}
+
+.pipe .person {
+    float: left;
+    width: 100%;
+    height: 10%;
+    border: solid #0f0f0f;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.editPersonFrom {
+    width: 12%;
+    margin: 0%;
+    padding: 0%;
+    float: left;
+}
+
+.deletePersonForm {
+    width: 12%;
+    margin: 0%;
+    padding: 0%;
+}
+
+.avatar {
+    width: 10%;
+    float: left;
+}
+
+.personData {
+    float: left;
+}
