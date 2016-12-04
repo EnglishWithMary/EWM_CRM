@@ -1,5 +1,6 @@
 package evg.testt.controller;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import evg.testt.dto.PersonDTO;
 import evg.testt.exception.BadAvatarNameException;
 import evg.testt.exception.PersonException;
@@ -7,6 +8,7 @@ import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
+import evg.testt.service.impl.BaseService;
 import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -36,6 +38,8 @@ public class PersonController {
     PersonService personService;
     @Autowired
     AvatarService avatarService;
+    @Autowired
+    PersonService baseService;
 
     @RequestMapping(value = "/personProfile", method = RequestMethod.GET)
     public ModelAndView profilePerson(@ModelAttribute("person") @Validated PersonDTO personDTO,
@@ -53,7 +57,7 @@ public class PersonController {
         personDTO.setComments(person.getComments());
         personDTO.setOrganization(person.getOrganization());
         personDTO.setAvatarURL(person.getAvatarURL());
-        personDTO.setBirthdayDateStr(person.getBirthdayDate());
+        personDTO.setBirthdayDateStr(baseService.getStringFromDate(person.getBirthdayDate()));
 
         return new ModelAndView(JspPath.PROFILE,"person", personDTO);
     }
@@ -77,7 +81,7 @@ public class PersonController {
             person.setLastName(personDTO.getLastName());
             person.setComments(personDTO.getComments());
             person.setOrganization(personDTO.getOrganization());
-            person.setBirthdayDate(personDTO.getBirthdayDateStr());
+            person.setBirthdayDate(baseService.getDateFromString(personDTO.getBirthdayDateStr()));
 
             Email email = person.getEmail();
             if (email == null) {

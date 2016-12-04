@@ -3,6 +3,7 @@ package evg.testt.service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 @Transactional
@@ -27,4 +28,8 @@ public interface Service<T> {
     List<T> getSortedByRegistrationDate() throws SQLException;
 
     List<T> getByPageSorted(int pageNumber) throws SQLException;
+
+    String getStringFromDate(Date birthdayDate);
+
+    Date getDateFromString(String birthdayDateStr);
 }
