@@ -36,6 +36,8 @@ public class StudentController {
     PersonService personService;
     @Autowired
     TeacherService teacherService;
+    @Autowired
+    PersonDTOService personDTOService;
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public String showStudent(@RequestParam(required = false) Integer teacher_id,
@@ -74,32 +76,18 @@ public class StudentController {
         User u = userService.findByUserLogin(personDTO.getLogin());
         if (u != null)
             bindingResult.rejectValue("login", "1", "Login already exist.");
+
         if (!bindingResult.hasErrors()) {
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-                UserRole roleId = UserRole.ROLE_STUDENT;
-                Role role = roleService.getById(roleId.getRoleId());
-                Person newPerson = new Person();
-                User newUser = new User();
-                Student newStudent = new Student();
-                Teacher teacher;
 
-                newPerson.setFirstName(personDTO.getFirstName());
-                newPerson.setLastName(personDTO.getLastName());
-                newPerson.setMiddleName(personDTO.getMiddleName());
-                newPerson.setComments(personDTO.getComments());
+            Student newStudent = personDTOService.buildPerson(personDTO).getStudent();
+            Teacher teacher;
 
-                newUser.setRole(role);
-                newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
-                newUser.setLogin(personDTO.getLogin());
-                newStudent.setPerson(newPerson);
-                newStudent.setUser(newUser);
+            if (teacher_id != null && teacher_id > 0) {
+                teacher = teacherService.getById(teacher_id);
+                newStudent.setTeacher(teacher);
+            }
 
-                if (teacher_id != null && teacher_id > 0) {
-                    teacher = teacherService.getById(teacher_id);
-                    newStudent.setTeacher(teacher);
-                }
-
-                studentService.insert(newStudent);
+            studentService.insert(newStudent);
 
             return "redirect:/students";
         } else {

@@ -34,6 +34,8 @@ public class TeacherController {
     RoleService roleService;
     @Autowired
     PersonService personService;
+    @Autowired
+    PersonDTOService personDTOService;
 
     @RequestMapping(value = "/teachers", method = RequestMethod.GET)
     public String showTeachers(Model model) throws SQLException{
@@ -64,27 +66,8 @@ public class TeacherController {
 
         if (!bindingResult.hasErrors()) {
 
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-                UserRole roleId = UserRole.ROLE_TEACHER;
-
-                Role role = roleService.getById(roleId.getRoleId());
-
-                Person newPerson = new Person();
-                User newUser = new User();
-                Teacher newTeacher = new Teacher();
-
-                newPerson.setFirstName(personDTO.getFirstName());
-                newPerson.setLastName(personDTO.getLastName());
-                newPerson.setMiddleName(personDTO.getMiddleName());
-
-                newUser.setRole(role);
-                newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
-                newUser.setLogin(personDTO.getLogin());
-
-                newTeacher.setPerson(newPerson);
-                newTeacher.setUser(newUser);
-
-                teacherService.insert(newTeacher);
+            Teacher newTeacher = personDTOService.buildPerson(personDTO).getTeacher();
+            teacherService.insert(newTeacher);
 
             return "redirect:/teachers";
         } else {

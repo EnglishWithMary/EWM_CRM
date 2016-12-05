@@ -3,10 +3,7 @@ package evg.testt.controller;
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
-import evg.testt.service.ManagerService;
-import evg.testt.service.PersonService;
-import evg.testt.service.RoleService;
-import evg.testt.service.UserService;
+import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -31,14 +28,21 @@ public class ManagerController {
 
     @Autowired
     SpringOvalValidator validator;
+
     @Autowired
     ManagerService managerService;
+
     @Autowired
     UserService userService;
+
     @Autowired
     RoleService roleService;
+
     @Autowired
     PersonService personService;
+
+    @Autowired
+    PersonDTOService personDTOService;
 
     @Value("${pagination.page.size}")
     protected int pageSize;
@@ -92,12 +96,9 @@ public class ManagerController {
             bindingResult.rejectValue("login", "1", "Login already exist.");
 
         if (!bindingResult.hasErrors()) {
+            Manager manager = personDTOService.buildPerson(personDTO).getManager();
+            managerService.insert(manager);
 
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            UserRole roleId = UserRole.ROLE_MANAGER;
-            Role role = roleService.getById(roleId.getRoleId());
-
-            managerService.insert(personDTO.getManager(role, passwordEncoder));
             return "redirect:/managers";
         } else {
             return "manager/add";
