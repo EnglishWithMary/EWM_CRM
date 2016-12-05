@@ -70,8 +70,8 @@
                     </li>
                     <li>
                         <form class=" navbar-form">
-                            <div class="form-group">
-                            </div>
+                            <%--<div class="form-group">--%>
+                            <%--</div>--%>
                             <button type="submit" class="btn btn-default">Log Out</button>
                         </form>
                     </li>
@@ -79,8 +79,4 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-
 </security:authorize>
-
-</nav>
-<a href="/home" class="logo">Mary</a>

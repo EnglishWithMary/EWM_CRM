@@ -10,23 +10,12 @@
 
 </head>
 <body class="subpage">
-<header id="header">
+<div id="wrapper">
     <tiles:insertAttribute name="header"/>
-    <tiles:insertAttribute name="authentification"/>
-</header>
-<security:authorize access="isAuthenticated()">
-        <tiles:insertAttribute name="menu"/>
-</security:authorize>
-<section id="main" class="wrapper">
-    <div class="inner">
-        <section id="banner">
-            <div class="content">
-                <tiles:insertAttribute name="body"/>
-            </div>
-        </section>
+    <div class="container">
+        <tiles:insertAttribute name="body"/>
     </div>
-</section>
-<tiles:insertAttribute name="footer"/>
+</div>
 <tiles:insertAttribute name="scripts"/>
 <tiles:insertAttribute name="formValidationScripts"/>
 </body>
