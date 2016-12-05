@@ -25,11 +25,11 @@ import java.util.List;
 public class GroupController {
 
     @Autowired
-    SpringOvalValidator validator;
+    private SpringOvalValidator validator;
     @Autowired
-    GroupService groupService;
+    private GroupService groupService;
     @Autowired
-    TeacherService teacherService;
+    private TeacherService teacherService;
 
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
     public String showGroups(Model model) throws SQLException {

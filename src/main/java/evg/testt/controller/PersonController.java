@@ -28,11 +28,11 @@ import java.util.List;
 public class PersonController {
 
     @Autowired
-    SpringOvalValidator validator;
+    private SpringOvalValidator validator;
     @Autowired
-    PersonService personService;
+    private PersonService personService;
     @Autowired
-    AvatarService avatarService;
+    private AvatarService avatarService;
 
     @RequestMapping(value = "/personProfile", method = RequestMethod.GET)
     public String profilePerson(@ModelAttribute("person") @Validated PersonDTO personDTO,

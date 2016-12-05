@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class LeadRepositoryJpaImpl extends BaseRepositoryJpaImpl<Lead> implements LeadRepository {
+public class LeadRepositoryJpaImpl extends HumanRepositoryJpaImpl<Lead> implements LeadRepository {
 
     @Override
     public Lead findByPerson(Person person) {

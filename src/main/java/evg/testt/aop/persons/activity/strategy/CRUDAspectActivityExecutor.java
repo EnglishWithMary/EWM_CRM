@@ -37,55 +37,51 @@ public class CRUDAspectActivityExecutor implements StrategyAspectActivityExecuto
         // if method have argument and this argument belongs to type BelongsToPerson
         // this is means he have filed of *.model.Person type, and
         // we can extract him.
-        if(args.length > 0 && args[0] instanceof BelongsToPerson)
-        {
-
-            //Get login of logged in user.
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            String name = auth.getName();
-
-            Activity activity = new Activity();
-            Person preceedingPerson = new Person(); // Object that was passed in invoked method.
-
-            // Get field by name from parameter(argument of method).
-            Field f = pjp.getArgs()[0].getClass().getDeclaredField("person");
-
-            // Additional checking to make sure that we got person from class.
-            if(f != null) {
-                f.setAccessible(true);
-                preceedingPerson = (Person)f.get(pjp.getArgs()[0]); // Get person.
-                StringBuilder activ = new StringBuilder();
-
-                // Make string for activity.
-                activ.append(name);
-                activ.append(" have ");
-                activ.append(pjp.getSignature().getName());
-                activ.append(pjp.getSignature().getName().endsWith("e")? "d ": "ed ");
-                activ.append("\"");
-                activ.append(preceedingPerson.getFirstName());
-                activ.append(" ");
-                activ.append(preceedingPerson.getLastName());
-                activ.append("\"");
-                activ.append(" person. ");
-                activ.append(args[0].getClass().getSimpleName());
-
-                // Insert all in database.
-                try {
-                    /**
-                     * TODO: don't FORGET!!!!!
-                     */
+//        if(args.length > 0 && args[0] instanceof BelongsToPerson)
+//        {
+//
+//            //Get login of logged in user.
+//            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//            String name = auth.getName();
+//
+//            Activity activity = new Activity();
+//            Person preceedingPerson = new Person(); // Object that was passed in invoked method.
+//
+//            // Get field by name from parameter(argument of method).
+//            Field f = pjp.getArgs()[0].getClass().getDeclaredField("person");
+//
+//            // Additional checking to make sure that we got person from class.
+//            if(f != null) {
+//                f.setAccessible(true);
+//                preceedingPerson = (Person)f.get(pjp.getArgs()[0]); // Get person.
+//                StringBuilder activ = new StringBuilder();
+//
+//                // Make string for activity.
+//                activ.append(name);
+//                activ.append(" have ");
+//                activ.append(pjp.getSignature().getName());
+//                activ.append(pjp.getSignature().getName().endsWith("e")? "d ": "ed ");
+//                activ.append("\"");
+//                activ.append(preceedingPerson.getFirstName());
+//                activ.append(" ");
+//                activ.append(preceedingPerson.getLastName());
+//                activ.append("\"");
+//                activ.append(" person. ");
+//                activ.append(args[0].getClass().getSimpleName());
+//
+//                // Insert all in database.
+//                try {
 //                    activity.setPerson(personService.getPersonByUserLogin(name));
 //                    activity.setActivity(activ.toString());
-                    activityService.insertActivity(activity);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-//                    throw e;
-                }
+//                    activityService.insertActivity(activity);
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
 //                catch (PersonRoleNotFoundException e) {
 //                    e.printStackTrace();
 //                }
-            }
-        }
+//            }
+//        }
 
         ret_obj = pjp.proceed(); // Proceed invoked method.
         return ret_obj; // Return result of proceeded method.

@@ -20,13 +20,13 @@
             </tr>
             <c:forEach var="teacher" items="${teachers}">
                 <tr>
-                    <td>${teacher.firstName}</td>
-                    <td>${teacher.lastName}</td>
-                    <td>${teacher.middleName}</td>
-                    <td>${teacher.registrationDate}</td>
+                    <td>${teacher.person.firstName}</td>
+                    <td>${teacher.person.lastName}</td>
+                    <td>${teacher.person.middleName}</td>
+                    <td>${teacher.person.registrationDate}</td>
                     <td>
                         <security:authorize access="hasRole('ROLE_ADMIN')">
-                            <a href="/teacherDelete?id=${teacher.id}">Delete</a>
+                            <a href="/teacherTrash?id=${teacher.id}">Delete</a>
                         </security:authorize>
                     </td>
                 </tr>

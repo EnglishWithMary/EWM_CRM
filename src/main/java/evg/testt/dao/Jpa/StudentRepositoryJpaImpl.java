@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Repository
-public class StudentRepositoryJpaImpl extends BaseRepositoryJpaImpl<Student> implements StudentRepository {
+public class StudentRepositoryJpaImpl extends HumanRepositoryJpaImpl<Student> implements StudentRepository {
     @Override
     public List<Student> findStudensByTeacher(int teacher_id) {
         List<Student> students = Collections.EMPTY_LIST;
