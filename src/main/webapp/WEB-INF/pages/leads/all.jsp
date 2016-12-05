@@ -15,6 +15,7 @@
             <td>Middle name</td>
             <td>Registration Date</td>
             <security:authorize access="hasRole('ROLE_ADMIN')">
+                <td>Edit Lead</td>
                 <td>Delete Lead</td>
             </security:authorize>
         </tr>
@@ -24,14 +25,28 @@
                 <td><label>${lead.person.lastName}</label></td>
                 <td><label>${lead.person.middleName}</label></td>
                 <td><label>${lead.person.registrationDate}</label></td>
-                <security:authorize access="hasRole('ROLE_ADMIN')">
+                <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
                     <td>
+                        <form method="post" action="/leadAdd">
+                            <button type="submit" class="btn btn-default btn-xs">
+                                Edit
+                            </button>
+                            <input type="hidden" name="personId" value="${lead.person.id}">
+                            <%--input type="hidden" name="cardId" value="${card.id}">
+                            <input type="hidden" name="pipeTipeId" value="${pt.id}"--%>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" action="/deleteLead">
 
                         <form method="post" action="/leadTrash">
                             <input type="hidden" name="id" value="${lead.id}">
                             <button type="submit" class="btn btn-default btn-xs">
                                 Delete
                             </button>
+                            <input type="hidden" name="id" value="${lead.id}">
+                            <input type="hidden" name="cardId" value="${card.id}">
+                            <input type="hidden" name="pipeTipeId" value="${pt.id}">
                         </form>
                     </td>
                 </security:authorize>
@@ -41,6 +56,8 @@
     <form method="post" action="/leadAdd">
         <input type="hidden" value="${pipeType.id}" name="pipeTypeId">
         <input type="hidden" value="${card.id}" name="cardId">
+        <%--input type="hidden" value="${pt.id}" name="pipeTipeId">
+        <input type="hidden" value="${card.id}" name="cardId"--%>
         <button type="submit" class="button alt">Add Lead</button>
     </form>
 </div>
