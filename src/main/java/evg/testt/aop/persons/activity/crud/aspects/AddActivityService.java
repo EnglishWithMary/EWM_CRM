@@ -5,9 +5,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by User on 27.11.2016.
- */
 @Component
 @Aspect
 public class AddActivityService extends CRUDAspectService implements ActivityAspectService {

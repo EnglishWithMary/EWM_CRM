@@ -34,16 +34,13 @@ public class TeacherController {
     RoleService roleService;
     @Autowired
     PersonService personService;
+    @Autowired
+    PersonDTOService personDTOService;
 
     @RequestMapping(value = "/teachers", method = RequestMethod.GET)
     public String showTeachers(Model model) throws SQLException{
-        List<Person> persons = new ArrayList<Person>();
-
         List<Teacher> teachers = teacherService.getAll();
-        for (Teacher teacher : teachers){
-                persons.add(teacher.getPerson());
-            }
-        model.addAttribute("teachers", persons);
+        model.addAttribute("teachers", teachers);
         return "teachers/all";
     }
 
@@ -64,27 +61,8 @@ public class TeacherController {
 
         if (!bindingResult.hasErrors()) {
 
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-                UserRole roleId = UserRole.ROLE_TEACHER;
-
-                Role role = roleService.getById(roleId.getRoleId());
-
-                Person newPerson = new Person();
-                User newUser = new User();
-                Teacher newTeacher = new Teacher();
-
-                newPerson.setFirstName(personDTO.getFirstName());
-                newPerson.setLastName(personDTO.getLastName());
-                newPerson.setMiddleName(personDTO.getMiddleName());
-
-                newUser.setRole(role);
-                newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
-                newUser.setLogin(personDTO.getLogin());
-
-                newTeacher.setPerson(newPerson);
-                newTeacher.setUser(newUser);
-
-                teacherService.insert(newTeacher);
+            Teacher newTeacher = personDTOService.buildPerson(personDTO).getTeacher();
+            teacherService.insert(newTeacher);
 
             return "redirect:/teachers";
         } else {
@@ -94,12 +72,8 @@ public class TeacherController {
 
     @RequestMapping(value = "/teacherSortByDate", method = RequestMethod.POST)
     public String filterTeachers(Model model) throws SQLException {
-        List<Person> persons=new ArrayList<>();
         List<Teacher> teachers = teacherService.getSortedByRegistrationDate();
-        for (Teacher teacher: teachers){
-                persons.add(teacher.getPerson());
-            }
-            model.addAttribute("teachers", persons);
+        model.addAttribute("teachers", teachers);
         return "teachers/all";
     }
 
@@ -107,6 +81,13 @@ public class TeacherController {
     public String teacherDelete(@RequestParam Integer id) throws SQLException {
         Teacher teacher = teacherService.getById(id);
         teacherService.delete(teacher);
+        return "teachers/all";
+    }
+
+    @RequestMapping(value = "/teacherTrash")
+    public String teacherTrash(@RequestParam Integer id) throws SQLException {
+        Teacher teacher = teacherService.getById(id);
+        teacherService.trash(teacher);
         return "teachers/all";
     }
 }

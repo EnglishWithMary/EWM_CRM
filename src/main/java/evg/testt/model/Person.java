@@ -18,7 +18,7 @@ public @Data class Person extends BaseModel{
     private String avatarURL;
 
     @Embedded
-    private State state;
+    private State state = new State();
 
     @Temporal(TemporalType.DATE)
     private Date birthdayDate;
@@ -27,7 +27,7 @@ public @Data class Person extends BaseModel{
     private Date registrationDate = new Date();
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date modifyDate;
+    private Date modifyDate = new Date();
 
     private String organization;
 
@@ -37,6 +37,6 @@ public @Data class Person extends BaseModel{
     @Column(columnDefinition = "text")
     private String comments;
 
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personActivities")
-//    List<Activity> activities;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+    List<Activity> activities;
 }

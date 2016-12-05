@@ -1,10 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<%--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>--%>
-<%--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>--%>
-<%--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">--%>
-
 <div class="pipe_line_canvas">
     <c:if test="${not empty cards}">
     <div class="scroll">
@@ -17,7 +13,7 @@
                         <form method="post" action="/editCardName" id="cardNameForm">
                             <input type="text" value="${card.cardName}" name="cardName" id="cardName">
                             <input type="hidden" value="${card.id}" name="cardId">
-                            <input type="hidden" value="${pt.id}" name="pipeTypeId">
+                            <input type="hidden" value="${pipeType.id}" name="pipeTypeId">
                             <button type="submit" class="btn btn-default btn-xs" id="submitCardName"><span
                                     class="glyphicon glyphicon-pencil"></span></button>
                         </form>
@@ -26,7 +22,7 @@
                             <button type="submit" class="btn btn-default btn-xs"><span
                                     class="glyphicon glyphicon-remove"></span></button>
                             <input type="hidden" value="${card.id}" name="cardId">
-                            <input type="hidden" name="pipeTypeId" value="${pt.id}">
+                            <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
                         </form>
                     </div>
 
@@ -55,7 +51,7 @@
 
                             <form method="post" action="/leadAdd" class="editPersonFrom">
                                 <input type="hidden" value="${card.id}" name="cardId">
-                                <input type="hidden" value="${pt.id}" name="pipeTypeId">
+                                <input type="hidden" value="${pipeType.id}" name="pipeTypeId">
                                 <button type="submit" class="btn btn-default btn-xs">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </button>
@@ -67,7 +63,7 @@
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </button>
                                 <input type="hidden" name="cardId" value="${card.id}">
-                                <input type="hidden" name="pipeTypeId" value="${pt.id}">
+                                <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
                             </form>
 
                         </div> <%-- end person --%>
@@ -79,7 +75,7 @@
 
                 <form method="post" action="/leadAdd">
                     <input type="hidden" name="cardId" value="${card.id}">
-                    <input type="hidden" name="pipeTypeId" value="${pt.id}">
+                    <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
                     <button type="submit" class="add">
                         <span>Add Lead</span>
                     </button>
@@ -89,11 +85,11 @@
         </c:forEach>
         </c:if>
 
-        <c:if test="${pt.id > 0 || pt.id != null}">
+        <c:if test="${pipeType.id > 0 || pipeType.id != null}">
             <div class="pipe_wrapper">
                 <form class="pipe" method="post" action="/addCard">
                     <input type="submit" value="Add Card" class="add_pipe">
-                    <input type="hidden" name="pipeTypeId" value="${pt.id}">
+                    <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
                 </form>
             </div>
         </c:if>
@@ -104,67 +100,3 @@
         overflow-y: hidden;
     }
 </style>
-<%--<script>--%>
-    <%--$(document).ready(function () {--%>
-
-        <%--$(".pipe .person").draggable({--%>
-            <%--cancel: "a.ui-icon",--%>
-            <%--revert: "invalid",--%>
-            <%--containment: "document",--%>
-            <%--helper: "clone",--%>
-            <%--cursor: "move"--%>
-        <%--});--%>
-
-        <%--$(".pipe").droppable({--%>
-            <%--accept: ".pipe .person",--%>
-
-            <%--classes: {--%>
-                <%--"ui-droppable-active": "ui-state-highlight"--%>
-            <%--},--%>
-
-            <%--drop: function( event, ui ) {--%>
-                <%--movePerson( ui.draggable, $(event.target) );--%>
-
-                <%--//personId--%>
-                <%--var $draggable_item = ui.draggable;--%>
-                <%--//var $from_input = $($draggable_item).find("#from");--%>
-
-                <%--var from = $($draggable_item).find("#from").val(); // Source card number--%>
-                <%--var personId = $($draggable_item).find("#personId").val(); // Draggable person--%>
-
-                <%--var $target = $(event.target); // Pipe where we drag person--%>
-
-                <%--var destination = $($target).find("#destination").val(); // Destination card number--%>
-
-                <%--$($draggable_item).find("#from").attr("value", destination);--%>
-
-                <%--var json = { "destination" : destination, "from" : from, "personId" : personId};--%>
-
-                <%--if(destination != from) {--%>
-                    <%--$.ajax({--%>
-                        <%--url: '/moveLeadAjax',--%>
-                        <%--dataType: 'json',--%>
-                        <%--type: 'POST',--%>
-                        <%--data: JSON.stringify(json),--%>
-                        <%--contentType: 'application/json',--%>
-
-                        <%--success: function (data) {--%>
-                        <%--}--%>
-                    <%--});--%>
-                <%--}--%>
-            <%--}--%>
-        <%--});--%>
-
-        <%--function movePerson($item, $target) {--%>
-            <%--$item.appendTo($target).fadeIn();--%>
-        <%--}--%>
-
-        <%--$(".person").css("width", $(".pipe").css("width"));--%>
-
-        <%--$('.pipe_wrapper #deleteCardForm').first().remove();--%>
-
-
-
-    <%--});--%>
-
-<%--</script>--%>

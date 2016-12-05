@@ -2,6 +2,7 @@ package evg.testt.service.impl;
 
 import evg.testt.model.Student;
 import evg.testt.dao.StudentRepository;
+import evg.testt.service.HumanService;
 import evg.testt.service.StudentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class StudentServiceImpl extends BaseService<Student, StudentRepository> implements StudentService {
+public class StudentServiceImpl extends HumanServiceImpl<Student, StudentRepository> implements StudentService {
 
     @Override
     public List<Student> getAllByTeacher(int teacher_id) {
