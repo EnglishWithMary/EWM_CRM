@@ -1,5 +1,6 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container-fluid">
@@ -36,6 +37,8 @@
                         <ul class="dropdown-menu">
                             <li><a href="/teachers">Teachers</a></li>
                             <li><a href="/managers">Managers</a></li>
+                            <li><a href="/students">Students</a></li>
+                            <li><a href="/leads">Leads</a></li>
                             <li><a href="/schedules">Schedules</a></li>
                             <li><a href="/payments">Payments</a></li>
                             <li><a href="/groups">Groups</a></li>
@@ -65,12 +68,21 @@
             <ul class="nav navbar-nav navbar-right">
                 <security:authorize access="isAuthenticated()">
                     <li class="minimize-it">
-                        <a href="#">
-                            <img class="img-size-vsm" alt="Vasyl Zaratustra"
-                                 src="${pageContext.request.contextPath}/resources/img/defaultAvatar.jpg"/>
-                            Vasyl Zaratustra
+                        <c:choose>
+                            <c:when test="${person.avatarURL == null}">
+                                <img class="img-size-vsm" class="img-circle" alt="Responsive image"
+                                     src="${pageContext.request.contextPath}/resources/img/defaultAvatar.jpg">
+                            </c:when>
+                            <c:otherwise>
+                                <img class="img-size-vsm" class="img-circle" alt="Responsive image"
+                                     src="${person.avatarURL}">
+                            </c:otherwise>
+                        </c:choose>
+                        <a href="/personProfile" class="button alt" >
+                            Profile
                         </a>
                     </li>
+
                 </security:authorize>
                 <li>
                     <security:authorize access="isAuthenticated()">
