@@ -8,5 +8,8 @@
         <put-attribute name="title" value="PipeLine page" />
         <put-attribute name="body" value="/WEB-INF/pages/pipeline/pipeline.jsp" />
         <put-attribute name="footer" value="/WEB-INF/pages/pipeline/emptyFooter.jsp" />
+
+        <put-attribute name="additionalScripts" value="/WEB-INF/pages/pipeline/pipelineScripts.jsp" />
+        <put-attribute name="additionalResources" value="/WEB-INF/pages/pipeline/pipelineResources.jsp" />
     </definition>
 </tiles-definitions>

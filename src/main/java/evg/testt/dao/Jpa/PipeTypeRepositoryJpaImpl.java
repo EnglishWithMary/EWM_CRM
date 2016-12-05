@@ -11,13 +11,10 @@ import java.sql.SQLException;
 
 @Repository
 public class PipeTypeRepositoryJpaImpl extends BaseRepositoryJpaImpl<PipeType> implements PipeTypeRepository {
-    @Autowired
-    private PipeTypeService pts;
-
     @Override
     public PipeType findPipe(Pipe pipe) throws SQLException {
         PipeType pt = new PipeType();
-        pt = pts.getById(pipe.getPipeId());
+        pt = findOne(pipe.getPipeId());
         return pt;
     }
 }
