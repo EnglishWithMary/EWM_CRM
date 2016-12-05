@@ -44,21 +44,21 @@
 
                                 <div class="col-md-2">
                                     <form method="post" action="/leadAdd">
-                                        <%--<input type="hidden" value="${person.id}" name="personId">--%>
-                                        <input type="hidden" value="${card.id}" name="cardId">
-                                        <input type="hidden" value="${pt.id}" name="pipeTypeId">
-                                        <button type="submit" class="btn btn-default btn-xs">
+                                        <input type="hidden" value="${person.id}" name="personId"/>
+                                        <input type="hidden" value="${card.id}" name="cardId"/>
+                                        <input type="hidden" value="${pt.id}" name="pipeTypeId"/>
+                                        <button type="submit" class="btn btn-default btn-xs"/>
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </button>
                                     </form>
                                 </div>
 
                                 <div class="col-md-2">
-                                    <form method="post" action="/deleteLeadFromPipe">
+                                    <form method="post" action="/deleteLead">
                                         <button type="submit" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
-                                        <%--<input type="hidden" name="cardPersonId" value="${cardPerson.id}">--%>
+                                        <input type="hidden" name="personId" value="${person.id}">
                                         <input type="hidden" name="cardId" value="${card.id}">
                                         <input type="hidden" name="pipeTypeId" value="${pt.id}">
                                     </form>

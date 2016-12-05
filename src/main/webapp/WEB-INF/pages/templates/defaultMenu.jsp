@@ -7,7 +7,7 @@
         <li><a href="/groups">Groups</a></li>
         <li><a href="/schedules">Schedules</a></li>
 
-        <security:authorize access="hasRole('ROLE_ADMIN')">
+        <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
             <li><a href="/teachers">Teachers</a></li>
             <li><a href="/managers">Managers</a></li>
             <li><a href="/leads">Leads</a></li>

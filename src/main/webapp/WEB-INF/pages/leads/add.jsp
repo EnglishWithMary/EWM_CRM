@@ -52,9 +52,9 @@
 
             <tr>
                 <td colspan="2">
-                    <%--<input type="hidden" name="cardPersonId" value="${cardPersonId}" />--%>
-                    <input type="hidden" name="cardId" value="${card_id}" />
-                    <input type="hidden" name="pipeTypeId" value="${pt_id}"/>
+                    <input type="hidden" name="personId" value="${personId}" />
+                    <input type="hidden" name="card_id" value="${card_id}" />
+                    <input type="hidden" name="pipeTypeId" value="${pt.id}"/>
                     <input type="submit" value="Add lead"/>
                 </td>
             </tr>

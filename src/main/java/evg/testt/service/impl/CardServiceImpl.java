@@ -2,6 +2,7 @@ package evg.testt.service.impl;
 
 import evg.testt.dao.PipeTypeRepository;
 import evg.testt.model.Card;
+import evg.testt.model.Person;
 import evg.testt.model.Pipe;
 import evg.testt.dao.CardRepository;
 import evg.testt.model.PipeType;
@@ -23,6 +24,12 @@ public class CardServiceImpl extends BaseService<Card, CardRepository> implement
     public List<Card> getCards(Pipe pipe) throws SQLException {
         PipeType pipeType = pr.findPipe(pipe);
         return dao.findCards(pipeType);
+    }
+
+    @Override
+    @Transactional
+    public Card getCardByPerson(Person person) throws SQLException {
+        return dao.findCardByPerson(person);
     }
 
     @Override
