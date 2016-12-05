@@ -2,6 +2,7 @@ package evg.testt.model;
 
 import lombok.Data;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "students")
 
@@ -16,6 +17,6 @@ public @Data class Student extends RegistratedUser implements BelongsToPerson{
     @OneToOne
     private Teacher teacher;
 
-//    @OneToMany
-//    private StudentLevelHistory studentLevelHistory;
+    @OneToMany
+    private List<StudentLevelHistory> studentLevelHistory;
 }

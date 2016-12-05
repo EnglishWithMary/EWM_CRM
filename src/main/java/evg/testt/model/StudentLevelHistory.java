@@ -18,9 +18,6 @@ public @Data class StudentLevelHistory {
     @Temporal(TemporalType.DATE)
     private Date checkpointDate;
 
-    @ManyToOne
-    private Student student;
-
     @Column(name = "grammar")
     @Enumerated(EnumType.ORDINAL)
     private LevelClassifierEnum grammar;
