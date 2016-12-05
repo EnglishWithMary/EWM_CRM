@@ -1,9 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<%--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>--%>
+<%--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>--%>
+<%--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">--%>
 
 <div class="pipe_line_canvas">
     <c:if test="${not empty cards}">
@@ -104,67 +104,67 @@
         overflow-y: hidden;
     }
 </style>
-<script>
-    $(document).ready(function () {
+<%--<script>--%>
+    <%--$(document).ready(function () {--%>
 
-        $(".pipe .person").draggable({
-            cancel: "a.ui-icon",
-            revert: "invalid",
-            containment: "document",
-            helper: "clone",
-            cursor: "move"
-        });
+        <%--$(".pipe .person").draggable({--%>
+            <%--cancel: "a.ui-icon",--%>
+            <%--revert: "invalid",--%>
+            <%--containment: "document",--%>
+            <%--helper: "clone",--%>
+            <%--cursor: "move"--%>
+        <%--});--%>
 
-        $(".pipe").droppable({
-            accept: ".pipe .person",
+        <%--$(".pipe").droppable({--%>
+            <%--accept: ".pipe .person",--%>
 
-            classes: {
-                "ui-droppable-active": "ui-state-highlight"
-            },
+            <%--classes: {--%>
+                <%--"ui-droppable-active": "ui-state-highlight"--%>
+            <%--},--%>
 
-            drop: function( event, ui ) {
-                movePerson( ui.draggable, $(event.target) );
+            <%--drop: function( event, ui ) {--%>
+                <%--movePerson( ui.draggable, $(event.target) );--%>
 
-                //personId
-                var $draggable_item = ui.draggable;
-                //var $from_input = $($draggable_item).find("#from");
+                <%--//personId--%>
+                <%--var $draggable_item = ui.draggable;--%>
+                <%--//var $from_input = $($draggable_item).find("#from");--%>
 
-                var from = $($draggable_item).find("#from").val(); // Source card number
-                var personId = $($draggable_item).find("#personId").val(); // Draggable person
+                <%--var from = $($draggable_item).find("#from").val(); // Source card number--%>
+                <%--var personId = $($draggable_item).find("#personId").val(); // Draggable person--%>
 
-                var $target = $(event.target); // Pipe where we drag person
+                <%--var $target = $(event.target); // Pipe where we drag person--%>
 
-                var destination = $($target).find("#destination").val(); // Destination card number
+                <%--var destination = $($target).find("#destination").val(); // Destination card number--%>
 
-                $($draggable_item).find("#from").attr("value", destination);
+                <%--$($draggable_item).find("#from").attr("value", destination);--%>
 
-                var json = { "destination" : destination, "from" : from, "personId" : personId};
+                <%--var json = { "destination" : destination, "from" : from, "personId" : personId};--%>
 
-                if(destination != from) {
-                    $.ajax({
-                        url: '/moveLeadAjax',
-                        dataType: 'json',
-                        type: 'POST',
-                        data: JSON.stringify(json),
-                        contentType: 'application/json',
+                <%--if(destination != from) {--%>
+                    <%--$.ajax({--%>
+                        <%--url: '/moveLeadAjax',--%>
+                        <%--dataType: 'json',--%>
+                        <%--type: 'POST',--%>
+                        <%--data: JSON.stringify(json),--%>
+                        <%--contentType: 'application/json',--%>
 
-                        success: function (data) {
-                        }
-                    });
-                }
-            }
-        });
+                        <%--success: function (data) {--%>
+                        <%--}--%>
+                    <%--});--%>
+                <%--}--%>
+            <%--}--%>
+        <%--});--%>
 
-        function movePerson($item, $target) {
-            $item.appendTo($target).fadeIn();
-        }
+        <%--function movePerson($item, $target) {--%>
+            <%--$item.appendTo($target).fadeIn();--%>
+        <%--}--%>
 
-        $(".person").css("width", $(".pipe").css("width"));
+        <%--$(".person").css("width", $(".pipe").css("width"));--%>
 
-        $('.pipe_wrapper #deleteCardForm').first().remove();
+        <%--$('.pipe_wrapper #deleteCardForm').first().remove();--%>
 
 
 
-    });
+    <%--});--%>
 
-</script>
+<%--</script>--%>
