@@ -22,4 +22,14 @@ class HumanServiceImpl <T extends Human, P extends HumanRepository<T>>
         o.getPerson().getState().setState("DELETED");
         dao.save(o);
     }
+
+    public void trash (T o) throws SQLException{
+        o.getPerson().getState().setState("TRASHED");
+        dao.save(o);
+    }
+
+    public void restore (T o) throws SQLException{
+        o.getPerson().getState().setState("ACTIVE");
+        dao.save(o);
+    }
 }

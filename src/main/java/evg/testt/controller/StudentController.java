@@ -25,17 +25,17 @@ import java.util.List;
 public class StudentController {
 
     @Autowired
-    SpringOvalValidator validator;
+    private SpringOvalValidator validator;
     @Autowired
-    StudentService studentService;
+    private StudentService studentService;
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    RoleService roleService;
+    private RoleService roleService;
     @Autowired
-    PersonService personService;
+    private PersonService personService;
     @Autowired
-    TeacherService teacherService;
+    private TeacherService teacherService;
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public String showStudent(@RequestParam(required = false) Integer teacher_id,
@@ -122,6 +122,13 @@ public class StudentController {
     public String studentDelete(@RequestParam Integer id) throws SQLException {
         Student student = studentService.getById(id);
         studentService.delete(student);
+        return "students/all";
+    }
+
+    @RequestMapping(value = "/studentTrash")
+    public String studentTrash(@RequestParam Integer id) throws SQLException {
+        Student student = studentService.getById(id);
+        studentService.trash(student);
         return "students/all";
     }
 }
