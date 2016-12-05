@@ -5,9 +5,9 @@
     <c:if test="${not empty cards}">
     <div class="scroll">
         <c:forEach items="${cards}" var="card">
-            <div class="pipe_wrapper ui-widget ui-helper-clearfix">
+            <div class="pipe_wrapper">
 
-                <div class="pipe ui-helper-clearfix ui-helper-reset">
+                <div class="pipe">
 
                     <div class="editToolbar">
                         <form method="post" action="/editCardName" id="cardNameForm">
@@ -28,7 +28,7 @@
 
                     <c:forEach items="${card.persons}" var="person">
 
-                        <div class="person ui-widget-content ui-corner-tr">
+                        <div class="person">
 
                             <input type="hidden" id="from" name="from" value="${card.id}">
 
@@ -40,7 +40,7 @@
                                     <img src="${person.avatarURL}" class="img-responsive"/>
                                 </c:if>
                             </div>
-                            <div class="personData ui-widget-header">
+                            <div class="personData">
                                 <input type="hidden" id="personId" name="personId" value="${person.id}">
                                 <p>
                                         ${person.lastName}

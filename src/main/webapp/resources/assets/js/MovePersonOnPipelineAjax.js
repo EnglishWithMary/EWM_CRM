@@ -14,9 +14,7 @@ $(document).ready(function () {
     $(".pipe").droppable({
         accept: ".pipe .person",
 
-        classes: {
-            "ui-droppable-active": "ui-state-highlight"
-        },
+        hoverClass: "pipehover",
 
         drop: function( event, ui ) {
             movePerson( ui.draggable, $(event.target) );
