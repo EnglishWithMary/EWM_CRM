@@ -10,4 +10,8 @@ public @Data class GroupDTO {
 
     private Integer teacherId;
 
+    private Integer studentId;
+
+    private Integer groupId;
+
 }

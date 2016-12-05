@@ -15,4 +15,7 @@ public @Data class Student extends Human implements BelongsToPerson{
 
     @OneToOne
     private Teacher teacher;
+
+    @ManyToOne
+    private Group group;
 }
