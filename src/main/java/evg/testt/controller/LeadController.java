@@ -75,7 +75,8 @@ public class LeadController {
             throws SQLException {
 
         model.addAttribute("cards", cardService.getCards(Pipe.valueOf(pipeTypeId)));
-        model.addAttribute("pt", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
+        model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
+
         validator.validate(personDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
