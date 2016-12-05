@@ -1,9 +1,9 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<security:authorize access="isAuthenticated()">
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container-fluid">
+<nav class="navbar navbar-default navbar-static-top">
+    <div class="container-fluid">
+        <security:authorize access="isAuthenticated()">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -14,8 +14,10 @@
                 </button>
                 <a id="logo" class="navbar-brand" href="/home">Mary</a>
             </div>
+        </security:authorize>
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <security:authorize access="isAuthenticated()">
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -51,7 +53,6 @@
                         </ul>
                     </li>
                 </ul>
-
                 <!--Search in All fields-->
                 <form class="navbar-form navbar-left">
                     <div class="form-group">
@@ -59,24 +60,31 @@
                     </div>
                     <button type="submit" class="btn btn-default">Search</button>
                 </form>
-                <!--Logo and log out-->
-
-                <ul class="nav navbar-nav navbar-right">
+            </security:authorize>
+            <!--Logo and log out-->
+            <ul class="nav navbar-nav navbar-right">
+                <security:authorize access="isAuthenticated()">
                     <li class="minimize-it">
-                        <a href="#" >
-                            <img class="img-size-vsm" alt="Vasyl Zaratustra" src="img/default.avatar.png" />
+                        <a href="#">
+                            <img class="img-size-vsm" alt="Vasyl Zaratustra"
+                                 src="${pageContext.request.contextPath}/resources/img/defaultAvatar.jpg"/>
                             Vasyl Zaratustra
                         </a>
                     </li>
-                    <li>
-                        <form class=" navbar-form">
-                            <%--<div class="form-group">--%>
-                            <%--</div>--%>
+                </security:authorize>
+                <li>
+                    <security:authorize access="isAuthenticated()">
+                        <form class=" navbar-form" action="/logout">
                             <button type="submit" class="btn btn-default">Log Out</button>
                         </form>
-                    </li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
-</security:authorize>
+                    </security:authorize>
+                    <security:authorize access="isAnonymous()">
+                        <form class=" navbar-form" action="/login">
+                            <button type="submit" class="btn btn-default">Log In</button>
+                        </form>
+                    </security:authorize>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
