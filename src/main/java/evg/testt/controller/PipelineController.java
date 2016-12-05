@@ -20,21 +20,16 @@ public class PipelineController {
 
     @Autowired
     private PipeTypeService pipeTypeService;
-
     @Autowired
     private CardService cardService;
-
     @Autowired
-    SpringOvalValidator validator;
-
+    private SpringOvalValidator validator;
     @Autowired
-    LeadService leadService;
-
+    private LeadService leadService;
     @Autowired
-    PersonService personService;
-
+    private PersonService personService;
     @Autowired
-    EmailService emailService;
+    private EmailService emailService;
 
     @RequestMapping(value = "/pipeline", method = RequestMethod.GET)
     public String goToPipelinepage(Model model) {
@@ -55,7 +50,6 @@ public class PipelineController {
         this.inserAttributes(model, pipe);
         return "redirect:/takeLeadtpipe";
     }
-
 
     @RequestMapping(value = "/takeStudentpipe", method = RequestMethod.GET)
     public String takeStudent(Model model)throws SQLException{

@@ -45,7 +45,7 @@
                         <td><textarea>${student.person.comments}</textarea></td>
                         <security:authorize access="hasRole('ROLE_ADMIN')">
                             <td>
-                                <a href="/studentDelete?id=${student.id}">Delete</a>
+                                <a href="/studentTrash?id=${student.id}">Delete</a>
                             </td>
                         </security:authorize>
                     </tr>

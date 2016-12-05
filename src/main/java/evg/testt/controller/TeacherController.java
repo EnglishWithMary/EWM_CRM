@@ -39,13 +39,8 @@ public class TeacherController {
 
     @RequestMapping(value = "/teachers", method = RequestMethod.GET)
     public String showTeachers(Model model) throws SQLException{
-        List<Person> persons = new ArrayList<Person>();
-
         List<Teacher> teachers = teacherService.getAll();
-        for (Teacher teacher : teachers){
-                persons.add(teacher.getPerson());
-            }
-        model.addAttribute("teachers", persons);
+        model.addAttribute("teachers", teachers);
         return "teachers/all";
     }
 
@@ -77,12 +72,8 @@ public class TeacherController {
 
     @RequestMapping(value = "/teacherSortByDate", method = RequestMethod.POST)
     public String filterTeachers(Model model) throws SQLException {
-        List<Person> persons=new ArrayList<>();
         List<Teacher> teachers = teacherService.getSortedByRegistrationDate();
-        for (Teacher teacher: teachers){
-                persons.add(teacher.getPerson());
-            }
-            model.addAttribute("teachers", persons);
+        model.addAttribute("teachers", teachers);
         return "teachers/all";
     }
 
@@ -90,6 +81,13 @@ public class TeacherController {
     public String teacherDelete(@RequestParam Integer id) throws SQLException {
         Teacher teacher = teacherService.getById(id);
         teacherService.delete(teacher);
+        return "teachers/all";
+    }
+
+    @RequestMapping(value = "/teacherTrash")
+    public String teacherTrash(@RequestParam Integer id) throws SQLException {
+        Teacher teacher = teacherService.getById(id);
+        teacherService.trash(teacher);
         return "teachers/all";
     }
 }

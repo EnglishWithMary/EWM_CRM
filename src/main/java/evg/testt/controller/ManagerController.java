@@ -27,20 +27,15 @@ import java.util.List;
 public class ManagerController {
 
     @Autowired
-    SpringOvalValidator validator;
-
+    private SpringOvalValidator validator;
     @Autowired
-    ManagerService managerService;
-
+    private ManagerService managerService;
     @Autowired
-    UserService userService;
-
+    private UserService userService;
     @Autowired
-    RoleService roleService;
-
+    private RoleService roleService;
     @Autowired
-    PersonService personService;
-
+    private PersonService personService;
     @Autowired
     PersonDTOService personDTOService;
 
@@ -109,6 +104,13 @@ public class ManagerController {
     public String managerDelete(@RequestParam Integer id) throws SQLException {
         Manager manager = managerService.getById(id);
         managerService.delete(manager);
+        return "managers/all";
+    }
+
+    @RequestMapping(value = "/managerTrash")
+    public String managerTrash(@RequestParam Integer id) throws SQLException {
+        Manager manager = managerService.getById(id);
+        managerService.trash(manager);
         return "managers/all";
     }
 }

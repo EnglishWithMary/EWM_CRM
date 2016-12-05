@@ -32,18 +32,15 @@ public class AvatarServiceImpl implements AvatarService {
         File file = multipartToFile(avatarFile);
 
         String linkToFile;
-        //Delete old Avatar to Amazon
-        if (oldImgFile != null && !oldImgFile.isEmpty()) {
 
-            amazonS3Service.deleteFileFromAmazonS3(oldImgFile);
+        amazonS3Service.deleteFileFromAmazonS3(oldImgFile);
 
-            linkToFile = amazonS3Service.uploadFileToAmazoneS3(file, newFileName);
+        linkToFile = amazonS3Service.uploadFileToAmazoneS3(file, newFileName);
 
-            person.setAvatarURL(linkToFile);
+        person.setAvatarURL(linkToFile);
 
-            //Update Person in DB
-            personService.update(person);
-        }
+        personService.update(person);
+
         return;
     }
 

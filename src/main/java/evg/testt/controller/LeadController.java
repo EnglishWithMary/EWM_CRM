@@ -26,21 +26,16 @@ public class LeadController {
     private PipeTypeService pipeTypeService;
     @Autowired
     private CardService cardService;
-
     @Autowired
-    SpringOvalValidator validator;
-
+    private SpringOvalValidator validator;
     @Autowired
-    LeadService leadService;
-
+    private LeadService leadService;
     @Autowired
-    PersonService personService;
-
+    private PersonService personService;
     @Autowired
-    EmailService emailService;
-
+    private EmailService emailService;
     @Autowired
-    PersonDTOService personDTOService;
+    private PersonDTOService personDTOService;
 
     @RequestMapping(value = "/leads", method = RequestMethod.GET)
     public String showLeads(Model model, Principal principal) throws SQLException {
@@ -104,6 +99,7 @@ public class LeadController {
                              @RequestParam(required = false) Integer pipeTypeId,
                              @RequestParam(required = true) Integer id)
             throws SQLException {
+
         return "redirect:/takeLeadtpipe";
     }
 
@@ -119,5 +115,12 @@ public class LeadController {
             cardService.update(card);
         }
         return "redirect:/takeLeadtpipe";
+    }
+
+    @RequestMapping(value = "/leadTrash", method = RequestMethod.POST)
+    public String leadTrash(Model model, @RequestParam(required = true) Integer id) throws SQLException {
+        Lead lead = leadService.getById(id);
+        leadService.trash(lead);
+        return "leads/all";
     }
 }

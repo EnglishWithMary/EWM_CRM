@@ -31,7 +31,7 @@
                         <td>${manager.person.registrationDate}</td>
                         <security:authorize access="hasRole('ROLE_ADMIN')">
                         <td>
-                            <a href="/managerDelete?id=${manager.id}">Delete</a>
+                            <a href="/managerTrash?id=${manager.id}">Delete</a>
                         </td>
                         </security:authorize>
                     </tr>
