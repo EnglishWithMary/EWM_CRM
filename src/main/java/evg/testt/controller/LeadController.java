@@ -34,6 +34,8 @@ public class LeadController {
     private PersonService personService;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private PersonDTOService personDTOService;
 
     @RequestMapping(value = "/leads", method = RequestMethod.GET)
     public String showLeads(Model model, Principal principal) throws SQLException {
@@ -73,7 +75,8 @@ public class LeadController {
             throws SQLException {
 
         model.addAttribute("cards", cardService.getCards(Pipe.valueOf(pipeTypeId)));
-        model.addAttribute("pt", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
+        model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
+
         validator.validate(personDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
@@ -81,18 +84,12 @@ public class LeadController {
             model.addAttribute("pt_id", pipeTypeId);
             return "leads/add";
         }
-        Person newPerson = new Person();
-        newPerson.setFirstName(personDTO.getFirstName());
-        newPerson.setLastName(personDTO.getLastName());
-        newPerson.setMiddleName(personDTO.getMiddleName());
-        Email newEmail = new Email();
-        newEmail.setEmail(personDTO.getEmail());
-        Lead newLead = new Lead();
-        newPerson.setEmail(newEmail);
-        newLead.setPerson(newPerson);
+
+        Lead newLead = personDTOService.buildPerson(personDTO).getLead();
         leadService.insert(newLead);
+
         Card card = cardService.getById(personDTO.getCardId());
-        card.getPersons().add(personService.getById(newPerson.getId()));
+        card.getPersons().add(personService.getById(newLead.getPerson().getId()));
         cardService.update(card);
         return "redirect:/takeLeadtpipe";
     }

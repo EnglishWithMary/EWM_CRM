@@ -13,6 +13,5 @@ public interface ActivityAspectService {
 
     void pointcut();
 
-    @Transactional
     Object doAspect(ProceedingJoinPoint pjp) throws Throwable;
 }

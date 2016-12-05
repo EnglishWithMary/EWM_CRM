@@ -3,10 +3,7 @@ package evg.testt.controller;
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
-import evg.testt.service.ManagerService;
-import evg.testt.service.PersonService;
-import evg.testt.service.RoleService;
-import evg.testt.service.UserService;
+import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -39,6 +36,8 @@ public class ManagerController {
     private RoleService roleService;
     @Autowired
     private PersonService personService;
+    @Autowired
+    PersonDTOService personDTOService;
 
     @Value("${pagination.page.size}")
     protected int pageSize;
@@ -92,33 +91,9 @@ public class ManagerController {
             bindingResult.rejectValue("login", "1", "Login already exist.");
 
         if (!bindingResult.hasErrors()) {
+            Manager manager = personDTOService.buildPerson(personDTO).getManager();
+            managerService.insert(manager);
 
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
-            UserRole roleId = UserRole.ROLE_MANAGER;
-
-            Role role = roleService.getById(roleId.getRoleId());
-
-            Person newPerson = new Person();
-            User newUser = new User();
-            Manager newManager = new Manager();
-            Email email = new Email();
-
-            email.setEmail(personDTO.getEmail());
-
-            newPerson.setFirstName(personDTO.getFirstName());
-            newPerson.setLastName(personDTO.getLastName());
-            newPerson.setMiddleName(personDTO.getMiddleName());
-            newPerson.setEmail(email);
-
-            newUser.setRole(role);
-            newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
-            newUser.setLogin(personDTO.getLogin());
-
-            newManager.setPerson(newPerson);
-            newManager.setUser(newUser);
-
-            managerService.insert(newManager);
             return "redirect:/managers";
         } else {
             return "manager/add";

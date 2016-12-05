@@ -13,6 +13,6 @@ public @Data class Activity extends BaseModel{
     @Temporal(TemporalType.TIMESTAMP)
     private Date date = new Date();
 
-//    @ManyToOne
-//    private Person person;
+    @ManyToOne
+    private Person person;
 }

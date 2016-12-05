@@ -34,7 +34,7 @@ public class PipelineController {
     @RequestMapping(value = "/pipeline", method = RequestMethod.GET)
     public String goToPipelinepage(Model model) {
         PipeType pt = new PipeType();
-        model.addAttribute("pt", pt);
+        model.addAttribute("pipeType", pt);
 
         return "pipeline/pipeline";
     }
@@ -92,6 +92,6 @@ public class PipelineController {
     private void inserAttributes(Model model, Pipe pipe)
             throws SQLException {
         model.addAttribute("cards", cardService.getCards(pipe));
-        model.addAttribute("pt", pipeTypeService.getPipe(pipe));
+        model.addAttribute("pipeType", pipeTypeService.getPipe(pipe));
     }
 }
