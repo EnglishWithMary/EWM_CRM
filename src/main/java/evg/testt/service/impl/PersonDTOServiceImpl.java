@@ -84,9 +84,7 @@ public class PersonDTOServiceImpl implements PersonDTOService {
                     Email newEmail = new Email();
                     newEmail.setEmail(personDTO.getEmail());
                     this.setEmail(newEmail);
-                    State state = new State();
-                    state.setState(StateType.STATE_ACTIVE.name());
-                    this.setState(state);
+                    this.setState(new State());
                 }
             };
         else

@@ -36,16 +36,16 @@ public class GroupController {
     private StudentService studentService;
 
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
-    public ModelAndView showGroups() throws SQLException {
+    public String showGroups(Model model) throws SQLException {
         List<Group> groups = groupService.getAll();
         List<Teacher> teachers=teacherService.getAll();
         List<Student> students=studentService.getAll();
 
-        ModelAndView modelAndView=new ModelAndView(JspPath.GROUP_ALL, "groups", groups);
-        modelAndView.addObject("teachers",teachers);
-        modelAndView.addObject("students", students);
-        modelAndView.addObject("groupFilter", new GroupDTO());
-        modelAndView.addObject("groupFilterStudentsByGroup", new GroupDTO());
+        model.addAttribute("groups",groups);
+        model.addAttribute("teachers",teachers);
+        model.addAttribute("students", students);
+        model.addAttribute("groupFilter", new GroupDTO());
+        model.addAttribute("groupFilterStudentsByGroup", new GroupDTO());
         return "groups/all";
     }
 
