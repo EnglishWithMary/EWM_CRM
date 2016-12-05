@@ -2,9 +2,7 @@ package evg.testt.model;
 
 import lombok.Data;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity(name = "groups")
 public @Data class Group extends BaseModel {
@@ -13,4 +11,10 @@ public @Data class Group extends BaseModel {
 
     @ManyToOne
     private Teacher teacher;
+
+    @Column(columnDefinition = "text")
+    private String comments;
+
+    @Embedded
+    private State state;
 }

@@ -4,7 +4,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity(name = "admins")
-public @Data class Admin extends BaseModel implements BelongsToPerson {
+public @Data class Admin extends Human implements BelongsToPerson {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Person person;

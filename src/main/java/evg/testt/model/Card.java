@@ -8,10 +8,7 @@ import java.util.List;
 @Entity(name = "cards")
 public @Data class Card extends BaseModel{
 
-    private String cardName = "No name.";
-
-//    @OneToOne
-//    private User user;
+    private String cardName = "Pipe";
 
     @OneToOne
     private PipeType type;

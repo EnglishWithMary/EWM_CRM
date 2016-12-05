@@ -4,6 +4,7 @@ import evg.testt.exception.PersonFieldTypeNotFoundException;
 import evg.testt.model.BaseModel;
 import evg.testt.model.Person;
 import evg.testt.dao.BaseRepository;
+import evg.testt.model.StateType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
@@ -21,7 +22,8 @@ import java.util.List;
 @Transactional
 @Repository
 @PropertySource(value = "classpath:standard.properties")
-public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements BaseRepository<T>{
+public abstract class BaseRepositoryJpaImpl<T extends BaseModel>
+        implements BaseRepository<T>{
 
     protected Class<T> entityClass;
 
@@ -54,15 +56,14 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel> implements Base
     }
 
     public void delete(T t){
-        em.remove(t);
+            em.remove(t);
     }
 
     public boolean exists(Integer id){
         return findOne(id) != null;
     }
 
-    public int count()
-    {
+    public int count() {
         long total = 0;
         Query query = em.createQuery("SELECT count(t) FROM " + entityClass.getName() + " t");
         total = (long)query.getSingleResult();
