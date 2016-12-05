@@ -1,0 +1,28 @@
+@import "bootstrap.css";
+@import "FancyFonts.css";
+
+.img-size-sm{
+    height: 72px;
+    width: 72px;
+}
+.img-size-vsm{
+    height: 36px;
+    width: 36px;
+    padding: 0px;
+}
+.minimize-it {
+    margin-bottom: -15px;
+    margin-top: -15px;
+    padding-top: 7px;
+    padding-bottom: 0px;
+}
+.clearspace{
+    height: 10px;
+}
+.padding-bot{
+    padding-bottom: 10px;
+}
+.table{
+    font-size: 0.8em;
+    color: #0f0f0f;
+}
