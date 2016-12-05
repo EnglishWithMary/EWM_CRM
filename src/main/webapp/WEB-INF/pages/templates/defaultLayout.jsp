@@ -6,6 +6,7 @@
 
     <title><tiles:getAsString name="title"/></title>
     <tiles:insertAttribute name="resources"/>
+    <tiles:insertAttribute name="additionalResources"/>
 
 </head>
 <body class="subpage">
@@ -16,6 +17,7 @@
     </div>
 </div>
 <tiles:insertAttribute name="scripts"/>
+<tiles:insertAttribute name="additionalScripts"/>
 <tiles:insertAttribute name="formValidationScripts"/>
 </body>
 </html>
