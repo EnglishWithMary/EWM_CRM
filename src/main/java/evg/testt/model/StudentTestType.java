@@ -1,12 +1,12 @@
 package evg.testt.model;
 
-public enum CheckpointTypeEnum {
+public enum StudentTestType {
 
-    ENTRY_TEST(1), CURRENT_TEST(2);
+    ENTRY_TEST(1), GRADUATE_TEST(2);
 
     private int testId;
 
-    CheckpointTypeEnum(int id){
+    StudentTestType(int id){
         testId = id;
     }
 

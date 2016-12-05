@@ -11,15 +11,15 @@ public @Data class StudentLevelHistory {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @ManyToOne
-    private Student student;
-
-    @Column(name = "typeLevel")
+    @Column(name = "testType")
     @Enumerated(EnumType.ORDINAL)
-    private CheckpointTypeEnum checkpointType;
+    private StudentTestType testType;
 
     @Temporal(TemporalType.DATE)
     private Date checkpointDate;
+
+    @ManyToOne
+    private Student student;
 
     @Column(name = "grammar")
     @Enumerated(EnumType.ORDINAL)

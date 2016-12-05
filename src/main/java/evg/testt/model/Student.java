@@ -15,4 +15,7 @@ public @Data class Student extends RegistratedUser implements BelongsToPerson{
 
     @OneToOne
     private Teacher teacher;
+
+//    @OneToMany
+//    private StudentLevelHistory studentLevelHistory;
 }
