@@ -1,6 +1,7 @@
 package evg.testt.service.impl;
 
 import evg.testt.model.Group;
+import evg.testt.model.Student;
 import evg.testt.model.Teacher;
 import evg.testt.dao.GroupRepository;
 import evg.testt.service.GroupService;
@@ -23,4 +24,12 @@ public class GroupServiceImpl extends BaseService<Group, GroupRepository>
     public List<Group> getByTeacher(Teacher teacher) throws SQLException {
         return groupRepository.findByTeacher(teacher);
     }
+
+    @Override
+    public List<Group> getByGroup(Group group) throws SQLException {
+        return groupRepository.findByGroup(group);
+    }
 }
+
+
+

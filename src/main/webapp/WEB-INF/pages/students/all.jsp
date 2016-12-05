@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="12u">
@@ -22,12 +23,28 @@
             <input type="submit" class="button" value="Find"/>
         </form>
 
+
+        <form action="/studentsSortedByGroup" method="get">
+            <select name="group_id">
+                <option value="">All groups</option>
+                <option value="-1">Students without group</option>
+                <c:forEach var="group" items="${groups}">
+                    <option value="${group.id}">
+                    ${group.name}</option>
+                </c:forEach>
+            </select>
+            <input type="submit" class="button" value="Find"/>
+        </form>
+
+
+
         <table class="alt">
             <thead>
             <tr>
                 <td>First name</td>
                 <td>Last name</td>
                 <td>Middle name</td>
+                <td>Student group</td>
                 <td>Registration Date</td>
                 <td>Comments</td>
                 <security:authorize access="hasRole('ROLE_ADMIN')">
@@ -41,6 +58,7 @@
                         <td>${student.person.firstName}</td>
                         <td>${student.person.lastName}</td>
                         <td>${student.person.middleName}</td>
+                        <td>${student.group.name}</td>
                         <td>${student.person.registrationDate}</td>
                         <td><textarea>${student.person.comments}</textarea></td>
                         <security:authorize access="hasRole('ROLE_ADMIN')">
@@ -54,4 +72,3 @@
         </table>
     </div>
     <p><a href="/studentAdd" class="button alt">Add Student</a></p>
-</div>
