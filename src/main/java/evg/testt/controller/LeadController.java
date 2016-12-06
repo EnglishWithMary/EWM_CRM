@@ -96,8 +96,11 @@ public class LeadController {
     ) throws SQLException {
 
         model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
-        if (pipeTypeId!=null) model.addAttribute("pt", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
-        model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
+        if (pipeTypeId!=null) {
+            model.addAttribute("pt", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
+            model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
+        }
+
 
         validator.validate(personDTO, bindingResult);
 
@@ -107,20 +110,10 @@ public class LeadController {
             model.addAttribute("personId",personId);
             return "leads/add";
         }
-        /*
-              Lead newLead = personDTOService.buildPerson(personDTO).getLead();
-        leadService.insert(newLead);
-
-        Card card = cardService.getById(personDTO.getCardId());
-        card.getPersons().add(personService.getById(newLead.getPerson().getId()));
-        cardService.update(card);
-        return "redirect:/takeLeadtpipe";
-    }
-         */
 
         Person person;
         if (personId==null) {
-            person = new Person();
+            /*person = new Person();
             person.setFirstName(personDTO.getFirstName());
             person.setLastName(personDTO.getLastName());
             person.setMiddleName(personDTO.getMiddleName());
@@ -132,6 +125,12 @@ public class LeadController {
             leadService.insert(newLead);
             Card card = cardService.getById(personDTO.getCardId());
             card.getPersons().add(personService.getById(person.getId()));
+            cardService.update(card);*/
+            Lead newLead = personDTOService.buildPerson(personDTO).getLead();
+            leadService.insert(newLead);
+
+            Card card = cardService.getById(personDTO.getCardId());
+            card.getPersons().add(personService.getById(newLead.getPerson().getId()));
             cardService.update(card);
         }else{
             person=personService.getById(personId);
@@ -144,13 +143,24 @@ public class LeadController {
             lead.setPerson(person);
             leadService.update(lead);
             if (personDTO.getCardId()!= card_id ) {
-                Card cardNew = cardService.getById(personDTO.getCardId());
-                cardNew.getPersons().add(personService.getById(person.getId()));
                 if (card_id!=null){
                     Card cardOld = cardService.getById(card_id);
-                    cardOld.getPersons().remove(personService.getById(personId));
+                    //cardOld.getPersons().remove(person);
+                    //this line doesn't work so I have to write this crutch loop
+                    //todo somehow fix this
+                    int i=0;
+                    for (Person p:cardOld.getPersons()) {
+                        Boolean b=p.getId().equals(person.getId());
+                        if (b){
+                            cardOld.getPersons().remove(p);
+                            break;
+                        }
+                        i++;
+                    }
                     cardService.update(cardOld);
                 }
+                Card cardNew = cardService.getById(personDTO.getCardId());
+                cardNew.getPersons().add(person);
                 cardService.update(cardNew);
             }
         }
