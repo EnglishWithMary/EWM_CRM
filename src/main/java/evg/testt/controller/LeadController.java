@@ -148,14 +148,12 @@ public class LeadController {
                     //cardOld.getPersons().remove(person);
                     //this line doesn't work so I have to write this crutch loop
                     //todo somehow fix this
-                    int i=0;
+
                     for (Person p:cardOld.getPersons()) {
-                        Boolean b=p.getId().equals(person.getId());
-                        if (b){
+                        if (p.getId().equals(person.getId())){
                             cardOld.getPersons().remove(p);
                             break;
                         }
-                        i++;
                     }
                     cardService.update(cardOld);
                 }
