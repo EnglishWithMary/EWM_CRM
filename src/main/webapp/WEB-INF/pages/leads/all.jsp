@@ -14,7 +14,7 @@
             <td>Last name</td>
             <td>Middle name</td>
             <td>Registration Date</td>
-            <security:authorize access="hasRole('ROLE_ADMIN')">
+            <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
                 <td>Edit Lead</td>
                 <td>Delete Lead</td>
             </security:authorize>
@@ -32,22 +32,53 @@
                                 Edit
                             </button>
                             <input type="hidden" name="personId" value="${lead.person.id}">
-                            <%--input type="hidden" name="cardId" value="${card.id}">
-                            <input type="hidden" name="pipeTipeId" value="${pt.id}"--%>
                         </form>
                     </td>
                     <td>
-                        <form method="post" action="/deleteLead">
-
-                        <form method="post" action="/leadTrash">
-                            <input type="hidden" name="id" value="${lead.id}">
-                            <button type="submit" class="btn btn-default btn-xs">
+                        <div>
+                            <button type="button" class="btn btn-default btn-xs"
+                                    data-toggle="modal" data-target="#modal${lead.id}">
                                 Delete
                             </button>
-                            <input type="hidden" name="id" value="${lead.id}">
-                            <input type="hidden" name="cardId" value="${card.id}">
-                            <input type="hidden" name="pipeTipeId" value="${pt.id}">
-                        </form>
+                        </div>
+                        <div class="modal fade" id="modal${lead.id}">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" type="button" data-dismiss="modal">
+                                            <i class="fa fa-close"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to delete the lead?</p>
+                                    </div>
+                                    <div class="modal-footer row">
+                                        <div class="col-md-4">
+                                            <form method="post" action="/deleteLead">
+                                                <button type="submit" class="btn btn-default btn-xs">
+                                                    Delete
+                                                </button>
+                                                <input type="hidden" name="personId" value="${lead.person.id}">
+                                            </form>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <form method="post" action="/leadTrash">
+                                                <button type="submit" class="btn btn-default btn-xs">
+                                                    Move to trash
+                                                </button>
+                                                <input type="hidden" name="personId" value="${lead.person.id}">
+                                            </form>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button class="btn btn-default btn-xs" type="button"
+                                                    data-dismiss="modal">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </security:authorize>
             </tr>
@@ -61,3 +92,4 @@
         <button type="submit" class="button alt">Add Lead</button>
     </form>
 </div>
+

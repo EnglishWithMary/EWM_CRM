@@ -27,19 +27,16 @@
 
                         <c:forEach items="${card.persons}" var="person">
                             <div class="editToolbar">
-                                <div class="col-md-2">
+                                <div class="col-md-8">
                                     <c:if test="${person.avatarURL==null}">
                                         <span class="glyphicon glyphicon-picture"/>
                                     </c:if>
                                     <c:if test="${person.avatarURL!=null}">
                                         <img src="${person.avatarURL}" class="img-responsive"/>
                                     </c:if>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>
-                                        ${person.lastName}
-                                        ${fn:substring(person.firstName,0,1)}.${fn:substring(person.middleName,0,1)}.
-                                    </p>
+                                    ${person.lastName}
+                                    ${fn:substring(person.firstName,0,1)
+                                    }.${fn:substring(person.middleName,0,1)}.
                                 </div>
 
                                 <div class="col-md-2">
@@ -54,14 +51,53 @@
                                 </div>
 
                                 <div class="col-md-2">
-                                    <form method="post" action="/deleteLead">
-                                        <button type="submit" class="btn btn-default btn-xs">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </button>
-                                        <input type="hidden" name="personId" value="${person.id}">
-                                        <input type="hidden" name="cardId" value="${card.id}">
-                                        <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
-                                    </form>
+                                    <button type="button" class="btn btn-default btn-xs"
+                                            data-toggle="modal" data-target="#modal${person.id}">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="modal${person.id}"
+                                 tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button class="close" type="button" data-dismiss="modal">
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to delete the lead?</p>
+                                        </div>
+                                        <div class="modal-footer row">
+                                            <div class="col-md-4">
+                                                <form method="post" action="/deleteLead">
+                                                    <button type="submit" class="btn btn-default btn-xs">
+                                                        Delete
+                                                    </button>
+                                                    <input type="hidden" name="personId" value="${person.id}">
+                                                    <input type="hidden" name="cardId" value="${card.id}">
+                                                    <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
+                                                </form>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <form method="post" action="/leadTrash">
+                                                    <button type="submit" class="btn btn-default btn-xs">
+                                                        Move to trash
+                                                    </button>
+                                                    <input type="hidden" name="personId" value="${person.id}">
+                                                    <input type="hidden" name="cardId" value="${card.id}">
+                                                    <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
+                                                </form>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button class="btn btn-default btn-xs" type="button"
+                                                        data-dismiss="modal">
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </c:forEach>

@@ -39,4 +39,10 @@ public @Data class Person extends BaseModel{
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
     List<Activity> activities;
+
+
+    /*@Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }*/
 }

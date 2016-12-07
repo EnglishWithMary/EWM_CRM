@@ -113,4 +113,18 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel>
         query.setMaxResults(pageSize);
         return query.getResultList();
     }
+
+    @Override
+    public List<T> findAllActive() throws SQLException {
+        if(!hasPerson())
+            throw new PersonFieldTypeNotFoundException(entityClass.getName() +
+                " has no field of " + Person.class.getName() + " type.");
+        Query query = em.createQuery("select t from "+entityClass.getName()+
+                " t join t.person p where p.state ='ACTIVE' or p.state ='STATE_ACTIVE'");
+        List<T> result =(List<T>) query.getResultList();
+        if (result.size()>0)
+            return result;
+        else
+            return null;
+    }
 }

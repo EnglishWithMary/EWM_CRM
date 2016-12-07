@@ -20,8 +20,7 @@ import java.util.List;
 
 @Controller
 public class LeadController {
-    @Autowired
-    private UserService userService;
+
     @Autowired
     private PipeTypeService pipeTypeService;
 
@@ -44,9 +43,8 @@ public class LeadController {
 
     @RequestMapping(value = "/leads", method = RequestMethod.GET)
     public String showLeads(Model model) throws SQLException {
-        List<Lead> leads = leadService.getAll();
+        List<Lead> leads = leadService.getAllActive();
         model.addAttribute("leads", leads);
-//        insertAttributes(model, principal, Pipe.LEAD_PIPE);
         return "leads/all";
     }
 
@@ -83,7 +81,6 @@ public class LeadController {
         model.addAttribute("lead", lead);
         model.addAttribute("card_id", cardId);
         model.addAttribute("personId", personId);
-
         return "leads/add";
     }
 
@@ -94,41 +91,21 @@ public class LeadController {
                                  @RequestParam(required = true) Integer pipeTypeId,
                                  @RequestParam(required = false) Integer personId
     ) throws SQLException {
-
         model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
         if (pipeTypeId!=null) {
             model.addAttribute("pt", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
             model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
         }
-
-
         validator.validate(personDTO, bindingResult);
-
         if (bindingResult.hasErrors()) {
             model.addAttribute("card_id", card_id);
-            //model.addAttribute("pt_id", pipeTypeId);
             model.addAttribute("personId",personId);
             return "leads/add";
         }
-
         Person person;
         if (personId==null) {
-            /*person = new Person();
-            person.setFirstName(personDTO.getFirstName());
-            person.setLastName(personDTO.getLastName());
-            person.setMiddleName(personDTO.getMiddleName());
-            Email newEmail = new Email();
-            newEmail.setEmail(personDTO.getEmail());
-            Lead newLead = new Lead();
-            person.setEmail(newEmail);
-            newLead.setPerson(person);
-            leadService.insert(newLead);
-            Card card = cardService.getById(personDTO.getCardId());
-            card.getPersons().add(personService.getById(person.getId()));
-            cardService.update(card);*/
             Lead newLead = personDTOService.buildPerson(personDTO).getLead();
             leadService.insert(newLead);
-
             Card card = cardService.getById(personDTO.getCardId());
             card.getPersons().add(personService.getById(newLead.getPerson().getId()));
             cardService.update(card);
@@ -137,8 +114,9 @@ public class LeadController {
             person.setFirstName(personDTO.getFirstName());
             person.setLastName(personDTO.getLastName());
             person.setMiddleName(personDTO.getMiddleName());
-            //todo update email
-            person.getEmail().setEmail(personDTO.getEmail());
+            Email email = person.getEmail();
+            email.setEmail(personDTO.getEmail());
+            emailService.update(email);
             Lead lead = leadService.getByPerson(person);
             lead.setPerson(person);
             leadService.update(lead);
@@ -168,7 +146,6 @@ public class LeadController {
         else{
             return "redirect:/leads";
         }
-
     }
 
     @RequestMapping(value = "/deleteLead", method = RequestMethod.POST)
@@ -176,42 +153,76 @@ public class LeadController {
                              @RequestParam(required = false) Integer cardId,
                              @RequestParam(required = false) Integer pipeTypeId,
                              @RequestParam(required = true) Integer personId) throws SQLException {
-        model.addAttribute("cards", cardService.getCards(Pipe.valueOf(pipeTypeId)));
-        model.addAttribute("pt", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
+        if (pipeTypeId!=null){
+            model.addAttribute("cards", cardService.getCards(Pipe.valueOf(pipeTypeId)));
+            model.addAttribute("pt", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
+        }
         Person person = personService.getById(personId);
         Lead lead = leadService.getByPerson(person);
         if (cardId != null) {
             Card card = cardService.getById(cardId);
-            card.getPersons().remove(person);
+            //card.getPersons().remove(person);
+            for (Person p:card.getPersons()) {
+                if (p.getId().equals(person.getId())){
+                    card.getPersons().remove(p);
+                    break;
+                }
+            }
+            cardService.update(card);
+        }else{
+            Card card =cardService.getCardByPerson(person);
+            //card.getPersons().remove(person);
+            for (Person p:card.getPersons()) {
+                if (p.getId().equals(person.getId())){
+                    card.getPersons().remove(p);
+                    break;
+                }
+            }
             cardService.update(card);
         }
-        State state = new State();
-        /*state.setState(StateType.STATE_DELETED.toString());
-        person.setState(state); TODO delete or remove to trash leads
-        personService.update(person);
-        personService.delete(person);*/
-        //leadService.delete(lead);
-        return "redirect:/takeLeadtpipe";
-    }
-
-    @RequestMapping(value = "/deleteLeadFromPipe", method = RequestMethod.POST)
-    public String deleteLeadFromPipe(
-                             @RequestParam(required = false) Integer cardId,
-                             @RequestParam(required = false) Integer pipeTypeId,
-                             @RequestParam(required = true) Integer id)
-            throws SQLException {
-        if (cardId != null) {
-            Card card = cardService.getById(cardId);
-            card.getPersons().remove(personService.getById(leadService.getById(id).getId()));
-            cardService.update(card);
-        }
-        return "redirect:/takeLeadtpipe";
+        leadService.delete(lead);
+        if (pipeTypeId!=null)
+            return "redirect:/takeLeadtpipe";
+        else
+            return "redirect:/leads";
     }
 
     @RequestMapping(value = "/leadTrash", method = RequestMethod.POST)
-    public String leadTrash(Model model, @RequestParam(required = true) Integer id) throws SQLException {
-        Lead lead = leadService.getById(id);
+    public String leadTrash(Model model,
+                            @RequestParam(required = false) Integer cardId,
+                            @RequestParam(required = false) Integer pipeTypeId,
+                            @RequestParam(required = true) Integer personId) throws SQLException {
+        if (pipeTypeId!=null){
+            model.addAttribute("cards", cardService.getCards(Pipe.valueOf(pipeTypeId)));
+            model.addAttribute("pt", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
+        }
+        Person person = personService.getById(personId);
+        Lead lead = leadService.getByPerson(person);
+        if (cardId != null) {
+            Card card = cardService.getById(cardId);
+            //card.getPersons().remove(person);
+            for (Person p:card.getPersons()) {
+                if (p.getId().equals(person.getId())){
+                    card.getPersons().remove(p);
+                    break;
+                }
+            }
+            cardService.update(card);
+        }else{
+            Card card =cardService.getCardByPerson(person);
+            //card.getPersons().remove(person);
+            for (Person p:card.getPersons()) {
+                if (p.getId().equals(person.getId())){
+                    card.getPersons().remove(p);
+                    break;
+                }
+            }
+            cardService.update(card);
+        }
         leadService.trash(lead);
-        return "leads/all";
+        if (pipeTypeId!=null)
+            return "redirect:/takeLeadtpipe";
+        else
+            return "redirect:/leads";
     }
 }
