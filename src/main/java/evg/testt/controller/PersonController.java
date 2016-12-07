@@ -66,6 +66,16 @@ public class PersonController {
             person.setFirstName(personDTO.getFirstName());
             person.setMiddleName(personDTO.getMiddleName());
             person.setLastName(personDTO.getLastName());
+            person.setComments(personDTO.getComments());
+            person.setOrganization(personDTO.getOrganization());
+            person.setBirthdayDate(baseService.getDateFromString(personDTO.getBirthdayDateStr()));
+
+            Email email = person.getEmail();
+            if (email == null) {
+                email = new Email();
+            }
+            email.setEmail(personDTO.getEmail());
+            person.setEmail(email);
 
             //Update person in DB
             personService.update(person);

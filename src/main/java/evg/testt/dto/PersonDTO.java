@@ -41,5 +41,11 @@ public @Data class PersonDTO {
 
     private String comments;
 
+    private String organization;
+
+    private String birthdayDateStr;
+
+    private String avatarURL;
+
     private Integer cardId;
 }
