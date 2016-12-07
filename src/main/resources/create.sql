@@ -3,8 +3,8 @@ INSERT INTO roles (id, role) VALUES (2, 'ROLE_MANAGER');
 INSERT INTO roles (id, role) VALUES (3, 'ROLE_TEACHER');
 INSERT INTO roles (id, role) VALUES (4, 'ROLE_STUDENT');
 
-INSERT INTO persons (id, firstname, lastname, organization,registrationdate,state)
-VALUES (1, 'Dmitry', 'Serebryakov', 'EWM', now(), 'STATE_ACTIVE');
+INSERT INTO persons (id, firstname, lastname, organization,modifydate,registrationdate,comments,state)
+VALUES (1, 'Dmitry', 'Serebryakov', 'EWM', now(), now(), 'Administrator', 'ACTIVE');
 
 INSERT INTO users (id, login, password,role_id)
 VALUES (1, 'admin', '$2a$08$4ozu21fedsIgpyrsIV1DOuGVVNkYyp6/KTLMil0gQdAz1r./qC3ri', 1); -- password-admin

@@ -3,6 +3,8 @@ package evg.testt.service.impl;
 import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.Person;
 import evg.testt.dao.PersonRepository;
+import evg.testt.model.State;
+import evg.testt.model.StateType;
 import evg.testt.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,4 +28,12 @@ public class PersonServiceImpl extends BaseService<Person, PersonRepository> imp
     public List<Person>  getSortedByRegistrationDate() throws SQLException{
         return personRepository.findSortedByRegistrationDate();
     }
+
+//    @Override
+//    public void delete(Person person) throws SQLException {
+//
+//        State state = new State(StateType.STATE_DELETED);
+//        person.setState(state);
+//        update(person);
+//    }
 }

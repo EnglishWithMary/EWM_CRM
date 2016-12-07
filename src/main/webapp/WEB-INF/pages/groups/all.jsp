@@ -19,6 +19,7 @@
             <input type="submit" value="filter">
         </div>
     </sf:form>
+
     <table>
         <tr>
             <td>Group Name</td>

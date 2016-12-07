@@ -2,10 +2,10 @@ package evg.testt.model;
 
 import lombok.Data;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "students")
-
-public @Data class Student extends RegistratedUser implements BelongsToPerson{
+public @Data class Student extends Human implements BelongsToPerson{
 
     @OneToOne(cascade = CascadeType.ALL)
     private Person person;
@@ -15,4 +15,10 @@ public @Data class Student extends RegistratedUser implements BelongsToPerson{
 
     @OneToOne
     private Teacher teacher;
+
+    @ManyToOne
+    private Group group;
+
+    @OneToMany
+    private List<StudentLevelHistory> studentLevelHistory;
 }

@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Repository
-public class StudentRepositoryJpaImpl extends BaseRepositoryJpaImpl<Student> implements StudentRepository {
+public class StudentRepositoryJpaImpl extends HumanRepositoryJpaImpl<Student> implements StudentRepository {
     @Override
     public List<Student> findStudensByTeacher(int teacher_id) {
         List<Student> students = Collections.EMPTY_LIST;
@@ -24,6 +24,23 @@ public class StudentRepositoryJpaImpl extends BaseRepositoryJpaImpl<Student> imp
         List<Student> students = Collections.EMPTY_LIST;
             TypedQuery<Student> query = em.createQuery("SELECT student FROM students student where student.teacher.id is null", Student.class);
             students = query.getResultList();
+        return students;
+    }
+
+    @Override
+    public List<Student> findStudentsByGroup(int group_id) {
+        List<Student> students = Collections.EMPTY_LIST;
+        TypedQuery<Student> query = em.createQuery("SELECT student FROM students student where student.group.id = :id", Student.class);
+        query.setParameter("id", group_id);
+        students = query.getResultList();
+        return students;
+    }
+
+    @Override
+    public List<Student> findStudentWithoutGroup() {
+        List<Student> students = Collections.EMPTY_LIST;
+        TypedQuery<Student> query = em.createQuery("SELECT student FROM students student where student.group.id is null", Student.class);
+        students = query.getResultList();
         return students;
     }
 }

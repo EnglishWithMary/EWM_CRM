@@ -1,16 +1,16 @@
 package evg.testt.controller;
 
+import evg.testt.ajax.utils.AjaxFormCall;
 import evg.testt.model.Card;
 import evg.testt.model.Pipe;
 import evg.testt.model.PipeType;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.sql.SQLException;
@@ -20,26 +20,21 @@ public class PipelineController {
 
     @Autowired
     private PipeTypeService pipeTypeService;
-
     @Autowired
     private CardService cardService;
-
     @Autowired
-    SpringOvalValidator validator;
-
+    private SpringOvalValidator validator;
     @Autowired
-    LeadService leadService;
-
+    private LeadService leadService;
     @Autowired
-    PersonService personService;
-
+    private PersonService personService;
     @Autowired
-    EmailService emailService;
+    private EmailService emailService;
 
     @RequestMapping(value = "/pipeline", method = RequestMethod.GET)
     public String goToPipelinepage(Model model) {
         PipeType pt = new PipeType();
-        model.addAttribute("pt", pt);
+        model.addAttribute("pipeType", pt);
 
         return "pipeline/pipeline";
     }
@@ -55,7 +50,6 @@ public class PipelineController {
         this.inserAttributes(model, pipe);
         return "redirect:/takeLeadtpipe";
     }
-
 
     @RequestMapping(value = "/takeStudentpipe", method = RequestMethod.GET)
     public String takeStudent(Model model)throws SQLException{
@@ -95,9 +89,18 @@ public class PipelineController {
         return "redirect:/takeLeadtpipe";
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/moveLeadAjax", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void moveLeadAjax(@RequestBody AjaxFormCall ajaxFormCall) throws SQLException {
+        if(ajaxFormCall.getDestination() != ajaxFormCall.getFrom())
+        {
+            cardService.movePersonOnCards(ajaxFormCall.getFrom(), ajaxFormCall.getDestination(), ajaxFormCall.getPersonId());
+        }
+    }
+
     private void inserAttributes(Model model, Pipe pipe)
             throws SQLException {
         model.addAttribute("cards", cardService.getCards(pipe));
-        model.addAttribute("pt", pipeTypeService.getPipe(pipe));
+        model.addAttribute("pipeType", pipeTypeService.getPipe(pipe));
     }
 }
