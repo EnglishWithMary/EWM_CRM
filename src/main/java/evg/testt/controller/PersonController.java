@@ -63,9 +63,9 @@ public class PersonController {
 
         validator.validate(personDTO, bindingResult);
 
-        if (bindingResult.hasErrors()) {
-            return "redirect:/personProfile";
-        }
+//        if (bindingResult.hasErrors()) {
+//            return "redirect:/personProfile";
+//        }
 
         String login = principal.getName();
 

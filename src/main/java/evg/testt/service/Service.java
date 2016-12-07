@@ -30,5 +30,4 @@ public interface Service<T> {
 
     List<T> getByPageSorted(int pageNumber) throws SQLException;
 
-    String getStringFromDate(Date birthdayDate);
 }

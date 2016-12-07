@@ -77,7 +77,7 @@
                 </div>
 
                 <div class="6u 12u$(xsmall)">
-                    <sf:input path="email.email"/>
+                    <sf:input path="email"/>
                     <sf:errors path="email"/>
                 </div>
 

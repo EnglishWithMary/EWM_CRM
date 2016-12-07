@@ -61,14 +61,4 @@ public abstract class BaseService <T extends BaseModel, P extends BaseRepository
     public List<T> getByPageSorted(int pageNumber) throws SQLException{
         return dao.findByPageSorted(pageNumber);
     }
-
-    public String getStringFromDate(Date date) {
-        SimpleDateFormat sdtf = new SimpleDateFormat("yyyy-MM-dd");
-
-        String stringDate;
-
-        stringDate = sdtf.format(date);
-        return stringDate;
-    }
-
 }

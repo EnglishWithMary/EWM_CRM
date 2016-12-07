@@ -20,7 +20,6 @@ public class PersonDTOServiceImpl implements PersonDTOService {
 
     @Autowired
     private RoleService roleService;
-
     @Autowired
     private PersonService personService;
 
