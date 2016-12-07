@@ -17,6 +17,5 @@ public @Data class User extends BaseModel {
     private String password;
 
     @ManyToOne
-//            (cascade = CascadeType.PERSIST)
     private Role role;
 }

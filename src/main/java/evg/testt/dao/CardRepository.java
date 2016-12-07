@@ -12,6 +12,7 @@ import java.util.List;
 public interface CardRepository extends BaseRepository<Card> {
 
     List<Card> findCards(PipeType pipe) throws SQLException;
+    void movePersonOnCards(int from, int destination, Person person) throws SQLException;
 
     Card findCardByPerson(Person person) throws SQLException;
 }

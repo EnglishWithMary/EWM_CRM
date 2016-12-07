@@ -33,4 +33,17 @@ public class CardRepositoryJpaImpl extends BaseRepositoryJpaImpl<Card> implement
             return (Card) result.get(0);
         else return null;
     }
+
+    @Override
+    public void movePersonOnCards(int from, int destination, Person person) throws SQLException {
+        Card sourceCard = findOne(from);
+        Card destinationCard = findOne(destination);
+
+        sourceCard.getPersons().remove(person);
+        destinationCard.getPersons().add(person);
+
+        save(sourceCard);
+        save(destinationCard);
+
+    }
 }

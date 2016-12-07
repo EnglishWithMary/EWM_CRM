@@ -7,6 +7,7 @@ import evg.testt.model.Pipe;
 import evg.testt.dao.CardRepository;
 import evg.testt.model.PipeType;
 import evg.testt.service.CardService;
+import evg.testt.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,10 +21,19 @@ public class CardServiceImpl extends BaseService<Card, CardRepository> implement
     @Autowired
     PipeTypeRepository pr;
 
+    @Autowired
+    PersonService personService;
+
     @Override
     public List<Card> getCards(Pipe pipe) throws SQLException {
         PipeType pipeType = pr.findPipe(pipe);
         return dao.findCards(pipeType);
+    }
+
+    @Override
+    public void movePersonOnCards(int from, int destination, int personId) throws SQLException {
+        Person movingPerson = personService.getById(personId);
+        dao.movePersonOnCards(from, destination, movingPerson);
     }
 
     @Override
