@@ -42,4 +42,6 @@ public @Data class PersonDTO {
     private String comments;
 
     private Integer cardId;
+
+    private String avatarURL;
 }

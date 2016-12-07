@@ -28,5 +28,5 @@ public interface Service<T> {
 
     List<T> getByPageSorted(int pageNumber) throws SQLException;
 
-
+    List<T> getAllActive() throws SQLException;
 }

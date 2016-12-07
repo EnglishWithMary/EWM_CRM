@@ -47,8 +47,6 @@
                                         ${fn:substring(person.firstName,0,1)}.${fn:substring(person.middleName,0,1)}.
                                 </p>
                             </div>
-
-
                             <form method="post" action="/leadAdd" class="editPersonFrom">
                                 <input type="hidden" value="${card.id}" name="cardId">
                                 <input type="hidden" value="${pipeType.id}" name="pipeTypeId">
@@ -56,23 +54,59 @@
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </button>
                             </form>
-
-
-                            <form method="post" action="/deleteLeadFromPipe" class="deletePersonForm">
-                                <button type="submit" class="btn btn-default btn-xs">
+                            <div>
+                                <button type="button" class="btn btn-default btn-xs"
+                                        data-toggle="modal" data-target="#modal${person.id}">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </button>
-                                <input type="hidden" name="cardId" value="${card.id}">
-                                <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
-                            </form>
-
+                            </div>
+                            <div class="modal fade" id="modal${person.id}"
+                                 tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button class="close" type="button" data-dismiss="modal">
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to delete the lead?</p>
+                                        </div>
+                                        <div class="modal-footer row">
+                                            <div class="col-md-4">
+                                                <form method="post" action="/deleteLead" class="deletePersonForm">
+                                                    <button type="submit" class="btn btn-default btn-xs">
+                                                        Delete
+                                                    </button>
+                                                    <input type="hidden" name="personId" value="${person.id}">
+                                                    <input type="hidden" name="cardId" value="${card.id}">
+                                                    <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
+                                                </form>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <form method="post" action="/leadTrash" class="deletePersonForm">
+                                                    <button type="submit" class="btn btn-default btn-xs">
+                                                        Move to trash
+                                                    </button>
+                                                    <input type="hidden" name="personId" value="${person.id}">
+                                                    <input type="hidden" name="cardId" value="${card.id}">
+                                                    <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
+                                                </form>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button class="btn btn-default btn-xs" type="button"
+                                                        data-dismiss="modal">
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div></div>
                         </div> <%-- end person --%>
-
                     </c:forEach>
 
                     <input type="hidden" id="destination" name="destination" value="${card.id}">
                 </div>
-
                 <form method="post" action="/leadAdd">
                     <input type="hidden" name="cardId" value="${card.id}">
                     <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
@@ -80,7 +114,6 @@
                         <span>Add Lead</span>
                     </button>
                 </form>
-
             </div>
         </c:forEach>
         </c:if>
