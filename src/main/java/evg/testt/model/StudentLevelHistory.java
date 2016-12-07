@@ -5,53 +5,38 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity(name = "StudentLevelHistory")
-public @Data class StudentLevelHistory {
+public @Data class StudentLevelHistory extends BaseModel{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
-    @Column(name = "testType")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated
     private StudentTestType testType;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date checkpointDate;
 
-    @Column(name = "grammar")
-    @Enumerated(EnumType.ORDINAL)
-    private LevelClassifierEnum grammar;
+    @Enumerated
+    private StudentLevelPoints grammar;
 
-    @Column(name = "speaking")
-    @Enumerated(EnumType.ORDINAL)
-    private LevelClassifierEnum speaking;
+    @Enumerated
+    private StudentLevelPoints speaking;
 
-    @Column(name = "listening")
-    @Enumerated(EnumType.ORDINAL)
-    private LevelClassifierEnum listening;
+    @Enumerated
+    private StudentLevelPoints listening;
 
-    @Column(name = "reading")
-    @Enumerated(EnumType.ORDINAL)
-    private LevelClassifierEnum reading;
+    @Enumerated
+    private StudentLevelPoints reading;
 
-    @Column(name = "vocabulary")
-    @Enumerated(EnumType.ORDINAL)
-    private LevelClassifierEnum vocabulary;
+    @Enumerated
+    private StudentLevelPoints vocabulary;
 
-    @Column(name = "pronunciation")
-    @Enumerated(EnumType.ORDINAL)
-    private LevelClassifierEnum pronunciation;
+    @Enumerated
+    private StudentLevelPoints pronunciation;
 
-    @Column(name = "writing")
-    @Enumerated(EnumType.ORDINAL)
-    private LevelClassifierEnum writing;
+    @Enumerated
+    private StudentLevelPoints writing;
 
-    @Column(name = "fluency")
-    @Enumerated(EnumType.ORDINAL)
-    private LevelClassifierEnum fluency;
+    @Enumerated
+    private StudentLevelPoints fluency;
 
-    @Column(name = "spelling")
-    @Enumerated(EnumType.ORDINAL)
-    private LevelClassifierEnum spelling;
-
+    @Enumerated
+    private StudentLevelPoints spelling;
 }
