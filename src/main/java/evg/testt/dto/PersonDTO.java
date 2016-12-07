@@ -1,17 +1,11 @@
 package evg.testt.dto;
 
-import evg.testt.model.*;
-import evg.testt.service.RoleService;
 import lombok.Data;
 import net.sf.oval.constraint.EqualToField;
 import net.sf.oval.constraint.Length;
 import net.sf.oval.constraint.MatchPattern;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Transient;
-import java.sql.SQLException;
-import java.util.Set;
 
 public @Data class PersonDTO {
 
@@ -43,7 +37,7 @@ public @Data class PersonDTO {
 
     private String organization;
 
-    private String birthdayDateStr;
+    private String birthdayDate;
 
     private String avatarURL;
 

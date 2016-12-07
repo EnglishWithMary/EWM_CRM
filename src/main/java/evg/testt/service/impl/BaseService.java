@@ -62,26 +62,12 @@ public abstract class BaseService <T extends BaseModel, P extends BaseRepository
         return dao.findByPageSorted(pageNumber);
     }
 
-    public Date getDateFromString(String dateS) {
-        SimpleDateFormat sdtf = new SimpleDateFormat("yyyy-MM-dd");
-        Date d;
-        try {
-            d = sdtf.parse(dateS);
-            return d;
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
-
     public String getStringFromDate(Date date) {
         SimpleDateFormat sdtf = new SimpleDateFormat("yyyy-MM-dd");
 
         String stringDate;
 
         stringDate = sdtf.format(date);
-
         return stringDate;
     }
 

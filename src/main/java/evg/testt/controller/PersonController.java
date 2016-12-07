@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,6 +34,8 @@ public class PersonController {
     private PersonService personService;
     @Autowired
     private AvatarService avatarService;
+    @Autowired
+    private PersonDTOService personDTOService;
 
     @RequestMapping(value = "/personProfile", method = RequestMethod.GET)
     public String profilePerson(@ModelAttribute("person") @Validated PersonDTO personDTO,
@@ -54,35 +57,25 @@ public class PersonController {
                                @RequestParam("image") MultipartFile multipartFile,
                                Principal principal,
                                Model model)
-            throws IOException, PersonException, PersonRoleNotFoundException, BadAvatarNameException, SQLException {
+            throws
+            IOException, PersonException,PersonRoleNotFoundException,
+            BadAvatarNameException, SQLException, ParseException {
 
-        //Person validate
         validator.validate(personDTO, bindingResult);
-        //Create updated person
+
+        if (bindingResult.hasErrors()) {
+            return "redirect:/personProfile";
+        }
+
         String login = principal.getName();
+
         try {
+
             Person person = personService.getPersonByUserLogin(login);
 
-            person.setFirstName(personDTO.getFirstName());
-            person.setMiddleName(personDTO.getMiddleName());
-            person.setLastName(personDTO.getLastName());
-            person.setComments(personDTO.getComments());
-            person.setOrganization(personDTO.getOrganization());
-            person.setBirthdayDate(baseService.getDateFromString(personDTO.getBirthdayDateStr()));
+            personDTOService.buildPerson(personDTO).updatePerson(person);
 
-            Email email = person.getEmail();
-            if (email == null) {
-                email = new Email();
-            }
-            email.setEmail(personDTO.getEmail());
-            person.setEmail(email);
-
-            //Update person in DB
-            personService.update(person);
-
-            //Update Avatar if exist
             if (!multipartFile.isEmpty()) {
-
                 avatarService.changePersonAvatar(multipartFile, person);
             }
         } catch (SQLException e) {

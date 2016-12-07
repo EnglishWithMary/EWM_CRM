@@ -55,12 +55,12 @@
                 </div>
 
                 <div class="6u 12u$(xsmall)">
-                    <sf:label path="birthdayDateStr">Birthday:</sf:label>
+                    <sf:label path="birthdayDate">Birthday:</sf:label>
                 </div>
 
                 <div class="6u 12u$(xsmall)">
-                    <sf:input path="birthdayDateStr" type="date"/>
-                    <sf:errors path="birthdayDateStr"/>
+                    <sf:input path="birthdayDate" type="date"/>
+                    <sf:errors path="birthdayDate"/>
                 </div>
 
                 <div class="6u 12u$(xsmall)">
@@ -77,7 +77,7 @@
                 </div>
 
                 <div class="6u 12u$(xsmall)">
-                    <sf:input path="email"/>
+                    <sf:input path="email.email"/>
                     <sf:errors path="email"/>
                 </div>
 
