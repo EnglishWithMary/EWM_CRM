@@ -6,5 +6,12 @@ import javax.persistence.*;
 @Entity(name = "emails")
 public @Data class Email extends BaseModel {
 
-    String email;
+    private String email;
+
+    public Email(){}
+
+    public Email(String email){
+        this.email = email;
+    }
+
 }

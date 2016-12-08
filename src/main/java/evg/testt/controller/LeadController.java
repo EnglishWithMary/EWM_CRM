@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -24,19 +24,14 @@ public class LeadController {
 
     @Autowired
     private PipeTypeService pipeTypeService;
-
     @Autowired
     private CardService cardService;
-
     @Autowired
-    SpringOvalValidator validator;
-
+    private SpringOvalValidator validator;
     @Autowired
-    LeadService leadService;
-
+    private LeadService leadService;
     @Autowired
-    PersonService personService;
-
+    private PersonService personService;
     @Autowired
     private EmailService emailService;
     @Autowired
@@ -62,6 +57,7 @@ public class LeadController {
                                 @RequestParam(required = false) Integer pipeTypeId,
                                 @RequestParam(required = false) Integer personId
     ) throws SQLException {
+
         PersonDTO lead = new PersonDTO();
 
         if (personId != null) {
@@ -94,7 +90,7 @@ public class LeadController {
     ) throws SQLException {
         model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
         if (pipeTypeId!=null) {
-            model.addAttribute("pt", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
+            //model.addAttribute("pt", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
             model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
         }
         validator.validate(personDTO, bindingResult);
