@@ -82,11 +82,12 @@ public class LeadController {
             return "leads/add";
         }
 
-        Lead newLead = personDTOService.buildPerson(personDTO).getLead();
-        leadService.insert(newLead);
+        Lead lead = new Lead();
+        lead = personDTOService.updateLead(lead, personDTO);
+        leadService.insert(lead);
 
         Card card = cardService.getById(personDTO.getCardId());
-        card.getPersons().add(personService.getById(newLead.getPerson().getId()));
+        card.getPersons().add(personService.getById(lead.getPerson().getId()));
         cardService.update(card);
         return "redirect:/takeLeadtpipe";
     }
@@ -107,6 +108,7 @@ public class LeadController {
                              @RequestParam(required = false) Integer pipeTypeId,
                              @RequestParam(required = true) Integer id)
             throws SQLException {
+
         if (cardId != null) {
             Card card = cardService.getById(cardId);
             card.getPersons().remove(personService.getById(leadService.getById(id).getId()));
