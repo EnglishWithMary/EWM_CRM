@@ -16,12 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
 public class LeadController {
-    @Autowired
-    private UserService userService;
     @Autowired
     private PipeTypeService pipeTypeService;
     @Autowired
@@ -32,8 +31,6 @@ public class LeadController {
     private LeadService leadService;
     @Autowired
     private PersonService personService;
-    @Autowired
-    private EmailService emailService;
     @Autowired
     private PersonDTOService personDTOService;
 
@@ -72,7 +69,7 @@ public class LeadController {
                                  BindingResult bindingResult,
                                  @RequestParam(required = true) Integer cardId,
                                  @RequestParam(required = true) Integer pipeTypeId)
-            throws SQLException {
+            throws SQLException, ParseException {
 
         model.addAttribute("cards", cardService.getCards(Pipe.valueOf(pipeTypeId)));
         model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));

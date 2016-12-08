@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -53,7 +54,7 @@ public class TeacherController {
 
     @RequestMapping(value = "/teacherSave", method = RequestMethod.POST)
     public String saveTeacher(@ModelAttribute("teacher") @Validated PersonDTO personDTO, BindingResult bindingResult,
-                              Model model) throws SQLException {
+                              Model model) throws SQLException, ParseException {
         validator.validate(personDTO, bindingResult);
         User u = userService.findByUserLogin(personDTO.getLogin());
         if (u != null)

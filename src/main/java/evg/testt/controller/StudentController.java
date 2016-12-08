@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -78,7 +79,7 @@ public class StudentController {
     public String saveStudent(@ModelAttribute("student") @Validated PersonDTO personDTO,
                               BindingResult bindingResult, Model model,
                               @RequestParam(required = false) Integer teacher_id,
-                              @RequestParam(required = false) Integer group_id) throws SQLException {
+                              @RequestParam(required = false) Integer group_id) throws SQLException, ParseException {
         validator.validate(personDTO, bindingResult);
         // проверка логина на уникальность
         User u = userService.findByUserLogin(personDTO.getLogin());
