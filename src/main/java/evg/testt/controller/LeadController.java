@@ -90,7 +90,7 @@ public class LeadController {
     ) throws SQLException, ParseException {
         model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
         if (pipeTypeId!=null) {
-            model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
+            model.addAttribute("pt", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
         }
         validator.validate(personDTO, bindingResult);
         if (bindingResult.hasErrors()) {
