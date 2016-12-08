@@ -87,10 +87,9 @@ public class LeadController {
                                  @RequestParam(required = true) Integer card_id,
                                  @RequestParam(required = true) Integer pipeTypeId,
                                  @RequestParam(required = false) Integer personId
-    ) throws SQLException {
+    ) throws SQLException, ParseException {
         model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
         if (pipeTypeId!=null) {
-            //model.addAttribute("pt", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
             model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
         }
         validator.validate(personDTO, bindingResult);
