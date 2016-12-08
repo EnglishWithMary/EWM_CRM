@@ -73,27 +73,35 @@
                                             <p>Are you sure you want to delete the lead?</p>
                                         </div>
                                         <div class="modal-footer row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
+                                                <form method="post" action="/leadDeleteFromPipe"
+                                                      class="deletePersonForm">
+                                                    <button type="submit" class="btn btn-default btn-xs">
+                                                        Reset position
+                                                    </button>
+                                                    <input type="hidden" name="personId" value="${person.id}">
+                                                    <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
+                                                </form>
+                                            </div>
+                                            <div class="col-md-3">
                                                 <form method="post" action="/deleteLead" class="deletePersonForm">
                                                     <button type="submit" class="btn btn-default btn-xs">
                                                         Delete
                                                     </button>
                                                     <input type="hidden" name="personId" value="${person.id}">
-                                                    <input type="hidden" name="cardId" value="${card.id}">
                                                     <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
                                                 </form>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <form method="post" action="/leadTrash" class="deletePersonForm">
                                                     <button type="submit" class="btn btn-default btn-xs">
                                                         Move to trash
                                                     </button>
                                                     <input type="hidden" name="personId" value="${person.id}">
-                                                    <input type="hidden" name="cardId" value="${card.id}">
                                                     <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
                                                 </form>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <button class="btn btn-default btn-xs" type="button"
                                                         data-dismiss="modal">
                                                     Cancel
@@ -107,13 +115,24 @@
 
                     <input type="hidden" id="destination" name="destination" value="${card.id}">
                 </div>
-                <form method="post" action="/leadAdd">
-                    <input type="hidden" name="cardId" value="${card.id}">
-                    <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
-                    <button type="submit" class="add">
-                        <span>Add Lead</span>
-                    </button>
-                </form>
+                <c:if test="${pipeType.id==1}">
+                    <form method="post" action="/leadAdd">
+                        <input type="hidden" name="cardId" value="${card.id}">
+                        <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
+                        <button type="submit" class="add">
+                            <span>Add Lead</span>
+                        </button>
+                    </form>
+                </c:if>
+                <c:if test="${pipeType.id==2}">
+                    <form method="post" action="/studentAdd">
+                        <input type="hidden" name="cardId" value="${card.id}">
+                        <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
+                        <button type="submit" class="add">
+                            <span>Add Student</span>
+                        </button>
+                    </form>
+                </c:if>
             </div>
         </c:forEach>
         </c:if>

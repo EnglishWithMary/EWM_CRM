@@ -16,6 +16,11 @@ UPDATE persons SET state='STATE_ACTIVE' WHERE state IS NULL;
 INSERT INTO pipetypes (id, type) VALUES (1, 'LEAD_PIPE');
 INSERT INTO pipetypes (id, type) VALUES (2, 'STUDENT_PIPE');
 
+INSERT INTO cards (id, cardName, type_id) VALUES (1, 'Default lead pipe',1);
+INSERT INTO cards (id, cardName, type_id) VALUES (2, 'Default student pipe',2);
+
 CREATE OR REPLACE VIEW staffview AS SELECT persons.* FROM persons LEFT JOIN admins ON persons.id = admins.person_id
   LEFT JOIN managers ON persons.id = managers.person_id LEFT JOIN students ON persons.id = students.person_id
   LEFT JOIN leads ON persons.id = leads.person_id;
+
+

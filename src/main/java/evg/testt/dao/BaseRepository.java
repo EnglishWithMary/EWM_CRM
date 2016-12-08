@@ -26,5 +26,4 @@ public interface BaseRepository <T extends BaseModel> {
 
     List<T> findByPageSorted(int pageNumber) throws SQLException;
 
-    List<T> findAllActive() throws SQLException;
 }
