@@ -97,7 +97,7 @@ public class ManagerController {
 
             return "redirect:/managers";
         } else {
-            return "manager/add";
+            return "managers/add";
         }
     }
 
