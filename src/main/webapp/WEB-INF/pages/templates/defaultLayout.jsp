@@ -9,13 +9,16 @@
     <tiles:insertAttribute name="additionalResources"/>
 
 </head>
-<body class="subpage">
-<div id="wrapper">
+<%--<body class="subpage">--%>
+<body>
+<%--<div id="wrapper">--%>
+<%--<div class="container-fluid">--%>
     <tiles:insertAttribute name="header"/>
-    <div class="container-fluid">
-        <tiles:insertAttribute name="body"/>
-    </div>
+<%--</div>--%>
+<div class="container-fluid">
+    <tiles:insertAttribute name="body"/>
 </div>
+<%--</div>--%>
 <tiles:insertAttribute name="scripts"/>
 <tiles:insertAttribute name="additionalScripts"/>
 <tiles:insertAttribute name="formValidationScripts"/>

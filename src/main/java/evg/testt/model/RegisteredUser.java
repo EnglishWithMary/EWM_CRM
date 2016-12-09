@@ -1,10 +1,11 @@
 package evg.testt.model;
 
 import lombok.Data;
+
 import javax.persistence.OneToOne;
 
-public @Data abstract class Human extends BaseModel{
+public @Data abstract class RegisteredUser extends Human{
 
     @OneToOne
-    Person person;
+    User user;
 }

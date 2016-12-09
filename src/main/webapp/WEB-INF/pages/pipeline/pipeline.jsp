@@ -7,11 +7,12 @@
         <c:forEach items="${cards}" var="card">
             <div class="pipe_wrapper">
 
-                <div class="pipe">
+                <div class="pipe scrollbox">
 
                     <div class="editToolbar">
                         <form method="post" action="/editCardName" id="cardNameForm">
-                            <input type="text" value="${card.cardName}" name="cardName" id="cardName">
+                            <input type="text" class="form-control" value="${card.cardName}" name="cardName"
+                                   id="cardName">
                             <input type="hidden" value="${card.id}" name="cardId">
                             <input type="hidden" value="${pipeType.id}" name="pipeTypeId">
                             <button type="submit" class="btn btn-default btn-xs" id="submitCardName"><span
@@ -34,7 +35,8 @@
 
                             <div class="avatar">
                                 <c:if test="${person.avatarURL==null}">
-                                    <span class="glyphicon glyphicon-picture"/>
+                                    <img class="img-rounded img-responsive" alt="Responsive image"
+                                         src="${pageContext.request.contextPath}/resources/img/defaultAvatar.jpg">
                                 </c:if>
                                 <c:if test="${person.avatarURL!=null}">
                                     <img src="${person.avatarURL}" class="img-responsive"/>
@@ -48,23 +50,22 @@
                                 </p>
                             </div>
 
-
-                            <form method="post" action="/leadAdd" class="editPersonFrom">
-                                <input type="hidden" value="${card.id}" name="cardId">
-                                <input type="hidden" value="${pipeType.id}" name="pipeTypeId">
-                                <button type="submit" class="btn btn-default btn-xs">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </button>
-                            </form>
-
-
-                            <form method="post" action="/deleteLeadFromPipe" class="deletePersonForm">
-                                <button type="submit" class="btn btn-default btn-xs">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                                <input type="hidden" name="cardId" value="${card.id}">
-                                <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
-                            </form>
+                            <div class="person-edit-tool-bar">
+                                <form method="post" action="/leadAdd" class="editPersonFrom btn-xs">
+                                    <input type="hidden" value="${card.id}" name="cardId">
+                                    <input type="hidden" value="${pipeType.id}" name="pipeTypeId">
+                                    <button type="submit" class="pipe-button btn btn-default btn-xs">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
+                                </form>
+                                <form method="post" action="/deleteLeadFromPipe" class="deletePersonForm btn-xs">
+                                    <button type="submit" class="btn btn-default btn-xs">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                    <input type="hidden" name="cardId" value="${card.id}">
+                                    <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
+                                </form>
+                            </div>
 
                         </div> <%-- end person --%>
 
@@ -76,7 +77,7 @@
                 <form method="post" action="/leadAdd">
                     <input type="hidden" name="cardId" value="${card.id}">
                     <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
-                    <button type="submit" class="add">
+                    <button type="submit" class="btn btn-success">
                         <span>Add Lead</span>
                     </button>
                 </form>
@@ -88,7 +89,7 @@
         <c:if test="${pipeType.id > 0 || pipeType.id != null}">
             <div class="pipe_wrapper">
                 <form class="pipe" method="post" action="/addCard">
-                    <input type="submit" value="Add Card" class="add_pipe">
+                    <input type="submit" value="Add Card" class="add_pipe btn btn-success">
                     <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
                 </form>
             </div>
