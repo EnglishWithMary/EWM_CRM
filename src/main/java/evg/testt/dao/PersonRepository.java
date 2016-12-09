@@ -11,6 +11,7 @@ public interface PersonRepository extends BaseRepository <Person>{
 
     Person findPersonByUserLogin(String userLogin) throws PersonRoleNotFoundException;
 
+
     List<Person> findSortedByRegistrationDate() throws SQLException;
 
 }

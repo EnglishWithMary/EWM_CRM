@@ -2,6 +2,27 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
+
+<%--<security:authorize access="isAuthenticated()">--%>
+    <%--<div id="container2">--%>
+        <%--<ul id="menu2">--%>
+            <%--<li><a href="#">Show all</a>--%>
+                <%--<ul>--%>
+                    <%--<li><a href="#">Managers</a></li>--%>
+                    <%--<li><a href="#">Teachers</a></li>--%>
+                    <%--<li><a href="#">Students</a></li>--%>
+                <%--</ul>--%>
+            <%--</li>--%>
+            <%--</ul>--%>
+    <%--</div>--%>
+
+
+<%--</security:authorize>--%>
+
+
+
+
+
 <nav class="right">
     <security:authorize access="isAnonymous()">
         <a href="/login" style="float: right;" class="button alt">Log in</a>
