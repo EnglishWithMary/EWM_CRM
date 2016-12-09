@@ -44,6 +44,8 @@
                             <tr>
                                 <th>Group Name</th>
                                 <th>Group's Teacher</th>
+                                <th>Language</th>
+                                <th>Status</th>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
                                     <th>Delete Group</th>
                                 </security:authorize>
@@ -52,24 +54,26 @@
                             <tbody>
                             <c:forEach var="group" items="${groups}">
                                 <tr>
-                                    <td>${group.name}</td>
+                                    <td><a href="" alt="Group Profile">${group.name}</a></td>
                                     <td>
-                                            ${group.teacher.person.firstName}${" "}
-                                            ${group.teacher.person.middleName}${" "}
-                                            ${group.teacher.person.lastName}${" "}
-                                    </td>
+                                        <a href="" alt="Teacher Profile">
+                                                ${group.teacher.person.firstName}${" "}
+                                                ${group.teacher.person.middleName}${" "}
+                                                ${group.teacher.person.lastName}${" "}
+                                        </a></td>
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
                                         <td>
                                             <a href="/teacherDelete?id=${teacher.id}">Delete</a>
                                         </td>
                                     </security:authorize>
+                                    <td>!add language</td>
+                                    <td>!add status</td>
                                 </tr>
                             </c:forEach>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <p><a class="button alt" href="/groupAdd">Add Group</a></p>
             </div>
         </div>
     </div>
@@ -79,7 +83,7 @@
                 <strong>Tools</strong>
             </div>
             <div class="panel-body">
-                Kitten was here
+                <p><a class="btn btn-success" href="/groupAdd">Add Group</a></p>
             </div>
         </div>
     </div>
