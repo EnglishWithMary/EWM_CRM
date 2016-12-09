@@ -2,9 +2,11 @@ package evg.testt.controller;
 
 import evg.testt.dto.GroupDTO;
 import evg.testt.model.Group;
+import evg.testt.model.Student;
 import evg.testt.model.Teacher;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.GroupService;
+import evg.testt.service.StudentService;
 import evg.testt.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,14 +32,20 @@ public class GroupController {
     private GroupService groupService;
     @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private StudentService studentService;
 
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
     public String showGroups(Model model) throws SQLException {
-        List<Teacher> teachers = teacherService.getAll();
         List<Group> groups = groupService.getAll();
-        model.addAttribute("groups", groups)
-                .addAttribute("teachers", teachers)
-                .addAttribute("groupFilter", new GroupDTO());
+        List<Teacher> teachers=teacherService.getAll();
+        List<Student> students=studentService.getAll();
+
+        model.addAttribute("groups",groups);
+        model.addAttribute("teachers",teachers);
+        model.addAttribute("students", students);
+        model.addAttribute("groupFilter", new GroupDTO());
+        model.addAttribute("groupFilterStudentsByGroup", new GroupDTO());
         return "groups/all";
     }
 
@@ -86,5 +94,4 @@ public class GroupController {
                 .addAttribute("groupFilter", groupFilter);
         return "groups/all";
     }
-
 }

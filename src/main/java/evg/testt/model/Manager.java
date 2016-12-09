@@ -7,12 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @Entity(name = "managers")
-
-public @Data class Manager extends Human implements BelongsToPerson{
+public @Data class Manager extends RegisteredUser implements BelongsToPerson{
 
     @OneToOne(cascade = CascadeType.ALL)
     private Person person;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private User user;
+    private User user = new User(new Role("ROLE_MANAGER",2));
 }
