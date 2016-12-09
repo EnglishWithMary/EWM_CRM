@@ -60,7 +60,8 @@
                                 </form>
 
 
-                                <%--form method="post" action="/deleteLeadFromPipe" class="deletePersonForm btn-xs">
+                                <%--form method="post" action="/deleteLeadFromPipe"
+                                 class="deletePersonForm btn-xs">
                                     <button type="submit" class="btn btn-default btn-xs">
                                         <span class="glyphicon glyphicon-remove"></span>
                                     </button>
@@ -69,12 +70,14 @@
                                 </form--%>
 
 
+
                                 <div>
                                     <button type="button" class="btn btn-default btn-xs"
                                             data-toggle="modal" data-target="#modal${person.id}">
                                         <span class="glyphicon glyphicon-remove"></span>
                                     </button>
                                 </div>
+
                                 <div class="modal fade" id="modal${person.id}"
                                      tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -124,7 +127,11 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div></div>
+                                    </div>
+                                </div>
+
+
+
                             </div>
 
                         </div> <%-- end person --%>
@@ -146,16 +153,17 @@
                     <form method="post" action="/leadAdd">
                         <input type="hidden" name="cardId" value="${card.id}">
                             <%--input type="hidden" name="pipeTypeId" value="${pipeType.id}"--%>
-                        <button type="submit" class="add">
+                        <button type="submit" class="btn btn-success">
                             <span>Add Lead</span>
                         </button>
                     </form>
                 </c:if>
+
                 <c:if test="${pipeType.id==2}">
                     <form method="post" action="/studentAdd">
                         <input type="hidden" name="cardId" value="${card.id}">
                         <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
-                        <button type="submit" class="add">
+                        <button type="submit" class="btn btn-success">
                             <span>Add Student</span>
                         </button>
                     </form>
@@ -163,7 +171,7 @@
 
             </div>
         </c:forEach>
-        </c:if>
+    </c:if>
 
         <c:if test="${pipeType.id > 0 || pipeType.id != null}">
             <div class="pipe_wrapper">

@@ -98,16 +98,22 @@ public class LeadController {
             model.addAttribute("personId",personId);
             return "leads/add";
         }
-        Person person;
+
         if (personId==null) {
-            Lead newLead = personDTOService.buildPerson(personDTO).getLead();
-            leadService.insert(newLead);
+            Lead lead = new Lead();
+            lead = personDTOService.updateLead(lead, personDTO);
+            leadService.insert(lead);
             Card card = cardService.getById(personDTO.getCardId());
-            card.getPersons().add(personService.getById(newLead.getPerson().getId()));
+            card.getPersons().add(lead.getPerson());
             cardService.update(card);
         }else{
-            person=personService.getById(personId);
-            person.setFirstName(personDTO.getFirstName());
+            Person person=personService.getById(personId);
+            Lead lead = leadService.getByPerson(person);
+            lead = personDTOService.updateLead(lead, personDTO);
+
+
+
+            /*person.setFirstName(personDTO.getFirstName());
             person.setLastName(personDTO.getLastName());
             person.setMiddleName(personDTO.getMiddleName());
             Email email = person.getEmail();
@@ -115,7 +121,7 @@ public class LeadController {
             emailService.update(email);
             Lead lead = leadService.getByPerson(person);
             lead.setPerson(person);
-            leadService.update(lead);
+            leadService.update(lead);*/
             Card cardOld = cardService.getCardByPerson(person);
 
             if (!personDTO.getCardId().equals(cardOld.getId())) {
