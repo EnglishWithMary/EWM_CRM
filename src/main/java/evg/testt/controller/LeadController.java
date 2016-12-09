@@ -92,6 +92,7 @@ public class LeadController {
         model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
         model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.LEAD_PIPE));
         validator.validate(personDTO, bindingResult);
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("card_id", personDTO.getCardId());
             model.addAttribute("personId",personId);

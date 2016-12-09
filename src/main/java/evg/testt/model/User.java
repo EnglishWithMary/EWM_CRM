@@ -18,4 +18,10 @@ public @Data class User extends BaseModel {
 
     @ManyToOne
     private Role role;
+
+    public User(){}
+
+    public User(Role role){
+        this.role = role;
+    }
 }

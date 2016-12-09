@@ -1,5 +1,6 @@
 package evg.testt.service.impl;
 
+import evg.testt.model.RegisteredUser;
 import evg.testt.model.Student;
 import evg.testt.dao.StudentRepository;
 import evg.testt.service.HumanService;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class StudentServiceImpl extends HumanServiceImpl<Student, StudentRepository> implements StudentService {
+public class StudentServiceImpl extends RegisteredUserServiceImpl<Student, StudentRepository> implements StudentService {
 
     @Override
     public List<Student> getAllByTeacher(int teacher_id) {

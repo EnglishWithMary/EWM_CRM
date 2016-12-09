@@ -73,7 +73,7 @@ public class PersonController {
 
             Person person = personService.getPersonByUserLogin(login);
 
-            personDTOService.buildPerson(personDTO).updatePerson(person);
+//            personDTOService.buildPerson(personDTO).updatePerson(person);
 
             if (!multipartFile.isEmpty()) {
                 avatarService.changePersonAvatar(multipartFile, person);
