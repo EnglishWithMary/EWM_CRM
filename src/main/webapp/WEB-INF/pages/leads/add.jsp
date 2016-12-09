@@ -46,15 +46,15 @@
                     </td>
                 </tr>
             </c:if>
-            <c:if test="${lead.cardId==null && card_id!=null}">
+            <%--c:if test="${lead.cardId==null && card_id!=null}">
                 <sf:hidden path="cardId" value="${card_id}"/>
-            </c:if>
+            </c:if--%>
 
             <tr>
                 <td colspan="2">
                     <input type="hidden" name="personId" value="${personId}" />
                     <input type="hidden" name="card_id" value="${card_id}" />
-                    <input type="hidden" name="pipeTypeId" value="${pt.id}"/>
+                    <%--input type="hidden" name="pipeTypeId" value="${pipeType.id}"/--%>
                     <input type="submit" value="Add lead"/>
                 </td>
             </tr>

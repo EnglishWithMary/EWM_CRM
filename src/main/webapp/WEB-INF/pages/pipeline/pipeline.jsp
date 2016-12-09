@@ -48,8 +48,9 @@
                                 </p>
                             </div>
                             <form method="post" action="/leadAdd" class="editPersonFrom">
-                                <input type="hidden" value="${card.id}" name="cardId">
-                                <input type="hidden" value="${pipeType.id}" name="pipeTypeId">
+                                <input type="hidden" name="personId" value="${person.id}">
+                                <%--input type="hidden" value="${card.id}" name="cardId">
+                                <input type="hidden" value="${pipeType.id}" name="pipeTypeId"--%>
                                 <button type="submit" class="btn btn-default btn-xs">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </button>
@@ -118,7 +119,7 @@
                 <c:if test="${pipeType.id==1}">
                     <form method="post" action="/leadAdd">
                         <input type="hidden" name="cardId" value="${card.id}">
-                        <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
+                        <%--input type="hidden" name="pipeTypeId" value="${pipeType.id}"--%>
                         <button type="submit" class="add">
                             <span>Add Lead</span>
                         </button>
