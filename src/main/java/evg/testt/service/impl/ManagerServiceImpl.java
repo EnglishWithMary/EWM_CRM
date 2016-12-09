@@ -12,6 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.SQLException;
 
 @Service
-public class ManagerServiceImpl extends HumanServiceImpl<Manager, ManagerRepository>
+public class ManagerServiceImpl extends RegisteredUserServiceImpl<Manager, ManagerRepository>
         implements ManagerService {
 }

@@ -7,5 +7,5 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-public interface TeacherService extends HumanService<Teacher> {
+public interface TeacherService extends RegisteredUserService<Teacher> {
 }

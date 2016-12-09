@@ -7,4 +7,11 @@ import lombok.Data;
 public @Data class Role extends BaseModel {
 
     private String role;
+
+    Role(){}
+
+    Role(String role, Integer id){
+        super.setId(id);
+        this.role = role;
+    }
 }

@@ -56,14 +56,17 @@ public class TeacherController {
     public String saveTeacher(@ModelAttribute("teacher") @Validated PersonDTO personDTO, BindingResult bindingResult,
                               Model model) throws SQLException, ParseException {
         validator.validate(personDTO, bindingResult);
+
         User u = userService.findByUserLogin(personDTO.getLogin());
+
         if (u != null)
             bindingResult.rejectValue("login", "1", "Login already exist.");
 
         if (!bindingResult.hasErrors()) {
 
-            Teacher newTeacher = personDTOService.buildPerson(personDTO).getTeacher();
-            teacherService.insert(newTeacher);
+            Teacher teacher = new Teacher();
+            teacher = personDTOService.updateRegisteredUser(teacher, personDTO);
+            teacherService.insert(teacher);
 
             return "redirect:/teachers";
         } else {
