@@ -48,14 +48,6 @@ body {
     border-top-right-radius: 0;
 }
 
-.pipe_line_canvas{
-    position: absolute !important;
-    left: 0;
-    top: 6em;
-    height: 100%;
-    width: 100%;
-}
-
 .scroll{
     white-space: nowrap;
     margin-bottom: 10px;
@@ -70,12 +62,10 @@ body {
 }
 
 .pipe_wrapper{
-    width: 20%;
     margin: 0 5px;
     height: 100%;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    display: inline-block;
     vertical-align: top;
     white-space: nowrap;
 }
@@ -195,6 +185,8 @@ body {
     width: 100%;
     margin-bottom: 10px;
     margin-top: 10px;
+    margin-left: 0px;
+    margin-right: 0px;
     background-color: #ffffff;
 }
 
@@ -204,20 +196,20 @@ body {
 }
 
 .editPersonFrom {
-    width: 12%;
-    margin: 0%;
-    padding: 0%;
-    float: left;
+    /*width: 12%;*/
+    /*margin: 0%;*/
+    /*padding: 0%;*/
+    /*float: left;*/
 }
 
 .deletePersonForm {
-    width: 12%;
-    margin: 0%;
-    padding: 0%;
+    /*width: 12%;*/
+    /*margin: 0%;*/
+    /*padding: 0%;*/
 }
 
 .avatar {
-    width: 25%;
+    /*width: 25%;*/
     float: left;
 }
 

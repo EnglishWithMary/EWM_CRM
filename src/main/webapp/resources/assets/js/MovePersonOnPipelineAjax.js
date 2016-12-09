@@ -53,7 +53,7 @@ $(document).ready(function () {
         $item.appendTo($target).fadeIn();
     }
 
-    $(".person").css("width", $(".pipe").css("width"));
+    // $(".person").css("width", $(".pipe").css("width"));
 
     $('.pipe_wrapper #deleteCardForm').first().remove();
 

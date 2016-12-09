@@ -1,13 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<div class="pipe_line_canvas">
-    <c:if test="${not empty cards}">
-    <div class="scroll">
-        <c:forEach items="${cards}" var="card">
-            <div class="pipe_wrapper">
 
-                <div class="pipe">
+<div class="row row-horizon">
+    <c:if test="${not empty cards}">
+        <c:forEach items="${cards}" var="card">
+            <div class="pipe_wrapper col-lg-2 col-md-3 col-sm-4 col-xs-12">
+
+                <div class="pipe ">
 
                     <div class="editToolbar">
                         <form method="post" action="/editCardName" id="cardNameForm">
@@ -28,11 +28,11 @@
 
                     <c:forEach items="${card.persons}" var="person">
 
-                        <div class="person">
+                        <div class="person row">
 
                             <input type="hidden" id="from" name="from" value="${card.id}">
 
-                            <div class="avatar">
+                            <div class="avatar col-lg-2 col-md-2 col-sm-2 col-xs-3">
                                 <c:if test="${person.avatarURL==null}">
                                     <span class="glyphicon glyphicon-picture"/>
                                 </c:if>
@@ -40,7 +40,7 @@
                                     <img src="${person.avatarURL}" class="img-responsive"/>
                                 </c:if>
                             </div>
-                            <div class="personData">
+                            <div class="personData col-lg-8 col-md-8 col-sm-8 col-xs-6">
                                 <input type="hidden" id="personId" name="personId" value="${person.id}">
                                 <p>
                                         ${person.lastName}
@@ -49,7 +49,7 @@
                             </div>
 
 
-                            <form method="post" action="/leadAdd" class="editPersonFrom">
+                            <form method="post" action="/leadAdd" class="editPersonFrom col-lg-1 col-md-1 col-sm-1 col-xs-1">
                                 <input type="hidden" value="${card.id}" name="cardId">
                                 <input type="hidden" value="${pipeType.id}" name="pipeTypeId">
                                 <button type="submit" class="btn btn-default btn-xs">
@@ -58,7 +58,7 @@
                             </form>
 
 
-                            <form method="post" action="/deleteLeadFromPipe" class="deletePersonForm">
+                            <form method="post" action="/deleteLeadFromPipe" class="deletePersonForm col-lg-1 col-md-1 col-sm-1 col-xs-1">
                                 <button type="submit" class="btn btn-default btn-xs">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </button>
@@ -83,20 +83,14 @@
 
             </div>
         </c:forEach>
-        </c:if>
+    </c:if>
 
-        <c:if test="${pipeType.id > 0 || pipeType.id != null}">
-            <div class="pipe_wrapper">
-                <form class="pipe" method="post" action="/addCard">
-                    <input type="submit" value="Add Card" class="add_pipe">
-                    <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
-                </form>
-            </div>
-        </c:if>
-    </div>
+    <c:if test="${pipeType.id > 0 || pipeType.id != null}">
+        <div class="pipe_wrapper col-lg-2 col-md-3 col-sm-4 col-xs-12">
+            <form class="pipe" method="post" action="/addCard">
+                <input type="submit" value="Add Card" class="add_pipe">
+                <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
+            </form>
+        </div>
+    </c:if>
 </div>
-<style media="screen" type="text/css">
-    body {
-        overflow-y: hidden;
-    }
-</style>
