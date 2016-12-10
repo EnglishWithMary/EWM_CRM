@@ -2,9 +2,9 @@
 @charset "UTF-8";
 @import url(font-awesome.min.css);
 @import "https://fonts.googleapis.com/css?family=Montserrat:700|Open+Sans:300,400|Pacifico";
-body {
-    background: #eee !important;
-}
+/*body {*/
+    /*background: #eee !important;*/
+/*}*/
 
 .wrapper {
     margin-top: 80px;

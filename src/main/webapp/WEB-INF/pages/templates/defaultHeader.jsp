@@ -68,17 +68,17 @@
             <ul class="nav navbar-nav navbar-right">
                 <security:authorize access="isAuthenticated()">
                     <li class="minimize-it">
+                        <a href="/personProfile">
                         <c:choose>
                             <c:when test="${person.avatarURL == null}">
-                                <img class="img-size-vsm" class="img-circle" alt="Responsive image"
+                                <img class="img-size-vsm" alt="Responsive image"
                                      src="${pageContext.request.contextPath}/resources/img/defaultAvatar.jpg">
                             </c:when>
                             <c:otherwise>
-                                <img class="img-size-vsm" class="img-circle" alt="Responsive image"
+                                <img class="img-size-vsm" alt="Responsive image"
                                      src="${person.avatarURL}">
                             </c:otherwise>
                         </c:choose>
-                        <a href="/personProfile" class="button alt" >
                             Profile
                         </a>
                     </li>
