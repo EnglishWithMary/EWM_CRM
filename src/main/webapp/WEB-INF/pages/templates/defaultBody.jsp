@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <h1>Enjoy your English with Mary! :)</h1>
  <p>English with Mary is your new way to improve your skills!!!
      <style>
@@ -13,8 +14,8 @@
 
 
      <link rel="shortcut icon" href="../favicon.ico">
-     <link rel="stylesheet" type="text/css" href="css/default.css" />
-     <link rel="stylesheet" type="text/css" href="css/component.css" />
+     <%--<link rel="stylesheet" type="text/css" href="css/default.css" />--%>
+     <%--<link rel="stylesheet" type="text/css" href="css/component.css" />--%>
      <script src="js/modernizr.custom.js"></script>
 
 
@@ -55,7 +56,25 @@
 
                      <ul>
                          <li>
-                             <%--<a class="cbp-vm-image" href="#"><img src="images/1.png"></a>--%>
+                             <%--<a class="cbp-vm-image" ><img src="i${person.avatarURL}></a>--%>
+                                 <security:authorize access="isAuthenticated()">
+                         <li class="minimize-it">
+                             <%--<a href="/personProfile">--%>
+                                 <c:choose>
+                                     <c:when test="${person.avatarURL == null}">
+                                         <img class="img-size-vsm" alt="Responsive image"
+                                              src="${pageContext.request.contextPath}/resources/img/defaultAvatar.jpg">
+                                     </c:when>
+                                     <c:otherwise>
+                                         <img class="img-size-vsm" alt="Responsive image"
+                                              src="${person.avatarURL}">
+                                     </c:otherwise>
+                                 </c:choose>
+                                 <%--Profile--%>
+                             <%--</a>--%>
+                         </li>
+
+                         </security:authorize>
                              <h3 class="cbp-vm-title">${person.firstName}</h3>
                              <h3 class="cbp-vm-title">${person.lastName}</h3>
                              <h3 class="cbp-vm-title">${person.middleName}</h3>
@@ -90,7 +109,7 @@
                  </c:forEach>
              <%--</tbod>--%>
          <%--</table>--%>
-
+</div>
 
 
              <%--&lt;%&ndash;<ul>&ndash;%&gt;--%>
