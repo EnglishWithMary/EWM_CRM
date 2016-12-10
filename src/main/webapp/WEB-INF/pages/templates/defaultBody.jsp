@@ -48,21 +48,23 @@
                  <th>Role</th>
              </tr>
              </thead>
-             <tbod>
+             </table>
                  <c:forEach var="person" items="${persons}">
 
 
 
                      <ul>
                          <li>
-                             <a class="cbp-vm-image" href="#"><img src="images/1.png"></a>
+                             <%--<a class="cbp-vm-image" href="#"><img src="images/1.png"></a>--%>
                              <h3 class="cbp-vm-title">${person.firstName}</h3>
-                             <div class="cbp-vm-price">${person.lastName}</div>
-                             <div class="cbp-vm-details">
-                                     ${person.middleName}
-                             </div>
-                             <a class="cbp-vm-icon cbp-vm-add" href="#">Add to cart</a>
-                         </li>
+                             <h3 class="cbp-vm-title">${person.lastName}</h3>
+                             <h3 class="cbp-vm-title">${person.middleName}</h3>
+                             <%--<div class="cbp-vm-price">${person.lastName}</div>--%>
+                             <%--<div class="cbp-vm-details">--%>
+                                     <%--${person.middleName}--%>
+                             <%--</div>--%>
+                             <%--<a class="cbp-vm-icon cbp-vm-add" href="#">Add to cart</a>--%>
+                         <%--</li>--%>
 
                          <%--<li>--%>
                              <%--<a class="cbp-vm-image" href="#"><img src="images/2.png"></a>--%>
@@ -86,8 +88,8 @@
 
                      <%--</tr>--%>
                  </c:forEach>
-             </tbod>
-         </table>
+             <%--</tbod>--%>
+         <%--</table>--%>
 
 
 
