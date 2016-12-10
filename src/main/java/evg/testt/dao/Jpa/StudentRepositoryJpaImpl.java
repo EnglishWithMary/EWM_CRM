@@ -1,5 +1,6 @@
 package evg.testt.dao.Jpa;
 
+import evg.testt.model.RegisteredUser;
 import evg.testt.model.Student;
 import evg.testt.dao.StudentRepository;
 import org.springframework.stereotype.Repository;
@@ -9,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Repository
-public class StudentRepositoryJpaImpl extends HumanRepositoryJpaImpl<Student> implements StudentRepository {
+public class StudentRepositoryJpaImpl extends RegisteredUserRepositoryJpaImpl<Student> implements StudentRepository {
     @Override
     public List<Student> findStudensByTeacher(int teacher_id) {
         List<Student> students = Collections.EMPTY_LIST;

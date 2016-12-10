@@ -5,6 +5,6 @@ import evg.testt.dao.AdminRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AdminRepositoryJpaImpl extends BaseRepositoryJpaImpl<Admin> implements AdminRepository {
+public class AdminRepositoryJpaImpl extends RegisteredUserRepositoryJpaImpl<Admin> implements AdminRepository {
 
 }

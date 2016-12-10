@@ -5,18 +5,16 @@ import evg.testt.exception.NullObjectPersonDTOException;
 import evg.testt.model.*;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 
 public interface PersonDTOService {
 
-    public Admin getAdmin() throws SQLException;
+    <T extends RegisteredUser> T updateRegisteredUser(T someRegisteredUser, PersonDTO personDTO) throws SQLException, ParseException;
 
-    public Manager getManager() throws SQLException;
+    Person getUpdatedPerson(Person person, PersonDTO personDTO) throws ParseException, NullObjectPersonDTOException;
 
-    public Teacher getTeacher() throws SQLException;
+    User getUpdatedUser (User user, PersonDTO personDTO);
 
-    public Student getStudent() throws SQLException;
-
-    public Lead getLead() throws SQLException;
-
-    public PersonDTOService buildPerson(PersonDTO personDTO) throws SQLException;
+    Lead updateLead(Lead lead, PersonDTO personDTO) throws ParseException, NullObjectPersonDTOException;
 }

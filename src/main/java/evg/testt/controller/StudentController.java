@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.text.ParseException;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,10 +28,6 @@ public class StudentController {
     private StudentService studentService;
     @Autowired
     private UserService userService;
-    @Autowired
-    private RoleService roleService;
-    @Autowired
-    private PersonService personService;
     @Autowired
     private TeacherService teacherService;
     @Autowired
@@ -78,30 +73,32 @@ public class StudentController {
     public String saveStudent(@ModelAttribute("student") @Validated PersonDTO personDTO,
                               BindingResult bindingResult, Model model,
                               @RequestParam(required = false) Integer teacher_id,
-                              @RequestParam(required = false) Integer group_id) throws SQLException {
+                              @RequestParam(required = false) Integer group_id) throws SQLException, ParseException {
         validator.validate(personDTO, bindingResult);
-        // проверка логина на уникальность
+
         User u = userService.findByUserLogin(personDTO.getLogin());
+
         if (u != null)
             bindingResult.rejectValue("login", "1", "Login already exist.");
 
         if (!bindingResult.hasErrors()) {
 
-            Student newStudent = personDTOService.buildPerson(personDTO).getStudent();
+            Student student = new Student();
+            student = personDTOService.updateRegisteredUser(student, personDTO);
+
             Teacher teacher;
             Group group;
 
             if (teacher_id != null && teacher_id > 0) {
                 teacher = teacherService.getById(teacher_id);
-                newStudent.setTeacher(teacher);
+                student.setTeacher(teacher);
             }
             if (group_id != null && group_id > 0) {
                 group = groupService.getById(group_id);
-                newStudent.setGroup(group);
-
+                student.setGroup(group);
             }
 
-            studentService.insert(newStudent);
+            studentService.insert(student);
 
             return "redirect:/students";
         } else {
@@ -138,6 +135,7 @@ public class StudentController {
     @RequestMapping(value = "/studentsSortedByGroup", method = RequestMethod.GET)
     public String showSortedStudent(Model model, @RequestParam(required = false) Integer group_id)
             throws SQLException {
+
         List<Student> students = Collections.EMPTY_LIST;
         List<Group> groups = groupService.getAll();
         List<Teacher> teachers = teacherService.getAll();

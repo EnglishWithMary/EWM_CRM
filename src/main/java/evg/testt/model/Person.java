@@ -31,7 +31,7 @@ public @Data class Person extends BaseModel{
 
     private String organization;
 
-    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    @OneToOne(cascade = CascadeType.ALL)
     Email email;
 
     @Column(columnDefinition = "text")

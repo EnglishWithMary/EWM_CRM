@@ -16,12 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
 public class LeadController {
-    @Autowired
-    private UserService userService;
     @Autowired
     private PipeTypeService pipeTypeService;
     @Autowired
@@ -32,8 +31,6 @@ public class LeadController {
     private LeadService leadService;
     @Autowired
     private PersonService personService;
-    @Autowired
-    private EmailService emailService;
     @Autowired
     private PersonDTOService personDTOService;
 
@@ -72,7 +69,7 @@ public class LeadController {
                                  BindingResult bindingResult,
                                  @RequestParam(required = true) Integer cardId,
                                  @RequestParam(required = true) Integer pipeTypeId)
-            throws SQLException {
+            throws SQLException, ParseException {
 
         model.addAttribute("cards", cardService.getCards(Pipe.valueOf(pipeTypeId)));
         model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
@@ -85,11 +82,12 @@ public class LeadController {
             return "leads/add";
         }
 
-        Lead newLead = personDTOService.buildPerson(personDTO).getLead();
-        leadService.insert(newLead);
+        Lead lead = new Lead();
+        lead = personDTOService.updateLead(lead, personDTO);
+        leadService.insert(lead);
 
         Card card = cardService.getById(personDTO.getCardId());
-        card.getPersons().add(personService.getById(newLead.getPerson().getId()));
+        card.getPersons().add(personService.getById(lead.getPerson().getId()));
         cardService.update(card);
         return "redirect:/takeLeadtpipe";
     }
@@ -110,6 +108,7 @@ public class LeadController {
                              @RequestParam(required = false) Integer pipeTypeId,
                              @RequestParam(required = true) Integer id)
             throws SQLException {
+
         if (cardId != null) {
             Card card = cardService.getById(cardId);
             card.getPersons().remove(personService.getById(leadService.getById(id).getId()));

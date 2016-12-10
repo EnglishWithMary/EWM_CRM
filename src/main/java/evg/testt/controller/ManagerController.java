@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,10 +33,6 @@ public class ManagerController {
     private ManagerService managerService;
     @Autowired
     private UserService userService;
-    @Autowired
-    private RoleService roleService;
-    @Autowired
-    private PersonService personService;
     @Autowired
     PersonDTOService personDTOService;
 
@@ -84,19 +81,23 @@ public class ManagerController {
 
     @RequestMapping(value = "/managerSave", method = RequestMethod.POST)
     public String saveManager(@ModelAttribute("manager") @Validated PersonDTO personDTO,
-                              BindingResult bindingResult, Model model) throws SQLException {
+                              BindingResult bindingResult, Model model) throws SQLException, ParseException {
         validator.validate(personDTO, bindingResult);
+
         User u = userService.findByUserLogin(personDTO.getLogin());
+
         if (u != null)
             bindingResult.rejectValue("login", "1", "Login already exist.");
 
         if (!bindingResult.hasErrors()) {
-            Manager manager = personDTOService.buildPerson(personDTO).getManager();
+
+            Manager manager = new Manager();
+            manager = personDTOService.updateRegisteredUser(manager, personDTO);
             managerService.insert(manager);
 
             return "redirect:/managers";
         } else {
-            return "manager/add";
+            return "managers/add";
         }
     }
 
