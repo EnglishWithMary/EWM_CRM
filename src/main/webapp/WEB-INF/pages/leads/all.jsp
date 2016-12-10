@@ -41,20 +41,10 @@
                             <td>${lead.person.lastName}</td>
                             <td>${lead.person.middleName}</td>
                             <td>${lead.person.registrationDate}</td>
-                            <security:authorize access="hasRole('ROLE_ADMIN')">
-                                <td>
-                                    <form method="post" action="/leadTrash">
-                                        <input type="hidden" name="id" value="${lead.id}">
-                                        <button type="submit" class="btn btn-default btn-sm">
-                                            Delete
-                                        </button>
-                                    </form>
-                                </td>
-                            </security:authorize>
                             <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
                                 <td>
                                     <form method="post" action="/leadAdd">
-                                        <button type="submit" class="btn btn-default btn-xs">
+                                        <button type="submit" class="btn btn-default btn-sm">
                                             Edit
                                         </button>
                                         <input type="hidden" name="personId" value="${lead.person.id}">
@@ -62,7 +52,7 @@
                                 </td>
                                 <td>
                                     <div>
-                                        <button type="button" class="btn btn-default btn-xs"
+                                        <button type="button"
                                                 data-toggle="modal" data-target="#modal${lead.id}">
                                             Delete
                                         </button>
@@ -81,7 +71,7 @@
                                                 <div class="modal-footer row">
                                                     <div class="col-md-4">
                                                         <form method="post" action="/deleteLead">
-                                                            <button type="submit" class="btn btn-default btn-xs">
+                                                            <button type="submit" class="btn btn-default btn-sm">
                                                                 Delete
                                                             </button>
                                                             <input type="hidden" name="personId" value="${lead.person.id}">
@@ -89,14 +79,14 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         <form method="post" action="/leadTrash">
-                                                            <button type="submit" class="btn btn-default btn-xs">
+                                                            <button type="submit" class="btn btn-default btn-sm">
                                                                 Move to trash
                                                             </button>
                                                             <input type="hidden" name="personId" value="${lead.person.id}">
                                                         </form>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <button class="btn btn-default btn-xs" type="button"
+                                                        <button class="btn btn-default btn-sm" type="button"
                                                                 data-dismiss="modal">
                                                             Cancel
                                                         </button>
@@ -121,14 +111,9 @@
             </div>
             <div class="panel-body">
                 <form method="post" action="/leadAdd">
-                    <input type="hidden" value="${pipeType.id}" name="pipeTypeId" class="hidden">
-                    <input type="hidden" value="${card.id}" name="cardId" class="hidden">
-                    <button type="submit" class="btn btn-success">Add Lead</button>
-                </form>
-                <form method="post" action="/leadAdd">
                     <%--input type="hidden" value="${pipeType.id}" name="pipeTypeId">
                     <input type="hidden" value="${card.id}" name="cardId"--%>
-                    <button type="submit" class="button alt">Add Lead</button>
+                    <button type="submit" class="btn btn-success">Add Lead</button>
                 </form>
             </div>
         </div>

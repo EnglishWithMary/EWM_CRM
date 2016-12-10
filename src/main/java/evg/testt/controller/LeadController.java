@@ -110,29 +110,11 @@ public class LeadController {
             Person person=personService.getById(personId);
             Lead lead = leadService.getByPerson(person);
             lead = personDTOService.updateLead(lead, personDTO);
-
-
-
-            /*person.setFirstName(personDTO.getFirstName());
-            person.setLastName(personDTO.getLastName());
-            person.setMiddleName(personDTO.getMiddleName());
-            Email email = person.getEmail();
-            email.setEmail(personDTO.getEmail());
-            emailService.update(email);
-            Lead lead = leadService.getByPerson(person);
-            lead.setPerson(person);
-            leadService.update(lead);*/
+            leadService.update(lead);
             Card cardOld = cardService.getCardByPerson(person);
-
             if (!personDTO.getCardId().equals(cardOld.getId())) {
                 if (card_id!=null){
-                    //cardOld.getPersons().remove(person);
-                    for (Person p:cardOld.getPersons()) {
-                        if (p.getId().equals(person.getId())){
-                            cardOld.getPersons().remove(p);
-                            break;
-                        }
-                    }
+                    cardOld.getPersons().remove(person);
                     cardService.update(cardOld);
                 }
                 Card cardNew = cardService.getById(personDTO.getCardId());
@@ -152,13 +134,7 @@ public class LeadController {
         Person person = personService.getById(personId);
         Lead lead = leadService.getByPerson(person);
         Card card = cardService.getCardByPerson(person);
-        //card.getPersons().remove(person);
-        for (Person p:card.getPersons()) {
-            if (p.getId().equals(person.getId())){
-                card.getPersons().remove(p);
-                break;
-            }
-        }
+        card.getPersons().remove(person);
         cardService.update(card);
         leadService.delete(lead);
         return "redirect:"+request.getHeader("Referer");
@@ -173,13 +149,7 @@ public class LeadController {
         Person person = personService.getById(personId);
         Lead lead = leadService.getByPerson(person);
         Card card = cardService.getCardByPerson(person);
-        //card.getPersons().remove(person);
-        for (Person p:card.getPersons()) {
-            if (p.getId().equals(person.getId())){
-                card.getPersons().remove(p);
-                break;
-            }
-        }
+        card.getPersons().remove(person);
         cardService.update(card);
         leadService.trash(lead);
 
@@ -193,13 +163,7 @@ public class LeadController {
 
         Person person = personService.getById(personId);
         Card card = cardService.getCardByPerson(person);
-        //card.getPersons().remove(person);
-        for (Person p:card.getPersons()) {
-            if (p.getId().equals(person.getId())){
-                card.getPersons().remove(p);
-                break;
-            }
-        }
+        card.getPersons().remove(person);
         cardService.update(card);
         Card cardNew=cardService.getById(1);
         cardNew.getPersons().add(person);
