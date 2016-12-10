@@ -5,7 +5,7 @@ public enum UserRole {
 
     private int roleId;
 
-        UserRole(int id){
+    UserRole(int id){
         roleId = id;
     }
 

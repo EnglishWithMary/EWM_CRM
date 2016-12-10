@@ -22,4 +22,17 @@ public class CardRepositoryJpaImpl extends BaseRepositoryJpaImpl<Card> implement
         cards = query.getResultList();
         return cards;
     }
+
+    @Override
+    public void movePersonOnCards(int from, int destination, Person person) throws SQLException {
+        Card sourceCard = findOne(from);
+        Card destinationCard = findOne(destination);
+
+        sourceCard.getPersons().remove(person);
+        destinationCard.getPersons().add(person);
+
+        save(sourceCard);
+        save(destinationCard);
+
+    }
 }

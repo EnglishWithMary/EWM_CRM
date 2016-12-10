@@ -1,13 +1,11 @@
 package evg.testt.dto;
 
-import evg.testt.model.Email;
 import lombok.Data;
 import net.sf.oval.constraint.EqualToField;
 import net.sf.oval.constraint.Length;
 import net.sf.oval.constraint.MatchPattern;
 
 import javax.persistence.Transient;
-import java.util.Set;
 
 public @Data class PersonDTO {
 
@@ -22,8 +20,8 @@ public @Data class PersonDTO {
     @Transient
     private String confirmPassword;
 
-    @MatchPattern(pattern = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9]" +
-            "(?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email address.")
+    @MatchPattern(pattern = "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9]" +
+            "(?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?", message = "Invalid email address.")
     private String email;
 
     @Length(min = 3, max = 20, message = "First Name should be between 3 and 20 chars.")
@@ -35,8 +33,13 @@ public @Data class PersonDTO {
     @Length(min = 3, max = 20, message = "Middle Name should be between 3 and 20 chars.")
     private String middleName;
 
-//    @Length(min = 3, max = 20, message = "Wrong middle name.")
     private String comments;
+
+    private String organization;
+
+    private String birthdayDate;
+
+    private String avatarURL;
 
     private Integer cardId;
 }

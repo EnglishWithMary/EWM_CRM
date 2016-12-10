@@ -3,10 +3,7 @@ package evg.testt.controller;
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
-import evg.testt.service.ManagerService;
-import evg.testt.service.PersonService;
-import evg.testt.service.RoleService;
-import evg.testt.service.UserService;
+import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -21,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,15 +28,13 @@ import java.util.List;
 public class ManagerController {
 
     @Autowired
-    SpringOvalValidator validator;
+    private SpringOvalValidator validator;
     @Autowired
-    ManagerService managerService;
+    private ManagerService managerService;
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    RoleService roleService;
-    @Autowired
-    PersonService personService;
+    PersonDTOService personDTOService;
 
     @Value("${pagination.page.size}")
     protected int pageSize;
@@ -85,43 +81,23 @@ public class ManagerController {
 
     @RequestMapping(value = "/managerSave", method = RequestMethod.POST)
     public String saveManager(@ModelAttribute("manager") @Validated PersonDTO personDTO,
-                              BindingResult bindingResult, Model model) throws SQLException {
+                              BindingResult bindingResult, Model model) throws SQLException, ParseException {
         validator.validate(personDTO, bindingResult);
+
         User u = userService.findByUserLogin(personDTO.getLogin());
+
         if (u != null)
             bindingResult.rejectValue("login", "1", "Login already exist.");
 
         if (!bindingResult.hasErrors()) {
 
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            Manager manager = new Manager();
+            manager = personDTOService.updateRegisteredUser(manager, personDTO);
+            managerService.insert(manager);
 
-            UserRole roleId = UserRole.ROLE_MANAGER;
-
-            Role role = roleService.getById(roleId.getRoleId());
-
-            Person newPerson = new Person();
-            User newUser = new User();
-            Manager newManager = new Manager();
-            Email email = new Email();
-
-            email.setEmail(personDTO.getEmail());
-
-            newPerson.setFirstName(personDTO.getFirstName());
-            newPerson.setLastName(personDTO.getLastName());
-            newPerson.setMiddleName(personDTO.getMiddleName());
-            newPerson.setEmail(email);
-
-            newUser.setRole(role);
-            newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
-            newUser.setLogin(personDTO.getLogin());
-
-            newManager.setPerson(newPerson);
-            newManager.setUser(newUser);
-
-            managerService.insert(newManager);
             return "redirect:/managers";
         } else {
-            return "manager/add";
+            return "managers/add";
         }
     }
 
@@ -129,6 +105,13 @@ public class ManagerController {
     public String managerDelete(@RequestParam Integer id) throws SQLException {
         Manager manager = managerService.getById(id);
         managerService.delete(manager);
+        return "managers/all";
+    }
+
+    @RequestMapping(value = "/managerTrash")
+    public String managerTrash(@RequestParam Integer id) throws SQLException {
+        Manager manager = managerService.getById(id);
+        managerService.trash(manager);
         return "managers/all";
     }
 }

@@ -16,29 +16,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
 public class LeadController {
     @Autowired
-    private UserService userService;
-    @Autowired
     private PipeTypeService pipeTypeService;
     @Autowired
     private CardService cardService;
-
     @Autowired
-    SpringOvalValidator validator;
-
+    private SpringOvalValidator validator;
     @Autowired
-    LeadService leadService;
-
+    private LeadService leadService;
     @Autowired
-    PersonService personService;
-
+    private PersonService personService;
     @Autowired
-    EmailService emailService;
-
+    private PersonDTOService personDTOService;
 
     @RequestMapping(value = "/leads", method = RequestMethod.GET)
     public String showLeads(Model model, Principal principal) throws SQLException {
@@ -75,10 +69,11 @@ public class LeadController {
                                  BindingResult bindingResult,
                                  @RequestParam(required = true) Integer cardId,
                                  @RequestParam(required = true) Integer pipeTypeId)
-            throws SQLException {
+            throws SQLException, ParseException {
 
         model.addAttribute("cards", cardService.getCards(Pipe.valueOf(pipeTypeId)));
-        model.addAttribute("pt", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
+        model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
+
         validator.validate(personDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
@@ -86,18 +81,13 @@ public class LeadController {
             model.addAttribute("pt_id", pipeTypeId);
             return "leads/add";
         }
-        Person newPerson = new Person();
-        newPerson.setFirstName(personDTO.getFirstName());
-        newPerson.setLastName(personDTO.getLastName());
-        newPerson.setMiddleName(personDTO.getMiddleName());
-        Email newEmail = new Email();
-        newEmail.setEmail(personDTO.getEmail());
-        Lead newLead = new Lead();
-        newPerson.setEmail(newEmail);
-        newLead.setPerson(newPerson);
-        leadService.insert(newLead);
+
+        Lead lead = new Lead();
+        lead = personDTOService.updateLead(lead, personDTO);
+        leadService.insert(lead);
+
         Card card = cardService.getById(personDTO.getCardId());
-        card.getPersons().add(personService.getById(newPerson.getId()));
+        card.getPersons().add(personService.getById(lead.getPerson().getId()));
         cardService.update(card);
         return "redirect:/takeLeadtpipe";
     }
@@ -108,6 +98,7 @@ public class LeadController {
                              @RequestParam(required = false) Integer pipeTypeId,
                              @RequestParam(required = true) Integer id)
             throws SQLException {
+
         return "redirect:/takeLeadtpipe";
     }
 
@@ -117,11 +108,19 @@ public class LeadController {
                              @RequestParam(required = false) Integer pipeTypeId,
                              @RequestParam(required = true) Integer id)
             throws SQLException {
+
         if (cardId != null) {
             Card card = cardService.getById(cardId);
             card.getPersons().remove(personService.getById(leadService.getById(id).getId()));
             cardService.update(card);
         }
         return "redirect:/takeLeadtpipe";
+    }
+
+    @RequestMapping(value = "/leadTrash", method = RequestMethod.POST)
+    public String leadTrash(Model model, @RequestParam(required = true) Integer id) throws SQLException {
+        Lead lead = leadService.getById(id);
+        leadService.trash(lead);
+        return "leads/all";
     }
 }

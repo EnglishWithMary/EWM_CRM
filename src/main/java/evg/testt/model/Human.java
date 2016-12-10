@@ -1,7 +1,10 @@
 package evg.testt.model;
 
-public abstract class Human extends BaseModel{
+import lombok.Data;
+import javax.persistence.OneToOne;
 
-//    abstract Person getPerson(Human human);
+public @Data abstract class Human extends BaseModel{
 
+    @OneToOne
+    Person person;
 }

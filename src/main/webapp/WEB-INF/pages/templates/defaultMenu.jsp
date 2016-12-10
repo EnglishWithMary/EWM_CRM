@@ -12,6 +12,7 @@
             <li><a href="/managers">Managers</a></li>
             <li><a href="/leads">Leads</a></li>
             <li><a href="/persons">Persons</a></li>
+            <li><a href="/payments">Payments</a></li>
         </security:authorize>
 
     </ul>

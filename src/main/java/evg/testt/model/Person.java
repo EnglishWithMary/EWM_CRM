@@ -18,7 +18,7 @@ public @Data class Person extends BaseModel{
     private String avatarURL;
 
     @Embedded
-    private State state;
+    private State state = new State();
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Role role;
@@ -30,16 +30,19 @@ public @Data class Person extends BaseModel{
     private Date registrationDate = new Date();
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date modifyDate;
+    private Date modifyDate = new Date();
 
     private String organization;
 
-    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    @OneToOne(cascade = CascadeType.ALL)
     Email email;
 
     @Column(columnDefinition = "text")
     private String comments;
 
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personActivities")
+    /**
+     * TODO remake log activity
+     * */
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person", fetch = FetchType.EAGER)
 //    List<Activity> activities;
 }

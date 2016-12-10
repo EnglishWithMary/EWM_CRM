@@ -5,7 +5,6 @@ import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,10 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.text.ParseException;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,81 +23,82 @@ import java.util.List;
 public class StudentController {
 
     @Autowired
-    SpringOvalValidator validator;
+    private SpringOvalValidator validator;
     @Autowired
-    StudentService studentService;
+    private StudentService studentService;
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    RoleService roleService;
+    private TeacherService teacherService;
     @Autowired
-    PersonService personService;
+    private PersonDTOService personDTOService;
     @Autowired
-    TeacherService teacherService;
+    private GroupService groupService;
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public String showStudent(@RequestParam(required = false) Integer teacher_id,
                               Model model) throws SQLException {
+
         List<Student> students = Collections.EMPTY_LIST;
         List<Teacher> teachers = teacherService.getAll();
+        List<Group> groups = groupService.getAll();
 
-        if (teacher_id != null) {
-            if (teacher_id > 0) {
-                students = studentService.getAllByTeacher(teacher_id);
-            } else if (teacher_id == -1) {
-                students = studentService.getStudentsWithoutTeacher();
-            }
-        } else {
+        if (teacher_id == null) {
             students = studentService.getAll();
+        } else if (teacher_id == -1) {
+            students = studentService.getStudentsWithoutTeacher();
+        } else if (teacher_id > 0) {
+            students = studentService.getAllByTeacher(teacher_id);
         }
-        model.addAttribute("students", students)
-                .addAttribute("teachers", teachers);
+        model.addAttribute("students", students).addAttribute("teachers", teachers)
+        .addAttribute("groups",groups);
         return "students/all";
     }
 
     @RequestMapping(value = "/studentAdd")
     public String addStudent(Model model) throws SQLException {
         PersonDTO person = new PersonDTO();
+
         List<Teacher> teachers = teacherService.getAll();
+
+        List<Group> groups = groupService.getAll();
+
         model.addAttribute("student", person)
                 .addAttribute("teachers", teachers);
+        model.addAttribute("groups", groups);
         return "students/add";
     }
 
     @RequestMapping(value = "/studentSave", method = RequestMethod.POST)
     public String saveStudent(@ModelAttribute("student") @Validated PersonDTO personDTO,
-                                    BindingResult bindingResult, Model model,
-                                    @RequestParam(required = false) Integer teacher_id) throws SQLException {
+                              BindingResult bindingResult, Model model,
+                              @RequestParam(required = false) Integer teacher_id,
+                              @RequestParam(required = false) Integer group_id) throws SQLException, ParseException {
         validator.validate(personDTO, bindingResult);
+
         User u = userService.findByUserLogin(personDTO.getLogin());
+
         if (u != null)
             bindingResult.rejectValue("login", "1", "Login already exist.");
+
         if (!bindingResult.hasErrors()) {
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-                UserRole roleId = UserRole.ROLE_STUDENT;
-                Role role = roleService.getById(roleId.getRoleId());
-                Person newPerson = new Person();
-                User newUser = new User();
-                Student newStudent = new Student();
-                Teacher teacher;
 
-                newPerson.setFirstName(personDTO.getFirstName());
-                newPerson.setLastName(personDTO.getLastName());
-                newPerson.setMiddleName(personDTO.getMiddleName());
-                newPerson.setComments(personDTO.getComments());
+            Student student = new Student();
+            student = personDTOService.updateRegisteredUser(student, personDTO);
 
-                newUser.setRole(role);
-                newUser.setPassword(passwordEncoder.encode(personDTO.getPassword()));
-                newUser.setLogin(personDTO.getLogin());
-                newStudent.setPerson(newPerson);
-                newStudent.setUser(newUser);
+            Teacher teacher;
+            Group group;
 
-                if (teacher_id != null && teacher_id > 0) {
-                    teacher = teacherService.getById(teacher_id);
-                    newStudent.setTeacher(teacher);
-                }
+            if (teacher_id != null && teacher_id > 0) {
+                teacher = teacherService.getById(teacher_id);
+                student.setTeacher(teacher);
+            }
+            if (group_id != null && group_id > 0) {
+                group = groupService.getById(group_id);
+                student.setGroup(group);
+            }
 
-                studentService.insert(newStudent);
+            studentService.insert(student);
 
             return "redirect:/students";
         } else {
@@ -108,13 +107,14 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/studentSortByDate", method = RequestMethod.POST)
-    public String filterStudents(Model model) throws SQLException{
-        List<Person> persons = new ArrayList<Person>();
+    public String filterStudents(Model model) throws SQLException {
+
         List<Student> students = studentService.getSortedByRegistrationDate();
-            for (Student item : students) {
-                persons.add(item.getPerson());
-            }
-            model.addAttribute("students", students);
+        List<Teacher> teachers = teacherService.getAll();
+        List<Group> groups = groupService.getAll();
+
+        model.addAttribute("students", students).addAttribute("teachers",teachers)
+                .addAttribute("groups",groups);
         return "students/all";
     }
 
@@ -123,5 +123,35 @@ public class StudentController {
         Student student = studentService.getById(id);
         studentService.delete(student);
         return "students/all";
+    }
+
+    @RequestMapping(value = "/studentTrash")
+    public String studentTrash(@RequestParam Integer id) throws SQLException {
+        Student student = studentService.getById(id);
+        studentService.trash(student);
+        return "students/all";
+    }
+
+    @RequestMapping(value = "/studentsSortedByGroup", method = RequestMethod.GET)
+    public String showSortedStudent(Model model, @RequestParam(required = false) Integer group_id)
+            throws SQLException {
+
+        List<Student> students = Collections.EMPTY_LIST;
+        List<Group> groups = groupService.getAll();
+        List<Teacher> teachers = teacherService.getAll();
+
+        if (group_id == null) {
+            students = studentService.getAll();
+        } else if (group_id == -1) {
+            students = studentService.getStudentWithoutGroup();
+        } else if (group_id > 0) {
+            students = studentService.getAllByGroup(group_id);
+        }
+
+        model.addAttribute("groups", groups).addAttribute("students", students)
+        .addAttribute("teachers", teachers);
+
+        return "students/all";
+
     }
 }

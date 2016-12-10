@@ -1,13 +1,10 @@
 package evg.testt.service;
 
-import evg.testt.model.BaseModel;
 import evg.testt.model.Human;
-import evg.testt.model.RegistratedUser;
 
 import java.sql.SQLException;
 
-public interface HumanService<T extends BaseModel> extends Service<Human> {
+public interface HumanService<T extends Human> extends Service <T> {
 
-//    public void delete(Human human) throws SQLException;
-
+    void trash (T o) throws SQLException;
 }

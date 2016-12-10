@@ -4,11 +4,11 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity(name = "admins")
-public @Data class Admin extends BaseModel implements BelongsToPerson {
+public @Data class Admin extends RegisteredUser implements BelongsToPerson {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Person person;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private User user;
+    private User user = new User(new Role("ROLE_ADMIN",1));
 }

@@ -357,6 +357,11 @@
             <artifactId>spring-context-support</artifactId>
             <version>4.0.0.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+        </dependency>
     </dependencies>
 
     <build>

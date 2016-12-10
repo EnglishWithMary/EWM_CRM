@@ -13,6 +13,7 @@
         <li><a href="/listPerson">List view</a></li>
         <li><a href="/pipeline">Pipeline</a></li>
         <li><a href="/persons">Persons</a></li>
+        <li><a href="/visits">Visits</a></li>
 
         <security:authorize access="hasRole('ROLE_ADMIN')">
             <li><a href="/admin">Admin</a></li>

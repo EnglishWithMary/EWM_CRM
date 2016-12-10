@@ -1,7 +1,10 @@
 package evg.testt.controller;
 
+import evg.testt.exception.PersonRoleNotFoundException;
+import evg.testt.model.Person;
 import evg.testt.model.User;
 import evg.testt.oval.SpringOvalValidator;
+import evg.testt.service.PersonService;
 import evg.testt.service.RoleService;
 import evg.testt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
@@ -30,6 +34,8 @@ public class UsersController {
     @Autowired
     UserService userService;
     @Autowired
+    PersonService personService;
+    @Autowired
     RoleService roleService;
     @Autowired
     SpringOvalValidator validator;
@@ -40,7 +46,14 @@ public class UsersController {
     }
 
     @RequestMapping(value = {"","/","/home"})
-    public String homePage() {
+    public String homePage(Model model, Principal principal) throws SQLException, PersonRoleNotFoundException {
+
+        if (principal != null) {
+
+            Person person = personService.getPersonByUserLogin(principal.getName());
+
+            model.addAttribute("person", person);
+        }
         return "home";
     }
 
