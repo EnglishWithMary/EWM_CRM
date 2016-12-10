@@ -111,8 +111,6 @@
             </div>
             <div class="panel-body">
                 <form method="post" action="/leadAdd">
-                    <%--input type="hidden" value="${pipeType.id}" name="pipeTypeId">
-                    <input type="hidden" value="${card.id}" name="cardId"--%>
                     <button type="submit" class="btn btn-success">Add Lead</button>
                 </form>
             </div>

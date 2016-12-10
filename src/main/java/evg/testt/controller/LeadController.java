@@ -78,15 +78,13 @@ public class LeadController {
             lead.setCardId(cardId);
         }
         model.addAttribute("lead", lead);
-        model.addAttribute("card_id", cardId);
         return "leads/add";
     }
 
     @RequestMapping(value = "/leadSave", method = RequestMethod.POST)
-    public String saveLeadOnPipe(HttpServletRequest request,
-            Model model, @ModelAttribute("lead") @Validated PersonDTO personDTO,
+    public String saveLeadOnPipe(HttpServletRequest request, Model model,
+                                 @ModelAttribute("lead") @Validated PersonDTO personDTO,
                                  BindingResult bindingResult,
-                                 @RequestParam(required = true) Integer card_id,
                                  @RequestParam(required = false) Integer personId
     ) throws SQLException, ParseException {
         model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
@@ -94,7 +92,6 @@ public class LeadController {
         validator.validate(personDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("card_id", personDTO.getCardId());
             model.addAttribute("personId",personId);
             return "leads/add";
         }
@@ -113,10 +110,8 @@ public class LeadController {
             leadService.update(lead);
             Card cardOld = cardService.getCardByPerson(person);
             if (!personDTO.getCardId().equals(cardOld.getId())) {
-                if (card_id!=null){
-                    cardOld.getPersons().remove(person);
-                    cardService.update(cardOld);
-                }
+                cardOld.getPersons().remove(person);
+                cardService.update(cardOld);
                 Card cardNew = cardService.getById(personDTO.getCardId());
                 cardNew.getPersons().add(person);
                 cardService.update(cardNew);

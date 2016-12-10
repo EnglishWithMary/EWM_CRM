@@ -37,7 +37,7 @@
                     <td>
                         <sf:select path="cardId" class="form-control">
                             <c:forEach items="${cards}" var="card">
-                                <option value="${card.id}" <c:if test="${card.id == card_id}">selected</c:if>>
+                                <option value="${card.id}" <c:if test="${card.id == lead.cardId}">selected</c:if>>
                                     ${card.cardName} (id=${card.id})
                                 </option>
                             </c:forEach>
@@ -46,15 +46,10 @@
                     </td>
                 </tr>
             </c:if>
-            <%--c:if test="${lead.cardId==null && card_id!=null}">
-                <sf:hidden path="cardId" value="${card_id}"/>
-            </c:if--%>
 
             <tr>
                 <td colspan="2">
                     <input type="hidden" name="personId" value="${personId}" />
-                    <input type="hidden" name="card_id" value="${card_id}" />
-                    <%--input type="hidden" name="pipeTypeId" value="${pipeType.id}"/--%>
                     <input type="submit" value="Add lead"/>
                 </td>
             </tr>
