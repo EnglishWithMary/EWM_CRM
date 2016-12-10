@@ -2,21 +2,21 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <h1>Enjoy your English with Mary! :)</h1>
  <p>English with Mary is your new way to improve your skills!!!
-     <style>
+     <%--<style>--%>
 
 
 
-     </style>
+     <%--</style>--%>
 
-     <link rel="stylesheet" type="text/css" href="/resources/assets/css/bootstrap/css/bootstrap.css">
-
-
+     <%--<link rel="stylesheet" type="text/css" href="/resources/assets/css/bootstrap/css/bootstrap.css">--%>
 
 
-     <link rel="shortcut icon" href="../favicon.ico">
+
+
+     <%--<link rel="shortcut icon" href="../favicon.ico">--%>
      <%--<link rel="stylesheet" type="text/css" href="css/default.css" />--%>
      <%--<link rel="stylesheet" type="text/css" href="css/component.css" />--%>
-     <script src="js/modernizr.custom.js"></script>
+     <%--<script src="js/modernizr.custom.js"></script>--%>
 
 
 
