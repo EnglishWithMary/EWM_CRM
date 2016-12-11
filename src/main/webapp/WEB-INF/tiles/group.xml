@@ -5,7 +5,7 @@
 
 <tiles-definitions>
     <definition name="groups/add" extends="home">
-        <put-attribute name="title" value="Group page" />
+        <put-attribute name="title" value="Add Group" />
         <put-attribute name="body" value="/WEB-INF/pages/groups/add.jsp" />
     </definition>
 

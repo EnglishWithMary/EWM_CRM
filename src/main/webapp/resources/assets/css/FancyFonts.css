@@ -4,7 +4,12 @@
 
 /* Reset */
 
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym,
+address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var,
+b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption,
+/*tbody, tfoot, thead, tr, th, td, */
+article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav,
+output, ruby, section, summary, time, mark, audio, video {
     font-size: 100%;
     font: inherit;
 }
@@ -12,7 +17,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 /* Type is needed ot inherit Awsome Fonts!!!*/
 
 body, input, select, textarea {
-    color: #767d85;
+    /*color: #767d85;*/
     font-family: "Open Sans", Arial, Helvetica, sans-serif;
     font-size: 13pt;
     font-weight: 300;
@@ -61,6 +66,7 @@ h6 {
 
 sub {
     font-size: 0.8em;
+
 }
 
 blockquote {
@@ -101,8 +107,8 @@ header h6 + p {
 /* Form */
 
 label {
-    font-size: 0.9em;
-    font-weight: 700;
+    font-size: 0.8em;
+    font-weight: 600;
 }
 
 input[type="checkbox"] + label:before,
@@ -116,14 +122,10 @@ input[type="radio"] + label:before {
 }
 
 /* Button */
-    input[type="submit"].alt,
-    input[type="reset"].alt,
-    input[type="button"].alt,
     input[type="submit"].btn,
     input[type="reset"].btn,
     input[type="button"].btn,
-    button.alt, button.btn,
-    .button.alt, .button.btn {
+    button.btn, .button.btn {
         -moz-appearance: none;
         -webkit-appearance: none;
         -ms-appearance: none;
@@ -132,46 +134,12 @@ input[type="radio"] + label:before {
         display: inline-block;
         font-family: "Open Sans", Arial, Helvetica, sans-serif;
                 /*"Montserrat", sans-serif;*/
-        background-color: transparent;
+        /*background-color: transparent;*/
         /*box-shadow: inset 0 0 0 1px #dee1e3;*/
-        color: #727a82;
+        /*color: #727a82 !important;*/
     }
-
-    input[type="submit"].alt:hover,
-    input[type="reset"].alt:hover,
-    input[type="button"].alt:hover,
-    input[type="submit"].btn:hover,
-    input[type="reset"].btn:hover,
-    input[type="button"].btn:hover,
-    button.alt:hover, button.btn:hover,
-    .button.alt:hover, .button.btn:hover {
-        background-color: rgba(144, 144, 144, 0.075);
-    }
-
-    input[type="submit"].alt:active,
-    input[type="reset"].alt:active,
-    input[type="button"].alt:active,
-    button.alt:active,
-    .button.alt:active,
-    input[type="submit"].btn:active,
-    input[type="reset"].btn:active,
-    input[type="button"].btn:active,
-    button.btn:active,
-    .button.btn:active {
-        background-color: rgba(144, 144, 144, 0.2);
-    }
-
-    input[type="submit"].alt.icon:before,
-    input[type="reset"].alt.icon:before,
-    input[type="button"].alt.icon:before,
-    button.alt.icon:before,
-    .button.alt.icon:before,
-    input[type="submit"].btn.icon:before,
-    input[type="reset"].btn.icon:before,
-    input[type="button"].btn.icon:before,
-    button.btn.icon:before,
-    .button.btn.icon:before{
-        color: #bbb;
+    .btn-default{
+        color: #727a82 !important;
     }
 
 /* Header */
