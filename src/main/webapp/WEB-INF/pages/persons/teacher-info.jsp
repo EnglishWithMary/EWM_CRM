@@ -41,29 +41,38 @@
                                     <strong>Information About Teacher</strong>
                                 </div>
                                 <div class="panel-body">
-                                    <p><strong>First Name: </strong>${teacher.person.firstName}</p>
-                                    <p><strong>Last Name: </strong>${teacher.person.lastName}</p>
-                                    <p><strong>Middle Name: </strong>${teacher.person.middleName}</p>
-                                    <p><strong>Phone: </strong>null</p>
-                                    <p><strong>email: </strong>${teacher.person.email.email}</p>
-                                    <p><strong>web : </strong><a href="">null</a></p>
-                                    <p><strong>Date of Birth: </strong>null</p>
-                                    <p><strong>Comment: </strong>${teacher.person.comments}</p>
+                                    <p><strong>First Name: </strong><input type="text" value="${teacher.person.firstName}"></p>
+                                    <p><strong>Last Name: </strong><input type="text" value="${teacher.person.lastName}"></p>
+                                    <p><strong>Middle Name: </strong><input type="text" value="${teacher.person.middleName}"></p>
+                                    <p><strong>Phone: </strong><input type="text"></p>
+                                    <p><strong>email: </strong><input type="text" value="${teacher.person.email.email}"></p>
+                                    <p><strong>web : </strong><input type="text"></p>
+                                    <p><strong>Date of Birth: </strong><input type="date"></p>
+                                    <p><strong>Comment: </strong><input type="text" value="${teacher.person.comments}"></p>
 
                                     <p><strong>Groups: </strong>
-                                        <c:forEach items="${groups}" var="group">
-                                            <a href="/group/info?group_id=${group.id}">${group.name}</a>
-                                        </c:forEach>
+                                        <select name="gropus" onchange="location = this.value;">
+                                            <option value="Groups" checked>Groups</option>
+                                            <c:forEach items="${groups}" var="group">
+                                                <option value="/group/info?group_id=${group.id}">${group.name}</option>
+                                            </c:forEach>
+                                        </select>
                                     </p>
 
-                                    <p><strong>Languages: </strong>English, Italian(null, need add filed)</p>
-                                    <p><strong>Referral: </strong>null</p>
-                                    <p><strong>Color: </strong>Kinda racism(ahhhahah)</p>
+                                    <p><strong>Languages: </strong>
+                                        <select name="languages">
+                                            <option>English</option>
+                                            <option>Spanish</option>
+                                            <option>French</option>
+                                        </select>
+                                    </p>
+                                    <p><strong>Referral: </strong><input type="text"></p>
+                                    <p><strong>Color: </strong><input type="color"></p>
 
                                     <p><strong>State: </strong>${teacher.person.state.state}</p>
                                     <p><strong>Last modified: </strong>${teacher.person.modifyDate}</p>
                                     <p><strong>Registration date: </strong>${teacher.person.registrationDate}</p>
-                                    <p><strong>Organization: </strong>null</p>
+                                    <p><strong>Organization: </strong><input type="text"></p>
                                 </div>
                             </div>
                         </div>
