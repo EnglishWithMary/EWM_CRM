@@ -272,21 +272,120 @@
 /*END OF PIPELINE STYLES*/
 
 
-#container ul { list-style: none; }
-#container .buttons { margin-bottom: 20px; color: #47a3da; }
+/*Style of list persons*/
 
-#container .list li {
-    width: 100%;
-    border-bottom: 1px dotted #CCC;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
+#containerListPersons ul {
+    /*list-style: none;*/
+    /*border-left: 30px;*/
+    /*border-right: 30px;*/
+    /*width: auto;*/
+    /*height: auto; !* Размеры *!*/
+    /*background: #ff60de; !* Цвет фона *!*/
+    /*outline: 2px solid #000; !* Чёрная рамка *!*/
+    /*border: 3px solid #67ff1c; !* Белая рамка *!*/
+    /*border-radius: 10px; !* Радиус скругления *!*/
+
+}
+
+#containerListPersons .buttons { margin-bottom: 20px; color: #47a3da; }
+
+/*design LIST*/
+#containerListPersons .list li {
+
+
+    list-style: none;
+    border-left: 30px;
+    border-right: 30px;
+    width: auto;
+    height: auto; /* Размеры */
+    background: #b3ffc7; /* Цвет фона */
+    outline: 2px solid #000; /* Чёрная рамка */
+    /*border: 3px solid #67ff1c; !* Белая рамка *!*/
+    border-radius: 10px; /* Радиус скругления */
+
+
+
+    /*width: 100%;*/
+    /*border-bottom: 1px dotted #CCC;*/
+    /*margin-bottom: 10px;*/
+    /*padding-bottom: 10px;*/
 }
 
 
-#container .grid li {
+.list li .row{
+    background-color: #3c763d;
+}
+
+.list li .lastName {
+
+
+
+    white-space: nowrap;
+    display: block;
+    vertical-align: middle;
+    /*text-align: start;*/
+    width: 100px;
+    height: auto;
+    border: 1px solid black;
+    /*margin-top: -15px;*/
+    /*margin-left: 200px;*/
+    /*width: 100px;	height: 10px; !* Размеры *!*/
+    background: #fc0; /* Цвет фона */
+    /*outline: 2px solid #000; !* Чёрная рамка *!*/
+    /*border: 3px solid #fff; !* Белая рамка *!*/
+    /*border-radius: 10px; !* Радиус скругления *!*/
+}
+.my-row:before,
+.my-row:after,
+.my-row{
+    margin-right: -15px;
+    margin-left: -15px;
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+
+
+.list li .firstName{
+    white-space: nowrap;
+    display: block;
+    vertical-align: middle;
+    /*text-align: start;*/
+    width: 100px;
+    height: auto;
+    border: 1px solid black;
+
+    /*margin-top: 10px;*/
+    /*margin-left: 100px;*/
+    /*width: 100px;	height: 0px; !* Размеры *!*/
+    /*background: #fc0; !* Цвет фона *!*/
+    /*outline: 2px solid #000; !* Чёрная рамка *!*/
+    /*border: 3px solid #fff; !* Белая рамка *!*/
+    /*border-radius: 10px; !* Радиус скругления *!*/
+}
+
+
+/*design GRID*/
+#containerListPersons .grid li {
     float: left; width: 20%;
     height: 50px;
     border-right: 1px dotted #CCC;
     border-bottom: 1px dotted #CCC;
     padding: 20px;
+
 }
+.grid li .lastName{
+    margin-top: 100px;
+    width: 100px;	height: 100px; /* Размеры */
+    background: #ff0828; /* Цвет фона */
+    outline: 2px solid #000; /* Чёрная рамка */
+    border: 3px solid #fff; /* Белая рамка */
+    border-radius: 10px; /* Радиус скругления */
+}
+
+
+
+
+/*End of list persons style*/

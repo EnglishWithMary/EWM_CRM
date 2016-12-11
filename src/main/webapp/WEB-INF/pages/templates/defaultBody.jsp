@@ -7,15 +7,19 @@
 
 
 
-                <div id="container">
+                <div id="containerListPersons">
                     <div class="buttons">
                         <button class="grid">Grid View</button>
                         <button class="list">List View</button>
                     </div>
-
                     <ul class="list">
                         <c:forEach var="person" items="${persons}">
-                        <li> <div class="fname"> ${person.firstName}  ${person.lastName} <c:choose>
+                        <li>
+
+                               <span class="firstName">${person.firstName} </span>
+                               <span class="lastName">${person.lastName} </span>
+
+                            <c:choose>
                             <c:when test="${person.avatarURL == null}">
                                 <img class="img-size-vsm" alt="Responsive image"
                                      src="${pageContext.request.contextPath}/resources/img/defaultAvatar.jpg">
@@ -24,20 +28,16 @@
                                 <img class="img-size-vsm" alt="Responsive image"
                                      src="${person.avatarURL}">
                             </c:otherwise>
-                        </c:choose> </li>
-                        <%--<li></li>--%>
-                        <%--<li>Item 3</li>--%>
-                        <%--<li>Item 4</li>--%>
-                        <%--<li>Item 5</li>--%>
-                        <%--<li>Item 6</li>--%>
-                        <%--<li>Item 7</li>--%>
+                        </c:choose>
+                        </li>
+
                         </c:forEach>
 
                     </ul>
                 </div>
 
-
-
+<%--<span class="firstName">--%>
+ <%--<span class="lastName">--%>
 
 
                 <%----%>
