@@ -43,6 +43,8 @@
                             <li><a href="/payments">Payments</a></li>
                             <li><a href="/groups">Groups</a></li>
                             <li><a href="/events">Events</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/test/student-info">test/student/info</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">

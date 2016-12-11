@@ -106,6 +106,12 @@ public class PersonController {
         return "persons/all";
     }
 
+    /*
+        Feature is added with one reason - to test if Student info is acceptable to work with
+     */
+    @RequestMapping(value = "/test/student-info")
+    public String testStudentInfo(){
+        return "persons/students/test/info";
+    }
+
 }
-
-
