@@ -44,11 +44,8 @@
                             <li><a href="/groups">Groups</a></li>
                             <li><a href="/events">Events</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="/test/student-info">test/student/info</a></li>
-                            <li><a href="/test/teacher-info">test/teacher/info</a></li>
                             <li><a href="/test/manager-info">test/manager/info</a></li>
                             <li><a href="/test/lead-info">test/lead/info</a></li>
-                            <li><a href="/test/group-info">test/group/info</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">

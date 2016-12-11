@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="container-fluid">
     <div class="row">
@@ -16,7 +17,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h4>Full Name</h4>
-                            <p>Strange J..</p>
+                            <p>${teacher.person.lastName}
+                                ${fn:substring(teacher.person.firstName,0,1)}.
+                                ${fn:substring(teacher.person.middleName,0,1)}.</p>
                         </div>
                     </div>
                     <div class="row">
@@ -46,7 +49,13 @@
                                     <p><strong>web : </strong><a href="">null</a></p>
                                     <p><strong>Date of Birth: </strong>null</p>
                                     <p><strong>Comment: </strong>${teacher.person.comments}</p>
-                                    <p><strong>Groups: </strong><a href="">null</a> </p>
+
+                                    <p><strong>Groups: </strong>
+                                        <c:forEach items="${groups}" var="group">
+                                            <a href="/group/info?group_id=${group.id}">${group.name}</a>
+                                        </c:forEach>
+                                    </p>
+
                                     <p><strong>Languages: </strong>English, Italian(null, need add filed)</p>
                                     <p><strong>Referral: </strong>null</p>
                                     <p><strong>Color: </strong>Kinda racism(ahhhahah)</p>

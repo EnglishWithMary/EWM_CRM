@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <div class="row">
     <div class="col-sm-12">
         <h1 class="page-header">Groups</h1>
@@ -54,9 +55,9 @@
                             <tbody>
                             <c:forEach var="group" items="${groups}">
                                 <tr>
-                                    <td><a href="" alt="Group Profile">${group.name}</a></td>
+                                    <td><a href="/group/info?group_id=${group.id}" alt="Group Profile">${group.name}</a></td>
                                     <td>
-                                        <a href="" alt="Teacher Profile">
+                                        <a href="/teacher/info?teacher_id=${group.teacher.id}" alt="Teacher Profile">
                                                 ${group.teacher.person.firstName}${" "}
                                                 ${group.teacher.person.middleName}${" "}
                                                 ${group.teacher.person.lastName}${" "}

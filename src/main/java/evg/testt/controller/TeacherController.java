@@ -37,6 +37,8 @@ public class TeacherController {
     PersonService personService;
     @Autowired
     PersonDTOService personDTOService;
+    @Autowired
+    private GroupService groupService;
 
     @RequestMapping(value = "/teachers", method = RequestMethod.GET)
     public String showTeachers(Model model) throws SQLException{
@@ -99,8 +101,10 @@ public class TeacherController {
     public String studentInfo(Model model, @RequestParam int teacher_id) throws SQLException {
 
         Teacher teacher = teacherService.getById(teacher_id);
+        List<Group> groups = groupService.getByTeacher(teacher);
 
         model.addAttribute("teacher", teacher);
+        model.addAttribute("groups", groups);
 
         return "persons/teacher-info";
     }

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <div class="row">
     <div class="col-sm-12">
@@ -35,7 +36,7 @@
                     <tbody>
                     <c:forEach var="teacher" items="${teachers}">
                         <tr>
-                            <td>${teacher.person.firstName}</td>
+                            <td><a href="/teacher/info?teacher_id=${teacher.id}">${teacher.person.firstName}</a></td>
                             <td>${teacher.person.lastName}</td>
                             <td>${teacher.person.middleName}</td>
                             <td>${teacher.person.registrationDate}</td>

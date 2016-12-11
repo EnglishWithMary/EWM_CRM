@@ -9,16 +9,6 @@
         <put-attribute name="body" value="/WEB-INF/pages/persons/all.jsp"/>
     </definition>
 
-    <definition name="persons/students/test/info" extends="default">
-        <put-attribute name="title" value="Student Info" />
-        <put-attribute name="body" value="/WEB-INF/pages/persons/student-info.jsp"/>
-    </definition>
-
-    <definition name="persons/teachers/test/info" extends="default">
-        <put-attribute name="title" value="Teacher Info" />
-        <put-attribute name="body" value="/WEB-INF/pages/persons/teacher-info.jsp"/>
-    </definition>
-
     <definition name="persons/leads/test/info" extends="default">
         <put-attribute name="title" value="Lead Info" />
         <put-attribute name="body" value="/WEB-INF/pages/persons/lead-info.jsp"/>
@@ -29,8 +19,4 @@
         <put-attribute name="body" value="/WEB-INF/pages/persons/manager-info.jsp"/>
     </definition>
 
-    <definition name="persons/groups/test/info" extends="default">
-        <put-attribute name="title" value="Group Info" />
-        <put-attribute name="body" value="/WEB-INF/pages/persons/group-info.jsp"/>
-    </definition>
 </tiles-definitions>
