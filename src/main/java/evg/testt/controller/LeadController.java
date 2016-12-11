@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -35,10 +36,9 @@ public class LeadController {
     private PersonDTOService personDTOService;
 
     @RequestMapping(value = "/leads", method = RequestMethod.GET)
-    public String showLeads(Model model, Principal principal) throws SQLException {
+    public String showLeads(Model model) throws SQLException {
         List<Lead> leads = leadService.getAll();
         model.addAttribute("leads", leads);
-//        insertAttributes(model, principal, Pipe.LEAD_PIPE);
         return "leads/all";
     }
 
@@ -51,76 +51,128 @@ public class LeadController {
 
     @RequestMapping(value = "/leadAdd", method = RequestMethod.POST)
     public String addLeadOnPipe(Model model,
-                                @RequestParam(required = true) Integer cardId,
-                                @RequestParam(required = true) Integer pipeTypeId
+                                @RequestParam(required = false) Integer cardId,
+                                @RequestParam(required = false) Integer personId,
+                                HttpServletRequest req
     ) throws SQLException {
 
         PersonDTO lead = new PersonDTO();
-        model.addAttribute("cards", cardService.getCards(Pipe.valueOf(pipeTypeId)));
-        model.addAttribute("pt", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
+        req.getSession().setAttribute("callback", req.getHeader("Referer"));
+        model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
+        model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.LEAD_PIPE));
+        model.addAttribute("personId", personId);
+        if(personId != null){
+            Person person = personService.getById(personId);
+            lead.setFirstName(person.getFirstName());
+            lead.setMiddleName(person.getMiddleName());
+            lead.setLastName(person.getLastName());
+            lead.setAvatarURL(person.getAvatarURL());
+            lead.setEmail(person.getEmail().getEmail());
+            Card card=cardService.getCardByPerson(person);
+            cardId=card.getId();
+            lead.setCardId(cardId);
+        }else {
+            if (cardId==null)cardId=1;
+            lead.setCardId(cardId);
+        }
         model.addAttribute("lead", lead);
-        model.addAttribute("pt_id", pipeTypeId);
-        model.addAttribute("card_id", cardId);
+
         return "leads/add";
     }
 
     @RequestMapping(value = "/leadSave", method = RequestMethod.POST)
     public String saveLeadOnPipe(Model model, @ModelAttribute("lead") @Validated PersonDTO personDTO,
                                  BindingResult bindingResult,
-                                 @RequestParam(required = true) Integer cardId,
-                                 @RequestParam(required = true) Integer pipeTypeId)
+                                 HttpServletRequest req,
+                                 @RequestParam(required = false) Integer personId)
             throws SQLException, ParseException {
 
-        model.addAttribute("cards", cardService.getCards(Pipe.valueOf(pipeTypeId)));
-        model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.valueOf(pipeTypeId)));
+        model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
+        model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.LEAD_PIPE));
 
         validator.validate(personDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("card_id", cardId);
-            model.addAttribute("pt_id", pipeTypeId);
+            model.addAttribute("personId",personId);
             return "leads/add";
         }
 
-        Lead lead = new Lead();
-        lead = personDTOService.updateLead(lead, personDTO);
-        leadService.insert(lead);
+        if (personId==null){
+            Lead lead = new Lead();
+            lead = personDTOService.updateLead(lead, personDTO);
+            leadService.insert(lead);
 
-        Card card = cardService.getById(personDTO.getCardId());
-        card.getPersons().add(personService.getById(lead.getPerson().getId()));
-        cardService.update(card);
-        return "redirect:/takeLeadtpipe";
+            Card card = cardService.getById(personDTO.getCardId());
+            card.getPersons().add(personService.getById(lead.getPerson().getId()));
+            cardService.update(card);
+        }else {
+            Person person = personService.getById(personId);
+            Lead lead = leadService.getByPerson(person);
+            lead = personDTOService.updateLead(lead, personDTO);
+            leadService.update(lead);
+            Card cardOld = cardService.getCardByPerson(person);
+            if (!personDTO.getCardId().equals(cardOld.getId())){
+                cardOld.getPersons().remove(person);
+                cardService.update(cardOld);
+                Card cardNew = cardService.getById(personDTO.getCardId());
+                cardNew.getPersons().add(person);
+                cardService.update(cardNew);
+            }
+        }
+        return "redirect:"+req.getSession().getAttribute("callback").toString();
     }
 
     @RequestMapping(value = "/deleteLead", method = RequestMethod.POST)
     public String deleteLead(Model model,
-                             @RequestParam(required = false) Integer cardId,
-                             @RequestParam(required = false) Integer pipeTypeId,
-                             @RequestParam(required = true) Integer id)
-            throws SQLException {
+                             @RequestParam(required = true)Integer personId,
+                             HttpServletRequest req) throws SQLException{
+        model.addAttribute("card", cardService.getCards(Pipe.LEAD_PIPE));
+        model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.LEAD_PIPE));
 
-        return "redirect:/takeLeadtpipe";
+        Person person = personService.getById(personId);
+        Lead lead = leadService.getByPerson(person);
+        Card card = cardService.getCardByPerson(person);
+        card.getPersons().remove(person);
+        cardService.update(card);
+        leadService.delete(lead);
+
+        return "redirect:"+req.getHeader("Referer");
     }
 
     @RequestMapping(value = "/deleteLeadFromPipe", method = RequestMethod.POST)
-    public String deleteLeadFromPipe(
-                             @RequestParam(required = false) Integer cardId,
-                             @RequestParam(required = false) Integer pipeTypeId,
-                             @RequestParam(required = true) Integer id)
+    public String deleteLeadFromPipe(Model model,
+                             @RequestParam(required = true) Integer personId,
+                                     HttpServletRequest req)
             throws SQLException {
 
-        if (cardId != null) {
-            Card card = cardService.getById(cardId);
-            card.getPersons().remove(personService.getById(leadService.getById(id).getId()));
-            cardService.update(card);
-        }
-        return "redirect:/takeLeadtpipe";
+        model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
+        model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.LEAD_PIPE));
+
+        Person person = personService.getById(personId);
+        Card cards = cardService.getCardByPerson(person);
+        cards.getPersons().remove(person);
+        cardService.update(cards);
+        Card card1 = cardService.getById(1);
+        card1.getPersons().add(person);
+        cardService.update(card1);
+
+
+        return "redirect:"+req.getHeader("Referer");
     }
 
     @RequestMapping(value = "/leadTrash", method = RequestMethod.POST)
-    public String leadTrash(Model model, @RequestParam(required = true) Integer id) throws SQLException {
-        Lead lead = leadService.getById(id);
-        leadService.trash(lead);
-        return "leads/all";
+    public String leadTrash(Model model, @RequestParam(required = true) Integer personId,
+                            HttpServletRequest req) throws SQLException {
+        model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
+        model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.LEAD_PIPE));
+
+        Person persons = personService.getById(personId);
+        Lead leads = leadService.getByPerson(persons);
+        Card cards = cardService.getCardByPerson(persons);
+        cards.getPersons().remove(persons);
+        cardService.update(cards);
+        leadService.trash(leads);
+
+        return "redirect:"+req.getHeader("Referer");
     }
 }

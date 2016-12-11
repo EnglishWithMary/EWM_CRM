@@ -41,4 +41,10 @@ public class CardServiceImpl extends BaseService<Card, CardRepository> implement
     public void delete(Card card) throws SQLException{
         dao.delete(dao.findOne(card.getId()));
     }
+
+    @Override
+    @Transactional
+    public Card getCardByPerson(Person person) throws SQLException {
+        return dao.findCardByPerson(person);
+    }
 }
