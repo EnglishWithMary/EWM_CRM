@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-<h1>Enjoy your English with Mary! :)</h1>
- <p>English with Mary is your new way to improve your skills!!!
+
 
 
 

@@ -271,7 +271,7 @@
 }
 /*END OF PIPELINE STYLES*/
 
-
+/*Styles of mosaic view*/
 /* Main container */
 .cbp-vm-switcher {
     padding: 20px;
@@ -372,17 +372,17 @@
     margin-right: 5px;
 }
 
-/* Common icon styles */
-.cbp-vm-icon:before {
-    font-family: 'fontawesome';
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-}
+/*!* Common icon styles *!*/
+/*.cbp-vm-icon:before {*/
+    /*font-family: 'fontawesome';*/
+    /*speak: none;*/
+    /*font-style: normal;*/
+    /*font-weight: normal;*/
+    /*font-variant: normal;*/
+    /*text-transform: none;*/
+    /*line-height: 1;*/
+    /*-webkit-font-smoothing: antialiased;*/
+/*}*/
 
 .cbp-vm-grid:before {
     content: "\f00a";
@@ -509,3 +509,4 @@
         width: 100%;
     }
 }
+/*End of mosaic styles*/
