@@ -278,6 +278,18 @@
     border: 3px solid #47a3da;
 }
 
+
+.my-span{
+    font-size: 32px;
+    /*margin-top: -13px;*/
+   margin-right: 400px;
+    margin-top: -3px;
+    margin-bottom: -50px;
+    /*border-top: 3px;*/
+}
+
+
+
 /* options/select wrapper with switch anchors */
 .cbp-vm-options {
     text-align: right;
@@ -372,17 +384,17 @@
     margin-right: 5px;
 }
 
-/*!* Common icon styles *!*/
-/*.cbp-vm-icon:before {*/
-    /*font-family: 'fontawesome';*/
-    /*speak: none;*/
-    /*font-style: normal;*/
-    /*font-weight: normal;*/
-    /*font-variant: normal;*/
-    /*text-transform: none;*/
-    /*line-height: 1;*/
-    /*-webkit-font-smoothing: antialiased;*/
-/*}*/
+/* Common icon styles */
+.cbp-vm-icon:before {
+    font-family: 'fontawesome';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+}
 
 .cbp-vm-grid:before {
     content: "\f00a";

@@ -7,15 +7,19 @@
 
 
 <div class="container">
-    <header class="clearfix">
-        <span>Blueprint <span class="bp-icon bp-icon-about" data-content="The Blueprints are a collection of basic and minimal website concepts, components, plugins and layouts with minimal style for easy adaption and usage, or simply for inspiration."></span></span>
-        <h1>View Mode Switch</h1>
-    </header>
+    <%--<header class="clearfix">--%>
+        <%--<span>Blueprint <span class="bp-icon bp-icon-about" data-content="The on."></span></span>--%>
+        <%--<h1>View Mode Switch</h1>--%>
+    <%--</header>--%>
     <div class="main">
+
         <div id="cbp-vm" class="cbp-vm-switcher cbp-vm-view-grid">
+
             <div class="cbp-vm-options">
-                <a href="#" class="cbp-vm-icon cbp-vm-grid cbp-vm-selected" data-view="cbp-vm-view-grid">Grid View</a>
+                <div class="my-span">List of all persons</div>
                 <a href="#" class="cbp-vm-icon cbp-vm-list" data-view="cbp-vm-view-list">List View</a>
+                <a href="#" class="cbp-vm-icon cbp-vm-grid cbp-vm-selected" data-view="cbp-vm-view-grid">Grid View</a>
+
             </div>
             <ul>
                 <c:forEach var="person" items="${persons}">
