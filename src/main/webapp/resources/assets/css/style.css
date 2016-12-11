@@ -282,7 +282,7 @@
 .my-span{
     font-size: 32px;
     /*margin-top: -13px;*/
-   margin-right: 400px;
+   margin-right: 420px;
     margin-top: -3px;
     margin-bottom: -50px;
     /*border-top: 3px;*/
@@ -362,7 +362,7 @@
 }
 
 .cbp-vm-price {
-    color: #c0c0c0;
+    color: #090909;
 }
 
 .cbp-vm-add {
@@ -416,7 +416,7 @@
 }
 
 .cbp-vm-view-grid ul li {
-    width: 33%;
+    width: 20%;
     text-align: center;
     padding: 25px;
     margin: 20px 0 0;

@@ -13,12 +13,12 @@
     <%--</header>--%>
     <div class="main">
 
-        <div id="cbp-vm" class="cbp-vm-switcher cbp-vm-view-grid">
+        <div id="cbp-vm" class="cbp-vm-switcher cbp-vm-view-list">
 
             <div class="cbp-vm-options">
                 <div class="my-span">List of all persons</div>
-                <a href="#" class="cbp-vm-icon cbp-vm-list" data-view="cbp-vm-view-list">List View</a>
-                <a href="#" class="cbp-vm-icon cbp-vm-grid cbp-vm-selected" data-view="cbp-vm-view-grid">Grid View</a>
+                <a href="#" class="cbp-vm-icon cbp-vm-list cbp-vm-selected" data-view="cbp-vm-view-list">List View</a>
+                <a href="#" class="cbp-vm-icon cbp-vm-grid " data-view="cbp-vm-view-grid">Grid View</a>
 
             </div>
             <ul>
