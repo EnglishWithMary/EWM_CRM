@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <div class="container-fluid">
     <div class="row">
@@ -12,22 +13,17 @@
                             <strong>Information about Group</strong>
                         </div>
                         <div class="panel-body">
-                            <p>
-                                <strong>Group Name: </strong>gName
-                            </p>
-                            <p>
-                                <strong>Group Teacher:</strong><a href="">tName</a>
-                            </p>
-                            <p>
-                                <strong>Studying Language:</strong>lLanguage
-                            </p>
-                            <p>
-                                <strong>Common Schedule:</strong>Tue(18:00-20:00), Wed(18:00-20:00),Sun(12:00-14:00)
-                                (common)
-                            </p>
-                            <p>
-                                <strong>Students:</strong>
-                            </p>
+                            <p><strong>Group Name: </strong>${group.name}</p>
+
+                            <p><strong>Group Teacher:</strong>
+                                <a href="/teacher/info?${group.teacher.id}">${group.teacher.person.firstName}</a></p>
+
+                            <p><strong>Studying Language:</strong>English(null)</p>
+
+                            <p><strong>Common Schedule:</strong>Tue(18:00-20:00), Wed(18:00-20:00)...</p>
+
+                            <p><strong>Students:</strong></p>
+
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
@@ -38,9 +34,16 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th><a href="">Malkovich I.I.</a></th>
-                                    <th>age</th>
-                                    <th>languages</th>
+                                    <c:forEach items="${group.students}" var="student">
+                                        <th><a href="/student/info?student_id=${student.id}">
+                                                    ${student.person.lastName}
+                                                    ${fn:substring(student.person.firstName,0,1)}.
+                                                    ${fn:substring(student.person.middleName,0,1)}.
+                                            </a>
+                                        </th>
+                                        <th>null</th>
+                                        <th>null</th>
+                                    </c:forEach>
                                 </tr>
                                 </tbody>
                             </table>

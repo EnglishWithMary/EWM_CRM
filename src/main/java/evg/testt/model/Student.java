@@ -16,7 +16,7 @@ public @Data class Student extends RegisteredUser implements BelongsToPerson{
     @OneToOne
     private Teacher teacher;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Group group;
 
     @OneToMany

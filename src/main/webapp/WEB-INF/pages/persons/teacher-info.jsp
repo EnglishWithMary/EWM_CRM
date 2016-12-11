@@ -38,18 +38,23 @@
                                     <strong>Information About Teacher</strong>
                                 </div>
                                 <div class="panel-body">
-                                    <p><strong>First Name: </strong>Jojo</p>
-                                    <p><strong>Last Name: </strong>Strange</p>
-                                    <p><strong>Middle Name: </strong></p>
-                                    <p><strong>Phone: </strong>+38(099)111-11-11</p>
-                                    <p><strong>email: </strong>dontremember@ma.com</p>
-                                    <p><strong>web : </strong><a href="">vk.com/jojo</a></p>
-                                    <p><strong>Date of Birth: </strong>Aug 11, 1992</p>
-                                    <p><strong>Comment: </strong>Great Teacher</p>
-                                    <p><strong>Groups: </strong><a href="GroupInfo.html">OCT-16-2016-EN</a> </p>
-                                    <p><strong>Languages: </strong>English, Italian</p>
-                                    <p><strong>Referral: </strong>Some Info</p>
-                                    <p><strong>Color: </strong>Kinda racism</p>
+                                    <p><strong>First Name: </strong>${teacher.person.firstName}</p>
+                                    <p><strong>Last Name: </strong>${teacher.person.lastName}</p>
+                                    <p><strong>Middle Name: </strong>${teacher.person.middleName}</p>
+                                    <p><strong>Phone: </strong>null</p>
+                                    <p><strong>email: </strong>${teacher.person.email.email}</p>
+                                    <p><strong>web : </strong><a href="">null</a></p>
+                                    <p><strong>Date of Birth: </strong>null</p>
+                                    <p><strong>Comment: </strong>${teacher.person.comments}</p>
+                                    <p><strong>Groups: </strong><a href="">null</a> </p>
+                                    <p><strong>Languages: </strong>English, Italian(null, need add filed)</p>
+                                    <p><strong>Referral: </strong>null</p>
+                                    <p><strong>Color: </strong>Kinda racism(ahhhahah)</p>
+
+                                    <p><strong>State: </strong>${teacher.person.state.state}</p>
+                                    <p><strong>Last modified: </strong>${teacher.person.modifyDate}</p>
+                                    <p><strong>Registration date: </strong>${teacher.person.registrationDate}</p>
+                                    <p><strong>Organization: </strong>null</p>
                                 </div>
                             </div>
                         </div>

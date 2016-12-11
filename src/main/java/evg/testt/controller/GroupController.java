@@ -94,4 +94,14 @@ public class GroupController {
                 .addAttribute("groupFilter", groupFilter);
         return "groups/all";
     }
+
+    @RequestMapping(value = "/group/info")
+    public String studentInfo(Model model, @RequestParam int group_id) throws SQLException {
+
+        Group group = groupService.getById(group_id);
+
+        model.addAttribute("group", group);
+
+        return "persons/group-info";
+    }
 }

@@ -94,4 +94,14 @@ public class TeacherController {
         teacherService.trash(teacher);
         return "teachers/all";
     }
+
+    @RequestMapping(value = "/teacher/info")
+    public String studentInfo(Model model, @RequestParam int teacher_id) throws SQLException {
+
+        Teacher teacher = teacherService.getById(teacher_id);
+
+        model.addAttribute("teacher", teacher);
+
+        return "persons/teacher-info";
+    }
 }

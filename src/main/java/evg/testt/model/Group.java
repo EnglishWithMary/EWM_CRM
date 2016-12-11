@@ -13,7 +13,7 @@ public @Data class Group extends BaseModel {
     @ManyToOne
     private Teacher teacher;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Student> students;
 
     @Column(columnDefinition = "text")

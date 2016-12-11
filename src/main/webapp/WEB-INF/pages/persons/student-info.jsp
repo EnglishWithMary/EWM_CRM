@@ -53,23 +53,25 @@
 
                                 <%--Information from request--%>
                                 <div class="panel-body">
-                                    <p><strong>First Name: </strong>fName</p>
-                                    <p><strong>Last Name: </strong>lName</p>
-                                    <p><strong>Middle Name: </strong>mName</p>
-                                    <p><strong>Phone: </strong>phone</p>
-                                    <p><strong>email: </strong>email</p>
-                                    <p><strong>web : </strong><a href="">vk/fb/twitter</a></p>
-                                    <p><strong>Date of Birth: </strong>date</p>
-                                    <p><strong>Comment: </strong>Great Student</p>
-                                    <p><strong>Groups: </strong><a href="">link to his group</a></p>
+                                    <p><strong>First Name: </strong>${student.person.firstName}</p>
+                                    <p><strong>Last Name: </strong>${student.person.lastName}</p>
+                                    <p><strong>Middle Name: </strong>${student.person.middleName}</p>
+                                    <p><strong>Phone: </strong>null</p>
+                                    <p><strong>email: </strong>${student.person.email.email}</p>
+                                    <p><strong>web : </strong><a href="">null</a></p>
+                                    <p><strong>Date of Birth: </strong>null</p>
+                                    <p><strong>Comment: </strong>${student.person.comments}</p>
+                                    <p><strong>State: </strong>${student.person.state.state}</p>
+                                    <p><strong>Last modified: </strong>${student.person.modifyDate}</p>
+                                    <p><strong>Registration date: </strong>${student.person.registrationDate}</p>
+                                    <p><strong>Organization: </strong>null</p>
+                                    <p><strong>Group: </strong><a href="/group/info?group_id=${student.group.id}">${student.group.name}</a></p>
                                     <p><strong>Last Groups: </strong><a href="">link to other groups</a>
                                         (status) </p>
-                                    <p><strong>Teachers: </strong><a href="">link to his teacher</a></p>
-                                    <p><strong>Referral: </strong>some info</p>
-                                    <p><strong>Student's contacts: </strong>Some Persons</p>
-                                    <p><strong>Schedule: </strong>Tue(18:00-20:00), Thu(18:00-20:00), Sun(12:00-14:00)
-                                        (common)
-                                    </p>
+                                    <p><strong>Teacher: </strong><a href="/teacher/info?teacher_id=${student.teacher.id}">${student.teacher.person.firstName}</a></p>
+                                    <p><strong>Referral: </strong>null</p>
+                                    <p><strong>Student's contacts: </strong>null</p>
+                                    <p><strong>Schedule: </strong>null</p>
                                     <p><strong>Something from his questionnaire: </strong>Additional info</p>
                                 </div>
                             </div>
