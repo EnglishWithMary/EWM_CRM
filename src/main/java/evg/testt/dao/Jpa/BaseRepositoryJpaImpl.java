@@ -113,4 +113,5 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel>
         query.setMaxResults(pageSize);
         return query.getResultList();
     }
+
 }
