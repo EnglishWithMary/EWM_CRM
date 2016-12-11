@@ -445,7 +445,8 @@
 }
 
 .cbp-vm-view-list .cbp-vm-image {
-    width: 30%;
+    /*visibility: hidden;*/
+    width: 20%;
 }
 
 .cbp-vm-view-list .cbp-vm-title {
