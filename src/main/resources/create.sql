@@ -19,3 +19,14 @@ INSERT INTO pipetypes (id, type) VALUES (2, 'STUDENT_PIPE');
 CREATE OR REPLACE VIEW staffview AS SELECT persons.* FROM persons LEFT JOIN admins ON persons.id = admins.person_id
   LEFT JOIN managers ON persons.id = managers.person_id LEFT JOIN students ON persons.id = students.person_id
   LEFT JOIN leads ON persons.id = leads.person_id;
+
+DROP VIEW personnel;
+CREATE VIEW personnel AS
+SELECT users.login, roles.role, persons.* FROM (
+SELECT admins.person_id AS person, admins.user_id AS usr FROM admins
+UNION SELECT managers.person_id AS person, managers.user_id AS usr FROM managers
+UNION SELECT teachers.person_id AS person, teachers.user_id AS usr FROM teachers
+) AS keys
+LEFT JOIN persons ON keys.person = persons.id
+LEFT JOIN users ON keys.usr = users.id
+LEFT JOIN roles ON users.role_id = roles.id;
