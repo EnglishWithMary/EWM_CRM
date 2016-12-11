@@ -1,9 +1,11 @@
 package evg.testt.controller;
 
+import antlr.Grammar;
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
+import evg.testt.service.impl.PersonDTOServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -129,6 +132,28 @@ public class StudentController {
     public String studentTrash(@RequestParam Integer id) throws SQLException {
         Student student = studentService.getById(id);
         studentService.trash(student);
+        return "students/all";
+    }
+
+    @RequestMapping(value = "/studentTestingResults")
+    public String studentEditLevel(@RequestParam Integer id, Model model) throws SQLException {
+        Student student = studentService.getById(id);
+        model.addAttribute("student", student);
+        model.addAttribute("person", student.getPerson());
+        model.addAttribute("checkpointDate", new Date());
+        return "students/testingResults";
+    }
+
+    @RequestMapping(value = "/saveTestingResults", method = RequestMethod.POST)
+    public String saveTestingResults(@ModelAttribute("studentLevelHistory") StudentLevelHistory studentLevelHistory,
+                                    @RequestParam(required = true) String testingDate)
+            throws SQLException {
+
+
+        //studentLevelHistory.setCheckpointDate(PersonDTOServiceImpl.(testingDate));
+        studentLevelHistory.setGrammar(studentLevelHistory.getGrammar());
+        studentLevelHistory.setSpeaking(studentLevelHistory.getSpeaking());
+
         return "students/all";
     }
 
