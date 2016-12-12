@@ -130,7 +130,7 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/teacher/info")
-    public String studentInfo(Model model, @RequestParam int teacher_id) throws SQLException {
+    public String teacherInfo(Model model, @RequestParam int teacher_id) throws SQLException {
 
         Teacher teacher = teacherService.getById(teacher_id);
         List<Group> groups = groupService.getByTeacher(teacher);

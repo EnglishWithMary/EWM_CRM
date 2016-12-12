@@ -61,10 +61,12 @@
                                     <p><strong>web : </strong><a href="">null</a></p>
                                     <p><strong>Date of Birth: </strong><input type="date" name="" id=""></p>
                                     <p><strong>Comment: </strong><input type="text" value="${student.person.comments}"></p>
+
                                     <p><strong>State: </strong><input type="text" value="${student.person.state.state}"></p>
                                     <p><strong>Last modified: </strong>${student.person.modifyDate}</p>
                                     <p><strong>Registration date: </strong>${student.person.registrationDate}</p>
                                     <p><strong>Organization: </strong><input type="text"></p>
+
                                     <p><strong>Group: </strong><a href="/group/info?group_id=${student.group.id}">${student.group.name}</a></p>
                                     <p><strong>Last Groups: </strong><a href="">link to other groups</a>
                                         (status) </p>

@@ -14,9 +14,4 @@
         <put-attribute name="body" value="/WEB-INF/pages/persons/lead-info.jsp"/>
     </definition>
 
-    <definition name="persons/managers/test/info" extends="default">
-        <put-attribute name="title" value="Manager Info" />
-        <put-attribute name="body" value="/WEB-INF/pages/persons/manager-info.jsp"/>
-    </definition>
-
 </tiles-definitions>

@@ -34,14 +34,21 @@
                                     <strong>Information About Manager</strong>
                                 </div>
                                 <div class="panel-body">
-                                    <p><strong>First Name: </strong>John</p>
-                                    <p><strong>Last Name: </strong>Johnson</p>
-                                    <p><strong>Middle Name: </strong>Oliver's son</p>
-                                    <p><strong>Phone: </strong>+38(099)111-11-11</p>
-                                    <p><strong>email: </strong>johnjohn@ma.com</p>
-                                    <p><strong>web : </strong><a href="">vk.com/johnjohn</a></p>
-                                    <p><strong>Date of Birth: </strong>Sep 01, 1986</p>
-                                    <p><strong>Comment: </strong>Works since establishment</p>
+
+                                    <p><strong>First Name: </strong><input type="text" value="${manager.person.firstName}"></p>
+                                    <p><strong>Last Name: </strong><input type="text" value="${manager.person.lastName}"></p>
+                                    <p><strong>Middle Name: </strong><input type="text" value="${manager.person.middleName}"></p>
+                                    <p><strong>Phone: </strong><input type="text" value=""></p>
+                                    <p><strong>email: </strong><input type="text" value="${manager.person.email.email}"></p>
+                                    <p><strong>web : </strong><a href=""></a></p>
+                                    <p><strong>Date of Birth: </strong><input type="date" value="${manager.person.birthdayDate}"></p>
+                                    <p><strong>Comment: </strong><input type="text" value="${manager.person.comments}"></p>
+
+                                    <p><strong>State: </strong><input type="text" value="${manager.person.state.state}"></p>
+                                    <p><strong>Last modified: </strong>${manager.person.modifyDate}</p>
+                                    <p><strong>Registration date: </strong>${manager.person.registrationDate}</p>
+                                    <p><strong>Organization: </strong><input type="text"></p>
+
                                 </div>
                             </div>
                         </div>

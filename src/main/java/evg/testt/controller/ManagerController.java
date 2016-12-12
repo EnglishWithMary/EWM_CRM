@@ -114,4 +114,14 @@ public class ManagerController {
         managerService.trash(manager);
         return "managers/all";
     }
+
+    @RequestMapping(value = "/manager/info", method = RequestMethod.GET)
+    public String managerInfo(Model model, @RequestParam int manager_id) throws SQLException {
+
+        Manager manager = managerService.getById(manager_id);
+
+        model.addAttribute("manager", manager);
+
+        return "persons/manager-info";
+    }
 }

@@ -127,7 +127,7 @@ public class GroupController {
     }
 
     @RequestMapping(value = "/group/info")
-    public String studentInfo(Model model, @RequestParam int group_id) throws SQLException {
+    public String groupInfo(Model model, @RequestParam int group_id) throws SQLException {
 
         Group group = groupService.getById(group_id);
 

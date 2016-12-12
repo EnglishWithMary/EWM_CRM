@@ -196,7 +196,7 @@ public class StudentController {
 
     }
 
-    @RequestMapping(value = "/student/info")
+    @RequestMapping(value = "/student/info", method = RequestMethod.GET)
     public String studentInfo(Model model, @RequestParam int student_id) throws SQLException {
 
         Student student = studentService.getById(student_id);
