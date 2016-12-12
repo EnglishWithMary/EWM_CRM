@@ -4,10 +4,15 @@ import evg.testt.dto.PersonDTO;
 import evg.testt.exception.BadAvatarNameException;
 import evg.testt.exception.PersonException;
 import evg.testt.exception.PersonRoleNotFoundException;
-import evg.testt.model.*;
+import evg.testt.model.Person;
+import evg.testt.model.Personnel;
 import evg.testt.oval.SpringOvalValidator;
-import evg.testt.service.*;
+import evg.testt.service.AvatarService;
+import evg.testt.service.PersonDTOService;
+import evg.testt.service.PersonService;
+import evg.testt.service.PersonnelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,7 +27,6 @@ import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -36,12 +40,16 @@ public class PersonController {
     private AvatarService avatarService;
     @Autowired
     private PersonDTOService personDTOService;
+    @Autowired
+    private PersonnelService personnelService;
+    @Value("${pagination.page.size}")
+    protected int pageSize;
 
     @RequestMapping(value = "/personProfile", method = RequestMethod.GET)
     public String profilePerson(@ModelAttribute("person") @Validated PersonDTO personDTO,
-                                      BindingResult bindingResult,
-                                      Principal principal, Model model)
-            throws PersonRoleNotFoundException, SQLException{
+                                BindingResult bindingResult,
+                                Principal principal, Model model)
+            throws PersonRoleNotFoundException, SQLException {
 
         validator.validate(personDTO, bindingResult);
 
@@ -58,7 +66,7 @@ public class PersonController {
                                Principal principal,
                                Model model)
             throws
-            IOException, PersonException,PersonRoleNotFoundException,
+            IOException, PersonException, PersonRoleNotFoundException,
             BadAvatarNameException, SQLException, ParseException {
 
         validator.validate(personDTO, bindingResult);
@@ -86,13 +94,16 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/persons", method = RequestMethod.GET)
-    public String showGroups(Model model) throws SQLException {
+    public String showGroups(Model model, @RequestParam(required = false) Integer page) throws SQLException {
 
-        /*
-        add logic: get all personnel
-         */
-        List<Person> persons = personService.getAll();
-        model.addAttribute("persons", persons);
+        page = (page == null || page < 1) ? 1 : page;
+
+        int count = personnelService.count();
+        int pages = count % pageSize == 0 ? count / pageSize : count / pageSize + 1;
+
+        List<Personnel> personnel = personnelService.getAllSortedAndPaginated(page);
+        model.addAttribute("personnel", personnel);
+        model.addAttribute("pages", pages);
         return "persons/all";
     }
 
