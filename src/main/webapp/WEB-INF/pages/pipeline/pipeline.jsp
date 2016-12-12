@@ -5,6 +5,7 @@
     <c:if test="${not empty cards}">
     <div class="scroll">
         <c:forEach items="${cards}" var="card">
+            
             <div class="pipe_wrapper">
 
                 <div class="pipe scrollbox">
@@ -52,87 +53,95 @@
 
                             <div class="person-edit-tool-bar">
                                 <form method="post" action="/leadAdd" class="editPersonFrom btn-xs">
-                                    <%--<input type="hidden" value="${card.id}" name="cardId">--%>
-                                    <%--<input type="hidden" value="${pipeType.id}" name="pipeTypeId">--%>
-                                        <input type="hidden" name="personId" value="${person.id}">
+                                    <input type="hidden" name="personId" value="${person.id}">
                                     <button type="submit" class="pipe-button btn btn-default btn-xs">
                                         <span class="glyphicon glyphicon-pencil"></span>
                                     </button>
                                 </form>
-                                <div>
-                                    <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#modal${person.id}">
-                                        <span class="glyphicon glyphicon-remove"></span>
-                                    </button>
-                                    <div class="modal fade" id="modal${person.id}" data-backdrop="false">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button class="close" type="button" data-dismiss="modal">
-                                                        <i class="fa fa-close"></i>
-                                                        </button>
-                                                    </div>
-                                                <div class="modal-body">
-                                                    <p>Are you sure want to delete the lead></p>
-                                                    </div>
-                                                <div class="modal-footer row">
-                                                    <div class="col-md-3">
-                                                        <form method="post" action="/deleteLeadFromPipe"
-                                                        class="deletePersonForm">
-                                                            <button type="submit" class="btn btn-default btn-xs">
-                                                                Reset position
-                                                            </button>
-                                                            <input type="hidden" name="personId" value="${person.id}">
-                                                            </form>
-                                                        </div>
-                                                    <div class="col-md-3">
-                                                        <form method="post" action="/deleteLead" class="deletePersonForm">
-                                                            <button type="submit" class="btn btn-default btn-xs">
-                                                                Delete
-                                                            </button>
-                                                            <input type="hidden" name="personId" value="${person.id}">
-                                                        </form>
-                                                        </div>
-                                                    <div class="col-md-3">
-                                                        <button class="btn btn-default btn-xs" type="button"
-                                                                data-dismiss="modal">
-                                                            Cancel
-                                                        </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+
+                                <button type="button" class="btn btn-default btn-xs"
+                                        data-toggle="modal" data-target="#modal${person.id}">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </div>
+
+                        </div> <%-- end person --%>
+
+                        <div class="modal fade" id="modal${person.id}">
+                            <div class="modal-dialog" >
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" type="button" data-dismiss="modal">
+                                            <i class="fa fa-close"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to delete the lead?</p>
+                                    </div>
+                                    <div class="modal-footer row">
+                                        <div class="col-md-3">
+                                            <form method="post" action="/leadDeleteFromPipe"
+                                                  class="deletePersonForm">
+                                                <button type="submit" class="btn btn-default btn-xs">
+                                                    Reset position
+                                                </button>
+                                                <input type="hidden" name="personId" value="${person.id}">
+                                            </form>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <form method="post" action="/deleteLead" class="deletePersonForm">
+                                                <button type="submit" class="btn btn-default btn-xs">
+                                                    Delete
+                                                </button>
+                                                <input type="hidden" name="personId" value="${person.id}">
+                                            </form>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <form method="post" action="/leadTrash" class="deletePersonForm">
+                                                <button type="submit" class="btn btn-default btn-xs">
+                                                    Move to trash
+                                                </button>
+                                                <input type="hidden" name="personId" value="${person.id}">
+                                            </form>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button class="btn btn-default btn-xs" type="button"
+                                                    data-dismiss="modal">
+                                                Cancel
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
-                        </div> <%-- end person --%>
-
+                            </div>
+                        </div>
                     </c:forEach>
 
                     <input type="hidden" id="destination" name="destination" value="${card.id}">
                 </div>
 
-              <c:if test="${pipeType.id==1}">
-                  <form method="post" action="/leadAdd">
-                      <input type="hidden" name="cardId" value="${card.id}">
-                      <button type="submit" class="btn btn-success">
-                          <span>Add lead</span>
-                      </button>
-                  </form>
-              </c:if>
+                <c:if test="${pipeType.id==1}">
+                    <form method="post" action="/leadAdd">
+                        <input type="hidden" name="cardId" value="${card.id}">
+                        <button type="submit" class="btn btn-success">
+                            <span>Add Lead</span>
+                        </button>
+                    </form>
+                </c:if>
 
                 <c:if test="${pipeType.id==2}">
                     <form method="post" action="/studentAdd">
                         <input type="hidden" name="cardId" value="${card.id}">
                         <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
                         <button type="submit" class="btn btn-success">
-                            <span>Add student</span>
+                            <span>Add Student</span>
                         </button>
                     </form>
                 </c:if>
+
             </div>
         </c:forEach>
+    </c:if>
 
-        </c:if>
         <c:if test="${pipeType.id > 0 || pipeType.id != null}">
             <div class="pipe_wrapper">
                 <form class="pipe" method="post" action="/addCard">
@@ -147,7 +156,5 @@
     body {
         overflow-y: hidden;
     }
-    .modal{
-        background-color: rgba(0,0,0,0.5);
-    }
 </style>
+

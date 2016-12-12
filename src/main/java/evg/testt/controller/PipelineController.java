@@ -48,15 +48,14 @@ public class PipelineController {
         card.setType(pt);
         cardService.insert(card);
         this.inserAttributes(model, pipe);
-
         if (pipe==Pipe.LEAD_PIPE){
-            return "redirect:/takeLeadpipe";
+            return "redirect:/takeLeadtpipe";
         }else if (pipe==Pipe.STUDENT_PIPE){
-            return "redirect:/taleStudentpipe";
-        }
-        else {
+            return "redirect:/takeStudentpipe";
+        }else{
             return "redirect:/pipeline";
         }
+
     }
 
     @RequestMapping(value = "/takeStudentpipe", method = RequestMethod.GET)

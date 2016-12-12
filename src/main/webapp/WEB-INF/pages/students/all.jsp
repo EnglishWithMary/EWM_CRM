@@ -88,10 +88,10 @@
                             <tbody>
                             <c:forEach var="student" items="${students}">
                                 <tr>
-                                    <td>${student.person.firstName}</td>
+                                    <td><a href="/student/info?student_id=${student.id}">${student.person.firstName}</a></td>
                                     <td>${student.person.lastName}</td>
                                     <td>${student.person.middleName}</td>
-                                    <td>${student.group.name}</td>
+                                    <td><a href="/group/info?group_id=${student.group.id}">${student.group.name}</a></td>
                                     <td>${student.person.registrationDate}</td>
                                     <td>${student.person.comments}</td>
                                     <security:authorize access="hasRole('ROLE_ADMIN')">

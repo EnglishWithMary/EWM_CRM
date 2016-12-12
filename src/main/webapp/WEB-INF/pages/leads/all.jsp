@@ -29,8 +29,8 @@
                         <th>Middle name</th>
                         <th>Registration Date</th>
                         <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
-                            <th>Edit Lead</th>
-                            <th>Delete Lead</th>
+                            <td>Edit Lead</td>
+                            <td>Delete Lead</td>
                         </security:authorize>
                     </tr>
                     </thead>
@@ -55,44 +55,47 @@
                                         <button type="button"
                                                 data-toggle="modal" data-target="#modal${lead.id}">
                                             Delete
-                                            </button>
-                                        </div>
+                                        </button>
+                                    </div>
                                     <div class="modal fade" id="modal${lead.id}">
                                         <div class="modal-dialog">
-                                            <div class="modal-header">
-                                                <button class="close" type="button" data-dismiss="modal">
-                                                    <i class="fa fa-close"></i>
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button class="close" type="button" data-dismiss="modal">
+                                                        <i class="fa fa-close"></i>
                                                     </button>
                                                 </div>
-                                            <div class="modal-body">
-                                                <p>Are you sure want to delete the Lead?</p>
+                                                <div class="modal-body">
+                                                    <p>Are you sure you want to delete the lead?</p>
                                                 </div>
-                                            <div class="modal-footer row">
-                                                <div class="col-md-4">
-                                                    <form method="post" action="/deleteLead">
-                                                        <button type="submit" class="btn btn-default btn-sm">
-                                                            Delete
+                                                <div class="modal-footer row">
+                                                    <div class="col-md-4">
+                                                        <form method="post" action="/deleteLead">
+                                                            <button type="submit" class="btn btn-default btn-sm">
+                                                                Delete
                                                             </button>
-                                                        <input type="hidden" name="personId" value="${lead.person.id}">
+                                                            <input type="hidden" name="personId" value="${lead.person.id}">
                                                         </form>
                                                     </div>
-                                                <div class="col-md-4">
-                                                    <form method="post" action="/leadTrash">
-                                                        <button type="submit" class="btn btn-default btn-sm">
-                                                            Move to trash
+                                                    <div class="col-md-4">
+                                                        <form method="post" action="/leadTrash">
+                                                            <button type="submit" class="btn btn-default btn-sm">
+                                                                Move to trash
                                                             </button>
-                                                        <input type="hidden" name="personId" value="${lead.person.id}">
+                                                            <input type="hidden" name="personId" value="${lead.person.id}">
                                                         </form>
                                                     </div>
-                                                <div class="col-md-4">
-                                                    <button type="submit" class="btn btn-default btn-sm" data-dismiss="modal">
-                                                        Cancel
+                                                    <div class="col-md-4">
+                                                        <button class="btn btn-default btn-sm" type="button"
+                                                                data-dismiss="modal">
+                                                            Cancel
                                                         </button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </td>
+                                    </div>
+                                </td>
                             </security:authorize>
                         </tr>
                     </c:forEach>

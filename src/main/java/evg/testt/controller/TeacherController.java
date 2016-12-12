@@ -40,6 +40,8 @@ public class TeacherController {
     PersonService personService;
     @Autowired
     PersonDTOService personDTOService;
+    @Autowired
+    private GroupService groupService;
 
     @Value("${pagination.page.size}")
     protected int pageSize;
@@ -125,5 +127,17 @@ public class TeacherController {
         Teacher teacher = teacherService.getById(id);
         teacherService.trash(teacher);
         return "teachers/all";
+    }
+
+    @RequestMapping(value = "/teacher/info")
+    public String teacherInfo(Model model, @RequestParam int teacher_id) throws SQLException {
+
+        Teacher teacher = teacherService.getById(teacher_id);
+        List<Group> groups = groupService.getByTeacher(teacher);
+
+        model.addAttribute("teacher", teacher);
+        model.addAttribute("groups", groups);
+
+        return "persons/teacher-info";
     }
 }

@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class EmailRepositoryJpaImpl extends BaseRepositoryJpaImpl<Email> implements EmailRepository{
+
 }

@@ -15,5 +15,4 @@ public interface CardRepository extends BaseRepository<Card> {
     void movePersonOnCards(int from, int destination, Person person) throws SQLException;
 
     Card findCardByPerson(Person person) throws SQLException;
-
 }

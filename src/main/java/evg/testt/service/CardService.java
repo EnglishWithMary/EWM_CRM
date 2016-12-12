@@ -12,6 +12,8 @@ import java.util.List;
 
 public interface CardService extends Service<Card>{
     List<Card> getCards(Pipe pipe) throws SQLException;
+
+    Card getCardByPerson(Person person) throws SQLException;
     void movePersonOnCards(int from, int destination, int personId) throws SQLException;
 
     Card getCardByPerson(Person person) throws SQLException;
