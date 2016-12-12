@@ -2,10 +2,6 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 
-
-
-
-
 <div class="container">
     <%--<header class="clearfix">--%>
         <%--<span>Blueprint <span class="bp-icon bp-icon-about" data-content="The on."></span></span>--%>
@@ -23,7 +19,8 @@
             <ul>
                 <c:forEach var="person" items="${persons}">
                 <li>
-                    <a class="cbp-vm-image" >  <c:choose>
+                    <a class="cbp-vm-image" >
+                        <c:choose>
                         <c:when test="${person.avatarURL == null}">
                             <img class="cbp-vm-image" alt="Responsive image"
                                  src="${pageContext.request.contextPath}/resources/img/defaultAvatar.jpg">
@@ -32,15 +29,18 @@
                             <img class="cbp-vm-image" alt="Responsive image"
                                  src="${person.avatarURL}">
                         </c:otherwise>
-                    </c:choose> </a>
-                    <h3 class="cbp-vm-title">${person.firstName}</h3>
+                    </c:choose>
+                    </a>
+
+                    <div class="cbp-vm-title">${person.firstName}</div>
                     <div class="cbp-vm-price">${person.lastName}</div>
                     <div class="cbp-vm-details">${person.middleName}</div>
                     <%--<a class="cbp-vm-icon cbp-vm-add">Add to cart</a></li>--%>
                     </c:forEach>
-
-    </div><!-- /main -->
-</div><!-- /container -->
+                </li>
+            </ul>
+    </div>
+</div>
 
 
 
