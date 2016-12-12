@@ -17,6 +17,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Transactional
@@ -78,6 +79,20 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel>
         return query.getResultList();
     }
 
+    public Query findPaginated(int pageNumber){
+        Query query = em.createQuery("SELECT t FROM " + entityClass.getName() + " t");
+        query.setFirstResult((pageNumber-1) * pageSize);
+        query.setMaxResults(pageSize);
+        return query;
+    }
+
+    /*
+        Here should be sorting parameters
+     */
+    public List<T> findAllSortedAndPaginated(int pageNumber){
+        return findPaginated(pageNumber).getResultList();
+    }
+
     private Boolean hasPerson(){
         Boolean hasPerson=false;
         Field[] fields = entityClass.getDeclaredFields();
@@ -113,4 +128,5 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel>
         query.setMaxResults(pageSize);
         return query.getResultList();
     }
+
 }

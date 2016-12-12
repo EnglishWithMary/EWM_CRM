@@ -21,28 +21,28 @@
                 <a class="cbp-vm-icon cbp-vm-grid" href="#" data-view="cbp-vm-view-grid">Grid View</a>
                 <a class="cbp-vm-icon cbp-vm-list cbp-vm-selected" href="#" data-view="cbp-vm-view-list">List View</a>
             </div>
-         <div class="table-wrapper">
-        <table class="alt">
-            <thead>
-            <tr>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>Middle name</th>
-                <td>Registration Date</td>
-            </tr>
-            </thead>
-            <tbod>
-                <c:forEach var="student" items="${students}">
+            <div class="table-wrapper">
+                <table class="alt">
+                    <thead>
                     <tr>
-                        <td>${student.person.firstName}</td>
-                        <td>${student.person.lastName}</td>
-                        <td>${student.person.middleName}</td>
-                        <td>${student.person.registrationDate}</td>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Middle name</th>
+                        <td>Registration Date</td>
                     </tr>
-                </c:forEach>
-            </tbod>
-        </table>
-             </div>
+                    </thead>
+                    <tbod>
+                        <c:forEach var="student" items="${students}">
+                            <tr>
+                                <td>${student.person.firstName}</td>
+                                <td>${student.person.lastName}</td>
+                                <td>${student.person.middleName}</td>
+                                <td>${student.person.registrationDate}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbod>
+                </table>
+            </div>
         </div >
     </div>
 </div>
