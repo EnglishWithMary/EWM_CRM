@@ -19,7 +19,6 @@
                 <div class="my-span">List of all persons</div>
                 <a href="#" class="cbp-vm-icon cbp-vm-list cbp-vm-selected" data-view="cbp-vm-view-list">List View</a>
                 <a href="#" class="cbp-vm-icon cbp-vm-grid " data-view="cbp-vm-view-grid">Grid View</a>
-
             </div>
             <ul>
                 <c:forEach var="person" items="${persons}">

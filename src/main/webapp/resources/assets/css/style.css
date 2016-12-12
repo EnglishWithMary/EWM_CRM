@@ -459,25 +459,30 @@
 .cbp-vm-view-list .cbp-vm-image {
     /*visibility: hidden;*/
     width: 20%;
+    /*padding: 1px;*/
+    /*margin: 2px;*/
 }
 
 .cbp-vm-view-list .cbp-vm-title {
-    font-size: 1.3em;
+    position: relative;
+    font-size: 2em;
     padding: 0 10px;
     white-space: normal;
-    width: 23%;
+    width: 10%;
+    right: 120px;
 }
 
 .cbp-vm-view-list .cbp-vm-price {
-    font-size: 1.3em;
-    width: 10%;
+    font-size: 2em;
+    width: 23%;
 }
 
 .cbp-vm-view-list .cbp-vm-details {
-    width: 40%;
     padding: 0 15px;
     overflow: hidden;
     white-space: normal;
+    font-size: 2em;
+    width: 23%;
 }
 
 .cbp-vm-view-list .cbp-vm-add {
@@ -522,3 +527,11 @@
     }
 }
 /*End of mosaic styles*/
+
+
+
+
+
+
+
+
