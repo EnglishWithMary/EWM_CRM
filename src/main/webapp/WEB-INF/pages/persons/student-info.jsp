@@ -53,26 +53,26 @@
 
                                 <%--Information from request--%>
                                 <div class="panel-body">
-                                    <p><strong>First Name: </strong>${student.person.firstName}</p>
-                                    <p><strong>Last Name: </strong>${student.person.lastName}</p>
-                                    <p><strong>Middle Name: </strong>${student.person.middleName}</p>
-                                    <p><strong>Phone: </strong>null</p>
-                                    <p><strong>email: </strong>${student.person.email.email}</p>
+                                    <p><strong>First Name: </strong><input type="text" value="${student.person.firstName}"></p>
+                                    <p><strong>Last Name: </strong><input type="text" value="${student.person.lastName}"></p>
+                                    <p><strong>Middle Name: </strong><input type="text" value="${student.person.middleName}"></p>
+                                    <p><strong>Phone: </strong><input type="text"></p>
+                                    <p><strong>email: </strong><input type="text" value="${student.person.email.email}"></p>
                                     <p><strong>web : </strong><a href="">null</a></p>
-                                    <p><strong>Date of Birth: </strong>null</p>
-                                    <p><strong>Comment: </strong>${student.person.comments}</p>
-                                    <p><strong>State: </strong>${student.person.state.state}</p>
+                                    <p><strong>Date of Birth: </strong><input type="date" name="" id=""></p>
+                                    <p><strong>Comment: </strong><input type="text" value="${student.person.comments}"></p>
+                                    <p><strong>State: </strong><input type="text" value="${student.person.state.state}"></p>
                                     <p><strong>Last modified: </strong>${student.person.modifyDate}</p>
                                     <p><strong>Registration date: </strong>${student.person.registrationDate}</p>
-                                    <p><strong>Organization: </strong>null</p>
+                                    <p><strong>Organization: </strong><input type="text"></p>
                                     <p><strong>Group: </strong><a href="/group/info?group_id=${student.group.id}">${student.group.name}</a></p>
                                     <p><strong>Last Groups: </strong><a href="">link to other groups</a>
                                         (status) </p>
                                     <p><strong>Teacher: </strong><a href="/teacher/info?teacher_id=${student.teacher.id}">${student.teacher.person.firstName}</a></p>
-                                    <p><strong>Referral: </strong>null</p>
-                                    <p><strong>Student's contacts: </strong>null</p>
-                                    <p><strong>Schedule: </strong>null</p>
-                                    <p><strong>Something from his questionnaire: </strong>Additional info</p>
+                                    <p><strong>Referral: </strong><input type="text"></p>
+                                    <p><strong>Student's contacts: </strong><input type="text"></p>
+                                    <p><strong>Schedule: </strong><input type="text"></p>
+                                    <p><strong>Something from his questionnaire: </strong><input type="text"></p>
                                 </div>
                             </div>
                         </div>
