@@ -41,7 +41,7 @@
                             <tbody>
                             <c:forEach var="manager" items="${managers}">
                                 <tr>
-                                    <td><a href="/manager/info?manager_id=${manager.id}">${manager.person.firstName}</a></td>
+                                    <td><a href="/managers/info?manager_id=${manager.id}">${manager.person.firstName}</a></td>
                                     <td>${manager.person.lastName}</td>
                                     <td>${manager.person.middleName}</td>
                                     <td>${manager.person.registrationDate}</td>
