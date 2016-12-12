@@ -87,6 +87,10 @@ public class PersonController {
 
     @RequestMapping(value = "/persons", method = RequestMethod.GET)
     public String showGroups(Model model) throws SQLException {
+
+        /*
+        add logic: get all personnel
+         */
         List<Person> persons = personService.getAll();
         model.addAttribute("persons", persons);
         return "persons/all";

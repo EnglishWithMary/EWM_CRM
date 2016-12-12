@@ -5,6 +5,8 @@ import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Controller
+@PropertySource(value = "classpath:standard.properties")
 public class StudentController {
 
     @Autowired
@@ -35,23 +38,39 @@ public class StudentController {
     @Autowired
     private GroupService groupService;
 
+    @Value("${pagination.page.size}")
+    protected int pageSize;
+
     @RequestMapping(value = "/students", method = RequestMethod.GET)
-    public String showStudent(@RequestParam(required = false) Integer teacher_id,
-                              Model model) throws SQLException {
+    public String showStudents(@RequestParam(required = false) Integer page,
+                               @RequestParam(required = false) Boolean flagSorted,
+                               Model model) throws SQLException {
+
+        if (flagSorted == null) flagSorted = false;
+
+        int totalStudents = 0, pages = 0, currentPage = 1;
+
+        if (page != null)
+            if (page > 0)
+                currentPage = page;
+
+        totalStudents = studentService.count();
 
         List<Student> students = Collections.EMPTY_LIST;
-        List<Teacher> teachers = teacherService.getAll();
-        List<Group> groups = groupService.getAll();
-
-        if (teacher_id == null) {
-            students = studentService.getAll();
-        } else if (teacher_id == -1) {
-            students = studentService.getStudentsWithoutTeacher();
-        } else if (teacher_id > 0) {
-            students = studentService.getAllByTeacher(teacher_id);
+        if (flagSorted == false) {
+            students = studentService.getByPage(currentPage);
+        } else {
+            students = studentService.getByPageSorted(currentPage);
         }
-        model.addAttribute("students", students).addAttribute("teachers", teachers)
-        .addAttribute("groups",groups);
+
+        pages = ((totalStudents / pageSize) + 1);
+
+        if (totalStudents % pageSize == 0) {
+            pages--;
+        }
+        model.addAttribute("students", students);
+        model.addAttribute("pages", pages);
+        model.addAttribute("flagSorted", flagSorted);
         return "students/all";
     }
 
@@ -113,10 +132,11 @@ public class StudentController {
         List<Teacher> teachers = teacherService.getAll();
         List<Group> groups = groupService.getAll();
 
-        model.addAttribute("students", students).addAttribute("teachers",teachers)
-                .addAttribute("groups",groups);
+        model.addAttribute("students", students).addAttribute("teachers", teachers)
+                .addAttribute("groups", groups);
         return "students/all";
     }
+
 
     @RequestMapping(value = "/studentDelete")
     public String studentDelete(@RequestParam Integer id) throws SQLException {
@@ -131,6 +151,27 @@ public class StudentController {
         studentService.trash(student);
         return "students/all";
     }
+
+
+    @RequestMapping(value = "/studentSortByTeacher", method = RequestMethod.POST)
+    public String showSortedByTeacher(@RequestParam(required = false) Integer teacher_id, Model model) throws SQLException {
+
+        List<Student> students = Collections.EMPTY_LIST;
+        List<Teacher> teachers = teacherService.getAll();
+        List<Group> groups = groupService.getAll();
+
+        if (teacher_id == null) {
+            students = studentService.getAll();
+        } else if (teacher_id == -1) {
+            students = studentService.getStudentsWithoutTeacher();
+        } else if (teacher_id > 0) {
+            students = studentService.getAllByTeacher(teacher_id);
+        }
+        model.addAttribute("students", students).addAttribute("teachers", teachers)
+                .addAttribute("groups", groups);
+        return "students/all";
+    }
+
 
     @RequestMapping(value = "/studentsSortedByGroup", method = RequestMethod.GET)
     public String showSortedStudent(Model model, @RequestParam(required = false) Integer group_id)
@@ -149,7 +190,7 @@ public class StudentController {
         }
 
         model.addAttribute("groups", groups).addAttribute("students", students)
-        .addAttribute("teachers", teachers);
+                .addAttribute("teachers", teachers);
 
         return "students/all";
 

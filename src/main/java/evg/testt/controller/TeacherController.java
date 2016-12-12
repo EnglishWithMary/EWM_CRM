@@ -5,6 +5,8 @@ import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Controller
+@PropertySource(value = "classpath:standard.properties")
 public class TeacherController {
 
     @Autowired
@@ -40,12 +43,41 @@ public class TeacherController {
     @Autowired
     private GroupService groupService;
 
-    @RequestMapping(value = "/teachers", method = RequestMethod.GET)
-    public String showTeachers(Model model) throws SQLException{
-        List<Teacher> teachers = teacherService.getAll();
-        model.addAttribute("teachers", teachers);
-        return "teachers/all";
-    }
+    @Value("${pagination.page.size}")
+    protected int pageSize;
+        @RequestMapping(value = "/teachers", method = RequestMethod.GET)
+        public String showTeachers(@RequestParam(required = false) Integer page,
+                                   @RequestParam(required = false) Boolean flagSorted,
+                                   Model model) throws SQLException {
+
+            if (flagSorted == null) flagSorted = false;
+
+            int totalTeachers = 0, pages = 0, currentPage = 1;
+
+            if (page != null)
+                if (page > 0)
+                    currentPage = page;
+
+            totalTeachers = teacherService.count();
+
+            List<Teacher> teachers = Collections.EMPTY_LIST;
+            if (flagSorted == false) {
+                teachers = teacherService.getByPage(currentPage);
+            } else {
+                teachers = teacherService.getByPageSorted(currentPage);
+            }
+
+            pages = ((totalTeachers / pageSize) + 1);
+
+            if (totalTeachers % pageSize == 0)
+                pages--;
+
+            model.addAttribute("teachers", teachers);
+            model.addAttribute("pages", pages);
+            model.addAttribute("flagSorted", flagSorted);
+            return "teachers/all";
+        }
+
 
     @RequestMapping(value = "/teacherAdd")
     public String addTeacher(Model model) {
