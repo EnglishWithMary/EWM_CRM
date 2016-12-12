@@ -105,6 +105,22 @@
                         </table>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-sm-2 col-sm-offset-5">
+                        <c:if test="${pages > 1}">
+                            <ul class="pagination">
+                                <c:forEach var="page" begin="1" end="${pages}">
+                                    <li class="${(page eq param.page) or ((param.page eq null) and (page eq 1))? 'active' : ''}">
+                                        <a href="/students?page=${page}&flagSorted=${flagSorted}">
+                                                ${page}
+                                        </a>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </c:if>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
