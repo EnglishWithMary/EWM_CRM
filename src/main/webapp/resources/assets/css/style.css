@@ -426,18 +426,25 @@
 }
 
 .cbp-vm-view-grid .cbp-vm-title {
-    font-size: 2em;
+    font-size: 1.5em;
+    padding-top: -2px;
 }
 
 .cbp-vm-view-grid .cbp-vm-details {
-    max-width: 300px;
-    min-height: 70px;
-    margin: 0 auto;
+    visibility: hidden;
+    font-size: 1.5em;
+    padding-top: -2px;
+
+    /*padding-top: 3px;*/
+    /*max-width: 300px;*/
+    /*min-height: 70px;*/
+    /*border-top: 2px;*/
+    /*font-size: 1.5em;*/
 }
 
 .cbp-vm-view-grid .cbp-vm-price {
-    margin: 10px 0;
     font-size: 1.5em;
+    padding-top: -2px;
 }
 
 
@@ -459,8 +466,6 @@
 .cbp-vm-view-list .cbp-vm-image {
     /*visibility: hidden;*/
     width: 20%;
-    /*padding: 1px;*/
-    /*margin: 2px;*/
 }
 
 .cbp-vm-view-list .cbp-vm-title {
