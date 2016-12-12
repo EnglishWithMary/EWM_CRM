@@ -1,44 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-
-<div class="12u">
-    <p>Persons</p>
-
-    <form method="post" action="/personSortByDate">
-        <div class="form-group">
-            <input type="submit" value="Sort by Registration Date">
-        </div>
-    </form>
-
-    <table>
-        <tr>
-            <td>Person Full Name</td>
-            <td>Persons Registration Date</td>
-            <security:authorize access="hasRole('ROLE_ADMIN')">
-                <td>Delete Person</td>
-            </security:authorize>
-        </tr>
-        <c:forEach var="person" items="${persons}">
-            <tr>
-                <td>
-                        ${person.firstName}
-                        ${person.middleName}
-                        ${person.lastName}
-                </td>
-                <td>
-                        ${person.registrationDate}
-                </td>
-                <security:authorize access="hasRole('ROLE_ADMIN')">
-                    <td>
-                        <a href="/personDelete?id=${person.id}">Delete</a>
-                    <td>
-                </security:authorize>
-            </tr>
-        </c:forEach>
-    </table>
-</div>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="container-fluid">
     <div class="row">
@@ -69,7 +32,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-4    ">
+                            <div class="col-sm-4">
                                 <div class="input-group">
                                     <span class="input-group-addon">Personnel's Role:</span>
                                     <select class="form-control">
@@ -100,128 +63,45 @@
                             <tr>
                                 <th>Full Name</th>
                                 <th>Login</th>
-                                <th>Status</th>
+                                <th>Role</th>
+                                <th>State</th>
+                                <th>Birth Date</th>
                                 <th>Reg. Date</th>
                                 <th>Mod. Date</th>
-                                <th>Last login</th>
-                                <th>Age</th>
-                                <th>Email</th>
-                                <th>Role</th>
                             </tr>
                             </thead>
+
                             <tbody>
-                            <tr>
-                                <th>Strange J..</th>
-                                <th><a href="TeacherInfo.html">jojoaa</a></th>
-                                <th>active</th>
-                                <th>Jan 01, 2016</th>
-                                <th>Jan 01, 2016</th>
-                                <th>Nov 30, 2016</th>
-                                <th>24</th>
-                                <th>jojoishere@jojo.com</th>
-                                <th>teacher</th>
-                            </tr>
-                            <tr>
-                                <th>Johnson J.O.</th>
-                                <th><a href="ManagerInfo.html">johnjohn</a></th>
-                                <th>active</th>
-                                <th>Aug 24, 2016</th>
-                                <th>Aug 24, 2016</th>
-                                <th>Nov 30, 2016</th>
-                                <th>28</th>
-                                <th>johnsjohhn@yo.com</th>
-                                <th>manager</th>
-                            </tr>
-                            <tr>
-                                <th>Vasyl Z.I.</th>
-                                <th>vaszar1</th>
-                                <th>active</th>
-                                <th>Sep 16, 2016</th>
-                                <th>Sep 16, 2016</th>
-                                <th>Nov 30, 2016</th>
-                                <th>78</th>
-                                <th>vasyl1964@mail.nowhere</th>
-                                <th>admin</th>
-                            </tr>
-                            <tr>
-                                <th>Vasyl Z.I.</th>
-                                <th>vaszar1</th>
-                                <th>active</th>
-                                <th>Sep 16, 2016</th>
-                                <th>Sep 16, 2016</th>
-                                <th>Nov 30, 2016</th>
-                                <th>78</th>
-                                <th>vasyl1964@mail.nowhere</th>
-                                <th>admin</th>
-                            </tr>
-                            <tr>
-                                <th>Vasyl Z.I.</th>
-                                <th>vaszar1</th>
-                                <th>active</th>
-                                <th>Sep 16, 2016</th>
-                                <th>Sep 16, 2016</th>
-                                <th>Nov 30, 2016</th>
-                                <th>78</th>
-                                <th>vasyl1964@mail.nowhere</th>
-                                <th>admin</th>
-                            </tr>
-                            <tr>
-                                <th>Vasyl Z.I.</th>
-                                <th>vaszar1</th>
-                                <th>active</th>
-                                <th>Sep 16, 2016</th>
-                                <th>Sep 16, 2016</th>
-                                <th>Nov 30, 2016</th>
-                                <th>78</th>
-                                <th>vasyl1964@mail.nowhere</th>
-                                <th>admin</th>
-                            </tr>
-                            <tr>
-                                <th>Vasyl Z.I.</th>
-                                <th>vaszar1</th>
-                                <th>active</th>
-                                <th>Sep 16, 2016</th>
-                                <th>Sep 16, 2016</th>
-                                <th>Nov 30, 2016</th>
-                                <th>78</th>
-                                <th>vasyl1964@mail.nowhere</th>
-                                <th>admin</th>
-                            </tr>
-                            <tr>
-                                <th>Vasyl Z.I.</th>
-                                <th>vaszar1</th>
-                                <th>active</th>
-                                <th>Sep 16, 2016</th>
-                                <th>Sep 16, 2016</th>
-                                <th>Nov 30, 2016</th>
-                                <th>78</th>
-                                <th>vasyl1964@mail.nowhere</th>
-                                <th>admin</th>
-                            </tr>
-                            <tr>
-                                <th>Vasyl Z.I.</th>
-                                <th>vaszar1</th>
-                                <th>active</th>
-                                <th>Sep 16, 2016</th>
-                                <th>Sep 16, 2016</th>
-                                <th>Nov 30, 2016</th>
-                                <th>78</th>
-                                <th>vasyl1964@mail.nowhere</th>
-                                <th>admin</th>
-                            </tr>
-                            <tr>
-                                <th>Vasyl Z.I.</th>
-                                <th>vaszar1</th>
-                                <th>active</th>
-                                <th>Sep 16, 2016</th>
-                                <th>Sep 16, 2016</th>
-                                <th>Nov 30, 2016</th>
-                                <th>78</th>
-                                <th>vasyl1964@mail.nowhere</th>
-                                <th>admin</th>
-                            </tr>
+                            <c:forEach var="person" items="${personnel}">
+                                <tr>
+                                    <td>
+                                            ${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}.
+                                    </td>
+                                    <td>${person.login}</td>
+                                    <td>${person.role}</td>
+                                    <td>${person.state}</td>
+                                    <td>${person.birthdayDate}</td>
+                                    <td>${person.registrationDate}</td>
+                                    <td>${person.modifyDate}</td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 col-sm-offset-5">
+                            <c:if test="${pages > 1}">
+                                <ul class="pagination">
+                                    <c:forEach var="page" begin="1" end="${pages}">
+                                        <li class="${(page eq param.page) or ((param.page eq null) and (page eq 1))? 'active' : ''}">
+                                            <a href="/persons?page=${page}">
+                                                    ${page}
+                                            </a>
+                                        </li>
+                                    </c:forEach>
+                                </ul>
+                            </c:if>
+                        </div>
                     </div>
                 </div>
             </div>
