@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-
+<security:authorize access="isAuthenticated()">
 <div class="container">
     <%--<header class="clearfix">--%>
         <%--<span>Blueprint <span class="bp-icon bp-icon-about" data-content="The on."></span></span>--%>
@@ -41,6 +41,6 @@
     </div>
 </div>
 
-
+</security:authorize>
 
 
