@@ -87,6 +87,10 @@ public class PersonController {
 
     @RequestMapping(value = "/persons", method = RequestMethod.GET)
     public String showGroups(Model model) throws SQLException {
+
+        /*
+        add logic: get all personnel
+         */
         List<Person> persons = personService.getAll();
         model.addAttribute("persons", persons);
         return "persons/all";
@@ -106,6 +110,31 @@ public class PersonController {
         return "persons/all";
     }
 
+    /*
+        Feature is added with one reason - to test if Student info is acceptable to work with
+     */
+    @RequestMapping(value = "/test/student-info")
+    public String testStudentInfo(){
+        return "persons/students/test/info";
+    }
+
+    @RequestMapping(value = "/test/teacher-info")
+    public String testTeacherInfo(){
+        return "persons/teachers/test/info";
+    }
+
+    @RequestMapping(value = "/test/manager-info")
+    public String testManagerInfo(){
+        return "persons/managers/test/info";
+    }
+
+    @RequestMapping(value = "/test/lead-info")
+    public String testLeadInfo(){
+        return "persons/leads/test/info";
+    }
+
+    @RequestMapping(value = "/test/group-info")
+    public String testGroupInfo(){
+        return "persons/groups/test/info";
+    }
 }
-
-

@@ -88,10 +88,10 @@
                             <tbody>
                             <c:forEach var="student" items="${students}">
                                 <tr>
-                                    <td>${student.person.firstName}</td>
+                                    <td><a href="/student/info?student_id=${student.id}">${student.person.firstName}</a></td>
                                     <td>${student.person.lastName}</td>
                                     <td>${student.person.middleName}</td>
-                                    <td>${student.group.name}</td>
+                                    <td><a href="/group/info?group_id=${student.group.id}">${student.group.name}</a></td>
                                     <td>${student.person.registrationDate}</td>
                                     <td>${student.person.comments}</td>
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
@@ -103,6 +103,22 @@
                             </c:forEach>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2 col-sm-offset-5">
+                        <c:if test="${pages > 1}">
+                            <ul class="pagination">
+                                <c:forEach var="page" begin="1" end="${pages}">
+                                    <li class="${(page eq param.page) or ((param.page eq null) and (page eq 1))? 'active' : ''}">
+                                        <a href="/students?page=${page}&flagSorted=${flagSorted}">
+                                                ${page}
+                                        </a>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </c:if>
                     </div>
                 </div>
             </div>
