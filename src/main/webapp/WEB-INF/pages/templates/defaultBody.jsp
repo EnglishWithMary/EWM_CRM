@@ -31,7 +31,6 @@
                         </c:otherwise>
                     </c:choose>
                     </a>
-
                     <div class="cbp-vm-title">${person.firstName}</div>
                     <div class="cbp-vm-price">${person.lastName}</div>
                     <div class="cbp-vm-details">${person.middleName}</div>
