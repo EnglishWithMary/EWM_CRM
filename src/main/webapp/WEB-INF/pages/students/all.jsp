@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
@@ -49,10 +50,11 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="row">
-                                    <form action="/studentsSortedByGroup" method="get">
+                                    <form action="/studentsSortedByGroup" method="post">
                                         <div class="col-sm-7">
-                                            <select name="group_id" class="form-control">
-                                                <option value="">All groups</option>
+                                            <select name="groupIdList" class="form-control"
+                                            multiple size="1">
+                                                <option value="0">All groups</option>
                                                 <option value="-1">Students without group</option>
                                                 <c:forEach var="group" items="${groups}">
                                                     <option value="${group.id}">
@@ -88,7 +90,7 @@
                             <tbody>
                             <c:forEach var="student" items="${students}">
                                 <tr>
-                                    <td>${student.person.firstName}</td>
+                                    <td>${student.person.firstName} </td>
                                     <td>${student.person.lastName}</td>
                                     <td>${student.person.middleName}</td>
                                     <td>${student.group.name}</td>
