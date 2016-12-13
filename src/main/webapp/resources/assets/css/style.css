@@ -101,6 +101,8 @@
     top: 3em;
     height: 100%;
     width: 100%;
+    overflow: hidden;
+
 }
 
 .scroll{
@@ -125,6 +127,12 @@
     display: inline-block;
     vertical-align: top;
     white-space: nowrap;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.pipe_wrapper:first-child{
+    padding-left: 15px;
 }
 
 .pipe{
@@ -139,6 +147,7 @@
     box-shadow: 0px 1px 1px -1px rgba(0,0,0,0.3);
     border: 1px solid #b7b7b7;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .person:hover{
@@ -175,10 +184,10 @@
 
 .person {
     overflow: hidden;
-    margin: 2.5%;
+    margin: 1.5%;
     position: relative;
     z-index: 10;
-    width: 95% !important;
+    width: 97% !important;
 }
 
 .editToolbar {
@@ -188,38 +197,54 @@
     height: 50px;
 }
 
+.editToolbar > * {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
 .editToolbar form{
     height: 50px;
     margin: 0px;
-    padding: 3% 0 3% 3%;
+    padding: 2.5% 0 2.5% 2.5%;
 }
 
-#cardName{
-    width: 90%;
-    margin-right: 1.5%;
-}
 
 .editToolbar #cardNameForm {
-    width: 87%;
+    width: 100%;
     float: left;
 }
 
 .editToolbar #cardName {
-    width: 90%;
+    width: 85%;
     float: left;
+    margin-right: 1.5%;
 }
 
 .editToolbar #deleteCardForm {
-    padding: 3% 0 3% 0%;
-    width: 12%;
+    /*padding: 3% 0 3% 0%;*/
+    /*width: 12%;*/
     float: right;
+    /*padding: 0%;*/
+    margin: 4px 5px 0px 0px;
+}
+
+.deleteCardForm {
+    margin: 0%;
+    padding: 0%;
+}
+
+.editCardForm {
+    margin: 0%;
+    padding: 0%;
 }
 
 .pipe .person {
     float: left;
-    width: 100%;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    margin-bottom: 1%;
+    margin-top: 1%;
+    /*width: 100%;*/
+    /*margin-bottom: 10px;*/
+    /*margin-top: 10px;*/
     background-color: #ffffff;
 }
 
@@ -232,36 +257,44 @@
     position: relative;
     /*right: 3%;*/
     top: 0;
-    width: 20%;
+    padding: 0%;
+    /*width: inherit;*/
 }
 
 .editPersonFrom {
-    margin: 0%;
+
+    float: right;
+    margin-right: 3px;
+    margin-top: 3px;
     padding: 0%;
-    float: left;
+
 }
 
 .deletePersonForm {
 
-    margin: 0%;
+    float: right;
+    margin-right: 3px;
+    margin-top: 3px;
     padding: 0%;
 }
 
 .avatar {
-    width: 15%;
+    /*width: 15%;*/
     float: left;
+    padding: 0%;
 }
 
 .avatar img {
-    padding: 15%;
+    padding: 10%;
 }
 
 .personData {
     height: 80%;
     margin-top: 0.1em;
-    width: 60%;
+    /*width: 70%;*/
     font-size: small;
     float: left;
+    padding: 0%;
 }
 
 .pipe-button{
