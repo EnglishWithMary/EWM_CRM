@@ -30,4 +30,6 @@ public interface Service<T> {
 
     List<T> getByPageSorted(int pageNumber) throws SQLException;
 
+    List<T> getAllSortedAndPaginated(int pageNumber) throws SQLException;
+
 }

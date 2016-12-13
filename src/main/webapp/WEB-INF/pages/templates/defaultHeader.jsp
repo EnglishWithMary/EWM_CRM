@@ -26,7 +26,9 @@
                            aria-expanded="false">Admin tools <span class="caret"></span> </a>
                         <ul class="dropdown-menu">
                             <li><a href="/users">All Users</a></li>
-                            <li><a href="#">...</a></li>
+                            <li><a href="/persons">All Personnel</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">..in development</a></li>
                         </ul>
                     </li>
 
@@ -43,6 +45,9 @@
                             <li><a href="/payments">Payments</a></li>
                             <li><a href="/groups">Groups</a></li>
                             <li><a href="/events">Events</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/test/manager-info">test/manager/info</a></li>
+                            <li><a href="/test/lead-info">test/lead/info</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">

@@ -184,10 +184,10 @@
 
 .person {
     overflow: hidden;
-    margin: 1.5%;
+    margin: 2.5%;
     position: relative;
     z-index: 10;
-    width: 97% !important;
+    width: 95% !important;
 }
 
 .editToolbar {
@@ -255,10 +255,8 @@
 .person-edit-tool-bar{
     overflow: visible;
     position: relative;
-    /*right: 3%;*/
     top: 0;
     padding: 0%;
-    /*width: inherit;*/
 }
 
 .editPersonFrom {
