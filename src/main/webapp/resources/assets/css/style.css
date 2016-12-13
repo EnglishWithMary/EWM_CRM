@@ -150,6 +150,11 @@
     overflow-x: hidden;
 }
 
+.pipe-person-list{
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
 .person:hover{
     background-color: ghostwhite !important;
 }
@@ -180,6 +185,18 @@
 
 .add_pipe{
     width: 100% !important;
+}
+
+.add-lead-on-pipe form{
+    height: 50px;
+    margin: 0px;
+    padding: 2.5% 0 2.5% 2.5%;
+}
+
+.add-student-on-pipe form{
+    height: 50px;
+    margin: 0px;
+    padding: 2.5% 0 2.5% 2.5%;
 }
 
 .person {
@@ -215,7 +232,7 @@
 }
 
 .editToolbar #cardName {
-    width: 85%;
+    width: 80%;
     float: left;
     margin-right: 1.5%;
 }
