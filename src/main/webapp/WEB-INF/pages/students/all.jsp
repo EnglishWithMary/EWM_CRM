@@ -34,7 +34,8 @@
                                 <div class="row">
                                     <form method="get" action="/students">
                                         <div class="col-sm-7">
-                                            <select name="teacher_id" class="form-control">
+                                            <select name="teacher_id" class="selectpicker form-control"
+                                                    data-actions-box="true" data-size="5">
                                                 <option value="">All teachers</option>
                                                 <option value="-1">Students without teachers</option>
                                                 <c:forEach var="teacher" items="${teachers}">
@@ -52,7 +53,8 @@
                                 <div class="row">
                                     <form action="/studentsSortedByGroup" method="post">
                                         <div class="col-sm-7">
-                                            <select name="groupIdList"  class="form-control" multiple size="1">
+                                            <select name="groupIdList"  class="selectpicker form-control"
+                                                    multiple title="Select group">
                                                 <option value="0">All groups</option>
                                                 <option value="-1">Students without group</option>
                                                 <c:forEach var="group" items="${groups}">
