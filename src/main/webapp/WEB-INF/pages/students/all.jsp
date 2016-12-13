@@ -52,8 +52,7 @@
                                 <div class="row">
                                     <form action="/studentsSortedByGroup" method="post">
                                         <div class="col-sm-7">
-                                            <select name="groupIdList" class="form-control"
-                                            multiple size="1">
+                                            <select name="groupIdList" class="form-control" multiple size="1">
                                                 <option value="0">All groups</option>
                                                 <option value="-1">Students without group</option>
                                                 <c:forEach var="group" items="${groups}">
