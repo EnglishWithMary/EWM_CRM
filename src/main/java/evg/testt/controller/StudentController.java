@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -152,7 +153,6 @@ public class StudentController {
         return "students/all";
     }
 
-
     @RequestMapping(value = "/studentSortByTeacher", method = RequestMethod.POST)
     public String showSortedByTeacher(@RequestParam(required = false) Integer teacher_id, Model model) throws SQLException {
 
@@ -173,25 +173,26 @@ public class StudentController {
     }
 
 
-    @RequestMapping(value = "/studentsSortedByGroup", method = RequestMethod.GET)
-    public String showSortedStudent(Model model, @RequestParam(required = false) Integer group_id)
+    @RequestMapping(value = "/studentsSortedByGroup", method = RequestMethod.POST)
+    public String showSortedStudent(Model model, @RequestParam(required = false) List<Integer> groupIdList)
             throws SQLException {
-
-        List<Student> students = Collections.EMPTY_LIST;
         List<Group> groups = groupService.getAll();
         List<Teacher> teachers = teacherService.getAll();
-
-        if (group_id == null) {
+        List<Student> students = new ArrayList<>();
+        if (groupIdList!=null && groupIdList.size()>0) {
+            if (groupIdList.contains(-1)) students.addAll(studentService.getStudentsWithoutGroup());
+            if (groupIdList.contains(0)) students.addAll(studentService.getAllStudentsWithGroup());
+            else{
+                for (Integer id : groupIdList)
+                    if (id > 0)
+                        students.addAll(studentService.getAllByGroup(id));
+            }
+        }else{
             students = studentService.getAll();
-        } else if (group_id == -1) {
-            students = studentService.getStudentWithoutGroup();
-        } else if (group_id > 0) {
-            students = studentService.getAllByGroup(group_id);
         }
-
-        model.addAttribute("groups", groups).addAttribute("students", students)
-                .addAttribute("teachers", teachers);
-
+        model.addAttribute("groups", groups)
+        .addAttribute("students", students)
+        .addAttribute("teachers", teachers);
         return "students/all";
 
     }
