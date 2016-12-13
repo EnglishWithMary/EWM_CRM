@@ -2,6 +2,7 @@ package evg.testt.service;
 
 import evg.testt.model.Student;
 
+import java.util.Collection;
 import java.util.List;
 
 import java.sql.SQLException;
@@ -11,6 +12,6 @@ public interface StudentService extends RegisteredUserService<Student> {
     List<Student> getAllByTeacher(int teacher_id);
     List<Student> getStudentsWithoutTeacher();
     List<Student> getAllByGroup(int group_id);
-    List<Student> getStudentWithoutGroup();
-    
+    List<Student> getStudentsWithoutGroup();
+    List<Student> getAllStudentsWithGroup() throws SQLException;
 }
