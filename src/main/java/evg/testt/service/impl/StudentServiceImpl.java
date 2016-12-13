@@ -8,6 +8,7 @@ import evg.testt.service.StudentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -30,7 +31,11 @@ public class StudentServiceImpl extends RegisteredUserServiceImpl<Student, Stude
     }
 
     @Override
-    public List<Student> getStudentWithoutGroup() {
-        return dao.findStudentWithoutGroup();
+    public List<Student> getStudentsWithoutGroup() {
+        return dao.findStudentsWithoutGroup();
+    }
+
+    @Override
+    public List<Student> getAllStudentsWithGroup() throws SQLException {return dao.findStudentsWithGroup();
     }
 }
