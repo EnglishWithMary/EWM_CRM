@@ -72,6 +72,8 @@ public class StudentController {
         model.addAttribute("students", students);
         model.addAttribute("pages", pages);
         model.addAttribute("flagSorted", flagSorted);
+        model.addAttribute("groups",groupService.getAll());
+        model.addAttribute("teachers",teacherService.getAll());
         return "students/all";
     }
 
