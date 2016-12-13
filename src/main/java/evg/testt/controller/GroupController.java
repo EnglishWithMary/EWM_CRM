@@ -9,6 +9,8 @@ import evg.testt.service.GroupService;
 import evg.testt.service.StudentService;
 import evg.testt.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Controller
+@PropertySource(value = "classpath:standard.properties")
 public class GroupController {
 
     @Autowired
@@ -35,13 +38,41 @@ public class GroupController {
     @Autowired
     private StudentService studentService;
 
+    @Value("${pagination.page.size}")
+    protected int pageSize;
+
+
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
-    public String showGroups(Model model) throws SQLException {
-        List<Group> groups = groupService.getAll();
+    public String showGroups(@RequestParam(required = false) Integer page,
+                             @RequestParam(required = false) Boolean flagSorted,
+                             Model model) throws SQLException {
         List<Teacher> teachers=teacherService.getAll();
         List<Student> students=studentService.getAll();
+        if (flagSorted == null) flagSorted = false;
+
+        int totalGroups = 0, pages = 0, currentPage = 1;
+
+        if (page != null)
+            if (page > 0)
+                currentPage = page;
+
+        totalGroups = groupService.count();
+
+        List<Group> groups = Collections.EMPTY_LIST;
+        if (flagSorted == false) {
+          groups = groupService.getByPage(currentPage);
+        } else {
+            groups = groupService.getByPageSorted(currentPage);
+        }
+
+        pages = ((totalGroups/ pageSize) + 1);
+
+        if (totalGroups % pageSize == 0)
+            pages--;
 
         model.addAttribute("groups",groups);
+        model.addAttribute("pages", pages);
+        model.addAttribute("flagSorted", flagSorted);
         model.addAttribute("teachers",teachers);
         model.addAttribute("students", students);
         model.addAttribute("groupFilter", new GroupDTO());
@@ -93,5 +124,15 @@ public class GroupController {
                 .addAttribute("teachers", teachers)
                 .addAttribute("groupFilter", groupFilter);
         return "groups/all";
+    }
+
+    @RequestMapping(value = "/group/info")
+    public String groupInfo(Model model, @RequestParam int group_id) throws SQLException {
+
+        Group group = groupService.getById(group_id);
+
+        model.addAttribute("group", group);
+
+        return "persons/group-info";
     }
 }

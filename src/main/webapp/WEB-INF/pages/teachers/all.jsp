@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <div class="row">
     <div class="col-sm-12">
@@ -35,7 +36,7 @@
                     <tbody>
                     <c:forEach var="teacher" items="${teachers}">
                         <tr>
-                            <td>${teacher.person.firstName}</td>
+                            <td><a href="/teacher/info?teacher_id=${teacher.id}">${teacher.person.firstName}</a></td>
                             <td>${teacher.person.lastName}</td>
                             <td>${teacher.person.middleName}</td>
                             <td>${teacher.person.registrationDate}</td>
@@ -48,10 +49,29 @@
                     </c:forEach>
                     </tbody>
                 </table>
+
+
+
+                <div class="row">
+                    <div class="col-sm-2 col-sm-offset-5">
+                        <c:if test="${pages > 1}">
+                            <ul class="pagination">
+                                <c:forEach var="page" begin="1" end="${pages}">
+                                    <li class="${(page eq param.page) or ((param.page eq null) and (page eq 1))? 'active' : ''}">
+                                        <a href="/teachers?page=${page}&flagSorted=${flagSorted}">
+                                                ${page}
+                                        </a>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </c:if>
+                    </div>
+                </div>
+            </div>
+
                 <%--</div>--%>
             </div>
         </div>
-    </div>
     <div class="col-sm-4">
         <div class="panel panel-default">
             <div class="panel-heading">
