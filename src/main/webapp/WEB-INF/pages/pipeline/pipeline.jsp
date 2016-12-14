@@ -31,9 +31,7 @@
                     <c:forEach items="${card.persons}" var="person">
 
                         <div class="person">
-
                             <input type="hidden" id="from" name="from" value="${card.id}">
-
                             <div class="avatar">
                                 <c:if test="${person.avatarURL==null}">
                                     <img class="img-rounded img-responsive" alt="Responsive image"
@@ -43,26 +41,31 @@
                                     <img src="${person.avatarURL}" class="img-responsive"/>
                                 </c:if>
                             </div>
+
                             <div class="personData">
                                 <input type="hidden" id="personId" name="personId" value="${person.id}">
-                                <p>
+                                <a class="btn btn-default btn-lg btn-block" href="/lead/info?personId=${person.id}" role="button">
                                         ${person.lastName}
                                         ${fn:substring(person.firstName,0,1)}.${fn:substring(person.middleName,0,1)}.
-                                </p>
+                                </a>
                             </div>
 
-                            <div class="person-edit-tool-bar">
-                                <form method="post" action="/leadAdd" class="editPersonFrom btn-xs">
-                                    <input type="hidden" name="personId" value="${person.id}">
-                                    <button type="submit" class="pipe-button btn btn-default btn-xs">
-                                        <span class="glyphicon glyphicon-pencil"></span>
-                                    </button>
-                                </form>
-
-                                <button type="button" class="btn btn-default btn-xs"
-                                        data-toggle="modal" data-target="#modal${person.id}">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="person-edit-tool-bar">
+                                        <button type="button" class="btn btn-default btn-xs"
+                                                data-toggle="modal" data-target="#modal${person.id}">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                        </br>
+                                        <form method="post" action="/leadAdd" class="editPersonFrom btn-xs">
+                                            <input type="hidden" name="personId" value="${person.id}">
+                                            <button type="submit" class="pipe-button btn btn-default btn-xs">
+                                                <span class="glyphicon glyphicon-pencil"></span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
 
                         </div> <%-- end person --%>

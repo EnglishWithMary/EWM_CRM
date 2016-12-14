@@ -41,17 +41,22 @@
                                     <strong>Information About Lead</strong>
                                 </div>
                                 <div class="panel-body">
-                                    <p><strong>First Name: </strong>Matilda</p>
-                                    <p><strong>Last Name: </strong>Smith</p>
-                                    <p><strong>Middle Name: </strong>Fergus'es daughter</p>
-                                    <p><strong>Phone: </strong>+38(055)444-33-99</p>
-                                    <p><strong>email: </strong>matilda@goo.com</p>
-                                    <p><strong>web : </strong><a href="">vk.com/matilda</a></p>
-                                    <p><strong>Date of Birth: </strong>Jul 17, 1991</p>
-                                    <p><strong>Comment: </strong>Wants to enroll into C2 classes</p>
+                                    <p><strong>First Name: </strong>${lead.person.firstName}</p>
+                                    <p><strong>Last Name: </strong>${lead.person.lastName}</p>
+                                    <p><strong>Middle Name: </strong>${lead.person.middleName}</p>
+                                    <p><strong>Phone: </strong></p>
+                                    <p><strong>email: </strong>${lead.person.email.email}</p>
+                                    <p><strong>web : </strong><a href=""></a></p>
+                                    <p><strong>Date of Birth: </strong>${lead.person.birthdayDate}</p>
+                                    <p><strong>Comment: </strong>${lead.person.comments}</p>
                                     <p><strong>Referral: </strong>Some info</p>
                                     <p><strong>Groups he wants to try: </strong>Group Name?</p>
                                     <p><strong>Language: </strong>English</p>
+
+                                    <p><strong>State: </strong><input type="text" value="${lead.person.state.state}"></p>
+                                    <p><strong>Last modified: </strong>${lead.person.modifyDate}</p>
+                                    <p><strong>Registration date: </strong>${lead.person.registrationDate}</p>
+                                    <p><strong>Organization: </strong><input type="text"></p>
                                 </div>
                             </div>
                         </div>
