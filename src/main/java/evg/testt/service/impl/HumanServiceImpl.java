@@ -34,8 +34,11 @@ class HumanServiceImpl <T extends Human, P extends HumanRepository<T>>
         dao.save(o);
     }
 
-    @Override
-    public List<T> getAll() throws SQLException {
-        return (List<T>)(dao.findAll());
+    public List<T> getSortedByRegistrationDate() throws SQLException{
+        return dao.findSortedByRegistrationDate();
+    }
+
+    public List<T> getByPageSorted(int pageNumber) throws SQLException{
+        return dao.findByPageSorted(pageNumber);
     }
 }

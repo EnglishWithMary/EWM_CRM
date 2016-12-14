@@ -12,7 +12,6 @@ import java.util.List;
 @Repository
 public class GroupRepositoryJpaImpl extends BaseRepositoryJpaImpl<Group> implements GroupRepository {
 
-    @Override
     public List<Group> findByGroup(Group group) {
         Query query = em.createQuery("SELECT group FROM groups group WHERE group.id =:group");
         query.setParameter("group", group);
@@ -23,7 +22,7 @@ public class GroupRepositoryJpaImpl extends BaseRepositoryJpaImpl<Group> impleme
             return null;
         }
     }
-    @Override
+
     public List<Group> findByTeacher(Teacher teacher) {
         Query query = em.createQuery("SELECT group FROM groups group WHERE group.teacher =:teacher");
         query.setParameter("teacher", teacher);
