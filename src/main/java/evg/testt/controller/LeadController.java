@@ -165,4 +165,12 @@ public class LeadController {
         cardService.update(cardNew);
         return "redirect:"+request.getHeader("Referer");
     }
+
+
+    @RequestMapping(value = "/lead/info", method = RequestMethod.GET)
+    public String leadInfo(Model model, @RequestParam int personId) throws SQLException {
+        Lead lead = leadService.getByPerson(personService.getById(personId));
+        model.addAttribute("lead", lead);
+        return "persons/lead-info";
+    }
 }
