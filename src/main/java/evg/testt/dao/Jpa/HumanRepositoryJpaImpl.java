@@ -44,8 +44,11 @@ public abstract class HumanRepositoryJpaImpl<T extends Human> extends BaseReposi
 
     public List<T> findByPageSorted(int pageNumber) throws SQLException {
         Query query = em.createQuery(this.query + " order by p.registrationDate asc");
+
         query.setFirstResult((pageNumber-1) * pageSize);
+
         query.setMaxResults(pageSize);
+
         return query.getResultList();
     }
 }
