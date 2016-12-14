@@ -17,6 +17,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Transactional
@@ -70,12 +71,25 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel>
         return (int)total;
     }
 
-    public List<T> findByPage(int pageNumber)
-    {
+    public List<T> findByPage(int pageNumber) {
         Query query = em.createQuery("SELECT t FROM " + entityClass.getName() + " t");
         query.setFirstResult((pageNumber-1) * pageSize);
         query.setMaxResults(pageSize);
         return query.getResultList();
+    }
+
+    public Query findPaginated(int pageNumber){
+        Query query = em.createQuery("SELECT t FROM " + entityClass.getName() + " t");
+        query.setFirstResult((pageNumber-1) * pageSize);
+        query.setMaxResults(pageSize);
+        return query;
+    }
+
+    /*
+        Here should be sorting parameters
+     */
+    public List<T> findAllSortedAndPaginated(int pageNumber){
+        return findPaginated(pageNumber).getResultList();
     }
 
     private Boolean hasPerson(){
@@ -91,19 +105,6 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel>
     }
 
     @Override
-    public List<T> findSortedByRegistrationDate() throws SQLException {
-        if(!hasPerson())throw new PersonFieldTypeNotFoundException(entityClass.getName() +
-                " has no field of " + Person.class.getName() + " type.");
-        Query query = em.createQuery("select l from "+entityClass.getName()+
-                " l join l.person p order by p.registrationDate asc");
-        List<T> result = (List<T>) query.getResultList();
-        if(result.size()>0) {
-            return result;
-        }
-        return null;
-    }
-
-    @Override
     public List<T> findByPageSorted(int pageNumber) throws SQLException {
         if(!hasPerson())throw new PersonFieldTypeNotFoundException(entityClass.getName() +
                 " has no field of " + Person.class.getName() + " type.");
@@ -113,4 +114,5 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel>
         query.setMaxResults(pageSize);
         return query.getResultList();
     }
+
 }

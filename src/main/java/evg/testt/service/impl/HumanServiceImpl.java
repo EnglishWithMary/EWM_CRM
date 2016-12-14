@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @Service
 public abstract
@@ -31,5 +32,13 @@ class HumanServiceImpl <T extends Human, P extends HumanRepository<T>>
     public void restore (T o) throws SQLException{
         o.getPerson().getState().setState("ACTIVE");
         dao.save(o);
+    }
+
+    public List<T> getSortedByRegistrationDate() throws SQLException{
+        return dao.findSortedByRegistrationDate();
+    }
+
+    public List<T> getByPageSorted(int pageNumber) throws SQLException{
+        return dao.findByPageSorted(pageNumber);
     }
 }
