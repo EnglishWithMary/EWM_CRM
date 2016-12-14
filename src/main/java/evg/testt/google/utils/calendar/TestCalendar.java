@@ -28,7 +28,7 @@ public class TestCalendar {
 
     /** Directory to store user credentials for this application. */
     private static final java.io.File DATA_STORE_DIR = new java.io.File(
-            System.getProperty("user.home"), ".documents");
+            System.getProperty("user.home"), "/Documents");
 
     /** Global instance of the {@link FileDataStoreFactory}. */
     private static FileDataStoreFactory DATA_STORE_FACTORY;
@@ -65,7 +65,7 @@ public class TestCalendar {
      */
     public static Credential authorize() throws IOException {
         // Load client secrets.
-        InputStream in = TestCalendar.class.getResourceAsStream("/englishwithmarytestkey.json");
+        InputStream in = TestCalendar.class.getResourceAsStream("/key.json");
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
@@ -76,9 +76,12 @@ public class TestCalendar {
                         .setDataStoreFactory(DATA_STORE_FACTORY)
                         .setAccessType("offline")
                         .build();
+
         Credential credential = new AuthorizationCodeInstalledApp(
-                flow, new LocalServerReceiver()).authorize("ewmcrmtest");
+                flow, new LocalServerReceiver()).authorize("user");
+
 //        System.out.println("Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
+
         return credential;
     }
 

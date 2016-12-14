@@ -37,6 +37,7 @@
                            aria-haspopup="true"
                            aria-expanded="false">Managing <span class="caret"></span> </a>
                         <ul class="dropdown-menu">
+                            <li><a href="/rooms">Rooms</a></li>
                             <li><a href="/teachers">Teachers</a></li>
                             <li><a href="/managers">Managers</a></li>
                             <li><a href="/students">Students</a></li>

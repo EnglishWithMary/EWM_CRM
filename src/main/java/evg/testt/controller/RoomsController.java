@@ -36,7 +36,8 @@ public class RoomsController {
     @RequestMapping(value = {"/rooms", "/rooms/all"}, method = RequestMethod.GET)
     public String showAllRooms(Model model) throws IOException {
         List<Event> events = testCalendar.getCalendarEvents();
-        List<RoomEvent> roomEvents = RoomsEventsHelper.convertGoogleEventsToRoomEvents(events);
+        List<RoomEvent> roomEvents = null;
+//                RoomsEventsHelper.convertGoogleEventsToRoomEvents(events);
         model.addAttribute("room-events", roomEvents);
         return "rooms/all";
     }
