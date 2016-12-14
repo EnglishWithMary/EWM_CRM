@@ -187,16 +187,10 @@
     width: 100% !important;
 }
 
-.add-lead-on-pipe form{
-    height: 50px;
-    margin: 0px;
-    padding: 2.5% 0 2.5% 2.5%;
-}
-
+.add-lead-on-pipe form,
 .add-student-on-pipe form{
     height: 50px;
     margin: 0px;
-    padding: 2.5% 0 2.5% 2.5%;
 }
 
 .person {
@@ -242,7 +236,7 @@
     /*width: 12%;*/
     float: right;
     /*padding: 0%;*/
-    margin: 4px 5px 0px 0px;
+    margin: 4px 9px 0px 0px;
 }
 
 .deleteCardForm {
