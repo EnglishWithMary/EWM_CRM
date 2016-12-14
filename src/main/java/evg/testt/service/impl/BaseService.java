@@ -61,4 +61,8 @@ public abstract class BaseService <T extends BaseModel, P extends BaseRepository
     public List<T> getByPageSorted(int pageNumber) throws SQLException{
         return dao.findByPageSorted(pageNumber);
     }
+
+    public List<T> getAllSortedAndPaginated(int pageNumber)throws SQLException{
+        return dao.findAllSortedAndPaginated(pageNumber);
+    }
 }
