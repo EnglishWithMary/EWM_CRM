@@ -1,48 +1,64 @@
 package evg.testt.controller;
 
-import evg.testt.model.Role;
+import evg.testt.exception.PersonRoleNotFoundException;
+import evg.testt.model.Person;
 import evg.testt.model.User;
+import evg.testt.oval.SpringOvalValidator;
+import evg.testt.service.PersonService;
 import evg.testt.service.RoleService;
 import evg.testt.service.UserService;
-import evg.testt.util.JspPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
+
+
+/**
+ * TODO: add functionality to interact with User - CRUD
+ */
 
 @Controller
 public class UsersController {
 
     @Autowired
     UserService userService;
-
+    @Autowired
+    PersonService personService;
     @Autowired
     RoleService roleService;
+    @Autowired
+    SpringOvalValidator validator;
 
     @ModelAttribute("user")
     public User createUser() {
         return new User();
     }
 
-    @RequestMapping(value = {"","/","home"})
-    public ModelAndView homePage() {
-        return new ModelAndView(JspPath.HOME);
-    }
+    @RequestMapping(value = {"","/","/home"})
+    public String homePage(Model model, Principal principal) throws SQLException, PersonRoleNotFoundException {
 
-    @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public ModelAndView showUsersFromPost() {
-        return showUsers();
+        if (principal != null) {
+
+            Person person = personService.getPersonByUserLogin(principal.getName());
+
+            model.addAttribute("person", person);
+        }
+        return "home";
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public ModelAndView showUsers() {
+    public String showUsers(Model model) {
         List<User> users;
         try {
             users = userService.getAll();
@@ -50,73 +66,51 @@ public class UsersController {
             users = Collections.emptyList();
             e.printStackTrace();
         }
-        return new ModelAndView(JspPath.USERS_ALL, "users", users);
+        model.addAttribute("users", users);
+        return "users/all";
     }
 
     @RequestMapping(value = "/userAdd")
-    public ModelAndView addUser() {
-        return new ModelAndView(JspPath.USERS_ADD);
+    public String addUser() {
+        return "users/add";
     }
 
-    @RequestMapping(value = "/userAdd", method = RequestMethod.POST)
-    public String saveUser(@ModelAttribute("user") User user) {
-        try {
-            userService.insert(user);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return "forward:/users";
-    }
+    @RequestMapping(value = "/userSave", method = RequestMethod.POST)
+    public String saveUser(Model model, @ModelAttribute("user") @Validated User user, BindingResult bindingResult) {
+        validator.validate(user, bindingResult);
 
-    @RequestMapping(value = "/userAddRole", method = RequestMethod.GET)
-    public ModelAndView addRole(@RequestParam int id) {
-        User user;
-        ModelAndView model;
-        try {
-            user = userService.getById(id);
-        } catch (SQLException e) {
-            user = null;
-            e.printStackTrace();
-        }
-        if (user.getRole() != null) {
-            return showUsers();
+        User u = null;
+        u =  userService.findByUserLogin(user.getLogin());
+        if (u != null)
+        bindingResult.rejectValue("login", "1", "Login already exist.");
+
+        if (!bindingResult.hasErrors()) {
+            try {
+                userService.insert(user);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return "users/all";
         } else {
-            model = new ModelAndView(JspPath.USERS_ADD_ROLE);
+            return "users/add";
         }
-        model.addObject("role", new Role());
-        model.addObject("user_id", id);
-        return model;
+    }
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(Model model,
+            @RequestParam(value = "error", required = false) String error,
+            @RequestParam(value = "logout", required = false) String logout) {
+
+//        ModelAndView model = new ModelAndView();
+        if (error != null) {
+            model.addAttribute("error", "Invalid username and password!");
+        }
+
+        if (logout != null) {
+            model.addAttribute("msg", "You've been logged out successfully.");
+        }
+//        model.setViewName("login");
+
+        return "login";
     }
 
-    @RequestMapping(value = "/userAddRole", method = RequestMethod.POST)
-    public String saveRole(@ModelAttribute("role") Role role, @RequestParam int id) {
-        User user;
-        try {
-            user = userService.getById(id);
-            user.setRole(role);
-            role.setUser(user);
-            roleService.update(role);
-            userService.update(user);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return "forward:/users";
-    }
-
-    @RequestMapping(value = "userDel")
-    public String deleteUser(@RequestParam int id) {
-        User user;
-        Role role;
-        try {
-            user = userService.getById(id);
-            role = user.getRole();
-            user.setRole(null);
-            roleService.delete(role);
-            userService.update(user);
-            userService.delete(user);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return "forward:/users";
-    }
 }
