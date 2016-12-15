@@ -16,4 +16,6 @@ public interface RoomService extends Service<Room>{
 
     public void insertEventIntoRoom(Event event, Integer id) throws SQLException, IOException;
 
+    public Room getRoomByName(String name);
+
 }

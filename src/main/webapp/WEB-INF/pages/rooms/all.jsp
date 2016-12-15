@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <h1 class="page-header">Teachers list</h1>
+        <h1 class="page-header">List of Rooms</h1>
     </div>
 </div>
 
@@ -14,36 +14,23 @@
                 <strong>List of Rooms</strong>
             </div>
             <div class="panel-body">
-                <form method="get" action="">
-                    <div class="form-group">
-                        <input type="submit" value="Sort ... In Developement" class="btn btn-default">
-                    </div>
-                </form>
-
-                <c:forEach var="room" items="${rooms}">
-                    <table class="table table-bordered">
-                        <thead>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Room Name</th>
+                        <th>Calendar</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="room" items="${rooms}">
                         <tr>
-                            <th>Event Name</th>
-                            <th>Start Time</th>
-                            <th>End Time</th>
+                            <td>${room.name}</td>
+                            <td><a href="/rooms/${room.id}/info" class="btn btn-default btn-sm">Calendar</a></td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach var="event" items="${events}">
-                            <tr>
-                                <td>${event.getSummary}</td>
-                                <td>${event.getStart.getDateTime}</td>
-                                <td>${event.getEnd.getDateTime}</td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                </c:forEach>
-
-
+                    </c:forEach>
+                    </tbody>
+                </table>
             </div>
-
         </div>
     </div>
     <div class="col-sm-4">

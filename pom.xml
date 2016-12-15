@@ -35,6 +35,13 @@
 
     <dependencies>
 
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+
         <!--Google API-->
         <!-- https://mvnrepository.com/artifact/com.google.api-client/google-api-client -->
         <dependency>

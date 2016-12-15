@@ -9,13 +9,13 @@ import javax.persistence.Transient;
 
 public @Data class PersonDTO {
 
-    @Length(min = 3, max = 20, message = "Login should be between 6 and 20 chars.")
+    @Length(min = 3, max = 20, message = "Login should be between 3 and 20 chars.")
     private String login;
 
     @Length(min = 6, max = 20, message = "Password should be between 6 and 20 chars.")
     private String password;
 
-    @Length(min = 6, max = 20, message = "Incorrect password.")
+    @Length(min = 6, max = 20, message = "Password should be between 6 and 20 chars.")
     @EqualToField(value = "password", message = "Passwords don't match")
     @Transient
     private String confirmPassword;

@@ -27,6 +27,10 @@ public class RoomServiceImpl extends BaseService<Room, RoomRepository> implement
     }
 
     public void insertEventIntoRoom(Event event, Integer id) throws SQLException, IOException{
-        GoogleCalendarAPI.insertEvent(dao.findOne(id).getName(), event);
+        GoogleCalendarAPI.insertEvent(dao.findOne(id).getCalendarId(), event);
+    }
+
+    public Room getRoomByName(String name){
+        return dao.findByName(name);
     }
 }
