@@ -31,9 +31,7 @@ public class StudentRepositoryJpaImpl extends RegisteredUserRepositoryJpaImpl<St
     @Override
     public List<Student> findStudentsByGroup(int group_id) {
         TypedQuery<Student> query = em.createQuery("SELECT student FROM students student where student.group.id = :id AND student.person.state = 'ACTIVE'", Student.class);
-
         query.setParameter("id", group_id);
-
         return query.getResultList();
     }
 

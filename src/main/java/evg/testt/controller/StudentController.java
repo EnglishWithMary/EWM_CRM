@@ -85,8 +85,7 @@ public class StudentController {
 
         List<Group> groups = groupService.getAll();
 
-        model.addAttribute("student", person)
-                .addAttribute("teachers", teachers);
+        model.addAttribute("student", person).addAttribute("teachers", teachers);
         model.addAttribute("groups", groups);
         return "students/add";
     }
@@ -152,7 +151,7 @@ public class StudentController {
     public String studentTrash(@RequestParam Integer id) throws SQLException {
         Student student = studentService.getById(id);
         studentService.trash(student);
-        return "students/all";
+        return "redirect:/students";
     }
 
     @RequestMapping(value = "/studentSortByTeacher", method = RequestMethod.POST)
