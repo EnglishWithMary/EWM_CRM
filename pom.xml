@@ -29,27 +29,71 @@
         <lombok.version>1.16.10</lombok.version>
         <amazonaws.version>1.9.2</amazonaws.version>
         <postrgesql.version>9.4-1206-jdbc42</postrgesql.version>
+        <google.api>1.22.0</google.api>
+        <google.services.calendar>v3-rev225-1.22.0</google.services.calendar>
     </properties>
 
     <dependencies>
 
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+
+        <!--Google API-->
+        <!-- https://mvnrepository.com/artifact/com.google.api-client/google-api-client -->
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>${google.api}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.google.oauth-client/google-oauth-client-jetty -->
+        <dependency>
+            <groupId>com.google.oauth-client</groupId>
+            <artifactId>google-oauth-client-jetty</artifactId>
+            <version>${google.api}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.google.oauth-client/google-oauth-client -->
+        <dependency>
+            <groupId>com.google.oauth-client</groupId>
+            <artifactId>google-oauth-client</artifactId>
+            <version>${google.api}</version>
+        </dependency>
+
+        <!--Google Calendar-->
+        <!-- https://mvnrepository.com/artifact/com.google.apis/google-api-services-calendar -->
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-calendar</artifactId>
+            <version>${google.services.calendar}</version>
+        </dependency>
+
+
+        <!--PostgreSQL-->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postrgesql.version}</version>
         </dependency>
-        <!-- Lombok-->
+
+        <!--Amazon AWS-->
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk</artifactId>
             <version>${amazonaws.version}</version>
         </dependency>
 
+        <!-- Lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
         </dependency>
+
         <!-- Mail -->
         <!-- https://mvnrepository.com/artifact/org.springframework.integration/spring-integration-mail -->
         <dependency>
@@ -57,11 +101,13 @@
             <artifactId>spring-integration-mail</artifactId>
             <version>4.3.4.RELEASE</version>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/javax.mail/mail -->
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
             <version>1.4</version>
+
         </dependency>
         <!-- Spring -->
         <!-- https://mvnrepository.com/artifact/org.springframework.batch/spring-batch-core -->
@@ -70,6 +116,7 @@
             <artifactId>spring-batch-core</artifactId>
             <version>3.0.7.RELEASE</version>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
         <dependency>
             <groupId>org.springframework</groupId>
