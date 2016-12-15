@@ -16,6 +16,9 @@ public @Data class Room extends BaseModel{
     @Pattern(regexp = "^[A-Za-z0-9_\\s\\-]*$")
     private String name;
 
+    @Column(name = "calendar_id")
+    private String calendarId;
+
     @Transient
-    List<RoomEvent> events;
+    private List<RoomEvent> events;
 }

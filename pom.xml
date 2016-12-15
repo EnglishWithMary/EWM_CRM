@@ -43,25 +43,12 @@
             <version>${google.api}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.google.api-client</groupId>
-            <artifactId>google-api-client-java6</artifactId>
-            <version>${google.api}</version>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/com.google.oauth-client/google-oauth-client-jetty -->
         <dependency>
             <groupId>com.google.oauth-client</groupId>
             <artifactId>google-oauth-client-jetty</artifactId>
             <version>${google.api}</version>
         </dependency>
-
-
-        <!--<dependency>-->
-            <!--<groupId>com.google.api-client</groupId>-->
-            <!--<artifactId>google-api-client-jackson</artifactId>-->
-            <!--<version>${google.api}</version>-->
-        <!--</dependency>-->
 
         <!-- https://mvnrepository.com/artifact/com.google.oauth-client/google-oauth-client -->
         <dependency>
