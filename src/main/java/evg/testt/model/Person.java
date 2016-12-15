@@ -20,6 +20,9 @@ public @Data class Person extends BaseModel{
     @Embedded
     private State state = new State();
 
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Role role;
+
     @Temporal(TemporalType.DATE)
     private Date birthdayDate;
 

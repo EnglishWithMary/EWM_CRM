@@ -23,16 +23,6 @@ public class CardRepositoryJpaImpl extends BaseRepositoryJpaImpl<Card> implement
         return cards;
     }
 
-    @Override
-    public Card findCardByPerson(Person person) throws SQLException {
-        Query query = em.createQuery("SELECT c FROM cards c join c.persons p"+
-                " WHERE p =:person");
-        query.setParameter("person", person);
-        List<Card> result = ( List<Card>) query.getResultList();
-        if (result.size()>0)
-            return (Card) result.get(0);
-        else return null;
-    }
 
     @Override
     public void movePersonOnCards(int from, int destination, Person person) throws SQLException {
@@ -45,5 +35,17 @@ public class CardRepositoryJpaImpl extends BaseRepositoryJpaImpl<Card> implement
         save(sourceCard);
         save(destinationCard);
 
+    }
+
+    @Override
+    public Card findCardByPerson(Person person) throws SQLException {
+        Query query = em.createQuery("SELECT  c from cards c join c.persons p where p =:person");
+        query.setParameter("person", person);
+        List<Card> results = (List<Card>)query.getResultList();
+        if (results.size()>0){
+            return (Card)results.get(0);
+        }else {
+            return null;
+        }
     }
 }

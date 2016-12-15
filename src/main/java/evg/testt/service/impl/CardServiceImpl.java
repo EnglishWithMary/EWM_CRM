@@ -36,15 +36,16 @@ public class CardServiceImpl extends BaseService<Card, CardRepository> implement
         dao.movePersonOnCards(from, destination, movingPerson);
     }
 
-    @Override
-    @Transactional
-    public Card getCardByPerson(Person person) throws SQLException {
-        return dao.findCardByPerson(person);
-    }
 
     @Override
     @Transactional
     public void delete(Card card) throws SQLException{
         dao.delete(dao.findOne(card.getId()));
+    }
+
+    @Override
+    @Transactional
+    public Card getCardByPerson(Person person) throws SQLException {
+        return dao.findCardByPerson(person);
     }
 }
