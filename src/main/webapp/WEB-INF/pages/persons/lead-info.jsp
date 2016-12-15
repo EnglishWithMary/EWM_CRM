@@ -1,6 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 
 <div class="container-fluid">
     <div class="row">
@@ -41,14 +44,17 @@
                                     <strong>Information About Lead</strong>
                                 </div>
                                 <div class="panel-body">
-                                    <p><strong>First Name: </strong>${lead.person.firstName}</p>
-                                    <p><strong>Last Name: </strong>${lead.person.lastName}</p>
-                                    <p><strong>Middle Name: </strong>${lead.person.middleName}</p>
+                                    <p><strong>First Name: </strong><input type="text" value="${lead.person.firstName}"></p>
+                                    <p><strong>Last Name: </strong><input type="text" value="${lead.person.lastName}"></p>
+                                    <p><strong>Middle Name: </strong><input type="text" value="${lead.person.middleName}"></p>
                                     <p><strong>Phone: </strong></p>
-                                    <p><strong>email: </strong>${lead.person.email.email}</p>
+                                    <p><strong>email: </strong><input type="text" value="${lead.person.email.email}"></p>
                                     <p><strong>web : </strong><a href=""></a></p>
-                                    <p><strong>Date of Birth: </strong>${lead.person.birthdayDate}</p>
-                                    <p><strong>Comment: </strong>${lead.person.comments}</p>
+                                    <p><strong>Date of Birth: </strong>
+                                        <fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ss.SSS" value="${lead.person.birthdayDate}" var="birth"/>
+                                        <input type="datetime-local" value= "${birth}" />
+                                    </p>
+                                    <p><strong>Comment: </strong><input type="text" value="${lead.person.comments}"></p>
                                     <p><strong>Referral: </strong>Some info</p>
                                     <p><strong>Groups he wants to try: </strong>Group Name?</p>
                                     <p><strong>Language: </strong>English</p>
@@ -56,7 +62,7 @@
                                     <p><strong>State: </strong><input type="text" value="${lead.person.state.state}"></p>
                                     <p><strong>Last modified: </strong>${lead.person.modifyDate}</p>
                                     <p><strong>Registration date: </strong>${lead.person.registrationDate}</p>
-                                    <p><strong>Organization: </strong><input type="text"></p>
+                                    <p><strong>Organization: </strong><input type="text" value="${lead.person.organization}"></p>
                                 </div>
                             </div>
                         </div>
