@@ -2,9 +2,7 @@ package evg.testt.dao.Jpa;
 
 
 import evg.testt.dao.HumanRepository;
-import evg.testt.exception.PersonFieldTypeNotFoundException;
 import evg.testt.model.Human;
-import evg.testt.model.Person;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
@@ -16,13 +14,41 @@ import java.util.List;
 public abstract class HumanRepositoryJpaImpl<T extends Human> extends BaseRepositoryJpaImpl<T>
         implements HumanRepository<T>{
 
-    public Collection<T> findAll(){
-        Query query = em.createQuery("select t from "+entityClass.getName()+
-                " t join t.person p where p.state ='ACTIVE' or p.state ='STATE_ACTIVE'");
-        List<T> result =(List<T>) query.getResultList();
-        if (result.size()>0)
-            return result;
-        else
-            return null;
+    private String query = "SELECT l FROM " + entityClass.getName() +
+            " l JOIN l.person p WHERE p.state = 'ACTIVE'";
+
+    @Override
+    public Collection<T> findAll() {
+
+        Query query = em.createQuery(this.query);
+
+        return (List<T>)query.getResultList();
+    }
+
+    public List<T> findByPage(int pageNumber) {
+
+        Query query = em.createQuery(this.query);
+
+        query.setFirstResult((pageNumber-1) * pageSize);
+
+        query.setMaxResults(pageSize);
+
+        return query.getResultList();
+    }
+
+    public List<T> findSortedByRegistrationDate() throws SQLException {
+        Query query = em.createQuery(this.query + " order by p.registrationDate asc");
+
+        return query.getResultList();
+    }
+
+    public List<T> findByPageSorted(int pageNumber) throws SQLException {
+        Query query = em.createQuery(this.query + " order by p.registrationDate asc");
+
+        query.setFirstResult((pageNumber-1) * pageSize);
+
+        query.setMaxResults(pageSize);
+
+        return query.getResultList();
     }
 }
