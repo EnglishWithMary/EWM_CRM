@@ -1,5 +1,6 @@
 package evg.testt.model;
 
+import com.google.api.services.calendar.model.Event;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,5 +21,5 @@ public @Data class Room extends BaseModel{
     private String calendarId;
 
     @Transient
-    private List<RoomEvent> events;
+    private List<Event> events;
 }

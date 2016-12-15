@@ -20,52 +20,30 @@
                     </div>
                 </form>
 
-                <%--<div class="table-wrapper">--%>
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Room</th>
-                        <th>Info</th>
-                        <security:authorize access="hasRole('ROLE_ADMIN')">
-                            <th>Delete Room</th>
-                        </security:authorize>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="room" items="${rooms}">
+                <c:forEach var="room" items="${rooms}">
+                    <table class="table table-bordered">
+                        <thead>
                         <tr>
-                            <td>${room.name}</td>
-                            <td><a href="/rooms/info?id=${room.id}">info</a></td>
-                            <td>
-                                <security:authorize access="hasRole('ROLE_ADMIN')">
-                                    <a href="">Delete (does nothing)</a>
-                                </security:authorize>
-                            </td>
+                            <th>Event Name</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
                         </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="event" items="${events}">
+                            <tr>
+                                <td>${event.getSummary}</td>
+                                <td>${event.getStart.getDateTime}</td>
+                                <td>${event.getEnd.getDateTime}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </c:forEach>
 
 
-                <%--PAGINATION MIGHT BE NESSECARY--%>
-                <%--<div class="row">--%>
-                <%--<div class="col-sm-2 col-sm-offset-5">--%>
-                <%--<c:if test="${pages > 1}">--%>
-                <%--<ul class="pagination">--%>
-                <%--<c:forEach var="page" begin="1" end="${pages}">--%>
-                <%--<li class="${(page eq param.page) or ((param.page eq null) and (page eq 1))? 'active' : ''}">--%>
-                <%--<a href="/teachers?page=${page}&flagSorted=${flagSorted}">--%>
-                <%--${page}--%>
-                <%--</a>--%>
-                <%--</li>--%>
-                <%--</c:forEach>--%>
-                <%--</ul>--%>
-                <%--</c:if>--%>
-                <%--</div>--%>
-                <%--</div>--%>
             </div>
 
-            <%--</div>--%>
         </div>
     </div>
     <div class="col-sm-4">
