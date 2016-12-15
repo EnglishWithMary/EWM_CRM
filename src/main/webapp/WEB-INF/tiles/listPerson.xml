@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="listPerson" extends="home">
+        <put-attribute name="body" value="/WEB-INF/pages/templates/defaultBody.jsp" />
+        <put-attribute name="title" value="List persons" />
+    </definition>
+
+    <definition name="listViews/leadsView" extends="home">
+        <put-attribute name="title" value="Leads" />
+        <put-attribute name="body" value="/WEB-INF/pages/listViews/leadsView.jsp" />
+    </definition>
+
+    <definition name="listViews/studentsView" extends="home">
+        <put-attribute name="title" value="Students" />
+        <put-attribute name="body" value="/WEB-INF/pages/listViews/studentsView.jsp" />
+    </definition>
+
+
+    <definition name="listViews/teachersView" extends="home">
+        <put-attribute name="title" value="Teachers" />
+        <put-attribute name="body" value="/WEB-INF/pages/listViews/teachersView.jsp" />
+    </definition>
+</tiles-definitions>
