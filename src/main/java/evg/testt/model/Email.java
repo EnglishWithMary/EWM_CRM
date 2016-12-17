@@ -14,4 +14,8 @@ public @Data class Email extends BaseModel {
         this.email = email;
     }
 
+    public String toString(){
+        return email;
+    }
+
 }
