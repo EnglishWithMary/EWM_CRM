@@ -3,7 +3,6 @@ package evg.testt.controller;
 import evg.testt.model.Card;
 import evg.testt.model.Pipe;
 import evg.testt.model.PipeType;
-import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

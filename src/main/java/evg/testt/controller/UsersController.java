@@ -3,7 +3,7 @@ package evg.testt.controller;
 import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.Person;
 import evg.testt.model.User;
-import evg.testt.oval.SpringOvalValidator;
+//import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.PersonService;
 import evg.testt.service.RoleService;
 import evg.testt.service.UserService;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -37,8 +38,6 @@ public class UsersController {
     PersonService personService;
     @Autowired
     RoleService roleService;
-    @Autowired
-    SpringOvalValidator validator;
 
     @ModelAttribute("user")
     public User createUser() {
@@ -76,8 +75,8 @@ public class UsersController {
     }
 
     @RequestMapping(value = "/userSave", method = RequestMethod.POST)
-    public String saveUser(Model model, @ModelAttribute("user") @Validated User user, BindingResult bindingResult) {
-        validator.validate(user, bindingResult);
+    public String saveUser(Model model, @Valid @ModelAttribute("user")  User user, BindingResult bindingResult) {
+//   validator.validate(user, bindingResult);
 
         User u = null;
         u =  userService.findByUserLogin(user.getLogin());

@@ -2,7 +2,7 @@ package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
-import evg.testt.oval.SpringOvalValidator;
+//import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -27,8 +28,8 @@ import java.util.List;
 @PropertySource(value = "classpath:standard.properties")
 public class ManagerController {
 
-    @Autowired
-    private SpringOvalValidator validator;
+//    @Autowired
+//    private SpringOvalValidator validator;
     @Autowired
     private ManagerService managerService;
     @Autowired
@@ -80,9 +81,9 @@ public class ManagerController {
     }
 
     @RequestMapping(value = "/managerSave", method = RequestMethod.POST)
-    public String saveManager(@ModelAttribute("manager") @Validated PersonDTO personDTO,
+    public String saveManager(@ModelAttribute("manager") @Valid PersonDTO personDTO,
                               BindingResult bindingResult, Model model) throws SQLException, ParseException {
-        validator.validate(personDTO, bindingResult);
+//        validator.validate(personDTO, bindingResult);
 
         User u = userService.findByUserLogin(personDTO.getLogin());
 

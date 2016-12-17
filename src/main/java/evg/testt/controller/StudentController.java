@@ -2,7 +2,7 @@ package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
-import evg.testt.oval.SpringOvalValidator;
+//import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Collections;
@@ -25,8 +26,8 @@ import java.util.List;
 @PropertySource(value = "classpath:standard.properties")
 public class StudentController {
 
-    @Autowired
-    private SpringOvalValidator validator;
+//    @Autowired
+//    private SpringOvalValidator validator;
     @Autowired
     private StudentService studentService;
     @Autowired
@@ -89,11 +90,11 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/studentSave", method = RequestMethod.POST)
-    public String saveStudent(@ModelAttribute("student") @Validated PersonDTO personDTO,
+    public String saveStudent(@ModelAttribute("student") @Valid PersonDTO personDTO,
                               BindingResult bindingResult, Model model,
                               @RequestParam(required = false) Integer teacher_id,
                               @RequestParam(required = false) Integer group_id) throws SQLException, ParseException {
-        validator.validate(personDTO, bindingResult);
+//        validator.validate(personDTO, bindingResult);
 
         User u = userService.findByUserLogin(personDTO.getLogin());
 
