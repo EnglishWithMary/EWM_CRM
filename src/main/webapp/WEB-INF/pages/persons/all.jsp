@@ -58,7 +58,7 @@
                     </div>
                     <div class="padding-bot"></div>
                     <div class="col-sm-12">
-                        <table id = "table-list" class="table table-striped table-bordered">                            <thead>
+                        <table id = "table-list" class="table table-striped table-bordered">
                             <thead>
                             <tr>
                                 <th>Full Name</th>
