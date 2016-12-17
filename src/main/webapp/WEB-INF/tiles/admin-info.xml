@@ -5,9 +5,9 @@
 
 <tiles-definitions>
 
-    <definition name="persons/manager-info" extends="default">
-        <put-attribute name="title" value="Manager info" />
-        <put-attribute name="body" value="/WEB-INF/pages/persons/manager-info.jsp" />
+    <definition name="persons/admin-info" extends="default">
+        <put-attribute name="title" value="Admin info" />
+        <put-attribute name="body" value="/WEB-INF/pages/persons/admin-info.jsp" />
         <put-attribute name="additionalScripts" value="/WEB-INF/pages/rooms/additionalScripts.jsp"/>
     </definition>
 

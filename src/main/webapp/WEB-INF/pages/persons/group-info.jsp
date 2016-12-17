@@ -59,7 +59,7 @@
                         </div>
                         <div class="panel-body">
                             <p>
-                                <a href="" class="btn btn-success" type="button">Add Student</a>
+                                <a href="/studentAdd" class="btn btn-success" type="button">Add Student</a>
                                 <a href="" class="btn btn-warning" type="button">Change Teacher</a>
                                 <a href="" class="btn btn-danger" type="button">Close Group</a>
                             </p>

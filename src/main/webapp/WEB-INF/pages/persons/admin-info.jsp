@@ -10,16 +10,16 @@
                 <div class="col-md-2">
                     <div class="row">
                         <div class="col-md-12">
-                            <img class="img-size-sm" alt="Manager John"
+                            <img class="img-size-sm" alt="Admin John"
                                  src="${pageContext.request.contextPath}/resources/img/defaultAvatar.jpg">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <h4>Full Name</h4>
-                            <p>${manager.person.lastName}
-                                ${fn:substring(manager.person.firstName,0,1)}.
-                                ${fn:substring(manager.person.middleName,0,1)}.</p>
+                            <p>${admin.person.lastName}
+                                ${fn:substring(lead.admin.firstName,0,1)}.
+                                ${fn:substring(lead.admin.middleName,0,1)}.</p>
                         </div>
                     </div>
                     <div class="row">
@@ -38,23 +38,13 @@
                                 </div>
                                 <div class="panel-body">
 
-                                    <p><strong>First Name: </strong><input type="text" value="${manager.person.firstName}"></p>
-                                    <p><strong>Last Name: </strong><input type="text" value="${manager.person.lastName}"></p>
-                                    <p><strong>Middle Name: </strong><input type="text" value="${manager.person.middleName}"></p>
+                                    <p><strong>First Name: </strong><input type="text" value="${admin.person.firstName}"></p>
+                                    <p><strong>Last Name: </strong><input type="text" value="${admin.person.lastName}"></p>
+                                    <p><strong>Middle Name: </strong><input type="text" value="${admin.person.middleName}"></p>
                                     <p><strong>Phone: </strong><input type="text" value=""></p>
-                                    <p><strong>email: </strong><input type="text" value="${manager.person.email.email}"></p>
-                                    <p><strong>web : </strong><a href=""></a><input type="text"></p>
-                                    <p><strong>Date of Birth: </strong><input type="date" value="${manager.person.birthdayDate}"></p>
-                                    <p><strong>Comment: </strong><input type="text" value="${manager.person.comments}"></p>
-
-                                    <p><strong>State: </strong>${manager.person.state.state}</p>
-                                    <p><strong>Last modified: </strong>${manager.person.modifyDate}</p>
-                                    <p><strong>Registration date: </strong>${manager.person.registrationDate}</p>
-                                    <p><strong>Organization: </strong><input type="text"></p>
-
-                                    <security:authorize access="hasRole('ROLE_ADMIN')">
-                                        <p><strong>Salary: </strong><input type="text"></p>
-                                    </security:authorize>
+                                    <p><strong>email: </strong><input type="text" value="${admin.person.email.email}"></p>
+                                    <p><strong>web : </strong><a href=""></a></p>
+                                    <p><strong>Date of Birth: </strong><input type="date" value="${admin.person.birthdayDate}"></p>
 
                                 </div>
                             </div>
@@ -63,11 +53,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="btn-group btn-group-md">
-                                <security:authorize access="hasRole('ROLE_ADMIN')">
-                                    <a href="/managerTrash?id=${manager.id}" class="btn btn-danger">Delete Manager</a>
-                                        <a href="" class="btn btn-success" type="button">Update Manager</a>
-                                        <a href="" class="btn btn-warning" type="button">Create New Manager</a>
-                                </security:authorize>
+                                <a href="" class="btn btn-default" type="button">Some buttons</a>
+                                we can use groups
                             </div>
                         </div>
                     </div>
