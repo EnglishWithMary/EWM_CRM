@@ -29,7 +29,7 @@ import java.util.List;
 @PropertySource(value = "classpath:standard.properties")
 public class GroupController {
 
-    @Autowired
+    @Autowired (required = false)
     private SpringOvalValidator validator;
     @Autowired
     private GroupService groupService;

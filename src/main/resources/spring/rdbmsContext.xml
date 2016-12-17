@@ -13,6 +13,18 @@
         http://www.springframework.org/schema/data/jpa
         http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath*:database_nosql.dev.properties</value>
+                <value>classpath*:database_rdbms.dev.properties</value>
+                <value>classpath*:mail.properties</value>
+                <value>classpath*:standard.properties</value>
+                <value>classpath*:amazon.properties</value>
+            </list>
+        </property>
+    </bean>
+
     <!-- Datasource config -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${jdbc.driverClassName}" />
