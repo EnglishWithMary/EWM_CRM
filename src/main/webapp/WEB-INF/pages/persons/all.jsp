@@ -58,29 +58,38 @@
                     </div>
                     <div class="padding-bot"></div>
                     <div class="col-sm-12">
-                        <table class="table table-bordered">
+                        <table id = "table-list" class="table table-striped table-bordered">                            <thead>
                             <thead>
                             <tr>
                                 <th>Full Name</th>
                                 <th>Login</th>
                                 <th>Role</th>
                                 <th>State</th>
-                                <th>Birth Date</th>
+                                <%--<th>Birth Date</th>--%>
                                 <th>Reg. Date</th>
                                 <th>Mod. Date</th>
                             </tr>
                             </thead>
+                            <tfoot>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Login</th>
+                                <th>Role</th>
+                                <th>State</th>
+                                <%--<th>Birth Date</th>--%>
+                                <th>Reg. Date</th>
+                                <th>Mod. Date</th>
+                            </tr>
+                            </tfoot>
 
                             <tbody>
                             <c:forEach var="person" items="${personnel}">
                                 <tr>
-                                    <td>
-                                            ${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}.
-                                    </td>
+                                    <td>${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</td>
                                     <td>${person.login}</td>
                                     <td>${person.role}</td>
                                     <td>${person.state}</td>
-                                    <td>${person.birthdayDate}</td>
+                                    <%--<td>${person.birthdayDate}</td>--%>
                                     <td>${person.registrationDate}</td>
                                     <td>${person.modifyDate}</td>
                                 </tr>

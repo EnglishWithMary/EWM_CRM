@@ -26,7 +26,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <table class="table table-bordered">
+                        <table id = "table-list" class="table table-striped table-bordered">
                             <thead>
                             <tr>
                                 <th>First name</th>
@@ -34,10 +34,23 @@
                                 <th>Middle name</th>
                                 <th>Registration Date</th>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
-                                    <th>Delete Manager</th>
+                                    <th>Delete</th>
+                                    <th>Save</th>
                                 </security:authorize>
                             </tr>
                             </thead>
+                            <tfoot>
+                            <tr>
+                                <th>First name</th>
+                                <th>Last name</th>
+                                <th>Middle name</th>
+                                <th>Registration Date</th>
+                                <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <th>Delete</th>
+                                    <th>Save</th>
+                                </security:authorize>
+                            </tr>
+                            </tfoot>
                             <tbody>
                             <c:forEach var="manager" items="${managers}">
                                 <tr>
@@ -48,6 +61,9 @@
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
                                         <td>
                                             <a href="/managerTrash?id=${manager.id}">Delete</a>
+                                        </td>
+                                        <td>
+                                            <a href="/managerSave?id=${manager.id}">Save</a>
                                         </td>
                                     </security:authorize>
                                 </tr>
@@ -86,3 +102,4 @@
         </div>
     </div>
 </div>
+

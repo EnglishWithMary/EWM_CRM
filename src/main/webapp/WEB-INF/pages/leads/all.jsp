@@ -21,7 +21,7 @@
                     </div>
                 </form>
 
-                <table class="table table-bordered">
+                <table id = "table-list" class="table table-striped table-bordered">
                     <thead>
                     <tr>
                         <th>First name</th>
@@ -29,11 +29,23 @@
                         <th>Middle name</th>
                         <th>Registration Date</th>
                         <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
-                            <td>Edit Lead</td>
-                            <td>Delete Lead</td>
+                            <td>Edit</td>
+                            <td>Delete</td>
                         </security:authorize>
                     </tr>
                     </thead>
+                    <tfoot>
+                    <tr>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Middle name</th>
+                        <th>Registration Date</th>
+                        <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
+                            <td>Edit</td>
+                            <td>Delete</td>
+                        </security:authorize>
+                    </tr>
+                    </tfoot>
                     <tbody>
                     <c:forEach var="lead" items="${leads}">
                         <tr>
