@@ -38,6 +38,12 @@ public class StudentController {
     private PersonDTOService personDTOService;
     @Autowired
     private GroupService groupService;
+    @Autowired
+    private PersonService personService;
+    @Autowired
+    private CardService cardService;
+    @Autowired
+    private LeadService leadService;
 
     @Value("${pagination.page.size}")
     protected int pageSize;
@@ -78,21 +84,49 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/studentAdd")
-    public String addStudent(Model model) throws SQLException {
-        PersonDTO person = new PersonDTO();
+    public String addStudent(Model model,
+                             @RequestParam(required = false) Integer cardId,
+                             @RequestParam(required = false) Integer personId) throws SQLException {
+
+        PersonDTO student = new PersonDTO();
+
+        if (personId != null && personId > 0) {
+            Person person = personService.getById(personId);
+            student.setFirstName(person.getFirstName());
+            student.setMiddleName(person.getMiddleName());
+            student.setLastName(person.getLastName());
+            student.setAvatarURL(person.getAvatarURL());
+            student.setEmail(person.getEmail().getEmail());
+            Card card=cardService.getCardByPerson(person);
+            cardId=card.getId();
+            student.setCardId(cardId);
+
+            leadService.delete(leadService.getByPerson(person));
+
+            Card leadCard = cardService.getCardByPerson(person);
+            leadCard.getPersons().remove(person);
+            cardService.update(leadCard);
+
+
+        }else{
+            if (cardId==null) cardId=1;
+            student.setCardId(cardId);
+        }
 
         List<Teacher> teachers = teacherService.getAll();
 
         List<Group> groups = groupService.getAll();
 
-        model.addAttribute("student", person).addAttribute("teachers", teachers);
+        model.addAttribute("student", student).addAttribute("teachers", teachers);
         model.addAttribute("groups", groups);
+
         return "students/add";
     }
 
     @RequestMapping(value = "/studentSave", method = RequestMethod.POST)
     public String saveStudent(@ModelAttribute("student") @Validated PersonDTO personDTO,
                               BindingResult bindingResult, Model model,
+                              @RequestParam(required = false) Integer person_id,
                               @RequestParam(required = false) Integer teacher_id,
                               @RequestParam(required = false) Integer group_id) throws SQLException, ParseException {
         validator.validate(personDTO, bindingResult);
