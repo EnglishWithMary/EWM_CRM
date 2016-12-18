@@ -35,7 +35,7 @@ public class LeadController {
     private LeadService leadService;
     @Autowired
     private PersonService personService;
-    @Autowired
+    @Autowired (required = false)
     private EmailService emailService;
     @Autowired
     private PersonDTOService personDTOService;
@@ -165,5 +165,13 @@ public class LeadController {
         cardNew.getPersons().add(person);
         cardService.update(cardNew);
         return "redirect:"+request.getHeader("Referer");
+    }
+
+
+    @RequestMapping(value = "/lead/info", method = RequestMethod.GET)
+    public String leadInfo(Model model, @RequestParam int personId) throws SQLException {
+        Lead lead = leadService.getByPerson(personService.getById(personId));
+        model.addAttribute("lead", lead);
+        return "persons/lead-info";
     }
 }

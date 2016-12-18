@@ -13,7 +13,7 @@
                 <strong>Add new Student</strong>
             </div>
             <div class="panel-body">
-                <sf:form method="post" modelAttribute="student" action="/studentSave">
+                <sf:form method="post" modelAttribute="student" id="form" action="/studentSave">
                     <fieldset class="form-group">
 
                         <div class="row padding-bot">

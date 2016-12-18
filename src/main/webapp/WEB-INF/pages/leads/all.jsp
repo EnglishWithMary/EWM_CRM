@@ -21,7 +21,7 @@
                     </div>
                 </form>
 
-                <table class="table table-bordered">
+                <table id = "table-list" class="table table-striped table-bordered">
                     <thead>
                     <tr>
                         <th>First name</th>
@@ -29,21 +29,33 @@
                         <th>Middle name</th>
                         <th>Registration Date</th>
                         <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
-                            <td>Edit Lead</td>
-                            <td>Delete Lead</td>
+                            <td>Edit</td>
+                            <td>Delete</td>
                         </security:authorize>
                     </tr>
                     </thead>
+                    <tfoot>
+                    <tr>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Middle name</th>
+                        <th>Registration Date</th>
+                        <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
+                            <td>Edit</td>
+                            <td>Delete</td>
+                        </security:authorize>
+                    </tr>
+                    </tfoot>
                     <tbody>
                     <c:forEach var="lead" items="${leads}">
                         <tr>
-                            <td>${lead.person.firstName}</td>
+                            <td><a href="/lead/info?personId=${lead.id}">${lead.person.firstName}</a></td>
                             <td>${lead.person.lastName}</td>
                             <td>${lead.person.middleName}</td>
                             <td>${lead.person.registrationDate}</td>
                             <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
                                 <td>
-                                    <form method="post" action="/leadAdd">
+                                    <form method="post" action="/">
                                         <button type="submit" class="btn btn-default btn-sm">
                                             Edit
                                         </button>

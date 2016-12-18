@@ -14,4 +14,6 @@ public @Data class GroupDTO {
 
     private Integer groupId;
 
+    private String language;
+
 }

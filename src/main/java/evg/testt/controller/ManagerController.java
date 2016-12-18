@@ -106,23 +106,20 @@ public class ManagerController {
     public String managerDelete(@RequestParam Integer id) throws SQLException {
         Manager manager = managerService.getById(id);
         managerService.delete(manager);
-        return "managers/all";
+        return "redirect:/managers";
     }
 
     @RequestMapping(value = "/managerTrash")
     public String managerTrash(@RequestParam Integer id) throws SQLException {
         Manager manager = managerService.getById(id);
         managerService.trash(manager);
-        return "managers/all";
+        return "redirect:/managers";
     }
 
     @RequestMapping(value = "/managers/info", method = RequestMethod.GET)
     public String managerInfo(Model model, @RequestParam int manager_id) throws SQLException {
-
         Manager manager = managerService.getById(manager_id);
-
         model.addAttribute("manager", manager);
-
         return "persons/manager-info";
     }
 }

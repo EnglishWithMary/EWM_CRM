@@ -70,7 +70,7 @@ public class GroupController {
 
         if (totalGroups % pageSize == 0)
             pages--;
-
+        groups = groupService.getAll();
         model.addAttribute("groups",groups);
         model.addAttribute("pages", pages);
         model.addAttribute("flagSorted", flagSorted);
@@ -99,12 +99,20 @@ public class GroupController {
         }
         Group newGroup = new Group();
         newGroup.setName(groupDTO.getName());
+        newGroup.setLanguage(groupDTO.getLanguage());
         groupService.insert(newGroup);
         if (groupDTO.getTeacherId() != null) {
             newGroup.setTeacher(teacherService.getById(groupDTO.getTeacherId()));
             groupService.update(newGroup);
         }
         return "redirect:/groups";
+    }
+
+    @RequestMapping(value = "/groupDelete")
+    public String groupDelete(@RequestParam Integer id) throws SQLException {
+        Group group = groupService.getById(id);
+        groupService.delete(group);
+        return "groups/all";
     }
 
     @RequestMapping(value = "/groupFilter", method = RequestMethod.POST)

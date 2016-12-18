@@ -8,6 +8,7 @@
     <definition name="persons/group-info" extends="default">
         <put-attribute name="title" value="Group info" />
         <put-attribute name="body" value="/WEB-INF/pages/persons/group-info.jsp" />
+        <put-attribute name="additionalScripts" value="/WEB-INF/pages/rooms/additionalScripts.jsp"/>
     </definition>
 
 </tiles-definitions>

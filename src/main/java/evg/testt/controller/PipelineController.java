@@ -28,7 +28,7 @@ public class PipelineController {
     private LeadService leadService;
     @Autowired
     private PersonService personService;
-    @Autowired
+    @Autowired (required = false)
     private EmailService emailService;
 
     @RequestMapping(value = "/pipeline", method = RequestMethod.GET)

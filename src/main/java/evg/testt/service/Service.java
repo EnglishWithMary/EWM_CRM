@@ -26,10 +26,7 @@ public interface Service<T> {
 
     List<T> getByPage(int pageNumber);
 
-    List<T> getSortedByRegistrationDate() throws SQLException;
-
     List<T> getByPageSorted(int pageNumber) throws SQLException;
 
-    List<T> getAllSortedAndPaginated(int pageNumber) throws SQLException;
-
+    List<T> getAllSortedAndPaginated(int pageNumber)throws SQLException;
 }

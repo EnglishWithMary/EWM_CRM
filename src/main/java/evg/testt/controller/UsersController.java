@@ -1,5 +1,6 @@
 package evg.testt.controller;
 
+import evg.testt.dto.PersonDTO;
 import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.Person;
 import evg.testt.model.User;
@@ -70,7 +71,9 @@ public class UsersController {
     }
 
     @RequestMapping(value = "/userAdd")
-    public String addUser() {
+    public String addUser(Model model) {
+        PersonDTO person =  new PersonDTO();
+        model.addAttribute("user", person);
         return "users/add";
     }
 

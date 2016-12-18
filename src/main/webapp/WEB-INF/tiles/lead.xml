@@ -7,6 +7,7 @@
     <definition name="leads/add" extends="home">
         <put-attribute name="title" value="Lead page" />
         <put-attribute name="body" value="/WEB-INF/pages/leads/add.jsp" />
+        <put-attribute name="formValidationScripts" value="/WEB-INF/pages/templates/defaultFormValidationScripts.jsp" />
     </definition>
 
     <definition name="leads/all" extends="home">

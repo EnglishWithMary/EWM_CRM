@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <div class="container-fluid">
     <div class="row">
@@ -16,7 +18,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h4>Full Name</h4>
-                            <p>Smith M.F.</p>
+                            <p>${lead.person.lastName}
+                                ${fn:substring(lead.person.firstName,0,1)}.
+                                ${fn:substring(lead.person.middleName,0,1)}.</p>
                         </div>
                     </div>
                     <div class="row">
@@ -41,17 +45,25 @@
                                     <strong>Information About Lead</strong>
                                 </div>
                                 <div class="panel-body">
-                                    <p><strong>First Name: </strong>Matilda</p>
-                                    <p><strong>Last Name: </strong>Smith</p>
-                                    <p><strong>Middle Name: </strong>Fergus'es daughter</p>
-                                    <p><strong>Phone: </strong>+38(055)444-33-99</p>
-                                    <p><strong>email: </strong>matilda@goo.com</p>
-                                    <p><strong>web : </strong><a href="">vk.com/matilda</a></p>
-                                    <p><strong>Date of Birth: </strong>Jul 17, 1991</p>
-                                    <p><strong>Comment: </strong>Wants to enroll into C2 classes</p>
+                                    <p><strong>First Name: </strong><input type="text" value="${lead.person.firstName}"></p>
+                                    <p><strong>Last Name: </strong><input type="text" value="${lead.person.lastName}"></p>
+                                    <p><strong>Middle Name: </strong><input type="text" value="${lead.person.middleName}"></p>
+                                    <p><strong>Phone: </strong></p>
+                                    <p><strong>email: </strong><input type="text" value="${lead.person.email.email}"></p>
+                                    <p><strong>web : </strong><a href=""></a></p>
+                                    <p><strong>Date of Birth: </strong>
+                                        <fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ss.SSS" value="${lead.person.birthdayDate}" var="birth"/>
+                                        <input type="datetime-local" value= "${birth}" />
+                                    </p>
+                                    <p><strong>Comment: </strong><input type="text" value="${lead.person.comments}"></p>
                                     <p><strong>Referral: </strong>Some info</p>
                                     <p><strong>Groups he wants to try: </strong>Group Name?</p>
                                     <p><strong>Language: </strong>English</p>
+
+                                    <p><strong>State: </strong><input type="text" value="${lead.person.state.state}"></p>
+                                    <p><strong>Last modified: </strong>${lead.person.modifyDate}</p>
+                                    <p><strong>Registration date: </strong>${lead.person.registrationDate}</p>
+                                    <p><strong>Organization: </strong><input type="text" value="${lead.person.organization}"></p>
                                 </div>
                             </div>
                         </div>
@@ -83,4 +95,3 @@
         </div>
     </div>
 </div>
-
