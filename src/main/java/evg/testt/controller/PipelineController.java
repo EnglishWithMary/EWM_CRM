@@ -22,13 +22,13 @@ public class PipelineController {
     private PipeTypeService pipeTypeService;
     @Autowired
     private CardService cardService;
-    @Autowired
+    @Autowired (required = false)
     private SpringOvalValidator validator;
     @Autowired
     private LeadService leadService;
     @Autowired
     private PersonService personService;
-    @Autowired
+    @Autowired (required = false)
     private EmailService emailService;
 
     @RequestMapping(value = "/pipeline", method = RequestMethod.GET)

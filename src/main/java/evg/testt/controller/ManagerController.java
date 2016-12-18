@@ -27,7 +27,7 @@ import java.util.List;
 @PropertySource(value = "classpath:standard.properties")
 public class ManagerController {
 
-    @Autowired
+    @Autowired (required = false)
     private SpringOvalValidator validator;
     @Autowired
     private ManagerService managerService;

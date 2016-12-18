@@ -6,6 +6,7 @@ import evg.testt.dao.StudentRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,16 +31,20 @@ public class StudentRepositoryJpaImpl extends RegisteredUserRepositoryJpaImpl<St
     @Override
     public List<Student> findStudentsByGroup(int group_id) {
         TypedQuery<Student> query = em.createQuery("SELECT student FROM students student where student.group.id = :id AND student.person.state = 'ACTIVE'", Student.class);
-
         query.setParameter("id", group_id);
-
         return query.getResultList();
     }
 
     @Override
-    public List<Student> findStudentWithoutGroup() {
+    public List<Student> findStudentsWithoutGroup() {
         TypedQuery<Student> query = em.createQuery("SELECT student FROM students student where student.group.id is null AND student.person.state = 'ACTIVE'", Student.class);
-
         return query.getResultList();
+    }
+
+    @Override
+    public List<Student> findStudentsWithGroup() throws SQLException {
+        TypedQuery<Student> query = em.createQuery("SELECT student FROM students student where student.group is not null AND student.person.state = 'ACTIVE'", Student.class);
+        return query.getResultList();
+
     }
 }
