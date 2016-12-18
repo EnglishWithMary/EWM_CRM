@@ -6,6 +6,9 @@ import evg.testt.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public abstract class BaseService <T extends BaseModel, P extends BaseRepository<T>>
@@ -52,10 +55,11 @@ public abstract class BaseService <T extends BaseModel, P extends BaseRepository
         return dao.findByPage(pageNumber);
     }
 
-    public List<T> getSortedByRegistrationDate() throws SQLException{
-        return dao.findSortedByRegistrationDate();
-    }
     public List<T> getByPageSorted(int pageNumber) throws SQLException{
         return dao.findByPageSorted(pageNumber);
+    }
+
+    public List<T> getAllSortedAndPaginated(int pageNumber)throws SQLException{
+        return dao.findAllSortedAndPaginated(pageNumber);
     }
 }

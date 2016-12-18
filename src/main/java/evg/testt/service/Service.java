@@ -3,6 +3,8 @@ package evg.testt.service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 @Transactional
@@ -24,7 +26,7 @@ public interface Service<T> {
 
     List<T> getByPage(int pageNumber);
 
-    List<T> getSortedByRegistrationDate() throws SQLException;
-
     List<T> getByPageSorted(int pageNumber) throws SQLException;
+
+    List<T> getAllSortedAndPaginated(int pageNumber)throws SQLException;
 }

@@ -4,10 +4,15 @@ import evg.testt.dto.PersonDTO;
 import evg.testt.exception.BadAvatarNameException;
 import evg.testt.exception.PersonException;
 import evg.testt.exception.PersonRoleNotFoundException;
-import evg.testt.model.*;
+import evg.testt.model.Person;
+import evg.testt.model.Personnel;
 import evg.testt.oval.SpringOvalValidator;
-import evg.testt.service.*;
+import evg.testt.service.AvatarService;
+import evg.testt.service.PersonDTOService;
+import evg.testt.service.PersonService;
+import evg.testt.service.PersonnelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,24 +26,30 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
-import java.util.Collections;
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
 public class PersonController {
 
-    @Autowired
+    @Autowired (required = false)
     private SpringOvalValidator validator;
     @Autowired
     private PersonService personService;
     @Autowired
     private AvatarService avatarService;
+    @Autowired
+    private PersonDTOService personDTOService;
+    @Autowired
+    private PersonnelService personnelService;
+    @Value("${pagination.page.size}")
+    protected int pageSize;
 
     @RequestMapping(value = "/personProfile", method = RequestMethod.GET)
     public String profilePerson(@ModelAttribute("person") @Validated PersonDTO personDTO,
-                                      BindingResult bindingResult,
-                                      Principal principal, Model model)
-            throws PersonRoleNotFoundException, SQLException{
+                                BindingResult bindingResult,
+                                Principal principal, Model model)
+            throws PersonRoleNotFoundException, SQLException {
 
         validator.validate(personDTO, bindingResult);
 
@@ -54,25 +65,27 @@ public class PersonController {
                                @RequestParam("image") MultipartFile multipartFile,
                                Principal principal,
                                Model model)
-            throws IOException, PersonException, PersonRoleNotFoundException, BadAvatarNameException, SQLException {
+            throws
+            IOException, PersonException, PersonRoleNotFoundException,
+            BadAvatarNameException, SQLException, ParseException {
 
-        //Person validate
         validator.validate(personDTO, bindingResult);
-        //Create updated person
+
+//        if (bindingResult.hasErrors()) {
+//            return "redirect:/personProfile";
+//        }
+
         String login = principal.getName();
+
         try {
+
             Person person = personService.getPersonByUserLogin(login);
 
-            person.setFirstName(personDTO.getFirstName());
-            person.setMiddleName(personDTO.getMiddleName());
-            person.setLastName(personDTO.getLastName());
+            person = personDTOService.getUpdatedPerson(person,personDTO);
 
-            //Update person in DB
             personService.update(person);
 
-            //Update Avatar if exist
             if (!multipartFile.isEmpty()) {
-
                 avatarService.changePersonAvatar(multipartFile, person);
             }
         } catch (SQLException e) {
@@ -83,9 +96,16 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/persons", method = RequestMethod.GET)
-    public String showGroups(Model model) throws SQLException {
-        List<Person> persons = personService.getAll();
-        model.addAttribute("persons", persons);
+    public String showGroups(Model model, @RequestParam(required = false) Integer page) throws SQLException {
+
+        page = (page == null || page < 1) ? 1 : page;
+
+        int count = personnelService.count();
+        int pages = count % pageSize == 0 ? count / pageSize : count / pageSize + 1;
+
+        List<Personnel> personnel = personnelService.getAllSortedAndPaginated(page);
+        model.addAttribute("personnel", personnel);
+        model.addAttribute("pages", pages);
         return "persons/all";
     }
 
@@ -103,6 +123,31 @@ public class PersonController {
         return "persons/all";
     }
 
+    /*
+        Feature is added with one reason - to test if Student info is acceptable to work with
+     */
+    @RequestMapping(value = "/test/student-info")
+    public String testStudentInfo(){
+        return "persons/students/test/info";
+    }
+
+    @RequestMapping(value = "/test/teacher-info")
+    public String testTeacherInfo(){
+        return "persons/teachers/test/info";
+    }
+
+    @RequestMapping(value = "/test/manager-info")
+    public String testManagerInfo(){
+        return "persons/managers/test/info";
+    }
+
+    @RequestMapping(value = "/test/lead-info")
+    public String testLeadInfo(){
+        return "persons/leads/test/info";
+    }
+
+    @RequestMapping(value = "/test/group-info")
+    public String testGroupInfo(){
+        return "persons/groups/test/info";
+    }
 }
-
-

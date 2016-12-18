@@ -4,107 +4,100 @@ import evg.testt.dto.PersonDTO;
 import evg.testt.exception.NullObjectPersonDTOException;
 import evg.testt.model.*;
 import evg.testt.service.PersonDTOService;
-import evg.testt.service.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Service
-public class PersonDTOServiceImpl implements PersonDTOService {
-
-    @Autowired
-    private RoleService roleService;
+public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTOService {
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    private PersonDTO personDTO;
+    public <T extends RegisteredUser> T updateRegisteredUser(T someRegisteredUser, PersonDTO personDTO) throws SQLException, ParseException{
 
-    @Override
-    public Admin getAdmin() throws SQLException {
-        Admin newAdmin = new Admin();
-        newAdmin.setPerson(getPerson());
-        newAdmin.setUser(getUser(UserRole.ROLE_ADMIN));
+        if (personDTO == null || someRegisteredUser == null) {
+            throw new NullObjectPersonDTOException("Can`t update person with empty data. First initialize objects.");
+        }
 
-        return newAdmin;
+        Person person;
+
+        if (someRegisteredUser.getPerson() == null){
+            person = new Person();
+        }
+        else {
+            person = someRegisteredUser.getPerson();
+        }
+
+        someRegisteredUser.setPerson(getUpdatedPerson(person, personDTO));
+
+        someRegisteredUser.setUser(getUpdatedUser(someRegisteredUser.getUser(), personDTO));
+
+        return someRegisteredUser;
     }
 
-    @Override
-    public Manager getManager() throws SQLException {
-        Manager newManager = new Manager();
-        newManager.setPerson(getPerson());
-        newManager.setUser(getUser(UserRole.ROLE_MANAGER));
+    public Lead updateLead(Lead lead, PersonDTO personDTO) throws NullObjectPersonDTOException, ParseException{
 
-        return newManager;
+        if (personDTO == null || lead == null) {
+            throw new NullObjectPersonDTOException("Can`t update person with empty data. First initialize objects.");
+        }
+
+        Person person;
+
+        if (lead.getPerson() == null){
+            person = new Person();
+        }
+        else {
+            person = lead.getPerson();
+        }
+
+        lead.setPerson(getUpdatedPerson(person, personDTO));
+
+        return lead;
     }
 
-    @Override
-    public Teacher getTeacher() throws SQLException {
-        Teacher newTeacher = new Teacher();
-        newTeacher.setPerson(getPerson());
-        newTeacher.setUser(getUser(UserRole.ROLE_TEACHER));
+    public Person getUpdatedPerson(Person person, PersonDTO personDTO) throws NullObjectPersonDTOException, ParseException {
 
-        return newTeacher;
+        if (personDTO == null || person == null) {
+            throw new NullObjectPersonDTOException("Can`t update person with empty data. First initialize objects.");
+        }
+
+        person.setFirstName(personDTO.getFirstName());
+        person.setLastName(personDTO.getLastName());
+        person.setMiddleName(personDTO.getMiddleName());
+        person.setComments(personDTO.getComments());
+        person.setOrganization(personDTO.getOrganization());
+        person.setBirthdayDate(getDateFromString(personDTO.getBirthdayDate()));
+        person.setEmail(new Email(personDTO.getEmail()));
+        person.setState(new State());
+
+        return person;
     }
 
-    @Override
-    public Student getStudent() throws SQLException {
-        Student newStudent = new Student();
-        newStudent.setPerson(getPerson());
-        newStudent.setUser(getUser(UserRole.ROLE_STUDENT));
+    public User getUpdatedUser (User user, PersonDTO personDTO){
 
-        return newStudent;
+        if (user.getLogin() == null) {
+            user.setLogin(personDTO.getLogin());
+        }
+
+        if (personDTO.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(personDTO.getPassword()));
+        }
+
+        return user;
     }
 
-    @Override
-    public Lead getLead() throws NullObjectPersonDTOException {
-        Lead newLead = new Lead();
-        newLead.setPerson(getPerson());
-        return newLead;
+    private Date getDateFromString(String dateFromForm) throws ParseException {
+        if (dateFromForm != null) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = simpleDateFormat.parse(dateFromForm);
+            return date;
+        }
+        else {
+            return null;
+        }
     }
 
-    public PersonDTOService buildPerson(PersonDTO personDTO) throws SQLException {
-        if (personDTO == null)
-            throw new NullObjectPersonDTOException("Can`t build person with empty data. First initialize DTO object.");
-
-        this.personDTO = personDTO;
-        return this;
-    }
-
-
-    private Person getPerson() throws NullObjectPersonDTOException {
-        if (this.personDTO != null)
-            return new Person() {
-                {
-                    this.setFirstName(personDTO.getFirstName());
-                    this.setLastName(personDTO.getLastName());
-                    this.setMiddleName(personDTO.getMiddleName());
-                    this.setComments(personDTO.getComments());
-                    Email newEmail = new Email();
-                    newEmail.setEmail(personDTO.getEmail());
-                    this.setEmail(newEmail);
-                    State state = new State();
-                    state.setState(StateType.STATE_ACTIVE.name());
-                    this.setState(state);
-                }
-            };
-        else
-            throw new NullObjectPersonDTOException("Can`t build person with empty data. First initialize DTO object.");
-    }
-
-    private User getUser(UserRole userRole) throws SQLException {
-        Role role = roleService.getById(userRole.getRoleId());
-
-        if (this.personDTO != null)
-            return new User() {
-                {
-                    this.setRole(role);
-                    this.setLogin(personDTO.getLogin());
-                    this.setPassword(passwordEncoder.encode(personDTO.getPassword()));
-                }
-            };
-        else
-            throw new NullObjectPersonDTOException("Can`t build person with empty data. First initialize DTO object.");
-    }
 }

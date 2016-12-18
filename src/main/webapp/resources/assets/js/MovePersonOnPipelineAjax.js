@@ -1,6 +1,3 @@
-/**
- * Created by DENNNN on 05.12.2016.
- */
 $(document).ready(function () {
 
         $(".pipe .person").draggable({
@@ -53,7 +50,7 @@ $(document).ready(function () {
         $item.appendTo($target).fadeIn();
     }
 
-    $(".person").css("width", $(".pipe").css("width"));
+    $(".person").width($(".person").parent().width() * 0.95);
 
     $('.pipe_wrapper #deleteCardForm').first().remove();
 

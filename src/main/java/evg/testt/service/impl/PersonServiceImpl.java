@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -29,11 +30,9 @@ public class PersonServiceImpl extends BaseService<Person, PersonRepository> imp
         return personRepository.findSortedByRegistrationDate();
     }
 
-//    @Override
-//    public void delete(Person person) throws SQLException {
-//
-//        State state = new State(StateType.STATE_DELETED);
-//        person.setState(state);
-//        update(person);
-//    }
+    @Override
+    public void update(Person o) throws SQLException {
+        o.setModifyDate(new Date());
+        dao.save(o);
+    }
 }

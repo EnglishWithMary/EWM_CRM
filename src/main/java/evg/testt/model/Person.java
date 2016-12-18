@@ -20,7 +20,7 @@ public @Data class Person extends BaseModel{
     @Embedded
     private State state = new State();
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date birthdayDate;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -31,7 +31,7 @@ public @Data class Person extends BaseModel{
 
     private String organization;
 
-    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    @OneToOne(cascade = CascadeType.ALL)
     Email email;
 
     @Column(columnDefinition = "text")
