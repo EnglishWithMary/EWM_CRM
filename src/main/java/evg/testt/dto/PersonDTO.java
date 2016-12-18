@@ -18,9 +18,9 @@ public @Data class PersonDTO {
     private String password;
 
     @Size(min = 6, max = 20, message = "Incorrect password.")
-//    @FieldEquals(value = "password", message = "Passwords don't match")
-//    @Transient
-//    private String confirmPassword;
+
+    @Transient
+    private String confirmPassword;
 
     @Pattern(regexp = "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9]" +
             "(?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?", message = "Invalid email address.")

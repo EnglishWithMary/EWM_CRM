@@ -88,7 +88,7 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/teacherSave", method = RequestMethod.POST)
-    public String saveTeacher(@ModelAttribute("teacher") @Valid PersonDTO personDTO, BindingResult bindingResult,
+    public String saveTeacher(@Valid @ModelAttribute("teacher")  PersonDTO personDTO, BindingResult bindingResult,
                               Model model) throws SQLException, ParseException {
 
 //        validator.validate(personDTO, bindingResult);
