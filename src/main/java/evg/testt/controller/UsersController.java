@@ -37,7 +37,7 @@ public class UsersController {
     PersonService personService;
     @Autowired
     RoleService roleService;
-    @Autowired
+    @Autowired (required = false)
     SpringOvalValidator validator;
 
     @ModelAttribute("user")

@@ -15,16 +15,16 @@ import javax.annotation.Resource;
 @Component
 public class AuthenticationSuccessListener implements ApplicationListener<InteractiveAuthenticationSuccessEvent>{
 
-    @Autowired
+    @Autowired (required = false)
     private JavaMailSender jms;
 
-    @Autowired
+    @Autowired (required = false)
     SimpleMailMessage smm;
 
 //    @Resource(name = "messageForMail")
     String msg;
 
-    @Autowired
+    @Autowired (required = false)
     UserService us;
 
     @Override

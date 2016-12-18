@@ -40,18 +40,30 @@
                 <div class="row padding-bot"></div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <table class="table table-bordered">
-                            <thead>
+                        <table id = "table-list" class="table table-striped table-bordered">                            <thead>
                             <tr>
                                 <th>Group Name</th>
                                 <th>Group's Teacher</th>
                                 <th>Language</th>
                                 <th>Status</th>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
-                                    <th>Delete Group</th>
+                                    <th>Delete</th>
+                                    <th>Save</th>
                                 </security:authorize>
                             </tr>
                             </thead>
+                            <tfoot>
+                            <tr>
+                                <th>Group Name</th>
+                                <th>Group's Teacher</th>
+                                <th>Language</th>
+                                <th>Status</th>
+                                <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <th>Delete</th>
+                                    <th>Save</th>
+                                </security:authorize>
+                            </tr>
+                            </tfoot>
                             <tbody>
                             <c:forEach var="group" items="${groups}">
                                 <tr>
@@ -61,14 +73,18 @@
                                                 ${group.teacher.person.firstName}${" "}
                                                 ${group.teacher.person.middleName}${" "}
                                                 ${group.teacher.person.lastName}${" "}
-                                        </a></td>
+                                        </a>
+                                    </td>
+                                    <td>!add language</td>
+                                    <td>!add status</td>
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
                                         <td>
                                             <a href="/teacherDelete?id=${teacher.id}">Delete</a>
                                         </td>
+                                        <td>
+                                            <a href="/teacherSave?id=${teacher.id}">Save</a>
+                                        </td>
                                     </security:authorize>
-                                    <td>!add language</td>
-                                    <td>!add status</td>
                                 </tr>
                             </c:forEach>
                             </tbody>

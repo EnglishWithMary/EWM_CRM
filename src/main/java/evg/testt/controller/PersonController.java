@@ -32,7 +32,7 @@ import java.util.List;
 @Controller
 public class PersonController {
 
-    @Autowired
+    @Autowired (required = false)
     private SpringOvalValidator validator;
     @Autowired
     private PersonService personService;

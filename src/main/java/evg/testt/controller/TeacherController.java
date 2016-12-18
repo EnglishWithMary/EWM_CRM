@@ -28,7 +28,7 @@ import java.util.List;
 @PropertySource(value = "classpath:standard.properties")
 public class TeacherController {
 
-    @Autowired
+    @Autowired (required = false)
     SpringOvalValidator validator;
     @Autowired
     TeacherService teacherService;
