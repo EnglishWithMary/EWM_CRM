@@ -2,8 +2,8 @@
 //     debug: true,
 //     success: "valid"
 // });
-$().ready(function () {
-    $("form").validate({
+$(document).ready(function () {
+    $('#form').validate({
         rules: {
             firstName: {
                 required: true,
@@ -22,7 +22,12 @@ $().ready(function () {
             },
             login: {
                 required: true,
-                minlength: 6,
+                minlength: 5,
+                maxlength: 20
+            },
+            username: {
+                required: true,
+                minlength: 5,
                 maxlength: 20
             },
             email: {
@@ -31,7 +36,7 @@ $().ready(function () {
             },
             password: {
                 required: true,
-                minlength: 6,
+                minlength: 5,
                 maxlength: 20
             },
             confirmPassword: {
@@ -57,7 +62,12 @@ $().ready(function () {
             },
             login: {
                 required: "Please enter your Login",
-                minlength: "Login should be at least 6 chars",
+                minlength: "Login should be at least 5 chars",
+                maxlength: "Login should be less than 20 chars"
+            },
+            username: {
+                required: "Please enter your Login",
+                minlength: "Login should be at least 5 chars",
                 maxlength: "Login should be less than 20 chars"
             },
             email:{
@@ -66,7 +76,7 @@ $().ready(function () {
             },
             password: {
                 required: "Please enter your Password",
-                minlength: "Password should be at least 6 chars",
+                minlength: "Password should be at least 5 chars",
                 maxlength: "Middle Name should be less than 20 chars"
             },
             confirmPassword: {

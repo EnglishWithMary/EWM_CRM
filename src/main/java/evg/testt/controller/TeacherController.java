@@ -119,14 +119,14 @@ public class TeacherController {
     public String teacherDelete(@RequestParam Integer id) throws SQLException {
         Teacher teacher = teacherService.getById(id);
         teacherService.delete(teacher);
-        return "teachers/all";
+        return "redirect:/teachers";
     }
 
     @RequestMapping(value = "/teacherTrash")
     public String teacherTrash(@RequestParam Integer id) throws SQLException {
         Teacher teacher = teacherService.getById(id);
         teacherService.trash(teacher);
-        return "teachers/all";
+        return "redirect:/teachers";
     }
 
     @RequestMapping(value = "/teacher/info")
