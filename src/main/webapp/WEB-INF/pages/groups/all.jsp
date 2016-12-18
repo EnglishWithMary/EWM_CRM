@@ -62,13 +62,13 @@
                                                 ${group.teacher.person.middleName}${" "}
                                                 ${group.teacher.person.lastName}${" "}
                                         </a></td>
-                                    <td>${group.language}</td>
-                                    <td>!add status</td>
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
                                         <td>
-                                            <a href="/groupDelete?id=${group.id}">Delete</a>
+                                            <a href="/teacherDelete?id=${teacher.id}">Delete</a>
                                         </td>
                                     </security:authorize>
+                                    <td>!add language</td>
+                                    <td>!add status</td>
                                 </tr>
                             </c:forEach>
                             </tbody>

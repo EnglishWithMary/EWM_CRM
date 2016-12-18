@@ -74,8 +74,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <table class="table table-bordered">
-                            <thead>
+                        <table id = "table-list" class="table table-striped table-bordered">                            <thead>
                             <tr>
                                 <th>First name</th>
                                 <th>Last name</th>
@@ -84,10 +83,25 @@
                                 <th>Registration Date</th>
                                 <th>Comments</th>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
-                                    <th>Delete Student</th>
+                                    <th>Delete</th>
+                                    <th>Save</th>
                                 </security:authorize>
                             </tr>
                             </thead>
+                            <tfoot>
+                            <tr>
+                                <th>First name</th>
+                                <th>Last name</th>
+                                <th>Middle name</th>
+                                <th>Student group</th>
+                                <th>Registration Date</th>
+                                <th>Comments</th>
+                                <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <th>Delete</th>
+                                    <th>Save</th>
+                                </security:authorize>
+                            </tr>
+                            </tfoot>
                             <tbody>
                             <c:forEach var="student" items="${students}">
                                 <tr>
@@ -100,6 +114,9 @@
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
                                         <td>
                                             <a href="/studentTrash?id=${student.id}">Delete</a>
+                                        </td>
+                                        <td>
+                                            <a href="/studentSave?id=${student.id}">Save</a>
                                         </td>
                                     </security:authorize>
                                 </tr>

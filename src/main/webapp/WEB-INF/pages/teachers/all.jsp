@@ -21,7 +21,7 @@
                 </form>
 
                 <%--<div class="table-wrapper">--%>
-                <table class="table table-bordered">
+                <table id = "table-list" class="table table-striped table-bordered">
                     <thead>
                     <tr>
                         <th>First name</th>
@@ -29,28 +29,42 @@
                         <th>Middle name</th>
                         <th>Registration Date</th>
                         <security:authorize access="hasRole('ROLE_ADMIN')">
-                            <th>Delete Teacher</th>
+                            <th>Delete</th>
+                            <th>Save</th>
                         </security:authorize>
                     </tr>
                     </thead>
+                    <tfoot>
+                    <tr>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Middle name</th>
+                        <th>Registration Date</th>
+                        <security:authorize access="hasRole('ROLE_ADMIN')">
+                            <th>Delete</th>
+                            <th>Save</th>
+                        </security:authorize>
+                    </tr>
+                    </tfoot>
                     <tbody>
                     <c:forEach var="teacher" items="${teachers}">
                         <tr>
-                            <td><a href="/teacher/info?teacher_id=${teacher.id}">${teacher.person.firstName}</a></td>
+                            <td>${teacher.person.firstName}</td>
                             <td>${teacher.person.lastName}</td>
                             <td>${teacher.person.middleName}</td>
                             <td>${teacher.person.registrationDate}</td>
+                            <security:authorize access="hasRole('ROLE_ADMIN')">
                             <td>
-                                <security:authorize access="hasRole('ROLE_ADMIN')">
-                                    <a href="/teacherTrash?id=${teacher.id}">Delete</a>
-                                </security:authorize>
+                                <a href="/teacherTrash?id=${teacher.id}">Delete</a>
                             </td>
+                            <td>
+                                <a href="/teacherSave?id=${teacher.id}">Save</a>
+                            </td>
+                            </security:authorize>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
-
-
 
                 <div class="row">
                     <div class="col-sm-2 col-sm-offset-5">
