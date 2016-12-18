@@ -7,6 +7,8 @@ import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -47,7 +49,7 @@ public class StudentController {
                                @RequestParam(required = false) Boolean flagSorted,
                                Model model) throws SQLException {
 
-        if (flagSorted == null) flagSorted = false;
+        /*if (flagSorted == null) flagSorted = false;
 
         int totalStudents = 0, pages = 0, currentPage = 1;
 
@@ -73,7 +75,10 @@ public class StudentController {
         model.addAttribute("pages", pages);
         model.addAttribute("flagSorted", flagSorted);
         model.addAttribute("groups",groupService.getAll());
-        model.addAttribute("teachers",teacherService.getAll());
+        model.addAttribute("teachers",teacherService.getAll());*/
+        //Sort sort= new Sort();
+        PageRequest pageRequest=new PageRequest(1,2,Sort.Direction.ASC,"person");
+
         return "students/all";
     }
 
