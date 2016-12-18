@@ -18,7 +18,7 @@
         <spring.data.jpa.version>1.8.0.RELEASE</spring.data.jpa.version>
         <version.jackson>1.9.13</version.jackson>
         <hibernate.version>5.0.1.Final</hibernate.version>
-        <hibernate.validator.version>5.2.1.Final</hibernate.validator.version>
+        <!--hibernate.validator.version>5.2.1.Final</hibernate.validator.version-->
         <hibernate.commons.version>5.0.0.Final</hibernate.commons.version>
         <!--<oval.version>1.84</oval.version>-->
         <jackson.version>2.5.2</jackson.version>
@@ -170,6 +170,14 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.1.0.Final</version>
+        </dependency>
+
         <!-- Spring AOP + AspectJ -->
         <dependency>
             <groupId>org.springframework</groupId>
