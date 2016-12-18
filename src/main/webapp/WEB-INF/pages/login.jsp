@@ -3,8 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div id="container">
-    <form class="form-signin" name='loginForm'
-          action='/security_check' method='POST'>
+    <form class="form-signin" name='loginForm' id="form" action='/security_check' method='POST'>
         <h3 class="form-signin-heading">Enter your login</h3>
 
         <c:if test="${not empty error}">
