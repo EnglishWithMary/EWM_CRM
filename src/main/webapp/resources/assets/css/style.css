@@ -266,3 +266,22 @@
     top: 0;
 }
 /*END OF PIPELINE STYLES*/
+
+/*START OF PROFILE PAGE STYLES*/
+
+/*margins for userdata entries*/
+.ud{
+    margin: 5px;
+}
+
+/*puts block of data in center*/
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.divider{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
