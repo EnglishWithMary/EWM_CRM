@@ -4,7 +4,7 @@ import evg.testt.dto.GroupDTO;
 import evg.testt.model.Group;
 import evg.testt.model.Student;
 import evg.testt.model.Teacher;
-import evg.testt.oval.SpringOvalValidator;
+//import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.GroupService;
 import evg.testt.service.StudentService;
 import evg.testt.service.TeacherService;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
@@ -29,8 +30,8 @@ import java.util.List;
 @PropertySource(value = "classpath:standard.properties")
 public class GroupController {
 
-    @Autowired (required = false)
-    private SpringOvalValidator validator;
+//    @Autowired
+//    private SpringOvalValidator validator;
     @Autowired
     private GroupService groupService;
     @Autowired
@@ -91,7 +92,7 @@ public class GroupController {
     }
 
     @RequestMapping(value = "/groupSave")
-    public String saveGroup(@ModelAttribute("group") @Validated GroupDTO groupDTO,
+    public String saveGroup(@ModelAttribute("group") @Valid GroupDTO groupDTO,
                             BindingResult bindingResult) throws SQLException {
         if (bindingResult.hasErrors()) {
             return "groups/add";

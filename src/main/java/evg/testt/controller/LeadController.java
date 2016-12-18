@@ -2,7 +2,7 @@ package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
-import evg.testt.oval.SpringOvalValidator;
+//import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -28,8 +29,8 @@ public class LeadController {
     private PipeTypeService pipeTypeService;
     @Autowired
     private CardService cardService;
-    @Autowired (required = false)
-    private SpringOvalValidator validator;
+//    @Autowired
+//    private SpringOvalValidator validator;
     @Autowired
     private LeadService leadService;
     @Autowired
@@ -83,13 +84,13 @@ public class LeadController {
 
     @RequestMapping(value = "/leadSave", method = RequestMethod.POST)
     public String saveLeadOnPipe(HttpServletRequest request, Model model,
-                                 @ModelAttribute("lead") @Validated PersonDTO personDTO,
+                                 @ModelAttribute("lead") @Valid PersonDTO personDTO,
                                  BindingResult bindingResult,
                                  @RequestParam(required = false) Integer personId
     ) throws SQLException, ParseException {
         model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
         model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.LEAD_PIPE));
-        validator.validate(personDTO, bindingResult);
+//        validator.validate(personDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("personId",personId);
