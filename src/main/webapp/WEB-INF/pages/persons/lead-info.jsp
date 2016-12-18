@@ -18,7 +18,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h4>Full Name</h4>
-                            <p>Smith M.F.</p>
+                            <p>${lead.person.lastName}
+                                ${fn:substring(lead.person.firstName,0,1)}.
+                                ${fn:substring(lead.person.middleName,0,1)}.</p>
                         </div>
                     </div>
                     <div class="row">
