@@ -4,6 +4,8 @@ import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 import com.google.gson.Gson;
+import evg.testt.google.utils.calendar.DateGoogleConverter;
+import evg.testt.google.utils.calendar.RoomsEventsHelper;
 import evg.testt.model.Room;
 import evg.testt.model.RoomEvent;
 import evg.testt.service.RoomService;
@@ -73,14 +75,7 @@ public class RoomsController {
     public String getEventsByRoomId(@PathVariable(value = "ID") Integer id)
             throws SQLException, IOException {
         List<Event> events = roomService.getAllEventsInRoom(id);
-        List<RoomEvent> roomEvents = new ArrayList<>();
-        for (Event event : events) {
-            RoomEvent roomEvent = new RoomEvent();
-            roomEvent.setTitle(event.getSummary());
-            roomEvent.setStart(new Date(event.getStart().getDateTime().getValue()));
-            roomEvent.setEnd(new Date(event.getEnd().getDateTime().getValue()));
-            roomEvents.add(roomEvent);
-        }
+        List<RoomEvent> roomEvents = RoomsEventsHelper.convertGoogleEventsToRoomEvents(events);
         return new Gson().toJson(roomEvents);
     }
 
@@ -99,29 +94,8 @@ public class RoomsController {
             model.addAttribute("room_id", id);
             return "rooms/add/event";
         }
-        Event event = new Event();
-        event.setSummary(roomEvent.getTitle());
-        event.setStart(new EventDateTime().setDateTime(new DateTime(roomEvent.getStart())));
-        event.setEnd(new EventDateTime().setDateTime(new DateTime(roomEvent.getEnd())));
-
+        Event event = RoomsEventsHelper.convertRoomEventToGoogleEvent(roomEvent);
         roomService.insertEventIntoRoom(event, id);
         return "redirect:/rooms/" + id.toString() + "/info";
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
