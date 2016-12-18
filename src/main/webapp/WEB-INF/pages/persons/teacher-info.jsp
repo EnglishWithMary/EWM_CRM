@@ -45,11 +45,12 @@
                                     <p><strong>Last Name: </strong><input type="text" value="${teacher.person.lastName}"></p>
                                     <p><strong>Middle Name: </strong><input type="text" value="${teacher.person.middleName}"></p>
                                     <p><strong>Phone: </strong><input type="text"></p>
+                                    <p><strong>Address: </strong><input type="text"></p>
                                     <p><strong>email: </strong><input type="text" value="${teacher.person.email.email}"></p>
-                                    <p><strong>web : </strong><input type="text"></p>
+                                    <p><strong>web : </strong><a href=""></a><input type="text"></p>
                                     <p><strong>Date of Birth: </strong><input type="date"></p>
-                                    <p><strong>Comment: </strong><input type="text" value="${teacher.person.comments}"></p>
 
+                                    <p><strong>Comment: </strong><input type="text" value="${teacher.person.comments}"></p>
                                     <p><strong>Groups: </strong>
                                         <select name="gropus" onchange="location = this.value;">
                                             <option value="Groups" checked>Groups</option>
@@ -73,6 +74,10 @@
                                     <p><strong>Last modified: </strong>${teacher.person.modifyDate}</p>
                                     <p><strong>Registration date: </strong>${teacher.person.registrationDate}</p>
                                     <p><strong>Organization: </strong><input type="text"></p>
+
+                                    <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <p><strong>Salary: </strong><input type="text"></p>
+                                    </security:authorize>
                                 </div>
                             </div>
                         </div>
@@ -80,7 +85,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="btn-group btn-group-md">
-                                <button class="btn btn-danger" type="button">Delete Teacher</button>
+                                <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
+                                    <a href="/teacherTrash?id=${teacher.id}" class="btn btn-danger">Delete Teacher</a>
+
+                                    <a href="" class="btn btn-success" type="button">Update Teacher</a>
+
+                                    <a href="" class="btn btn-warning" type="button">Create New Teacher</a>
+                                </security:authorize>
                             </div>
                             Why not "fire teacher"?
                         </div>
@@ -94,7 +105,7 @@
                                     <strong>Calendar</strong>
                                 </div>
                                 <div class="panel-body">
-                                    <!--Calendar    -->
+                                    <div id="calendar"></div>
                                 </div>
                             </div>
                         </div>
