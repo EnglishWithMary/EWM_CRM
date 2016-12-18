@@ -58,8 +58,7 @@
                                                 <option value="0">All groups</option>
                                                 <option value="-1">Students without group</option>
                                                 <c:forEach var="group" items="${groups}">
-                                                    <option value="${group.id}">
-                                                            ${group.name}</option>
+                                                    <option value="${group.id}">${group.name}</option>
                                                 </c:forEach>
                                             </select>
                                         </div>
@@ -86,6 +85,7 @@
                                     <th>Delete</th>
                                     <th>Save</th>
                                 </security:authorize>
+                                <th>Teacher</th>
                             </tr>
                             </thead>
                             <tfoot>
@@ -119,6 +119,7 @@
                                             <a href="/studentSave?id=${student.id}">Save</a>
                                         </td>
                                     </security:authorize>
+                                    <td><a href="/teacher/info?teacher_id=${student.teacher.id}">${student.teacher.person.firstName}</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -144,7 +145,6 @@
             </div>
         </div>
     </div>
-
     <div class="col-sm-4">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -155,4 +155,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>
