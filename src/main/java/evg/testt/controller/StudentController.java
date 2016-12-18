@@ -1,11 +1,15 @@
 package evg.testt.controller;
 
 import antlr.Grammar;
+import com.amazonaws.services.simpleworkflow.flow.core.TryCatch;
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
+import evg.testt.service.impl.BaseService;
 import evg.testt.service.impl.PersonDTOServiceImpl;
+import evg.testt.service.impl.StudentLevelHistoryServiceImpl;
+import evg.testt.service.impl.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +42,8 @@ public class StudentController {
     private PersonDTOService personDTOService;
     @Autowired
     private GroupService groupService;
+    @Autowired
+    private StudentLevelHistoryService studentLevelHistoryService;
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public String showStudent(@RequestParam(required = false) Integer teacher_id,
@@ -146,15 +153,36 @@ public class StudentController {
 
     @RequestMapping(value = "/saveTestingResults", method = RequestMethod.POST)
     public String saveTestingResults(@ModelAttribute("studentLevelHistory") StudentLevelHistory studentLevelHistory,
-                                    @RequestParam(required = true) String testingDate)
-            throws SQLException {
+                                     @RequestParam Integer student_id,
+                                     @RequestParam String testingDate)
+            throws SQLException, ParseException {
 
+        Student student = studentService.getById(student_id);
 
-        //studentLevelHistory.setCheckpointDate(PersonDTOServiceImpl.(testingDate));
-        studentLevelHistory.setGrammar(studentLevelHistory.getGrammar());
-        studentLevelHistory.setSpeaking(studentLevelHistory.getSpeaking());
+        StudentLevelHistory studentLevel = new StudentLevelHistory();
+        studentLevel.setStudent(student);
+        studentLevel.setCheckpointDate(getDateFromString(testingDate));
+        studentLevel.setTestType(studentLevelHistory.getTestType());
 
+        studentLevel.setGrammar(studentLevelHistory.getGrammar());
+        studentLevel.setSpeaking(studentLevelHistory.getSpeaking());
+        studentLevel.setFluency(studentLevelHistory.getFluency());
+        studentLevel.setListening(studentLevelHistory.getListening());
+        studentLevel.setPronunciation(studentLevelHistory.getPronunciation());
+        studentLevel.setSpelling(studentLevelHistory.getSpelling());
+        studentLevel.setReading(studentLevelHistory.getReading());
+        studentLevel.setVocabulary(studentLevelHistory.getVocabulary());
+        studentLevel.setWriting(studentLevelHistory.getWriting());
+
+        studentLevelHistoryService.insert(studentLevel);
         return "students/all";
+    }
+
+    public Date getDateFromString(String dateFromForm) throws ParseException {
+        if (dateFromForm == "") dateFromForm = "2001-01-01";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = simpleDateFormat.parse(dateFromForm);
+        return date;
     }
 
     @RequestMapping(value = "/studentsSortedByGroup", method = RequestMethod.GET)
