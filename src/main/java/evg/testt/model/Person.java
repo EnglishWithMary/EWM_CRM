@@ -37,6 +37,6 @@ public @Data class Person extends BaseModel{
     @Column(columnDefinition = "text")
     private String comments;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person", fetch = FetchType.LAZY)
-    List<Activity> activities;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person", fetch = FetchType.LAZY)
+//    List<Activity> activities;
 }
