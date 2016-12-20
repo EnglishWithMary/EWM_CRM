@@ -47,5 +47,5 @@ class GroupEvent extends BaseModel {
         this.setUpdated(new Date());
     }
 
-    /* All Day option is not necessary */
+        /* All Day option is not necessary */
 }

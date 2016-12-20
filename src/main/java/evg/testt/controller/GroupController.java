@@ -5,6 +5,7 @@ import evg.testt.dto.GroupDTO;
 import evg.testt.model.*;
 //import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
+import evg.testt.util.fullcalendar.FullcalendarHeleper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -162,7 +163,9 @@ public class GroupController {
     @RequestMapping(value = "/group/{ID}/calendar/events", method = RequestMethod.GET)
     public String getEventsByRoomId(@PathVariable(value = "ID") Integer id)
             throws SQLException {
-        List<GroupEvent> groupEvents = groupEventsService.getAllByGroupId(id);
+        List<FullcalendarEvent> groupEvents = FullcalendarHeleper
+                .convertGroupEventsToFullcalendarEvents(groupEventsService.getAllByGroupId(id));
+
         return new Gson().toJson(groupEvents);
     }
 
