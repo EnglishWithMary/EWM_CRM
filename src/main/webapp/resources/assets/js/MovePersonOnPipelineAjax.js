@@ -14,7 +14,21 @@ $(document).ready(function () {
         hoverClass: "pipehover",
 
         drop: function( event, ui ) {
-            movePerson( ui.draggable, $(event.target) );
+
+            var i = 0; //used as flag to find out if element added or not
+            $(this).children('.person').each(function () {
+                if ($(this).offset().top >= ui.offset.top) //compare
+                {
+                    $(ui.draggable).insertBefore($(this));
+                    i = 1;
+                    return false; //break loop
+                }
+            })
+
+            if (i != 1) //if element dropped at the end of card
+            {
+                movePerson( ui.draggable, $(event.target) );
+            }
 
             //personId
             var $draggable_item = ui.draggable;
@@ -29,9 +43,18 @@ $(document).ready(function () {
 
             $($draggable_item).find("#from").attr("value", destination);
 
-            var json = { "destination" : destination, "from" : from, "personId" : personId};
+            var positions=[];
 
-            if(destination != from) {
+            // find position and id of person on card
+            $($(event.target)).children(".person").each(function (index) {
+                var id = $(this).find("#personId").val();
+                var position = index + 1;
+                positions.push({"position": position, "id": id});
+            });
+
+            var json = { "destination" : destination, "from" : from, "personId" : personId, "array": positions};
+
+            // if(destination != from) {
                 $.ajax({
                     url: '/moveLeadAjax',
                     dataType: 'json',
@@ -42,7 +65,7 @@ $(document).ready(function () {
                     success: function (data) {
                     }
                 });
-            }
+            // }
         }
     });
 

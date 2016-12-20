@@ -99,10 +99,7 @@ public class PipelineController {
     @ResponseBody
     @RequestMapping(value = "/moveLeadAjax", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void moveLeadAjax(@RequestBody AjaxFormCall ajaxFormCall) throws SQLException {
-        if(ajaxFormCall.getDestination() != ajaxFormCall.getFrom())
-        {
-            cardService.movePersonOnCards(ajaxFormCall.getFrom(), ajaxFormCall.getDestination(), ajaxFormCall.getPersonId());
-        }
+            cardService.movePersonOnCards(ajaxFormCall);
     }
 
     private void inserAttributes(Model model, Pipe pipe)

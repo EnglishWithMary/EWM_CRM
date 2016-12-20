@@ -98,18 +98,20 @@ public class LeadController {
         }
 
         if (personId==null) {
+            Card card = cardService.getById(personDTO.getCardId());
             Lead lead = new Lead();
             lead = personDTOService.updateLead(lead, personDTO);
+            lead.getPerson().setPosition(card.getPersons().size() + 1);
             leadService.insert(lead);
-            Card card = cardService.getById(personDTO.getCardId());
             card.getPersons().add(lead.getPerson());
             cardService.update(card);
         }else{
             Person person=personService.getById(personId);
+            Card cardOld = cardService.getCardByPerson(person);
             Lead lead = leadService.getByPerson(person);
             lead = personDTOService.updateLead(lead, personDTO);
+            lead.getPerson().setPosition(cardOld.getPersons().size() + 1);
             leadService.update(lead);
-            Card cardOld = cardService.getCardByPerson(person);
             if (!personDTO.getCardId().equals(cardOld.getId())) {
                 cardOld.getPersons().remove(person);
                 cardService.update(cardOld);
