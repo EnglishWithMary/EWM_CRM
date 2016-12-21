@@ -225,9 +225,6 @@ public class StudentController {
         return date;
     }
 
-    @RequestMapping(value = "/studentsSortedByGroup", method = RequestMethod.GET)
-    public String showSortedStudent(Model model, @RequestParam(required = false) Integer group_id)
-
     @RequestMapping(value = "/studentsSortedByGroup", method = RequestMethod.POST)
     public String showSortedStudent(Model model, @RequestParam(required = false) List<Integer> groupIdList)
             throws SQLException {
