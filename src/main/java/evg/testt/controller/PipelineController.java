@@ -4,7 +4,7 @@ import evg.testt.ajax.utils.AjaxFormCall;
 import evg.testt.model.Card;
 import evg.testt.model.Pipe;
 import evg.testt.model.PipeType;
-import evg.testt.oval.SpringOvalValidator;
+//import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,13 +22,13 @@ public class PipelineController {
     private PipeTypeService pipeTypeService;
     @Autowired
     private CardService cardService;
-    @Autowired
-    private SpringOvalValidator validator;
+//    @Autowired
+//    private SpringOvalValidator validator;
     @Autowired
     private LeadService leadService;
     @Autowired
     private PersonService personService;
-    @Autowired
+    @Autowired (required = false)
     private EmailService emailService;
 
     @RequestMapping(value = "/pipeline", method = RequestMethod.GET)
@@ -48,7 +48,14 @@ public class PipelineController {
         card.setType(pt);
         cardService.insert(card);
         this.inserAttributes(model, pipe);
-        return "redirect:/takeLeadtpipe";
+        if (pipe==Pipe.LEAD_PIPE){
+            return "redirect:/takeLeadtpipe";
+        }else if (pipe==Pipe.STUDENT_PIPE){
+            return "redirect:/takeStudentpipe";
+        }else{
+            return "redirect:/pipeline";
+        }
+
     }
 
     @RequestMapping(value = "/takeStudentpipe", method = RequestMethod.GET)

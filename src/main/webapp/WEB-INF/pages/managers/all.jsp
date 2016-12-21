@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="row">
     <div class="col-sm-12">
@@ -25,7 +26,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <table class="table table-bordered">
+                        <table id = "table-list" class="table table-striped table-bordered">
                             <thead>
                             <tr>
                                 <th>First name</th>
@@ -33,20 +34,36 @@
                                 <th>Middle name</th>
                                 <th>Registration Date</th>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
-                                    <th>Delete Manager</th>
+                                    <th>Delete</th>
+                                    <th>Save</th>
                                 </security:authorize>
                             </tr>
                             </thead>
+                            <tfoot>
+                            <tr>
+                                <th>First name</th>
+                                <th>Last name</th>
+                                <th>Middle name</th>
+                                <th>Registration Date</th>
+                                <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <th>Delete</th>
+                                    <th>Save</th>
+                                </security:authorize>
+                            </tr>
+                            </tfoot>
                             <tbody>
                             <c:forEach var="manager" items="${managers}">
                                 <tr>
-                                    <td>${manager.person.firstName}</td>
+                                    <td><a href="/managers/info?manager_id=${manager.id}">${manager.person.firstName}</a></td>
                                     <td>${manager.person.lastName}</td>
                                     <td>${manager.person.middleName}</td>
                                     <td>${manager.person.registrationDate}</td>
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
                                         <td>
                                             <a href="/managerTrash?id=${manager.id}">Delete</a>
+                                        </td>
+                                        <td>
+                                            <a href="/managerSave?id=${manager.id}">Save</a>
                                         </td>
                                     </security:authorize>
                                 </tr>
@@ -85,3 +102,4 @@
         </div>
     </div>
 </div>
+

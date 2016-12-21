@@ -26,7 +26,9 @@
                            aria-expanded="false">Admin tools <span class="caret"></span> </a>
                         <ul class="dropdown-menu">
                             <li><a href="/users">All Users</a></li>
-                            <li><a href="#">...</a></li>
+                            <li><a href="/persons">All Personnel</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">..in development</a></li>
                         </ul>
                     </li>
 
@@ -35,6 +37,7 @@
                            aria-haspopup="true"
                            aria-expanded="false">Managing <span class="caret"></span> </a>
                         <ul class="dropdown-menu">
+                            <li><a href="/rooms">Rooms</a></li>
                             <li><a href="/teachers">Teachers</a></li>
                             <li><a href="/managers">Managers</a></li>
                             <li><a href="/students">Students</a></li>
@@ -43,6 +46,11 @@
                             <li><a href="/payments">Payments</a></li>
                             <li><a href="/groups">Groups</a></li>
                             <li><a href="/events">Events</a></li>
+
+                            <security:authorize access="hasRole('ROLE_ADMIN')">
+                                <li role="separator" class="divider"></li>
+                                <li><a href="/admins">Admins</a></li>
+                            </security:authorize>
                         </ul>
                     </li>
                     <li class="dropdown">

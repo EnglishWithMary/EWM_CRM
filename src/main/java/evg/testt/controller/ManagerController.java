@@ -2,7 +2,7 @@ package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
-import evg.testt.oval.SpringOvalValidator;
+//import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -27,8 +28,8 @@ import java.util.List;
 @PropertySource(value = "classpath:standard.properties")
 public class ManagerController {
 
-    @Autowired
-    private SpringOvalValidator validator;
+//    @Autowired
+//    private SpringOvalValidator validator;
     @Autowired
     private ManagerService managerService;
     @Autowired
@@ -80,9 +81,9 @@ public class ManagerController {
     }
 
     @RequestMapping(value = "/managerSave", method = RequestMethod.POST)
-    public String saveManager(@ModelAttribute("manager") @Validated PersonDTO personDTO,
+    public String saveManager(@ModelAttribute("manager") @Valid PersonDTO personDTO,
                               BindingResult bindingResult, Model model) throws SQLException, ParseException {
-        validator.validate(personDTO, bindingResult);
+//        validator.validate(personDTO, bindingResult);
 
         User u = userService.findByUserLogin(personDTO.getLogin());
 
@@ -105,13 +106,20 @@ public class ManagerController {
     public String managerDelete(@RequestParam Integer id) throws SQLException {
         Manager manager = managerService.getById(id);
         managerService.delete(manager);
-        return "managers/all";
+        return "redirect:/managers";
     }
 
     @RequestMapping(value = "/managerTrash")
     public String managerTrash(@RequestParam Integer id) throws SQLException {
         Manager manager = managerService.getById(id);
         managerService.trash(manager);
-        return "managers/all";
+        return "redirect:/managers";
+    }
+
+    @RequestMapping(value = "/managers/info", method = RequestMethod.GET)
+    public String managerInfo(Model model, @RequestParam int manager_id) throws SQLException {
+        Manager manager = managerService.getById(manager_id);
+        model.addAttribute("manager", manager);
+        return "persons/manager-info";
     }
 }

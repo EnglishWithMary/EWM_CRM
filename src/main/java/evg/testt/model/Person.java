@@ -20,7 +20,7 @@ public @Data class Person extends BaseModel{
     @Embedded
     private State state = new State();
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date birthdayDate;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -37,9 +37,6 @@ public @Data class Person extends BaseModel{
     @Column(columnDefinition = "text")
     private String comments;
 
-    /**
-     * TODO remake log activity
-     * */
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person", fetch = FetchType.EAGER)
-//    List<Activity> activities;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person", fetch = FetchType.LAZY)
+    List<Activity> activities;
 }

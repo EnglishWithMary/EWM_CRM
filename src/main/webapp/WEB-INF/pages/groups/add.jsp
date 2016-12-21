@@ -35,6 +35,21 @@
                             </div>
                         </div>
                         <div class="row padding-bot">
+                            <div class="col-sm-12">
+                                <sf:label path="language"> Language: </sf:label>
+                                <sf:select path="language">
+                                    <option label="English">English</option>
+                                    <option label="Germany">Germany</option>
+                                    <option label="Germany">Spanish</option>
+                                    <option label="Germany">Russian</option>
+                                    <option label="Germany">Italian</option>
+                                    <option label="Germany">Polish</option>
+                                    <option label="Germany">French</option>
+                                    <option label="Germany">Ukrainian</option>
+                                </sf:select>
+                            </div>
+                        </div>
+                        <div class="row padding-bot">
                             <div class="col-sm-4 col-sm-offset-4">
                                 <input type="submit" class="btn btn-success" value="Add group"/>
                             </div>
@@ -44,3 +59,4 @@
             </div>
         </div>
     </div>
+</div>

@@ -1,11 +1,11 @@
 package evg.testt.dto;
 
 import lombok.Data;
-import net.sf.oval.constraint.Length;
+import javax.validation.constraints.Size;
 
 public @Data class GroupDTO {
 
-    @Length(min = 2, max = 20, message = "Name length must have 2-20 chars")
+    @Size(min = 2, max = 20, message = "Name length must have 2-20 chars")
     private String name;
 
     private Integer teacherId;
@@ -13,5 +13,7 @@ public @Data class GroupDTO {
     private Integer studentId;
 
     private Integer groupId;
+
+    private String language;
 
 }
