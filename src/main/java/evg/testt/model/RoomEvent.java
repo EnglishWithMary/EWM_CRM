@@ -5,8 +5,8 @@ import lombok.Data;
 import java.util.Date;
 
 public @Data class RoomEvent {
-    Integer id;
-    String title;
-    Date start;
-    Date end;
+    private Integer id;
+    private String title;
+    private Date start;
+    private Date end;
 }

@@ -55,7 +55,7 @@
                             <tbody>
                             <c:forEach var="group" items="${groups}">
                                 <tr>
-                                    <td><a href="/group/info?group_id=${group.id}" alt="Group Profile">${group.name}</a></td>
+                                    <td><a href="/group/${group.id}/info" alt="Group Profile">${group.name}</a></td>
                                     <td>
                                         <a href="/teacher/info?teacher_id=${group.teacher.id}" alt="Teacher Profile">
                                                 ${group.teacher.person.firstName}${" "}

@@ -16,7 +16,8 @@
                             <p><strong>Group Name: </strong>${group.name}</p>
 
                             <p><strong>Group Teacher:</strong>
-                                <a href="/teacher/info?teacher_id=${group.teacher.id}">${group.teacher.person.firstName}</a></p>
+                                <a href="/teacher/info?teacher_id=${group.teacher.id}">${group.teacher.person.firstName}</a>
+                            </p>
 
                             <p><strong>Studying Language:</strong>English(null)</p>
 
@@ -33,18 +34,18 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach items="${group.students}" var="student">
+                                <c:forEach items="${group.students}" var="student">
                                     <tr>
                                         <th><a href="/student/info?student_id=${student.id}">
-                                                    ${student.person.lastName}
-                                                    ${fn:substring(student.person.firstName,0,1)}.
-                                                    ${fn:substring(student.person.middleName,0,1)}.
-                                            </a>
+                                                ${student.person.lastName}
+                                                ${fn:substring(student.person.firstName,0,1)}.
+                                                ${fn:substring(student.person.middleName,0,1)}.
+                                        </a>
                                         </th>
                                         <th>null</th>
                                         <th>null</th>
                                     </tr>
-                                    </c:forEach>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>
@@ -81,7 +82,14 @@
                             <strong>Group's Schedule</strong>
                         </div>
                         <div class="panel-body">
-                            <div id="calendar"></div>
+                            <div class="row">
+                                <div id="calendar"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <a href="/group/${group.id}/calendar" class="btn btn-success">Change Events</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
