@@ -6,6 +6,7 @@ import evg.testt.model.*;
 //import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import evg.testt.util.fullcalendar.FullcalendarHeleper;
+import org.mortbay.util.ajax.AjaxFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -196,10 +197,10 @@ public class GroupController {
     @ResponseBody
     @RequestMapping(value = "/group/{group_id}/calendar/room/{room_id}/add-event-test", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void saveEventAjaxMethod(@RequestBody FullcalendarEvent fullcalendarEvent,
-                                    @PathVariable(value = "group_id") Integer groupId,
-                                    @PathVariable(value = "room_id") Integer roomId,
-                                    HttpServletResponse response
+    public String  saveEventAjaxMethod(@RequestBody FullcalendarEvent fullcalendarEvent,
+                                                       @PathVariable(value = "group_id") Integer groupId,
+                                                       @PathVariable(value = "room_id") Integer roomId,
+                                                       HttpServletResponse response
     ) throws SQLException {
         Room room = roomService.getById(roomId);
         GroupEvent groupEvent = FullcalendarHeleper
@@ -210,6 +211,6 @@ public class GroupController {
                 groupService.getById(groupId).getName());
         groupEventsService.insert(groupEvent);
 //        response.setStatus(200);
-//        return "success";
+        return new Gson().toJson("msg = success, code = 200");
     }
 }

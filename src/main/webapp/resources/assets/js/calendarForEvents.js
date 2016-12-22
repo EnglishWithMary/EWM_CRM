@@ -14,14 +14,16 @@ $(document).ready(function () {
             type: 'POST',
             data: JSON.stringify(json),
             contentType: 'application/json',
+            timeout: 100000,
             success: function (data) {
-                // $('#calendar').fullCalendar('refetchEvents');
+                $('#calendar').fullCalendar('refetchEvents');
+                $('#myModal').modal('toggle');
             },
             error: function (e) {
                 // assert(e.responseText);
             }
         });
-        $('#myModal').modal('toggle');
+        // alert("AJAX finished")
     });
 
     $('#calendar').fullCalendar({

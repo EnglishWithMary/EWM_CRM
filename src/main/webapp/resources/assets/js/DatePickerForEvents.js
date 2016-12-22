@@ -25,8 +25,8 @@ function formatDate(dateVal) {
         sHour = "12";
     }
 
-    sHour = padValue(sHour);
-
+    // sHour = padValue(sHour);
+    //
     return sMonth + "/" + sDay + "/" + sYear + " " + sHour + ":" + sMinute + " " + sAMPM;
 }
 
