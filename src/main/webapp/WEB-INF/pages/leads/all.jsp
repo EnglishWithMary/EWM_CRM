@@ -15,13 +15,19 @@
             </div>
             <div class="panel-body">
 
-                <form method="post" action="/leadSortByDate">
-                    <div class="form-group">
-                        <input type="submit" value="Sort by Registration Date" class="btn btn-default">
+                <div class="row padding-bot">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <form method="get" action="/leads">
+                            <input type="hidden" name="flagSorted" value="${!flagSorted}" class="hidden">
+                            <input value="${flagSorted == true ? 'Common  order' : 'Sort by Registration Date'}"
+                            type="submit" class="btn btn-default"/>
+                        </form>
                     </div>
-                </form>
+                </div>
 
-                <table id = "table-list" class="table table-striped table-bordered">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <table class="table table-striped table-bordered">
                     <thead>
                     <tr>
                         <th>First name</th>
@@ -113,6 +119,27 @@
                     </c:forEach>
                     </tbody>
                 </table>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                     <div class="text-center">
+                        <c:if test="${pages > 1}">
+                            <ul class="pagination">
+                                <c:forEach var="page" begin="1" end="${pages}">
+                                    <li class="${(page eq param.page) or ((param.page eq null) and (page eq 1))? 'active' : ''}">
+                                        <a href="/leads?page=${page}&flagSorted=${flagSorted}">
+                                                ${page}
+                                        </a>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </c:if>
+                     </div>
+                        </div>
+                    </div>
+
             </div>
         </div>
     </div>
