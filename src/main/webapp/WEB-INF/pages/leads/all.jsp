@@ -36,6 +36,7 @@
                         <th>Registration Date</th>
                         <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
                             <td>Edit</td>
+                            <td>Move to a student</td>>
                             <td>Delete</td>
                         </security:authorize>
                     </tr>
@@ -48,6 +49,7 @@
                         <th>Registration Date</th>
                         <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
                             <td>Edit</td>
+                            <td>Move to a student</td>>
                             <td>Delete</td>
                         </security:authorize>
                     </tr>
@@ -68,6 +70,16 @@
                                         <input type="hidden" name="personId" value="${lead.person.id}">
                                     </form>
                                 </td>
+
+                                <td>
+                                    <form method="post" action="/studentAdd">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            Move to a student
+                                        </button>
+                                        <input type="hidden" name="personId" value="${lead.person.id}">
+                                    </form>
+                                </td>
+
                                 <td>
                                     <div>
                                         <button type="button"
