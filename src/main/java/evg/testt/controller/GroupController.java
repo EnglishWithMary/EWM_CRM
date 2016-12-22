@@ -209,8 +209,6 @@ public class GroupController {
         groupEvent.setRoomId(room.getId());
         groupEvent.setGroupId(groupId);
         if(groupEvent.getTitle().equals(""))
-            groupEvent.setTitle(groupEvent.getTitle());
-        else
             groupEvent.setTitle("No title!");
         groupEventsService.insert(groupEvent);
         return new Gson().toJson("msg = success, code = 200");
