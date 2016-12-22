@@ -127,6 +127,7 @@ public class StudentController {
             return "redirect:/students";
         } else {
 
+//            model.addAttribute("student", personDTO);
             model.addAttribute("groups",groupService.getAll());
             model.addAttribute("teachers",teacherService.getAll());
             return "students/add";
