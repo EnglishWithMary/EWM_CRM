@@ -5,27 +5,26 @@ $(document).ready(function () {
         revert: "invalid",
         containment: "document",
         helper: "clone",
-        cursor: "move"
+        cursor: "move",
     });
 
     $(".pipe").droppable({
         accept: ".pipe .person",
-
         hoverClass: "pipehover",
 
         drop: function( event, ui ) {
-
             var i = 0; //used as flag to find out if element added or not
             $(this).children('.person').each(function () {
+
                 if ($(this).offset().top >= ui.offset.top) //compare
                 {
                     $(ui.draggable).insertBefore($(this));
                     i = 1;
                     return false; //break loop
                 }
-            })
 
-            if (i != 1) //if element dropped at the end of card
+            })
+            if (i == 0) //if element dropped at the end of card
             {
                 movePerson( ui.draggable, $(event.target) );
             }
@@ -44,12 +43,20 @@ $(document).ready(function () {
             $($draggable_item).find("#from").attr("value", destination);
 
             var positions=[];
-
+            // $(this).is($draggable_item)
             // find position and id of person on card
             $($(event.target)).children(".person").each(function (index) {
                 var id = $(this).find("#personId").val();
                 var position = index + 1;
-                positions.push({"position": position, "id": id});
+
+                // Write in array id of clone and another elements on pipe
+                // except element which clone we are dragging.
+                // @personId presents id of clone of draggable element
+               if($(this).is($draggable_item) || id != personId)
+               {
+                   positions.push({"position": position, "id": id});
+               }
+
             });
 
             var json = { "destination" : destination, "from" : from, "personId" : personId, "array": positions};
