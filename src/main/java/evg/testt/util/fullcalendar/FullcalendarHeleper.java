@@ -9,6 +9,7 @@ import java.util.List;
 public class FullcalendarHeleper {
     public static FullcalendarEvent convertGroupEventToFullcalendarEvent(GroupEvent groupEvent){
         FullcalendarEvent fullcalendarEvent = new FullcalendarEvent(
+                groupEvent.getId(),
                 groupEvent.getStartDate(),
                 groupEvent.getEndDate(),
                 groupEvent.getTitle()
@@ -18,6 +19,7 @@ public class FullcalendarHeleper {
 
     public static GroupEvent convertFullcalendarEventToGroupEvent(FullcalendarEvent fullcalendarEvent){
         GroupEvent groupEvent = new GroupEvent();
+        groupEvent.setId(fullcalendarEvent.getId());
         groupEvent.setTitle(fullcalendarEvent.getTitle());
         groupEvent.setStartDate(fullcalendarEvent.getStart());
         groupEvent.setEndDate(fullcalendarEvent.getEnd());

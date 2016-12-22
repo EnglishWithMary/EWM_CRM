@@ -9,11 +9,13 @@ import evg.testt.util.fullcalendar.FullcalendarHeleper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -189,5 +191,25 @@ public class GroupController {
         }
         groupEventsService.insert(groupEvent);
         return "redirect:/group/" + id.toString() + "/calendar";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/group/{group_id}/calendar/room/{room_id}/add-event-test", method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void saveEventAjaxMethod(@RequestBody FullcalendarEvent fullcalendarEvent,
+                                    @PathVariable(value = "group_id") Integer groupId,
+                                    @PathVariable(value = "room_id") Integer roomId,
+                                    HttpServletResponse response
+    ) throws SQLException {
+        Room room = roomService.getById(roomId);
+        GroupEvent groupEvent = FullcalendarHeleper
+                .convertFullcalendarEventToGroupEvent(fullcalendarEvent);
+        groupEvent.setRoomId(room.getId());
+        groupEvent.setGroupId(groupId);
+        groupEvent.setTitle(groupEvent.getTitle() + ", room = " + room.getName() + ", group = " +
+                groupService.getById(groupId).getName());
+        groupEventsService.insert(groupEvent);
+//        response.setStatus(200);
+//        return "success";
     }
 }

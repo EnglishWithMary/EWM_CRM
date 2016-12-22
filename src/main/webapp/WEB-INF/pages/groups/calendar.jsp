@@ -54,6 +54,17 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="col-sm-2 control-label" for="room">Room:</label>
+                        <div class="col-sm-10">
+                            <select id="room" class="form-select-button">
+                                <c:forEach var="room" items="${rooms}">
+                                    <option value="${room.id}">${room.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="col-sm-2 control-label" for="date-start">Start Time</label>
                         <div class="col-sm-10">
                             <div class="input-group date" id="date-start">

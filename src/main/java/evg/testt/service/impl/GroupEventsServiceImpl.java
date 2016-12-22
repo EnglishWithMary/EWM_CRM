@@ -16,6 +16,15 @@ public class GroupEventsServiceImpl extends BaseService<GroupEvent, GroupEventsR
     public List<GroupEvent> getAllByGroupId(Integer id) {
         return dao.findAllByGroupId(id);
     }
+
+    @Override
+    public void update(GroupEvent groupEvent){
+        GroupEvent updatedGroupEvent = dao.findOne(groupEvent.getId());
+        updatedGroupEvent.setTitle(groupEvent.getTitle());
+        updatedGroupEvent.setStartDate(groupEvent.getStartDate());
+        updatedGroupEvent.setEndDate(groupEvent.getEndDate());
+        dao.save(updatedGroupEvent);
+    }
 }
 
 

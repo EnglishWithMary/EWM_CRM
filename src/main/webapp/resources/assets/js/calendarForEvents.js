@@ -1,17 +1,28 @@
 $(document).ready(function () {
-
-//        Date.parseDate = function( input, format ){
-//            return moment(input,format).toDate();
-//        };
-//        Date.prototype.dateFormat = function( format ){
-//            return moment(this).format(format);
-//        };
-
-//        element.datetimepicker({
-//            format:      'YYYY-MM-DD\\THH:mm:ssZ',
-//            formatTime:  'HH:mm',
-//            formatDate:  'YYYY-MM-DD'
-//        });
+    var path = window.location.pathname;
+    $('#success').click(function (data) {
+        // alert("text");
+        var json = {
+            "id": "null",
+            "title": $('#title').val(),
+            "start": new Date($('#date-start').datetimepicker('viewDate')),
+            "end": new Date($('#date-end').datetimepicker('viewDate'))
+        };
+        $.ajax({
+            url: path + '/room/' + $('#room').val() + '/add-event-test',
+            dataType: 'json',
+            type: 'POST',
+            data: JSON.stringify(json),
+            contentType: 'application/json',
+            success: function (data) {
+                // $('#calendar').fullCalendar('refetchEvents');
+            },
+            error: function (e) {
+                // assert(e.responseText);
+            }
+        });
+        $('#myModal').modal('toggle');
+    });
 
     $('#calendar').fullCalendar({
         header: {
@@ -23,6 +34,9 @@ $(document).ready(function () {
         editable: true,
         droppable: true,
         events: window.location.pathname + "/events",
+        /*
+         * eventReceive isn't working correctly right now
+         */
         eventReceive: function (event) {
             var title = event.title;
             var start = event.start.format("YYYY-MM-DD[T]HH:MM:SS");
@@ -45,27 +59,9 @@ $(document).ready(function () {
         selectable: true,
         selectHelper: true,
         select: function (start, end) {
-//                var title = function(){
-//                    $('#myModal').modal();
-//                };
             $('#myModal').modal();
-//                var title = $('#myModal #title').val();
-//                var title = prompt("Text");
-//                $('#myModal').modal();
-//                if (title) {
-//                    $('#calendar').fullCalendar('renderEvent',
-//                        {
-//                            title: title,
-//                            start: start,
-//                            end: end
-//                        },
-//                        true // make the event "stick"
-//                    );
-//                }
             $('#date-start input').val(formatDate(start));
             $('#date-end input').val(formatDate(end));
-//                alert(title + start.toString() + end.toString() + allDay.valueOf());
-//                calendar.fullCalendar('unselect');
 
             /**
              * CREATE FUNCTION THAT TRIGGERS MODAL WINDOW AFTER ENTERING TIME
