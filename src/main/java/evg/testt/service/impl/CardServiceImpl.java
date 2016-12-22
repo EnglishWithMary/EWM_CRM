@@ -1,5 +1,6 @@
 package evg.testt.service.impl;
 
+import evg.testt.ajax.utils.AjaxFormCall;
 import evg.testt.dao.PipeTypeRepository;
 import evg.testt.model.Card;
 import evg.testt.model.Person;
@@ -31,9 +32,9 @@ public class CardServiceImpl extends BaseService<Card, CardRepository> implement
     }
 
     @Override
-    public void movePersonOnCards(int from, int destination, int personId) throws SQLException {
-        Person movingPerson = personService.getById(personId);
-        dao.movePersonOnCards(from, destination, movingPerson);
+    public void movePersonOnCards(AjaxFormCall ajaxFormCall) throws SQLException {
+        Person movingPerson = personService.getById(ajaxFormCall.getPersonId());
+        dao.movePersonOnCards(ajaxFormCall, movingPerson);
     }
 
     @Override

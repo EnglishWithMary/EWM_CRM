@@ -21,6 +21,7 @@ $(document).ready(function () {
             }
         });
 
+        $('#myModal').find("#eventId").attr("value", 0);
         $('#myModal').modal('toggle');
     });
 
