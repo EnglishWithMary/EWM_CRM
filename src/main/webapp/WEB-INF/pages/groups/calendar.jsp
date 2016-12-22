@@ -77,7 +77,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="date-end">Start Time</label>
+                        <label class="col-sm-2 control-label" for="date-end">End Time</label>
                         <div class="col-sm-10">
                             <div class="input-group date" id="date-end">
                                 <input type="text" placeholder="end" class="form-control"/>
@@ -90,8 +90,13 @@
                 </div>
 
                 <div class="modal-footer">
+                    <input type="hidden" id="eventId" value="0" class="hidden">
                     <div class="form-group col-sm-10">
-                        <button id="success" type="button" class="btn btn-success">Add Event</button>
+                        <button id="success" type="button" class="btn btn-success">Add/Update Event</button>
+                    </div>
+
+                    <div class="form-group col-sm-10">
+                        <button id="delete" type="button" class="btn btn-success">Delete Event</button>
                     </div>
                 </div>
 

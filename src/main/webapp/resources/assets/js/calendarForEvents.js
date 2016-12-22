@@ -1,12 +1,13 @@
 $(document).ready(function () {
     var path = window.location.pathname;
     $('#success').click(function (data) {
-        // alert("text");
+
+        var eventId = $('#myModal').find("#eventId").val();
         var json = {
-            "id": "null",
+            "id": eventId,
             "title": $('#title').val(),
-            "start": new Date($('#date-start').datetimepicker('viewDate')),
-            "end": new Date($('#date-end').datetimepicker('viewDate'))
+            "start": new Date($('#date-start').find("input").val()),
+            "end": new Date($('#date-end').find("input").val())
         };
         $.ajax({
             url: path + '/room/' + $('#room').val() + '/add-event-test',
@@ -17,13 +18,33 @@ $(document).ready(function () {
             timeout: 100000,
             success: function (data) {
                 $('#calendar').fullCalendar('refetchEvents');
-                $('#myModal').modal('toggle');
-            },
-            error: function (e) {
-                // assert(e.responseText);
             }
         });
-        // alert("AJAX finished")
+
+        $('#myModal').modal('toggle');
+    });
+
+    $('#delete').click(function (data) {
+
+        var eventId = $('#myModal').find("#eventId").val();
+        var json = {
+            "id": eventId,
+        };
+
+        if(eventId > 0) {
+            $.ajax({
+                url: path + '/delete/event',
+                dataType: 'json',
+                type: 'POST',
+                data: JSON.stringify(json),
+                contentType: 'application/json',
+                timeout: 100000,
+                success: function (data) {
+                    $('#calendar').fullCalendar('refetchEvents');
+                },
+            });
+        }
+        $('#myModal').modal('toggle');
     });
 
     $('#calendar').fullCalendar({
@@ -36,6 +57,7 @@ $(document).ready(function () {
         editable: true,
         droppable: true,
         events: window.location.pathname + "/events",
+        timezone: "local",
         /*
          * eventReceive isn't working correctly right now
          */
@@ -64,10 +86,31 @@ $(document).ready(function () {
             $('#myModal').modal();
             $('#date-start input').val(formatDate(start));
             $('#date-end input').val(formatDate(end));
+        },
 
-            /**
-             * CREATE FUNCTION THAT TRIGGERS MODAL WINDOW AFTER ENTERING TIME
-             */
+        eventClick: function(event, jsEvent, view){
+            $('#myModal').modal();
+            $('#date-start').val(formatDate(event.start));
+            $('#date-end').val(formatDate(event.end));
+            $('#myModal').find("#eventId").attr("value", event.id);
+            $('#myModal').find("#title").attr("value", event.title);
+        },
+
+        eventDrop: function(event, delta, revertFunc) {
+            var json = {
+                "id": event.id,
+                "title": event.title,
+                "start": new Date(formatDate(event.start)),
+                "end": new Date(formatDate(event.end))
+            };
+            $.ajax({
+                url: path + '/room/' + $('#room').val() + '/add-event-test',
+                dataType: 'json',
+                type: 'POST',
+                data: JSON.stringify(json),
+                contentType: 'application/json',
+                timeout: 100000,
+            });
         }
     })
 });

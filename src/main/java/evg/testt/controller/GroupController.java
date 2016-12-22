@@ -6,6 +6,7 @@ import evg.testt.model.*;
 //import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import evg.testt.util.fullcalendar.FullcalendarHeleper;
+import org.apache.http.HttpStatus;
 import org.mortbay.util.ajax.AjaxFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -207,10 +208,22 @@ public class GroupController {
                 .convertFullcalendarEventToGroupEvent(fullcalendarEvent);
         groupEvent.setRoomId(room.getId());
         groupEvent.setGroupId(groupId);
-        groupEvent.setTitle(groupEvent.getTitle() + ", room = " + room.getName() + ", group = " +
-                groupService.getById(groupId).getName());
+        if(groupEvent.getTitle().equals(""))
+            groupEvent.setTitle(groupEvent.getTitle());
+        else
+            groupEvent.setTitle("No title!");
         groupEventsService.insert(groupEvent);
-//        response.setStatus(200);
+        return new Gson().toJson("msg = success, code = 200");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/group/{group_id}/calendar/delete/event", method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String  deleteEventAjaxMethod(@RequestBody FullcalendarEvent fullcalendarEvent,
+                                       HttpServletResponse response) throws SQLException {
+
+        GroupEvent groupEvent = groupEventsService.getById(fullcalendarEvent.getId());
+        groupEventsService.delete(groupEvent);
         return new Gson().toJson("msg = success, code = 200");
     }
 }
