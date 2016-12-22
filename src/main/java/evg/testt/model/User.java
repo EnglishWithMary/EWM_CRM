@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 public @Data class User extends BaseModel {
     @Size(min = 3, max = 20, message = "Login should be at least 3 and less than 20 symbols")
     private String login;
-    @Size(min = 6, max = 20, message = "Password should be at least 3 and less than 20 symbols")
+
     private String password;
 
     @ManyToOne
