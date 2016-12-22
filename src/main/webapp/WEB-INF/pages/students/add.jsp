@@ -60,10 +60,10 @@
                         <div class="row padding-bot">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-4">
-                                <sf:label path="login" name="login">Login:</sf:label><span></span>
+                                <sf:label path="login">Login:</sf:label>
                             </div>
                             <div class="col-sm-6">
-                                <sf:input path="login" name="login" cssClass="form-control"/>
+                                <sf:input path="login" cssClass="form-control"/>
                                 <sf:errors path="login" cssClass="has-error"/>
                             </div>
                         </div>
@@ -98,46 +98,26 @@
                             </div>
                         </div>
                         <div class="row padding-bot">
-                            <div class="col-sm-1"></div>
-                            <div class="col-sm-4">
-                            <label path="teacher_id">Teacher:</label>
-                            </div>
+                            <div class="col-sm-3"></div>
                             <div class="col-sm-6">
-                                        <select path="teacher_id" class="form-control">
-                                            <option value="">Set teacher later...</option>
-                                            <c:forEach items="${teachers}" var="teacher">
-                                                <option value="${teacher.id}">${teacher.person.firstName}</option>
-                                            </c:forEach>
-                                        </select>
-                                <%--<select name="teacher_id" class="form-control">--%>
-                                    <%--<option value="">Set teacher later...</option>--%>
-                                    <%--<c:forEach var="teacher" items="${teachers}">--%>
-                                        <%--<option value="${teacher.id}">${teacher.person.firstName}</option>--%>
-                                    <%--</c:forEach>--%>
-                                <%--</select>--%>
+                                <select name="teacher_id" class="form-control">
+                                    <option value="">Set teacher later...</option>
+                                    <c:forEach var="teacher" items="${teachers}">
+                                        <option value="${teacher.id}">${teacher.person.firstName}</option>
+                                    </c:forEach>
+                                </select>
                             </div>
                         </div>
                         <div class="row padding-bot ">
-                            <div class="col-sm-1"></div>
-                            <div class="col-sm-4">
-                                <label path="group_id">Group:</label>
-                            </div>
+                            <div class="col-sm-3"></div>
                             <div class="col-sm-6">
-                                <select path="group_id" class="form-control">
+                                <select name="group_id" class="form-control">
                                     <option value="">Set group later...</option>
-                                    <c:forEach items="${groups}" var="group">
+                                    <c:forEach var="group" items="${groups}">
                                         <option value="${group.id}">${group.name}</option>
                                     </c:forEach>
                                 </select>
-                                <br/>
-                            <%--<div class="col-sm-6">--%>
-                                <%--<select name="group_id" class="form-control">--%>
-                                    <%--<option value="">Set group later...</option>--%>
-                                    <%--<c:forEach var="group" items="${groups}">--%>
-                                        <%--<option value="${group.id}">${group.name}</option>--%>
-                                    <%--</c:forEach>--%>
-                                <%--</select>--%>
-                            <%--</div>--%>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-4 col-sm-offset-4">
@@ -150,51 +130,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-
-    $("#login").change(function(){
-        login =  $("#login").val();
-        var expLogin = /^[a-zA-Z0-9_]+$/g;
-        var resLogin =  login.search(expLogin);
-        if(resLogin ==  -1){
-            $("#login").next().hide().text("Неверный  логин").css("color","red").
-            fadeIn(400);
-            $("#login").removeClass().addClass("inputRed");
-            loginStat  = 0;
-            buttonOnAndOff();
-        }else{
-            $.ajax({
-                url:  "/studentAdd",
-                type:  "GET",
-                data:  "login=" + login,
-                cache:  false,
-                success:  function(response){
-                    if(response  == "no"){
-                        $("#login").next().hide().
-                        text("Логин  занят").css("color","red").fadeIn(400);
-                        $("#login").removeClass().
-                        addClass("inputRed");
-                    }else{
-                        $("#login").removeClass().
-                        addClass("inputGreen");
-                        $("#login").next().text("");
-                    }
-                }
-            });
-            loginStat  = 1;
-            buttonOnAndOff();
-        }
-    });
-    $("#login").keyup(function(){
-        $("#login").removeClass();
-        $("#login").next().text("");
-    });
-    function  buttonOnAndOff(){
-        if(loginStat  == 1){
-            $("#submit").removeAttr("disabled");
-        }else{
-            $("#submit").attr("disabled","disabled");
-        }
-    }
-</script>

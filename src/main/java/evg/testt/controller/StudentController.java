@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-//@Transactional(rollbackFor = Exception.class)
 @Controller
 @PropertySource(value = "classpath:standard.properties")
 public class StudentController {
@@ -127,7 +126,6 @@ public class StudentController {
             return "redirect:/students";
         } else {
 
-//            model.addAttribute("student", personDTO);
             model.addAttribute("groups",groupService.getAll());
             model.addAttribute("teachers",teacherService.getAll());
             return "students/add";
