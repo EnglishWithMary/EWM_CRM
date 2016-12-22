@@ -203,7 +203,6 @@ public class StudentController {
         studentLevel.setStudent(student);
         studentLevel.setCheckpointDate(getDateFromString(testingDate));
         studentLevel.setTestType(studentLevelHistory.getTestType());
-
         studentLevel.setGrammar(studentLevelHistory.getGrammar());
         studentLevel.setSpeaking(studentLevelHistory.getSpeaking());
         studentLevel.setFluency(studentLevelHistory.getFluency());
