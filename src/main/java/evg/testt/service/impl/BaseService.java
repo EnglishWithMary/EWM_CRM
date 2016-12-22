@@ -30,7 +30,8 @@ public abstract class BaseService <T extends BaseModel, P extends BaseRepository
     }
 
     public void delete(T o) throws SQLException {
-        dao.delete(o);
+        T d = getById(o.getId());
+        dao.delete(d);
     }
 
      public void insert(T o) throws SQLException {

@@ -67,7 +67,8 @@
                 </table>
 
                 <div class="row">
-                    <div class="col-sm-2 col-sm-offset-5">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="text-center">
                         <c:if test="${pages > 1}">
                             <ul class="pagination">
                                 <c:forEach var="page" begin="1" end="${pages}">
@@ -79,6 +80,7 @@
                                 </c:forEach>
                             </ul>
                         </c:if>
+                        </div>
                     </div>
                 </div>
             </div>
