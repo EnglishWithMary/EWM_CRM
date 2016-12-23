@@ -5,16 +5,29 @@ $(document).ready(function () {
         revert: "invalid",
         containment: "document",
         helper: "clone",
-        cursor: "move"
+        cursor: "move",
     });
 
     $(".pipe").droppable({
         accept: ".pipe .person",
-
         hoverClass: "pipehover",
 
         drop: function( event, ui ) {
-            movePerson( ui.draggable, $(event.target) );
+            var i = 0; //used as flag to find out if element added or not
+            $(this).children('.person').each(function () {
+
+                if ($(this).offset().top >= ui.offset.top) //compare
+                {
+                    $(ui.draggable).insertBefore($(this));
+                    i = 1;
+                    return false; //break loop
+                }
+
+            })
+            if (i == 0) //if element dropped at the end of card
+            {
+                movePerson( ui.draggable, $(event.target) );
+            }
 
             //personId
             var $draggable_item = ui.draggable;
@@ -29,9 +42,26 @@ $(document).ready(function () {
 
             $($draggable_item).find("#from").attr("value", destination);
 
-            var json = { "destination" : destination, "from" : from, "personId" : personId};
+            var positions=[];
+            // $(this).is($draggable_item)
+            // find position and id of person on card
+            $($(event.target)).children(".person").each(function (index) {
+                var id = $(this).find("#personId").val();
+                var position = index + 1;
 
-            if(destination != from) {
+                // Write in array id of clone and another elements on pipe
+                // except element which clone we are dragging.
+                // @personId presents id of clone of draggable element
+               if($(this).is($draggable_item) || id != personId)
+               {
+                   positions.push({"position": position, "id": id});
+               }
+
+            });
+
+            var json = { "destination" : destination, "from" : from, "personId" : personId, "array": positions};
+
+            // if(destination != from) {
                 $.ajax({
                     url: '/moveLeadAjax',
                     dataType: 'json',
@@ -42,7 +72,7 @@ $(document).ready(function () {
                     success: function (data) {
                     }
                 });
-            }
+            // }
         }
     });
 

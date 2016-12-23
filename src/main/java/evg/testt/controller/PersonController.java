@@ -6,7 +6,7 @@ import evg.testt.exception.PersonException;
 import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.Person;
 import evg.testt.model.Personnel;
-import evg.testt.oval.SpringOvalValidator;
+//import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.AvatarService;
 import evg.testt.service.PersonDTOService;
 import evg.testt.service.PersonService;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
@@ -32,8 +33,8 @@ import java.util.List;
 @Controller
 public class PersonController {
 
-    @Autowired (required = false)
-    private SpringOvalValidator validator;
+//    @Autowired
+//    private SpringOvalValidator validator;
     @Autowired
     private PersonService personService;
     @Autowired
@@ -46,12 +47,12 @@ public class PersonController {
     protected int pageSize;
 
     @RequestMapping(value = "/personProfile", method = RequestMethod.GET)
-    public String profilePerson(@ModelAttribute("person") @Validated PersonDTO personDTO,
+    public String profilePerson(@ModelAttribute("person") @Valid PersonDTO personDTO,
                                 BindingResult bindingResult,
                                 Principal principal, Model model)
             throws PersonRoleNotFoundException, SQLException {
 
-        validator.validate(personDTO, bindingResult);
+//        validator.validate(personDTO, bindingResult);
 
         Person person = personService.getPersonByUserLogin(principal.getName());
 
@@ -60,7 +61,7 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/personUpdate", method = RequestMethod.POST)
-    public String updatePerson(@ModelAttribute("person") @Validated PersonDTO personDTO,
+    public String updatePerson(@ModelAttribute("person") @Valid PersonDTO personDTO,
                                BindingResult bindingResult,
                                @RequestParam("image") MultipartFile multipartFile,
                                Principal principal,
@@ -69,7 +70,7 @@ public class PersonController {
             IOException, PersonException, PersonRoleNotFoundException,
             BadAvatarNameException, SQLException, ParseException {
 
-        validator.validate(personDTO, bindingResult);
+//        validator.validate(personDTO, bindingResult);
 
 //        if (bindingResult.hasErrors()) {
 //            return "redirect:/personProfile";

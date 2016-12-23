@@ -4,7 +4,7 @@ import evg.testt.ajax.utils.AjaxFormCall;
 import evg.testt.model.Card;
 import evg.testt.model.Pipe;
 import evg.testt.model.PipeType;
-import evg.testt.oval.SpringOvalValidator;
+//import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,8 +22,8 @@ public class PipelineController {
     private PipeTypeService pipeTypeService;
     @Autowired
     private CardService cardService;
-    @Autowired (required = false)
-    private SpringOvalValidator validator;
+//    @Autowired
+//    private SpringOvalValidator validator;
     @Autowired
     private LeadService leadService;
     @Autowired
@@ -99,10 +99,7 @@ public class PipelineController {
     @ResponseBody
     @RequestMapping(value = "/moveLeadAjax", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void moveLeadAjax(@RequestBody AjaxFormCall ajaxFormCall) throws SQLException {
-        if(ajaxFormCall.getDestination() != ajaxFormCall.getFrom())
-        {
-            cardService.movePersonOnCards(ajaxFormCall.getFrom(), ajaxFormCall.getDestination(), ajaxFormCall.getPersonId());
-        }
+            cardService.movePersonOnCards(ajaxFormCall);
     }
 
     private void inserAttributes(Model model, Pipe pipe)
