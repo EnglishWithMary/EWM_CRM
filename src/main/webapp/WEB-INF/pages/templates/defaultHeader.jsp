@@ -46,9 +46,11 @@
                             <li><a href="/payments">Payments</a></li>
                             <li><a href="/groups">Groups</a></li>
                             <li><a href="/events">Events</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="/test/manager-info">test/manager/info</a></li>
-                            <li><a href="/test/lead-info">test/lead/info</a></li>
+
+                            <security:authorize access="hasRole('ROLE_ADMIN')">
+                                <li role="separator" class="divider"></li>
+                                <li><a href="/admins">Admins</a></li>
+                            </security:authorize>
                         </ul>
                     </li>
                     <li class="dropdown">

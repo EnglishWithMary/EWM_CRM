@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="container-fluid">
     <div class="row">
@@ -21,7 +22,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h4>Full Name</h4>
-                            <p>Name I.I.</p>
+                            <p>${student.person.lastName}
+                                ${fn:substring(student.person.firstName,0,1)}.
+                                ${fn:substring(student.person.middleName,0,1)}.</p>
                         </div>
                     </div>
 
@@ -85,7 +88,7 @@
                         <div class="col-md-12">
                             <div class="btn-group btn-group-md">
                                 <a href="" class="btn btn-success" type="button">Become Graduate</a>
-                                <a href="" class="btn btn-danger" type="button">Delete Student</a>
+                                <a href="/studentTrash?id=${student.id}" class="btn btn-danger" >Delete Student</a>
                             </div>
                         </div>
                     </div>
@@ -210,6 +213,20 @@
                             </div>
                         </div>
                     </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <strong>Calendar</strong>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div id="calendar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>

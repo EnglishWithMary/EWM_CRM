@@ -12,10 +12,18 @@ public class RoomsEventsHelper {
         for (Event event : events){
             list.add(convertGoogleEventToRoomEvent(event));
         }
-        return  null;
+        return  list;
     }
 
-    private static RoomEvent convertGoogleEventToRoomEvent(Event event){
+    public static List<Event> convertRoomEventsToGoogleEvents(List<RoomEvent> roomEvents){
+        List<Event> list = new ArrayList<>();
+        for (RoomEvent roomEvent : roomEvents){
+            list.add(convertRoomEventToGoogleEvent(roomEvent));
+        }
+        return  list;
+    }
+
+    public static RoomEvent convertGoogleEventToRoomEvent(Event event){
         RoomEvent roomEvent = new RoomEvent();
         roomEvent.setTitle(event.getSummary());
         roomEvent.setStart(DateGoogleConverter.convertGoogleDateTimeToDate(event.getStart()));
@@ -23,7 +31,7 @@ public class RoomsEventsHelper {
         return roomEvent;
     }
 
-    private static Event convertRoomEventToGoogleEvent(RoomEvent roomEvent){
+    public static Event convertRoomEventToGoogleEvent(RoomEvent roomEvent){
         Event event = new Event();
         event.setSummary(roomEvent.getTitle());
         event.setStart(DateGoogleConverter.convertDateToGoogleTimeDate(roomEvent.getStart()));

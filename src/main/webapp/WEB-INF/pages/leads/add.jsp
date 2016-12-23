@@ -7,7 +7,7 @@
         window.history.pushState(null, '', 'leadAdd');
     };
 </script>
-<sf:form method="post" modelAttribute="lead" action="/leadSave">
+<sf:form method="post" modelAttribute="lead" id="form" action="/leadSave">
     <fieldset>
         <table>
             <tr>

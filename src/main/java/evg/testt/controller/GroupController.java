@@ -1,26 +1,24 @@
 package evg.testt.controller;
 
+import com.google.gson.Gson;
 import evg.testt.dto.GroupDTO;
-import evg.testt.model.Group;
-import evg.testt.model.Student;
-import evg.testt.model.Teacher;
-import evg.testt.oval.SpringOvalValidator;
-import evg.testt.service.GroupService;
-import evg.testt.service.StudentService;
-import evg.testt.service.TeacherService;
+import evg.testt.model.*;
+//import evg.testt.oval.SpringOvalValidator;
+import evg.testt.service.*;
+import evg.testt.util.fullcalendar.FullcalendarHeleper;
+import org.apache.http.HttpStatus;
+import org.mortbay.util.ajax.AjaxFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
@@ -29,14 +27,20 @@ import java.util.List;
 @PropertySource(value = "classpath:standard.properties")
 public class GroupController {
 
-    @Autowired (required = false)
-    private SpringOvalValidator validator;
+    //    @Autowired
+//    private SpringOvalValidator validator;
     @Autowired
     private GroupService groupService;
     @Autowired
     private TeacherService teacherService;
     @Autowired
     private StudentService studentService;
+
+    @Autowired
+    private RoomService roomService;
+
+    @Autowired
+    private GroupEventsService groupEventsService;
 
     @Value("${pagination.page.size}")
     protected int pageSize;
@@ -46,8 +50,8 @@ public class GroupController {
     public String showGroups(@RequestParam(required = false) Integer page,
                              @RequestParam(required = false) Boolean flagSorted,
                              Model model) throws SQLException {
-        List<Teacher> teachers=teacherService.getAll();
-        List<Student> students=studentService.getAll();
+        List<Teacher> teachers = teacherService.getAll();
+        List<Student> students = studentService.getAll();
         if (flagSorted == null) flagSorted = false;
 
         int totalGroups = 0, pages = 0, currentPage = 1;
@@ -60,20 +64,20 @@ public class GroupController {
 
         List<Group> groups = Collections.EMPTY_LIST;
         if (flagSorted == false) {
-          groups = groupService.getByPage(currentPage);
+            groups = groupService.getByPage(currentPage);
         } else {
             groups = groupService.getByPageSorted(currentPage);
         }
 
-        pages = ((totalGroups/ pageSize) + 1);
+        pages = ((totalGroups / pageSize) + 1);
 
         if (totalGroups % pageSize == 0)
             pages--;
         groups = groupService.getAll();
-        model.addAttribute("groups",groups);
+        model.addAttribute("groups", groups);
         model.addAttribute("pages", pages);
         model.addAttribute("flagSorted", flagSorted);
-        model.addAttribute("teachers",teachers);
+        model.addAttribute("teachers", teachers);
         model.addAttribute("students", students);
         model.addAttribute("groupFilter", new GroupDTO());
         model.addAttribute("groupFilterStudentsByGroup", new GroupDTO());
@@ -91,7 +95,7 @@ public class GroupController {
     }
 
     @RequestMapping(value = "/groupSave")
-    public String saveGroup(@ModelAttribute("group") @Validated GroupDTO groupDTO,
+    public String saveGroup(@ModelAttribute("group") @Valid GroupDTO groupDTO,
                             BindingResult bindingResult) throws SQLException {
         if (bindingResult.hasErrors()) {
             return "groups/add";
@@ -134,13 +138,90 @@ public class GroupController {
         return "groups/all";
     }
 
-    @RequestMapping(value = "/group/info")
-    public String groupInfo(Model model, @RequestParam int group_id) throws SQLException {
+    @RequestMapping(value = "/group/{ID}/info")
+    public String groupInfo(Model model, @PathVariable(value = "ID") Integer groupId)
+            throws SQLException {
 
-        Group group = groupService.getById(group_id);
+        if (!groupService.isExists(groupId)) {
+            return "redirect:/groups";
+        }
+        Group group = groupService.getById(groupId);
 
         model.addAttribute("group", group);
 
         return "persons/group-info";
+    }
+
+    @RequestMapping(value = "/group/{ID}/calendar")
+    public String showGroupCalendar(Model model, @PathVariable(value = "ID") Integer groupId)
+            throws SQLException {
+        if (!groupService.isExists(groupId)) {
+            return "redirect:/groups";
+        }
+        model.addAttribute("rooms", roomService.getAll());
+        model.addAttribute("group", groupService.getById(groupId));
+        return "group/calendar";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/group/{ID}/calendar/events", method = RequestMethod.GET)
+    public String getEventsByRoomId(@PathVariable(value = "ID") Integer id)
+            throws SQLException {
+        List<FullcalendarEvent> groupEvents = FullcalendarHeleper
+                .convertGroupEventsToFullcalendarEvents(groupEventsService.getAllByGroupId(id));
+
+        return new Gson().toJson(groupEvents);
+    }
+
+    @RequestMapping(value = "/group/{ID}/add-event", method = RequestMethod.GET)
+    public String showAddEvent(Model model, @PathVariable(value = "ID") Integer id)
+            throws SQLException {
+        model.addAttribute("GroupEvent", new GroupEvent())
+                .addAttribute("group_id", id)
+                .addAttribute("rooms", roomService.getAll());
+        return "group/add/event";
+    }
+
+    @RequestMapping(value = "/group/{ID}/add-event", method = RequestMethod.POST)
+    public String saveEvent(Model model, @ModelAttribute("RoomEvent") @Valid GroupEvent groupEvent,
+                            BindingResult result, @PathVariable(value = "ID") Integer id)
+            throws SQLException {
+        if (result.hasErrors()) {
+            model.addAttribute("group_id", id)
+                    .addAttribute("rooms", roomService.getAll());
+            return "group/add/event";
+        }
+        groupEventsService.insert(groupEvent);
+        return "redirect:/group/" + id.toString() + "/calendar";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/group/{group_id}/calendar/room/{room_id}/add-event-test", method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String  saveEventAjaxMethod(@RequestBody FullcalendarEvent fullcalendarEvent,
+                                                       @PathVariable(value = "group_id") Integer groupId,
+                                                       @PathVariable(value = "room_id") Integer roomId,
+                                                       HttpServletResponse response
+    ) throws SQLException {
+        Room room = roomService.getById(roomId);
+        GroupEvent groupEvent = FullcalendarHeleper
+                .convertFullcalendarEventToGroupEvent(fullcalendarEvent);
+        groupEvent.setRoomId(room.getId());
+        groupEvent.setGroupId(groupId);
+        if(groupEvent.getTitle().equals(""))
+            groupEvent.setTitle("No title!");
+        groupEventsService.insert(groupEvent);
+        return new Gson().toJson("msg = success, code = 200");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/group/{group_id}/calendar/delete/event", method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String  deleteEventAjaxMethod(@RequestBody FullcalendarEvent fullcalendarEvent,
+                                       HttpServletResponse response) throws SQLException {
+
+        GroupEvent groupEvent = groupEventsService.getById(fullcalendarEvent.getId());
+        groupEventsService.delete(groupEvent);
+        return new Gson().toJson("msg = success, code = 200");
     }
 }

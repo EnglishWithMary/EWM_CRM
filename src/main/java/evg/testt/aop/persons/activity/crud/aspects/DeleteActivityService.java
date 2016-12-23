@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 public class DeleteActivityService extends CRUDAspectService implements ActivityAspectService {
 
     @Override
-    @Pointcut("execution(* evg.testt.service.impl.BaseService.delete(..))")
+    @Pointcut("execution(* evg.testt.service.impl.BaseService.delete(..)) " +
+            "|| execution(* evg.testt.service.impl.HumanServiceImpl.*(..))")
     public void pointcut() {}
 }
