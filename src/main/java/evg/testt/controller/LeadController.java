@@ -5,6 +5,7 @@ import evg.testt.model.*;
 //import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -40,10 +42,39 @@ public class LeadController {
     @Autowired
     private PersonDTOService personDTOService;
 
+    @Value("${pagination.page.size}")
+    protected int pageSize;
+
     @RequestMapping(value = "/leads", method = RequestMethod.GET)
-    public String showLeads(Model model) throws SQLException {
-        List<Lead> leads = leadService.getAll();
+    public String showLeads(@RequestParam(required = false) Integer page,
+                            @RequestParam(required = false) Boolean flagSorted,
+                            Model model) throws SQLException {
+
+        if (flagSorted == null) flagSorted = false;
+
+        int totalLeads = 0, pages = 0, currentPage = 1;
+
+        if (page != null)
+            if (page > 0)
+                currentPage = page;
+
+        totalLeads = leadService.count();
+
+        List<Lead> leads = Collections.EMPTY_LIST;
+        if (flagSorted == false) {
+            leads = leadService.getByPage(currentPage);
+        } else {
+            leads = leadService.getByPageSorted(currentPage);
+        }
+
+        pages = ((totalLeads / pageSize) + 1);
+
+        if (totalLeads % pageSize == 0)
+            pages--;
+
         model.addAttribute("leads", leads);
+        model.addAttribute("pages", pages);
+        model.addAttribute("flagSorted", flagSorted);
         return "leads/all";
     }
 
@@ -98,18 +129,20 @@ public class LeadController {
         }
 
         if (personId==null) {
+            Card card = cardService.getById(personDTO.getCardId());
             Lead lead = new Lead();
             lead = personDTOService.updateLead(lead, personDTO);
+            lead.getPerson().setPosition(card.getPersons().size() + 1);
             leadService.insert(lead);
-            Card card = cardService.getById(personDTO.getCardId());
             card.getPersons().add(lead.getPerson());
             cardService.update(card);
         }else{
             Person person=personService.getById(personId);
+            Card cardOld = cardService.getCardByPerson(person);
             Lead lead = leadService.getByPerson(person);
             lead = personDTOService.updateLead(lead, personDTO);
+            lead.getPerson().setPosition(cardOld.getPersons().size() + 1);
             leadService.update(lead);
-            Card cardOld = cardService.getCardByPerson(person);
             if (!personDTO.getCardId().equals(cardOld.getId())) {
                 cardOld.getPersons().remove(person);
                 cardService.update(cardOld);

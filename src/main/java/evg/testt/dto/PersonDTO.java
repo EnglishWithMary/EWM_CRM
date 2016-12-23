@@ -10,6 +10,7 @@ import javax.persistence.Transient;
 @FieldEquals( field="password", equalsTo="confirmPassword" )
 public @Data class PersonDTO {
 
+
     @Size(min = 3, max = 20, message = "Login should be between 6 and 20 chars.")
     private String login;
 
@@ -39,7 +40,7 @@ public @Data class PersonDTO {
 
     private String birthdayDate;
 
-    private String avatarURL;
+    protected String avatarURL;
 
-    private Integer cardId;
+    protected Integer cardId;
 }
