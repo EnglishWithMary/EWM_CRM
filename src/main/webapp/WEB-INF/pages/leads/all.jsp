@@ -36,6 +36,7 @@
                         <th>Registration Date</th>
                         <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
                             <td>Edit</td>
+                            <td>Move to a student</td>
                             <td>Delete</td>
                         </security:authorize>
                     </tr>
