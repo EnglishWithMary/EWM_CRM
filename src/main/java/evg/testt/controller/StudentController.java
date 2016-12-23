@@ -39,6 +39,10 @@ public class StudentController {
     private PersonDTOService personDTOService;
     @Autowired
     private GroupService groupService;
+    @Autowired
+    private PersonService personService;
+    @Autowired
+    private LeadService leadService;
 
     @Value("${pagination.page.size}")
     protected int pageSize;
@@ -209,4 +213,25 @@ public class StudentController {
 
         return "persons/student-info";
     }
+
+    @RequestMapping(value = "/leadToStudent")
+    public String addStudent(Integer personId) throws SQLException {
+
+        PersonDTO studentDTO = new PersonDTO();
+
+            Person person = personService.getById(personId);
+            studentDTO.setFirstName(person.getFirstName());
+            studentDTO.setMiddleName(person.getMiddleName());
+            studentDTO.setLastName(person.getLastName());
+//            studentDTO.setAvatarURL(person.getAvatarURL());
+//            studentDTO.setEmail(person.getEmail().getEmail());
+
+            leadService.delete(leadService.getByPerson(person));
+
+        Student student = new Student();
+        studentService.insert(student);
+
+        return "students/all";
+    }
+
 }
