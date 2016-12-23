@@ -28,8 +28,6 @@ import java.util.List;
 @PropertySource(value = "classpath:standard.properties")
 public class ManagerController {
 
-//    @Autowired
-//    private SpringOvalValidator validator;
     @Autowired
     private ManagerService managerService;
     @Autowired
@@ -83,8 +81,6 @@ public class ManagerController {
     @RequestMapping(value = "/managerSave", method = RequestMethod.POST)
     public String saveManager(@ModelAttribute("manager") @Valid PersonDTO personDTO,
                               BindingResult bindingResult, Model model) throws SQLException, ParseException {
-//        validator.validate(personDTO, bindingResult);
-
         User u = userService.findByUserLogin(personDTO.getLogin());
 
         if (u != null)

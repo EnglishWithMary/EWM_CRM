@@ -97,7 +97,7 @@ public class AdminController {
         return "admins/all";
     }
 
-    @RequestMapping(value = "/adminsAdd")
+    @RequestMapping(value = "/adminAdd")
     public String addAdmin(Model model) {
         PersonDTO person = new PersonDTO();
         model.addAttribute("admin", person);
@@ -133,7 +133,14 @@ public class AdminController {
         return "redirect:/admins";
     }
 
-    @RequestMapping(value = "/admin/info", method = RequestMethod.GET)
+    @RequestMapping(value = "/adminTrash")
+    public String adminTrash(@RequestParam Integer id) throws SQLException {
+        Admin admin = adminService.getById(id);
+       adminService.trash(admin);
+        return "redirect:/admins";
+    }
+
+    @RequestMapping(value = "/admins/info", method = RequestMethod.GET)
     public String adminInfo(Model model, @RequestParam int admin_id) throws SQLException {
         Admin admin = adminService.getById(admin_id);
         model.addAttribute("admin", admin);

@@ -54,16 +54,16 @@
                             <tbody>
                             <c:forEach var="admin" items="${admins}">
                                 <tr>
-                                    <td><a href="/admin/info?admin_id=${admin.id}">${admin.person.firstName}</a></td>
+                                    <td><a href="/admins/info?admin_id=${admin.id}">${admin.person.firstName}</a></td>
                                     <td>${admin.person.lastName}</td>
                                     <td>${admin.person.middleName}</td>
                                     <td>${admin.person.registrationDate}</td>
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
                                         <td>
-                                            <a href="/adminTrash?id=${manager.id}">Delete</a>
+                                            <a href="/adminTrash?id=${admin.id}">Delete</a>
                                         </td>
                                         <td>
-                                            <a href="/adminSave?id=${manager.id}">Save</a>
+                                            <a href="/adminSave?id=${admin.id}">Save</a>
                                         </td>
                                     </security:authorize>
 

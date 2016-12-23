@@ -9,7 +9,7 @@
     <div class="col-sm-5 col-sm-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong>Add new admin</strong>
+                <strong>Add new Admin</strong>
             </div>
             <div class="panel-body">
                 <sf:form method="post" modelAttribute="admin" id="form" action="/adminSave">

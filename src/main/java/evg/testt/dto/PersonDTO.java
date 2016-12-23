@@ -10,13 +10,12 @@ import javax.persistence.Transient;
 @FieldEquals( field="password", equalsTo="confirmPassword" )
 public @Data class PersonDTO {
 
-    @NotBlank
     @Size(min = 3, max = 20, message = "Login should be between 6 and 20 chars.")
     private String login;
-    @NotBlank
+
     @Size(min = 6, max = 20, message = "Password should be between 6 and 20 chars.")
     private String password;
-    @NotBlank
+
     @Size(min = 6, max = 20, message = "Incorrect password.")
     @Transient
     private String confirmPassword;
@@ -24,13 +23,13 @@ public @Data class PersonDTO {
     @Pattern(regexp = "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9]" +
             "(?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?", message = "Invalid email address.")
     private String email;
-    @NotBlank
+
     @Size(min = 3, max = 20, message = "First Name should be between 3 and 20 chars.")
     private String firstName;
-    @NotBlank
+
     @Size(min = 3, max = 20, message = "Last Name should be between 3 and 20 chars.")
     private String lastName;
-    @NotBlank
+
     @Size(min = 3, max = 20, message = "Middle Name should be between 3 and 20 chars.")
     private String middleName;
 
