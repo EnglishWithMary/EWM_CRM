@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="groups/add" extends="home">
+        <put-attribute name="title" value="Add Group" />
+        <put-attribute name="body" value="/WEB-INF/pages/groups/add.jsp" />
+    </definition>
+
+    <definition name="groups/all" extends="home">
+        <put-attribute name="title" value="Groups page" />
+        <put-attribute name="body" value="/WEB-INF/pages/groups/all.jsp" />
+    </definition>
+
+    <definition name="group/calendar" extends="default">
+        <put-attribute name="title" value="Group Calendar" />
+        <put-attribute name="body" value="/WEB-INF/pages/groups/calendar.jsp" />
+        <put-attribute name="additionalScripts" value="/WEB-INF/pages/groups/additionalScripts.jsp"/>
+    </definition>
+
+    <definition name="group/add/event" extends="default">
+        <put-attribute name="title" value="Add Event to Group" />
+        <put-attribute name="body" value="/WEB-INF/pages/groups/add-event.jsp" />
+        <put-attribute name="additionalScripts" value="/WEB-INF/pages/groups/additionalScripts.jsp"/>
+    </definition>
+</tiles-definitions>

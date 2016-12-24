@@ -1,13 +1,18 @@
 package evg.testt.service.impl;
 
+import evg.testt.model.BaseModel;
+import evg.testt.dao.BaseRepository;
 import evg.testt.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-public abstract class BaseService <T , P extends JpaRepository<T,Integer>> implements Service<T> {
+public abstract class BaseService <T extends BaseModel, P extends BaseRepository<T>>
+        implements Service<T> {
 
     protected  P dao;
 
@@ -17,7 +22,7 @@ public abstract class BaseService <T , P extends JpaRepository<T,Integer>> imple
     }
 
     public List<T> getAll() throws SQLException {
-        return dao.findAll();
+        return (List<T>)(dao.findAll());
     }
 
     public T getById(Integer id) throws SQLException {
@@ -25,7 +30,8 @@ public abstract class BaseService <T , P extends JpaRepository<T,Integer>> imple
     }
 
     public void delete(T o) throws SQLException {
-        dao.delete(o);
+        T d = getById(o.getId());
+        dao.delete(d);
     }
 
      public void insert(T o) throws SQLException {
@@ -38,5 +44,23 @@ public abstract class BaseService <T , P extends JpaRepository<T,Integer>> imple
 
     public boolean isExists(Integer id) throws SQLException {
         return dao.exists(id);
+    }
+
+    public int count()
+    {
+       return dao.count();
+    }
+
+    public List<T> getByPage(int pageNumber)
+    {
+        return dao.findByPage(pageNumber);
+    }
+
+    public List<T> getByPageSorted(int pageNumber) throws SQLException{
+        return dao.findByPageSorted(pageNumber);
+    }
+
+    public List<T> getAllSortedAndPaginated(int pageNumber)throws SQLException{
+        return dao.findAllSortedAndPaginated(pageNumber);
     }
 }
