@@ -21,7 +21,7 @@
                     </div>
                 </form>
 
-                <table id = "table-list" class="table table-striped table-bordered">
+                <table  class="table table-striped table-bordered" ><!--id = "table-list" class="table table-striped table-bordered"-->
                     <thead>
                     <tr>
                         <th>First name</th>

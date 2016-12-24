@@ -7,8 +7,6 @@ import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -45,40 +44,37 @@ public class StudentController {
     protected int pageSize;
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
-    public String showStudents(@RequestParam(required = false) Integer page,
-                               @RequestParam(required = false) Boolean flagSorted,
-                               Model model) throws SQLException {
-
-        /*if (flagSorted == null) flagSorted = false;
+    public String showStudents(Model model,@RequestParam(required = false) Integer page,
+                               @RequestParam(required = false) Integer teacher_id,
+                               @RequestParam(required = false) List<Integer> group_id_list
+                               ,@RequestParam(required = false) String studentSortByDate
+    ) throws SQLException {
 
         int totalStudents = 0, pages = 0, currentPage = 1;
 
-        if (page != null)
-            if (page > 0)
-                currentPage = page;
-
-        totalStudents = studentService.count();
-
-        List<Student> students = Collections.EMPTY_LIST;
-        if (flagSorted == false) {
-            students = studentService.getByPage(currentPage);
-        } else {
-            students = studentService.getByPageSorted(currentPage);
+        if (page != null){
+            if (page > 0) currentPage = page;
+        } else{
+            page=currentPage;
         }
 
-        pages = ((totalStudents / pageSize) + 1);
+        totalStudents = studentService.countByFilter(teacher_id, group_id_list);
 
+        List<Student> students = studentService.getStudentsPageWithFilters(
+                page,teacher_id, group_id_list, studentSortByDate);
+
+        pages = ((totalStudents / pageSize) + 1);
         if (totalStudents % pageSize == 0) {
             pages--;
         }
+
+        model.addAttribute("teacherId", teacher_id);
+        model.addAttribute("sortDirection", studentSortByDate);
+        model.addAttribute("groupIdList", group_id_list);
         model.addAttribute("students", students);
         model.addAttribute("pages", pages);
-        model.addAttribute("flagSorted", flagSorted);
         model.addAttribute("groups",groupService.getAll());
-        model.addAttribute("teachers",teacherService.getAll());*/
-        //Sort sort= new Sort();
-        PageRequest pageRequest=new PageRequest(1,2,Sort.Direction.ASC,"person");
-
+        model.addAttribute("teachers",teacherService.getAll());
         return "students/all";
     }
 
