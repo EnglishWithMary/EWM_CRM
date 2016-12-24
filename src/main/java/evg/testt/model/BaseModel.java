@@ -5,7 +5,9 @@ import lombok.Data;
 import javax.persistence.*;
 
 @MappedSuperclass
-public @Data class BaseModel {
+@SqlResultSetMapping(name ="personnel" )
+public @Data
+class BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
