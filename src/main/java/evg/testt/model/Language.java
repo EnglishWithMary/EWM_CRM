@@ -16,4 +16,6 @@ public @Data class Language extends BaseModel{
     @ManyToMany(mappedBy = "languages")
     private List<Teacher> teachers;
 
+    public Language (){}
+
 }

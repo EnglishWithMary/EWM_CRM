@@ -66,7 +66,7 @@ public class LanguageController {
     }
 
     @RequestMapping(value = "/languageSave", method = RequestMethod.POST)
-    public String saveTeacher(Model model, @ModelAttribute("language")
+    public String saveLanguage(Model model, @ModelAttribute("language")
     @Validated Language language, BindingResult result)
             throws SQLException, IOException {
         if (result.hasErrors()) {
@@ -75,6 +75,15 @@ public class LanguageController {
         languageService.insert(language);
         return "redirect:/languages";
     }
+
+    @RequestMapping(value = "/languageDel")
+    public String delLanguage(Model model, @ModelAttribute("language")
+    @Validated Language language, BindingResult result)
+            throws SQLException, IOException {
+        languageService.delete(language);
+        return "redirect:/languages";
+    }
+
 }
 
 

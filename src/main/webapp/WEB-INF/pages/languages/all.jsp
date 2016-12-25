@@ -21,7 +21,7 @@
                         <%--<div class="row">--%>
                             <%--<div class="col-sm-6">--%>
                                 <%--<div class="row">--%>
-                                    <%--<form method="get" action="/languages">--%>
+                                    <%--<form method="post" action="/languages">--%>
                                         <%--<div class="col-sm-7">--%>
                                             <%--<select name="teacher_id" class="selectpicker form-control"--%>
                                                     <%--data-actions-box="true" data-size="5">--%>
@@ -43,24 +43,29 @@
                 <%--</div>--%>
                     <div class="row">
                     <div class="col-sm-12">
-                        <table id = "table-list" class="table table-striped table-bordered">                            <thead>
-                        <tr>
-                            <th>Language</th>
-                        </tr>
-                            <tfoot>
+                        <form method="post" action="/languages">
+                            <table id = "table-list" class="table table-striped table-bordered">                            <thead>
                             <tr>
                                 <th>Language</th>
                             </tr>
-                            </tfoot>
-                            <tbody>
-                            <c:forEach var="language" items="${languages}">
-                                <tr>
-                                    <td><a${language.id}>${language.language}</a></td>
-                                    <%--<td>${language.language.registrationDate}</td>--%>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
+                                <tfoot>
+                                    <tr>
+                                        <th>Language</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                <c:forEach var="language" items="${languages}">
+                                    <tr>
+                                        <td><a${language.id}>${language.language}</a></td>
+                                        <%--<td>${language.language.registrationDate}</td>--%>
+                                        <td>
+                                            <a methods="post" href="/languageDel?id=${language.id}">Delete</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
                 </div>
             </div>
