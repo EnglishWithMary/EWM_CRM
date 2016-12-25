@@ -23,8 +23,8 @@ CREATE OR REPLACE VIEW staffview AS SELECT persons.* FROM persons LEFT JOIN admi
   LEFT JOIN managers ON persons.id = managers.person_id LEFT JOIN students ON persons.id = students.person_id
   LEFT JOIN leads ON persons.id = leads.person_id;
 
-DROP personnel;
-DROP VIEW personnel;
+DROP TABLE if EXISTS personnel;
+DROP VIEW if EXISTS personnel;
 CREATE VIEW personnel AS
 SELECT users.login, roles.role, persons.* FROM (
 SELECT admins.person_id AS person, admins.user_id AS usr FROM admins
