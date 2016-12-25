@@ -41,6 +41,10 @@ public class StudentController {
     private PersonDTOService personDTOService;
     @Autowired
     private GroupService groupService;
+    @Autowired
+    private PersonService personService;
+    @Autowired
+    private LeadService leadService;
 
     @Value("${pagination.page.size}")
     protected int pageSize;
@@ -213,5 +217,27 @@ public class StudentController {
         model.addAttribute("student", student);
 
         return "persons/student-info";
+    }
+
+    @RequestMapping(value = "/leadToStudent")
+    public String leadToStudent(Integer personId) throws SQLException, ParseException {
+
+        Person person = personService.getById(personId);
+
+        Lead lead = leadService.getByPerson(person);
+        leadService.delete(lead);
+
+        PersonDTO studentDTO = new PersonDTO();
+        studentDTO.setFirstName(person.getFirstName());
+        studentDTO.setMiddleName(person.getMiddleName());
+        studentDTO.setLastName(person.getLastName());
+        studentDTO.setEmail(person.getEmail().getEmail());
+
+        Student student = new Student();
+
+        personDTOService.updateRegisteredUser(student, studentDTO);
+        studentService.insert(student); //#2
+        return "redirect:/students";
+
     }
 }
