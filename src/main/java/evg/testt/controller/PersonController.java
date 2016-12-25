@@ -109,6 +109,27 @@ public class PersonController {
         return "persons/all";
     }
 
+
+
+
+
+
+//    @RequestMapping(value = "/persons", method = RequestMethod.GET)
+//    public String showGroups(Model model, @RequestParam(required = false) Integer page) throws SQLException {
+//
+//        page = (page == null || page < 1) ? 1 : page;
+//
+//        int count = personnelService.count();
+//        int pages = count % pageSize == 0 ? count / pageSize : count / pageSize + 1;
+//
+//        List<Personnel> personnel = personnelService.getAll();
+//        model.addAttribute("personnel", personnel);
+//        model.addAttribute("pages", pages);
+//        return "personnel";
+//    }
+
+
+
     @RequestMapping(value = "/personSortByDate", method = RequestMethod.POST)
     public String filterPersons(Model model) throws SQLException {
         List<Person> persons = personService.getSortedByRegistrationDate();
