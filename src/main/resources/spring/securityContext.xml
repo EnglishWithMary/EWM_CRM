@@ -15,14 +15,14 @@
         <!--<intercept-url pattern="/**" access="permitAll" />-->
         <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
-        <intercept-url pattern="/users**" access="hasRole('ROLE_STUDENT')"/>
-        <intercept-url pattern="/users/**" access="hasRole('ROLE_STUDENT')"/>
-        <intercept-url pattern="/managers**" access="hasRole('ROLE_MANAGER')"/>
-        <intercept-url pattern="/managers/**" access="hasRole('ROLE_MANAGER')"/>
-        <intercept-url pattern="/teachers**" access="hasRole('ROLE_TEACHER')"/>
-        <intercept-url pattern="/teachers/**" access="hasRole('ROLE_TEACHER')"/>
-        <intercept-url pattern="/students**" access="hasRole('ROLE_STUDENT')"/>
-        <intercept-url pattern="/students/**" access="hasRole('ROLE_STUDENT')"/>
+        <intercept-url pattern="/users**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/users/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/managers**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/managers/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/teachers**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/teachers/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/students**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/students/**" access="hasRole('ROLE_ADMIN')"/>
         <!--<intercept-url pattern="/login.jsp*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
         <form-login
                 login-processing-url="/security_check"
