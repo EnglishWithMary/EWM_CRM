@@ -2,10 +2,12 @@ package evg.testt.controller;
 
 import evg.testt.dto.GroupDTO;
 import evg.testt.model.Group;
+import evg.testt.model.Language;
 import evg.testt.model.Student;
 import evg.testt.model.Teacher;
 import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.GroupService;
+import evg.testt.service.LanguageService;
 import evg.testt.service.StudentService;
 import evg.testt.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,8 @@ public class GroupController {
     private TeacherService teacherService;
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private LanguageService languageService;
 
     @Value("${pagination.page.size}")
     protected int pageSize;
@@ -83,7 +87,9 @@ public class GroupController {
     @RequestMapping(value = "/groupAdd")
     public String addGroup(Model model) throws SQLException {
         List<Teacher> teachers = teacherService.getAll();
+        List<Language> languages = languageService.getAll();
         model.addAttribute("teachers", teachers);
+        model.addAttribute("languages", languages);
         GroupDTO groupDTO = new GroupDTO();
         groupDTO.setName("Default Group");
         model.addAttribute("group", groupDTO);
@@ -98,10 +104,13 @@ public class GroupController {
         }
         Group newGroup = new Group();
         newGroup.setName(groupDTO.getName());
-        newGroup.setLanguage(groupDTO.getLanguage());
         groupService.insert(newGroup);
         if (groupDTO.getTeacherId() != null) {
             newGroup.setTeacher(teacherService.getById(groupDTO.getTeacherId()));
+            groupService.update(newGroup);
+        }
+        if (groupDTO.getLanguageId() != null) {
+            newGroup.setLanguage(languageService.getById(groupDTO.getLanguageId()));
             groupService.update(newGroup);
         }
         return "redirect:/groups";

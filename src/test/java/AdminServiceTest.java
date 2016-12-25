@@ -1,26 +1,26 @@
+//
+//import evg.testt.service.AdminService;
+//import evg.testt.service.RoleService;
+//import org.junit.Test;
+//import org.junit.runner.RunWith;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.test.context.ContextConfiguration;
+//import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+//
+//@ContextConfiguration(locations = {"classpath:application-config-test.xml"})
+//@RunWith(SpringJUnit4ClassRunner.class)
+//public class AdminServiceTest {
 
-import evg.testt.service.AdminService;
-import evg.testt.service.RoleService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+//    @Autowired
+//    AdminService adminService;
+//
+//    @Autowired
+//    RoleService roleService;
 
-@ContextConfiguration(locations = {"classpath:application-config-test.xml"})
-@RunWith(SpringJUnit4ClassRunner.class)
-public class AdminServiceTest {
-
-    @Autowired
-    AdminService adminService;
-
-    @Autowired
-    RoleService roleService;
-
-    @Test
-    public void test(){
-
-    }
+//    @Test
+//    public void test(){
+//
+//    }
 
 //   @Test
 //    public void addAdminTest() throws SQLException {
@@ -58,4 +58,4 @@ public class AdminServiceTest {
 //        Assert.assertEquals("DELETED", admin.getPerson().getState().getState());
 //    }
 
-}
+//}
