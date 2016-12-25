@@ -91,7 +91,7 @@
                             <tbody>
                             <c:forEach var="person" items="${personnel}">
                                 <tr>
-                                    <td><a href="/admin/info?admin_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</td>
+                                    <td><a href="/admins/info?admin_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</td>
                                     <td>${person.login}</td>
                                     <td>${person.role}</td>
                                     <td>${person.state}</td>
@@ -127,14 +127,14 @@
             </div>
         </div>
         <div class="col-lg-4">
-            <p class="panel panel-default">
+            <div class="panel panel-default">
                 <div class="panel-heading">
                     <strong>Tool's Panel</strong>
                 </div>
-                <p class="panel-body">
+                <div class="panel-body">
                     <h4>Add person</h4>
                     <p>
-                        <form method="get" action="/adminAdd">
+                        <form method="get" action="/adminsWithPersonnelAdd">
                             <button class="btn btn-success" type="submit">Add Admin</button>
                         </form>
                         <form method="get" action="/managersWithPersonnelAdd">
@@ -145,8 +145,7 @@
                         </form>
                     </p>
                     <h4>Some Statistics</h4>
-                    <p>In development</p>
-                </div>
+                </p>
             </div>
         </div>
     </div>

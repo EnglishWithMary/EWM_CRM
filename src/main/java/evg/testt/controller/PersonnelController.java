@@ -1,13 +1,11 @@
 package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
+import evg.testt.model.Admin;
 import evg.testt.model.Manager;
 import evg.testt.model.Teacher;
 import evg.testt.model.User;
-import evg.testt.service.ManagerService;
-import evg.testt.service.PersonDTOService;
-import evg.testt.service.TeacherService;
-import evg.testt.service.UserService;
+import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +28,36 @@ public class PersonnelController {
     PersonDTOService personDTOService;
     @Autowired
     TeacherService teacherService;
+    @Autowired
+    private AdminService adminService;
+
+    @RequestMapping(value = "/adminsWithPersonnelAdd")
+    public String addAdmin(Model model) {
+        PersonDTO person = new PersonDTO();
+        model.addAttribute("adminWithPersonnel", person);
+        return "personnels/addAdmin";
+    }
+    @RequestMapping(value = "/adminsSaveWithPersonnel", method = RequestMethod.POST)
+    public String saveAdmin(@ModelAttribute("adminWithPersonnel") @Valid PersonDTO personDTO,
+                            BindingResult bindingResult, Model model) throws SQLException, ParseException {
+
+
+        User u = userService.findByUserLogin(personDTO.getLogin());
+
+        if (u != null)
+            bindingResult.rejectValue("login", "1", "Login already exist.");
+
+        if (!bindingResult.hasErrors()) {
+
+            Admin admin = new Admin();
+            admin = personDTOService.updateRegisteredUser(admin, personDTO);
+            adminService.insert(admin);
+
+            return "redirect:/persons";
+        } else {
+            return "personnel/addAdmin";
+        }
+    }
 
     @RequestMapping(value = "/managersWithPersonnelAdd")
     public String addManagerPersonnel(Model model) {
@@ -86,5 +114,7 @@ public class PersonnelController {
             return "personnel/addTeacher";
         }
     }
+
+
 
 }
