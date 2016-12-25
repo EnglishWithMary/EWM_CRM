@@ -81,7 +81,6 @@ public class StudentRepositoryJpaImpl extends RegisteredUserRepositoryJpaImpl<St
                 hQLQuery += "student.teacher.id = " + teacher_id  + " AND ";//
             }
         }
-
         if (groupIdList!=null && groupIdList.size()>0) {
             if (groupIdList.contains(-1)) hQLQuery += "student.group IS NULL ";
             if (groupIdList.contains(0)) hQLQuery+= "student.group IS NOT NULL ";
