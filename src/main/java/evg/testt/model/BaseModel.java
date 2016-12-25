@@ -5,7 +5,24 @@ import lombok.Data;
 import javax.persistence.*;
 
 @MappedSuperclass
-public @Data class BaseModel {
+//@SqlResultSetMapping(name ="personnel" )
+//@SqlResultSetMapping(
+//        name="personnel",
+//        classes={
+//                @ConstructorResult(
+//                        targetClass=Personnel.class,
+//                        columns={
+//                                @ColumnResult(name="firstName"),
+//                                @ColumnResult(name="lastName"),
+//                                @ColumnResult(name="role")
+//                        }
+//                )
+//        }
+//)
+//
+//@NamedNativeQuery(name="personnel", query="SELECT * FROM personnel", resultSetMapping="personnel")
+public @Data
+class BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

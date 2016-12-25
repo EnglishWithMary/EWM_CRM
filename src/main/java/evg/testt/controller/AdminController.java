@@ -28,6 +28,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import static javax.swing.text.StyleConstants.ModelAttribute;
+
 @Controller
 @PropertySource(value = "classpath:standard.properties")
 public class AdminController {
