@@ -2,7 +2,7 @@ package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
-import evg.testt.oval.SpringOvalValidator;
+//import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -28,8 +29,8 @@ import java.util.List;
 @PropertySource(value = "classpath:standard.properties")
 public class TeacherController {
 
-    @Autowired (required = false)
-    SpringOvalValidator validator;
+//    @Autowired
+//    SpringOvalValidator validator;
     @Autowired
     TeacherService teacherService;
     @Autowired
@@ -87,9 +88,10 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/teacherSave", method = RequestMethod.POST)
-    public String saveTeacher(@ModelAttribute("teacher") @Validated PersonDTO personDTO, BindingResult bindingResult,
+    public String saveTeacher(@Valid @ModelAttribute("teacher")  PersonDTO personDTO, BindingResult bindingResult,
                               Model model) throws SQLException, ParseException {
-        validator.validate(personDTO, bindingResult);
+
+//        validator.validate(personDTO, bindingResult);
 
         User u = userService.findByUserLogin(personDTO.getLogin());
 
@@ -119,14 +121,14 @@ public class TeacherController {
     public String teacherDelete(@RequestParam Integer id) throws SQLException {
         Teacher teacher = teacherService.getById(id);
         teacherService.delete(teacher);
-        return "teachers/all";
+        return "redirect:/teachers";
     }
 
     @RequestMapping(value = "/teacherTrash")
     public String teacherTrash(@RequestParam Integer id) throws SQLException {
         Teacher teacher = teacherService.getById(id);
         teacherService.trash(teacher);
-        return "teachers/all";
+        return "redirect:/teachers";
     }
 
     @RequestMapping(value = "/teacher/info")

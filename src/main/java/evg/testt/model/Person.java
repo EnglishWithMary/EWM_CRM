@@ -37,9 +37,8 @@ public @Data class Person extends BaseModel{
     @Column(columnDefinition = "text")
     private String comments;
 
-    /**
-     * TODO remake log activity
-     * */
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person", fetch = FetchType.EAGER)
+    private Integer position = 0;
+
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person", fetch = FetchType.LAZY)
 //    List<Activity> activities;
 }
