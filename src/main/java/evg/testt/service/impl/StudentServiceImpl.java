@@ -5,6 +5,7 @@ import evg.testt.model.Student;
 import evg.testt.dao.StudentRepository;
 import evg.testt.service.HumanService;
 import evg.testt.service.StudentService;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,5 +38,17 @@ public class StudentServiceImpl extends RegisteredUserServiceImpl<Student, Stude
 
     @Override
     public List<Student> getAllStudentsWithGroup() throws SQLException {return dao.findStudentsWithGroup();
+    }
+
+    @Override
+    public List<Student> getStudentsPageWithFilters(int pageNumber, Integer teacher_id,
+                                              List<Integer> groupIdList, String direction
+    ) throws SQLException{
+        return dao.findStudentsPageWithFilters(pageNumber, teacher_id, groupIdList, direction);
+    }
+
+    @Override
+    public int countByFilter(Integer teacher_id, List<Integer> groupIdList) throws SQLException{
+        return dao.countByFilter(teacher_id,groupIdList);
     }
 }
