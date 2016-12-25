@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -100,7 +101,8 @@ public class StudentController {
 //        validator.validate(personDTO, bindingResult);
 
         User u = userService.findByUserLogin(personDTO.getLogin());
-
+        Teacher teacher = null;
+        Group group = null;
         if (u != null)
             bindingResult.rejectValue("login", "1", "Login already exist.");
 
@@ -109,8 +111,7 @@ public class StudentController {
             Student student = new Student();
             student = personDTOService.updateRegisteredUser(student, personDTO);
 
-            Teacher teacher;
-            Group group;
+
 
             if (teacher_id != null && teacher_id > 0) {
                 teacher = teacherService.getById(teacher_id);
@@ -125,6 +126,9 @@ public class StudentController {
 
             return "redirect:/students";
         } else {
+
+            model.addAttribute("groups",groupService.getAll());
+            model.addAttribute("teachers",teacherService.getAll());
             return "students/add";
         }
     }
