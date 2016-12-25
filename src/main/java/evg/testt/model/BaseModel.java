@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 @MappedSuperclass
-@SqlResultSetMapping(name ="personnel" )
+//@SqlResultSetMapping(name ="personnel" )
 //@SqlResultSetMapping(
 //        name="personnel",
 //        classes={
