@@ -217,19 +217,22 @@ public class StudentController {
     @RequestMapping(value = "/leadToStudent")
     public String leadToStudent(Integer personId) throws SQLException, ParseException {
 
-        PersonDTO studentDTO = new PersonDTO();
-
         Person person = personService.getById(personId);
+
+        Lead lead = leadService.getByPerson(person);
+        leadService.delete(lead);
+
+        PersonDTO studentDTO = new PersonDTO();
         studentDTO.setFirstName(person.getFirstName());
         studentDTO.setMiddleName(person.getMiddleName());
         studentDTO.setLastName(person.getLastName());
         studentDTO.setEmail(person.getEmail().getEmail());
 
-        leadService.delete(leadService.getByPerson(person));
         Student student = new Student();
-        student = personDTOService.updateRegisteredUser(student, studentDTO);
-        studentService.insert(student);
 
-        return "students/all";
+        personDTOService.updateRegisteredUser(student, studentDTO);
+        studentService.insert(student); //#2
+        return "redirect:/students";
+
     }
 }
