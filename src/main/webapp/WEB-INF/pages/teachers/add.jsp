@@ -51,11 +51,13 @@
                             <div class="col-sm-1"></div>
                             <div class="col-sm-4">
                                 <label path="languages">Languages:</label>
-                                <div>
+                            </div>
+                            <div class="col-sm-6">
+                                <select name="languages" multiple size="3">
                                     <c:forEach var="lang" items="${languages}" >
-                                        <div>${lang.language}</div>
+                                            <option value="${lang.language}">${lang.language}</option>
                                     </c:forEach>
-                                </div>
+                                </select>
                             </div>
                         </div>
                         <div class="row padding-bot">
