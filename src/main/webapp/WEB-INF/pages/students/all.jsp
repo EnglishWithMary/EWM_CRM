@@ -78,6 +78,7 @@
                                         <th>Delete</th>
                                         <th>Save</th>
                                     </security:authorize>
+                                    <th>Teacher</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
@@ -92,6 +93,7 @@
                                         <th>Delete</th>
                                         <th>Save</th>
                                     </security:authorize>
+                                    <th>Teacher</th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
@@ -111,6 +113,7 @@
                                                 <a href="/studentSave?id=${student.id}">Save</a>
                                             </td>
                                         </security:authorize>
+                                        <td><a href="/teacher/info?teacher_id=${student.teacher.id}">${student.teacher.person.firstName}</a></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
