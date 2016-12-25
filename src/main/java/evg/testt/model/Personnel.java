@@ -40,5 +40,4 @@ class Personnel extends BaseModel {
 
     @Column(columnDefinition = "text")
     private String comments;
-
 }
