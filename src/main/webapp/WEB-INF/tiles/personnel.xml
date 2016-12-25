@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="personnels/addManager" extends="home">
+        <put-attribute name="title" value="Add manager page" />
+        <put-attribute name="body" value="/WEB-INF/pages/personnels/addManager.jsp"/>
+    </definition>
+
+    <definition name="personnels/addTeacher" extends="home">
+        <put-attribute name="title" value="Add teacher page" />
+        <put-attribute name="body" value="/WEB-INF/pages/personnels/addTeacher.jsp"/>
+    </definition>
+
+
+</tiles-definitions>

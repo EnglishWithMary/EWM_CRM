@@ -68,6 +68,9 @@
                                 <%--<th>Birth Date</th>--%>
                                 <th>Reg. Date</th>
                                 <th>Mod. Date</th>
+                                <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <th>Delete</th>
+                                </security:authorize>
                             </tr>
                             </thead>
                             <tfoot>
@@ -79,19 +82,27 @@
                                 <%--<th>Birth Date</th>--%>
                                 <th>Reg. Date</th>
                                 <th>Mod. Date</th>
+                                <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <th>Delete</th>
+                                </security:authorize>
                             </tr>
                             </tfoot>
 
                             <tbody>
                             <c:forEach var="person" items="${personnel}">
                                 <tr>
-                                    <td>${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</td>
+                                    <td><a href="/admin/info?admin_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</td>
                                     <td>${person.login}</td>
                                     <td>${person.role}</td>
                                     <td>${person.state}</td>
                                     <%--<td>${person.birthdayDate}</td>--%>
                                     <td>${person.registrationDate}</td>
                                     <td>${person.modifyDate}</td>
+                                    <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <td>
+                                        <a href="/personDelete?id=${person.id}">Delete</a>
+                                    </td>
+                                    </security:authorize>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -116,16 +127,22 @@
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="panel panel-default">
+            <p class="panel panel-default">
                 <div class="panel-heading">
                     <strong>Tool's Panel</strong>
                 </div>
-                <div class="panel-body">
+                <p class="panel-body">
                     <h4>Add person</h4>
                     <p>
-                        <button class="btn btn-success" type="button">Add Admin</button>
-                        <button class="btn btn-success" type="button">Add Manager</button>
-                        <button class="btn btn-success" type="button">Add Teacher</button>
+                        <form method="get" action="/adminAdd">
+                            <button class="btn btn-success" type="submit">Add Admin</button>
+                        </form>
+                        <form method="get" action="/managersWithPersonnelAdd">
+                            <button class="btn btn-success" type="submit" >Add Manager</button>
+                        </form>
+                        <form method="get" action="/teachersWithPersonnelAdd">
+                            <button class="btn btn-success" type="submit">Add Teacher</button>
+                        </form>
                     </p>
                     <h4>Some Statistics</h4>
                     <p>In development</p>
