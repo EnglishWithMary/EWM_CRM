@@ -42,6 +42,8 @@ public class TeacherController {
     PersonDTOService personDTOService;
     @Autowired
     private GroupService groupService;
+    @Autowired
+    private LanguageService languageService;
 
     @Value("${pagination.page.size}")
     protected int pageSize;
@@ -80,7 +82,9 @@ public class TeacherController {
 
 
     @RequestMapping(value = "/teacherAdd")
-    public String addTeacher(Model model) {
+    public String addTeacher(Model model) throws SQLException{
+        List<Language> languages = languageService.getAll();
+        model.addAttribute("languages", languages);
         PersonDTO person =  new PersonDTO();
         model.addAttribute("teacher", person);
         return "teachers/add";

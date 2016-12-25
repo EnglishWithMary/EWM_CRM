@@ -1,4 +1,5 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="row">
     <div class="col-sm-12">
@@ -44,6 +45,17 @@
                             <div class="col-sm-6">
                                 <sf:input path="middleName" cssClass="form-control"/>
                                 <sf:errors path="middleName" cssClass="has-error"/>
+                            </div>
+                        </div>
+                        <div class="row padding-bot">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-4">
+                                <label path="languages">Languages:</label>
+                                <div>
+                                    <c:forEach var="lang" items="${languages}" >
+                                        <div>${lang.language}</div>
+                                    </c:forEach>
+                                </div>
                             </div>
                         </div>
                         <div class="row padding-bot">
