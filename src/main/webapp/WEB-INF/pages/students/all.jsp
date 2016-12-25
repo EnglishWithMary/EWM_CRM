@@ -81,6 +81,7 @@
                                 <th>Student group</th>
                                 <th>Registration Date</th>
                                 <th>Comments</th>
+                                <th>Testing results</th>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
                                     <th>Delete</th>
                                     <th>Save</th>
@@ -111,6 +112,9 @@
                                     <td><a href="/group/info?group_id=${student.group.id}">${student.group.name}</a></td>
                                     <td>${student.person.registrationDate}</td>
                                     <td>${student.person.comments}</td>
+                                    <td>
+                                        <a href="/studentTestingResults?id=${student.id}">Testing results</a>
+                                    </td>
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
                                         <td>
                                             <a href="/studentTrash?id=${student.id}">Delete</a>

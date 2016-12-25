@@ -14,4 +14,10 @@
         <put-attribute name="title" value="Students page" />
         <put-attribute name="body" value="/WEB-INF/pages/students/all.jsp" />
     </definition>
+
+    <definition name="students/testingResults" extends="home">
+        <put-attribute name="title" value="Student testing results page" />
+        <put-attribute name="body" value="/WEB-INF/pages/students/testingResults.jsp" />
+    </definition>
+
 </tiles-definitions>
