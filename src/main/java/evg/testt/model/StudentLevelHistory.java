@@ -7,7 +7,7 @@ import java.util.Date;
 @Entity(name = "StudentLevelHistory")
 public @Data class StudentLevelHistory extends BaseModel{
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Student student;
 
     @Enumerated

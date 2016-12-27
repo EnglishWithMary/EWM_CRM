@@ -1,9 +1,12 @@
 package evg.testt.model;
 
 import lombok.Data;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
 import java.util.List;
 
+@Transactional
 @Entity(name = "students")
 public @Data class Student extends RegisteredUser implements BelongsToPerson{
 
@@ -18,7 +21,4 @@ public @Data class Student extends RegisteredUser implements BelongsToPerson{
 
     @ManyToOne
     private Group group;
-
-    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
-    private List<StudentLevelHistory> studentLevelHistory;
 }

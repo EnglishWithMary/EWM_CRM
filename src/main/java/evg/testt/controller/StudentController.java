@@ -198,28 +198,16 @@ public class StudentController {
 
     @RequestMapping(value = "/saveTestingResults", method = RequestMethod.POST)
     public String saveTestingResults(@ModelAttribute("studentLevelHistory") StudentLevelHistory studentLevelHistory,
-                                     @RequestParam Integer student_id,
-                                     @RequestParam String testingDate)
+                                     @RequestParam Integer student_id)
             throws SQLException, ParseException {
 
         Student student = studentService.getById(student_id);
 
-        StudentLevelHistory studentLevel = new StudentLevelHistory();
-        studentLevel.setStudent(student);
-        studentLevel.setCheckpointDate(getDateFromString(testingDate));
-        studentLevel.setTestType(studentLevelHistory.getTestType());
-        studentLevel.setGrammar(studentLevelHistory.getGrammar());
-        studentLevel.setSpeaking(studentLevelHistory.getSpeaking());
-        studentLevel.setFluency(studentLevelHistory.getFluency());
-        studentLevel.setListening(studentLevelHistory.getListening());
-        studentLevel.setPronunciation(studentLevelHistory.getPronunciation());
-        studentLevel.setSpelling(studentLevelHistory.getSpelling());
-        studentLevel.setReading(studentLevelHistory.getReading());
-        studentLevel.setVocabulary(studentLevelHistory.getVocabulary());
-        studentLevel.setWriting(studentLevelHistory.getWriting());
+        studentLevelHistory.setStudent(student);
 
-        studentLevelHistoryService.insert(studentLevel);
-        return "students/all";
+        studentLevelHistoryService.insert(studentLevelHistory);
+
+        return "redirect:/students";
     }
 
     public Date getDateFromString(String dateFromForm) throws ParseException {

@@ -82,11 +82,11 @@
                                 <th>Registration Date</th>
                                 <th>Comments</th>
                                 <th>Testing results</th>
+                                <th>Teacher</th>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
                                     <th>Delete</th>
                                     <th>Save</th>
                                 </security:authorize>
-                                <th>Teacher</th>
                             </tr>
                             </thead>
                             <tfoot>
@@ -97,11 +97,12 @@
                                 <th>Student group</th>
                                 <th>Registration Date</th>
                                 <th>Comments</th>
+                                <th>Testing results</th>
+                                <th>Teacher</th>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
                                     <th>Delete</th>
                                     <th>Save</th>
                                 </security:authorize>
-                                <th>Teacher</th>
                             </tr>
                             </tfoot>
                             <tbody>
@@ -116,6 +117,9 @@
                                     <td>
                                         <a href="/studentTestingResults?id=${student.id}">Testing results</a>
                                     </td>
+                                    <td>
+                                        <a href="/teacher/info?teacher_id=${student.teacher.id}">${student.teacher.person.firstName}</a>
+                                    </td>
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
                                         <td>
                                             <a href="/studentTrash?id=${student.id}">Delete</a>
@@ -124,7 +128,6 @@
                                             <a href="/studentSave?id=${student.id}">Save</a>
                                         </td>
                                     </security:authorize>
-                                    <td><a href="/teacher/info?teacher_id=${student.teacher.id}">${student.teacher.person.firstName}</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
