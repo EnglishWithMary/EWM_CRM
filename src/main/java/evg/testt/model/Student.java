@@ -19,6 +19,6 @@ public @Data class Student extends RegisteredUser implements BelongsToPerson{
     @ManyToOne
     private Group group;
 
-    @OneToMany
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private List<StudentLevelHistory> studentLevelHistory;
 }
