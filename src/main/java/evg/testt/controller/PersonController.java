@@ -124,6 +124,14 @@ public class PersonController {
         return "persons/all";
     }
 
+    @RequestMapping(value = "/fullSearch")
+    public String search(Model model, @RequestParam String searchText) throws SQLException {
+        List<Person> persons = personService.getPersonsByKeyWord(searchText);
+
+        model.addAttribute("persons", persons);
+        return "home";
+    }
+
     /*
         Feature is added with one reason - to test if Student info is acceptable to work with
      */

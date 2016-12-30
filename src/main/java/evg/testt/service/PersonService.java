@@ -15,4 +15,6 @@ public interface PersonService extends Service<Person> {
 
     public void delete(Person person) throws SQLException;
 
+    List<Person> getPersonsByKeyWord(String keyWords) throws SQLException;
+
 }

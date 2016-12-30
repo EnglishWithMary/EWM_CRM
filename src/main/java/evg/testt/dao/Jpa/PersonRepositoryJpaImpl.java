@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import java.sql.SQLException;
@@ -59,6 +61,19 @@ public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> imple
             return result;
         }
         return null;
+    }
+
+    @Override
+    public List<Person> findPersonByKeyWord(String keywords) throws SQLException {
+        List<Person> peoples = Collections.EMPTY_LIST;
+
+        String searchText = keywords+":*";
+
+        Query nativeQuery = em.createNativeQuery("SELECT * FROM persons WHERE fts @@ to_tsquery(:text)", Person.class);
+        nativeQuery.setParameter("text", searchText);
+        peoples = nativeQuery.getResultList();
+
+        return peoples;
     }
 
 }

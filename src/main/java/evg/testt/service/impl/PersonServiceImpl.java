@@ -31,6 +31,11 @@ public class PersonServiceImpl extends BaseService<Person, PersonRepository> imp
     }
 
     @Override
+    public List<Person> getPersonsByKeyWord(String keyWords) throws SQLException {
+        return dao.findPersonByKeyWord(keyWords);
+    }
+
+    @Override
     public void update(Person o) throws SQLException {
         o.setModifyDate(new Date());
         dao.save(o);
