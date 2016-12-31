@@ -19,10 +19,6 @@ INSERT INTO pipetypes (id, type) VALUES (2, 'STUDENT_PIPE');
 INSERT INTO cards (id, cardName, type_id) VALUES (1, 'Default lead pipe',1);
 INSERT INTO cards (id, cardName, type_id) VALUES (2, 'Default student pipe',2);
 
-CREATE OR REPLACE VIEW staffview AS SELECT persons.* FROM persons LEFT JOIN admins ON persons.id = admins.person_id
-  LEFT JOIN managers ON persons.id = managers.person_id LEFT JOIN students ON persons.id = students.person_id
-  LEFT JOIN leads ON persons.id = leads.person_id;
-
 DROP TABLE if EXISTS personnel;
 DROP VIEW if EXISTS personnel;
 CREATE VIEW personnel AS
@@ -34,3 +30,45 @@ UNION SELECT teachers.person_id AS person, teachers.user_id AS usr FROM teachers
 LEFT JOIN persons ON keys.person = persons.id
 LEFT JOIN users ON keys.usr = users.id
 LEFT JOIN roles ON users.role_id = roles.id;
+
+-- full text props
+CREATE TEXT SEARCH DICTIONARY ispell_ru (
+template  =   ispell,
+  dictfile  =   ru,
+  afffile   =   ru,
+  stopwords =   russian
+);
+
+CREATE TEXT SEARCH DICTIONARY ispell_en (
+template  =   ispell,
+  dictfile  =   "en",
+  afffile   =   "en",
+  stopwords =   english
+);
+
+CREATE TEXT SEARCH CONFIGURATION ru ( COPY = russian );
+CREATE TEXT SEARCH CONFIGURATION en ( COPY = english );
+
+ALTER TEXT SEARCH CONFIGURATION ru
+ALTER MAPPING
+FOR word, hword, hword_part
+WITH ispell_ru, russian_stem;
+
+ALTER TEXT SEARCH CONFIGURATION ru
+ALTER MAPPING
+FOR asciiword, asciihword, hword_asciipart
+WITH ispell_en, english_stem;
+
+SET default_text_search_config = 'en';
+
+CREATE OR REPLACE VIEW staffview AS
+SELECT persons.*, groups.name as group_name,
+setweight( coalesce( to_tsvector('en', persons.firstname),''),'A') || ' ' ||
+setweight( coalesce( to_tsvector('en', persons.lastname),''),'B') || ' ' ||
+setweight( coalesce( to_tsvector('en', groups.name),''),'C') as searchtext
+FROM persons
+  LEFT JOIN admins ON persons.id = admins.person_id
+  LEFT JOIN managers ON persons.id = managers.person_id
+  LEFT JOIN students ON persons.id = students.person_id
+  LEFT JOIN leads ON persons.id = leads.person_id
+  LEFT JOIN groups ON students.group_id = groups.id;

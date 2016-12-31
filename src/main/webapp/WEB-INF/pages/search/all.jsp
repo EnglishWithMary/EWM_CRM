@@ -13,7 +13,7 @@
         <div class="col-lg-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <strong>Information about personnel</strong>
+                    <strong>Information about searched persons</strong>
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -25,21 +25,8 @@
                                         <option></option>
                                         <option>First Name</option>
                                         <option>Last Name</option>
-                                        <option>Personnel Role</option>
                                         <option>Registration Date</option>
-                                        <option>Age</option>
                                         <option>Status</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="input-group">
-                                    <span class="input-group-addon">Personnel's Role:</span>
-                                    <select class="form-control">
-                                        <option></option>
-                                        <option>ADMIN</option>
-                                        <option>MANAGER</option>
-                                        <option>TEACHER</option>
                                     </select>
                                 </div>
                             </div>
@@ -62,10 +49,7 @@
                             <thead>
                             <tr>
                                 <th>Full Name</th>
-                                <th>Login</th>
-                                <th>Role</th>
                                 <th>State</th>
-                                <%--<th>Birth Date</th>--%>
                                 <th>Reg. Date</th>
                                 <th>Mod. Date</th>
                             </tr>
@@ -73,23 +57,17 @@
                             <tfoot>
                             <tr>
                                 <th>Full Name</th>
-                                <th>Login</th>
-                                <th>Role</th>
                                 <th>State</th>
-                                <%--<th>Birth Date</th>--%>
                                 <th>Reg. Date</th>
                                 <th>Mod. Date</th>
                             </tr>
                             </tfoot>
 
                             <tbody>
-                            <c:forEach var="person" items="${personnel}">
+                            <c:forEach var="person" items="${persons}">
                                 <tr>
                                     <td>${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</td>
-                                    <td>${person.login}</td>
-                                    <td>${person.role}</td>
                                     <td>${person.state}</td>
-                                    <%--<td>${person.birthdayDate}</td>--%>
                                     <td>${person.registrationDate}</td>
                                     <td>${person.modifyDate}</td>
                                 </tr>

@@ -32,7 +32,17 @@ public class PersonServiceImpl extends BaseService<Person, PersonRepository> imp
 
     @Override
     public List<Person> getPersonsByKeyWord(String keyWords) throws SQLException {
-        return dao.findPersonByKeyWord(keyWords);
+        StringBuilder searchText = new StringBuilder();
+
+        String[] words = keyWords.split("\\s");
+
+        for (int i = 0; i < words.length; i++) {
+            searchText.append(words[i] + ":*");
+            if (i < words.length - 1)
+                searchText.append("|");
+        }
+
+        return dao.findPersonByKeyWord(searchText.toString());
     }
 
     @Override

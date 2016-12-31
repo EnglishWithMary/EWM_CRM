@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -126,10 +127,13 @@ public class PersonController {
 
     @RequestMapping(value = "/fullSearch")
     public String search(Model model, @RequestParam String searchText) throws SQLException {
-        List<Person> persons = personService.getPersonsByKeyWord(searchText);
+        List<Person> persons = Collections.EMPTY_LIST;
+
+        if(!searchText.equals(""))
+        persons = personService.getPersonsByKeyWord(searchText);
 
         model.addAttribute("persons", persons);
-        return "home";
+        return "search/all";
     }
 
     /*
