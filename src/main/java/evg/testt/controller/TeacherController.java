@@ -135,6 +135,7 @@ public class TeacherController {
     public String teacherInfo(Model model, @RequestParam int teacher_id) throws SQLException {
 
         Teacher teacher = teacherService.getById(teacher_id);
+        String levelName = teacher.getLevel().name();
         List<Group> groups = groupService.getByTeacher(teacher);
 
         model.addAttribute("teacher", teacher);
@@ -142,4 +143,17 @@ public class TeacherController {
 
         return "persons/teacher-info";
     }
+
+    @RequestMapping(value = "/setTeacherLevel")
+    public String setTeacherLevel(int level, int teacher_id) throws SQLException {
+
+        Teacher teacher = teacherService.getById(teacher_id);
+        TeacherLevelEnum level_Id = TeacherLevelEnum.valueOf(level);
+        teacher.setLevel(level_Id);
+        teacherService.update(teacher);
+        String levelName = teacher.getLevel().name();
+
+        return "redirect:/teacher/info?teacher_id="+teacher_id+levelName;
+    }
+
 }
