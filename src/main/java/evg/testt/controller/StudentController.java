@@ -4,10 +4,15 @@ import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
 //import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
+import evg.testt.service.impl.BaseService;
+import evg.testt.service.impl.PersonDTOServiceImpl;
+import evg.testt.service.impl.StudentLevelHistoryServiceImpl;
+import evg.testt.service.impl.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -17,10 +22,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -39,40 +47,42 @@ public class StudentController {
     private PersonDTOService personDTOService;
     @Autowired
     private GroupService groupService;
+    @Autowired
+    private StudentLevelHistoryService studentLevelHistoryService;
 
     @Value("${pagination.page.size}")
     protected int pageSize;
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
-    public String showStudents(@RequestParam(required = false) Integer page,
-                               @RequestParam(required = false) Boolean flagSorted,
-                               Model model) throws SQLException {
-
-        if (flagSorted == null) flagSorted = false;
+    public String showStudents(Model model,@RequestParam(required = false) Integer page,
+                               @RequestParam(required = false) Integer teacher_id,
+                               @RequestParam(required = false) List<Integer> group_id_list
+                               ,@RequestParam(required = false) String studentSortByDate
+    ) throws SQLException {
 
         int totalStudents = 0, pages = 0, currentPage = 1;
 
-        if (page != null)
-            if (page > 0)
-                currentPage = page;
-
-        totalStudents = studentService.count();
-
-        List<Student> students = Collections.EMPTY_LIST;
-        if (flagSorted == false) {
-            students = studentService.getByPage(currentPage);
-        } else {
-            students = studentService.getByPageSorted(currentPage);
+        if (page != null){
+            if (page > 0) currentPage = page;
+        } else{
+            page=currentPage;
         }
 
-        pages = ((totalStudents / pageSize) + 1);
+        totalStudents = studentService.countByFilter(teacher_id, group_id_list);
 
+        List<Student> students = studentService.getStudentsPageWithFilters(
+                page,teacher_id, group_id_list, studentSortByDate);
+
+        pages = ((totalStudents / pageSize) + 1);
         if (totalStudents % pageSize == 0) {
             pages--;
         }
+
+        model.addAttribute("teacherId", teacher_id);
+        model.addAttribute("sortDirection", studentSortByDate);
+        model.addAttribute("groupIdList", group_id_list);
         model.addAttribute("students", students);
         model.addAttribute("pages", pages);
-        model.addAttribute("flagSorted", flagSorted);
         model.addAttribute("groups",groupService.getAll());
         model.addAttribute("teachers",teacherService.getAll());
         return "students/all";
@@ -99,7 +109,8 @@ public class StudentController {
 //        validator.validate(personDTO, bindingResult);
 
         User u = userService.findByUserLogin(personDTO.getLogin());
-
+        Teacher teacher = null;
+        Group group = null;
         if (u != null)
             bindingResult.rejectValue("login", "1", "Login already exist.");
 
@@ -108,8 +119,7 @@ public class StudentController {
             Student student = new Student();
             student = personDTOService.updateRegisteredUser(student, personDTO);
 
-            Teacher teacher;
-            Group group;
+
 
             if (teacher_id != null && teacher_id > 0) {
                 teacher = teacherService.getById(teacher_id);
@@ -124,6 +134,9 @@ public class StudentController {
 
             return "redirect:/students";
         } else {
+
+            model.addAttribute("groups",groupService.getAll());
+            model.addAttribute("teachers",teacherService.getAll());
             return "students/add";
         }
     }
@@ -139,7 +152,6 @@ public class StudentController {
                 .addAttribute("groups", groups);
         return "students/all";
     }
-
 
     @RequestMapping(value = "/studentDelete")
     public String studentDelete(@RequestParam Integer id) throws SQLException {
@@ -175,6 +187,35 @@ public class StudentController {
         return "students/all";
     }
 
+    @RequestMapping(value = "/studentTestingResults")
+    public String studentEditLevel(@RequestParam Integer id, Model model) throws SQLException {
+        Student student = studentService.getById(id);
+        model.addAttribute("student", student);
+        model.addAttribute("person", student.getPerson());
+        model.addAttribute("checkpointDate", new Date());
+        return "students/testingResults";
+    }
+
+    @RequestMapping(value = "/saveTestingResults", method = RequestMethod.POST)
+    public String saveTestingResults(@ModelAttribute("studentLevelHistory") StudentLevelHistory studentLevelHistory,
+                                     @RequestParam Integer student_id)
+            throws SQLException, ParseException {
+
+        Student student = studentService.getById(student_id);
+
+        studentLevelHistory.setStudent(student);
+
+        studentLevelHistoryService.insert(studentLevelHistory);
+
+        return "redirect:/students";
+    }
+
+    public Date getDateFromString(String dateFromForm) throws ParseException {
+        if (dateFromForm == "") dateFromForm = "2001-01-01";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = simpleDateFormat.parse(dateFromForm);
+        return date;
+    }
 
     @RequestMapping(value = "/studentsSortedByGroup", method = RequestMethod.POST)
     public String showSortedStudent(Model model, @RequestParam(required = false) List<Integer> groupIdList)

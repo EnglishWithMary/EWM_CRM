@@ -73,7 +73,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <table id = "table-list" class="table table-striped table-bordered">                            <thead>
+                        <table class="table table-striped table-bordered">                            <thead>
                             <tr>
                                 <th>First name</th>
                                 <th>Last name</th>
@@ -81,11 +81,12 @@
                                 <th>Student group</th>
                                 <th>Registration Date</th>
                                 <th>Comments</th>
+                                <th>Testing results</th>
+                                <th>Teacher</th>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
                                     <th>Delete</th>
                                     <th>Save</th>
                                 </security:authorize>
-                                <th>Teacher</th>
                             </tr>
                             </thead>
                             <tfoot>
@@ -96,6 +97,8 @@
                                 <th>Student group</th>
                                 <th>Registration Date</th>
                                 <th>Comments</th>
+                                <th>Testing results</th>
+                                <th>Teacher</th>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
                                     <th>Delete</th>
                                     <th>Save</th>
@@ -111,6 +114,12 @@
                                     <td><a href="/group/info?group_id=${student.group.id}">${student.group.name}</a></td>
                                     <td>${student.person.registrationDate}</td>
                                     <td>${student.person.comments}</td>
+                                    <td>
+                                        <a href="/studentTestingResults?id=${student.id}">Testing results</a>
+                                    </td>
+                                    <td>
+                                        <a href="/teacher/info?teacher_id=${student.teacher.id}">${student.teacher.person.firstName}</a>
+                                    </td>
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
                                         <td>
                                             <a href="/studentTrash?id=${student.id}">Delete</a>
@@ -119,7 +128,6 @@
                                             <a href="/studentSave?id=${student.id}">Save</a>
                                         </td>
                                     </security:authorize>
-                                    <td><a href="/teacher/info?teacher_id=${student.teacher.id}">${student.teacher.person.firstName}</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -128,8 +136,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="text-center">
+                    <div class="col-sm-2 col-sm-offset-5">
                         <c:if test="${pages > 1}">
                             <ul class="pagination">
                                 <c:forEach var="page" begin="1" end="${pages}">
@@ -141,7 +148,6 @@
                                 </c:forEach>
                             </ul>
                         </c:if>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -89,7 +89,7 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
         return user;
     }
 
-    private Date getDateFromString(String dateFromForm) throws ParseException {
+    public Date getDateFromString(String dateFromForm) throws ParseException {
         if (dateFromForm != null) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date date = simpleDateFormat.parse(dateFromForm);
