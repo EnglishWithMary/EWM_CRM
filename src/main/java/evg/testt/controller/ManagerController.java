@@ -118,4 +118,16 @@ public class ManagerController {
         model.addAttribute("manager", manager);
         return "persons/manager-info";
     }
+
+    @RequestMapping(value = "/managerUpdateComments", method = RequestMethod.POST)
+    public String studentUpdate(Model model,
+                                @RequestParam Integer id,
+                                @RequestParam String comments) throws SQLException {
+        Manager manager = managerService.getById(id);
+        manager.getPerson().setComments(comments);
+        managerService.update(manager);
+        model.addAttribute("manager", manager);
+
+        return "persons/manager-info";
+    }
 }

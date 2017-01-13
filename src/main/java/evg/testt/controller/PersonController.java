@@ -151,4 +151,24 @@ public class PersonController {
     public String testGroupInfo(){
         return "persons/groups/test/info";
     }
+
+    /*
+    This can be apply not for "comments" only
+
+    @RequestMapping(value = "/personUpdateComments", method = RequestMethod.POST)
+    public String studentUpdate(Model model,
+                                @RequestParam Integer id,
+                                @RequestParam Integer role,
+                                @RequestParam String comments) throws SQLException {
+
+        Person person = personService.getById(id);
+        person.setComments(comments);
+        //personService.update(person);
+
+        // надо возвращать туда, откуда вызван метод
+        //model.addAttribute("student", student);
+
+        return "redirect:/students";
+    }
+    */
 }

@@ -243,9 +243,18 @@ public class StudentController {
 
     @RequestMapping(value = "/student/info", method = RequestMethod.GET)
     public String studentInfo(Model model, @RequestParam int student_id) throws SQLException {
-
         Student student = studentService.getById(student_id);
+        model.addAttribute("student", student);
+        return "persons/student-info";
+    }
 
+    @RequestMapping(value = "/studentUpdateComments", method = RequestMethod.POST)
+    public String studentUpdate(Model model,
+                                @RequestParam Integer id,
+                                @RequestParam String comments) throws SQLException {
+        Student student = studentService.getById(id);
+        student.getPerson().setComments(comments);
+        studentService.update(student);
         model.addAttribute("student", student);
 
         return "persons/student-info";
