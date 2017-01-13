@@ -60,7 +60,7 @@
                                     <td>${manager.person.lastName}</td>
                                     <td>${manager.person.middleName}</td>
                                     <td>${manager.person.registrationDate}</td>
-                                    <td>${manager.person.comments}</td>
+                                    <td><textarea name="comments" cols="16" disabled>${manager.person.comments}</textarea></td>
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
                                         <td>
                                             <a href="/managerTrash?id=${manager.id}">Delete</a>

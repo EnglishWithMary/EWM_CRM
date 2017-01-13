@@ -61,7 +61,7 @@
                             <td>${lead.person.lastName}</td>
                             <td>${lead.person.middleName}</td>
                             <td>${lead.person.registrationDate}</td>
-                            <td>${lead.person.comments}</td>
+                            <td><textarea name="comments" cols="16" disabled>${lead.person.comments}</textarea></td>
                             <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
                                 <td>
                                     <form method="post" action="/">

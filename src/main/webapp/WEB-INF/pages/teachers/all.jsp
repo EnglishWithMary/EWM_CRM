@@ -55,7 +55,7 @@
                             <td>${teacher.person.lastName}</td>
                             <td>${teacher.person.middleName}</td>
                             <td>${teacher.person.registrationDate}</td>
-                            <td>${teacher.person.comments}</td>
+                            <td><textarea name="comments" cols="16" disabled>${teacher.person.comments}</textarea></td>
                             <security:authorize access="hasRole('ROLE_ADMIN')">
                             <td>
                                 <a href="/teacherTrash?id=${teacher.id}">Delete</a>
