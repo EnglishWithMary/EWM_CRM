@@ -256,7 +256,6 @@ public class StudentController {
         student.getPerson().setComments(comments);
         studentService.update(student);
         model.addAttribute("student", student);
-
         return "persons/student-info";
     }
 }
