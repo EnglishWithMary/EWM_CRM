@@ -39,13 +39,19 @@ public @Data class Person extends BaseModel{
 
     private Integer position = 0;
 
-    public boolean isNull(){
-        return false;
+    public static final Person NULL = new NullPerson();
+
+    private static class NullPerson extends Person {
+        private NullPerson() {}
     }
 
-    public static Person newNull(){
-        return new NullPerson();
-    }
+//    public boolean isNull(){
+//        return false;
+//    }
+//
+//    public static Person newNull(){
+//        return new NullPerson();
+//    }
 
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person", fetch = FetchType.LAZY)
 //    List<Activity> activities;
