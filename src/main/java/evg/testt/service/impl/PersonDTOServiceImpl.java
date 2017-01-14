@@ -24,7 +24,7 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
 
         Person person;
 
-        if (someRegisteredUser.getPerson() == null){
+        if (someRegisteredUser.getPerson() == Person.NULL){
             person = new Person();
         }
         else {
@@ -46,7 +46,7 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
 
         Person person;
 
-        if (lead.getPerson() == null){
+        if (lead.getPerson() == Person.NULL){
             person = new Person();
         }
         else {
@@ -60,7 +60,7 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
 
     public Person getUpdatedPerson(Person person, PersonDTO personDTO) throws NullObjectPersonDTOException, ParseException {
 
-        if (personDTO == null || person == null) {
+        if (personDTO == null || person == Person.NULL) {
             throw new NullObjectPersonDTOException("Can`t update person with empty data. First initialize objects.");
         }
 

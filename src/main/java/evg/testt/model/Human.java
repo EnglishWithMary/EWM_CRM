@@ -12,7 +12,4 @@ public @Data abstract class Human extends BaseModel{
         return (person==null)?Person.NULL:person;
     }
 
-//    public Person getPerson(){
-//        return (person==null)?Person.newNull():person;
-//    }
 }
