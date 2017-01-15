@@ -57,12 +57,13 @@ public class PersonController {
         return "profile";
     }
 
+//    /persons/updatePerson
+//    old name /personUpdate
     @RequestMapping(value = "/personUpdate", method = RequestMethod.POST)
     public String updatePerson(@ModelAttribute("person") @Valid PersonDTO personDTO,
                                BindingResult bindingResult,
                                @RequestParam("image") MultipartFile multipartFile,
-                               Principal principal,
-                               Model model)
+                               Principal principal)
             throws
             IOException, PersonException, PersonRoleNotFoundException,
             BadAvatarNameException, SQLException, ParseException {
@@ -96,6 +97,7 @@ public class PersonController {
         return "persons/all";
     }
 
+//   what to rename here?
     @RequestMapping(value = "/personSortByDate", method = RequestMethod.POST)
     public String filterPersons(Model model) throws SQLException {
         List<Person> persons = personService.getSortedByRegistrationDate();
@@ -103,6 +105,7 @@ public class PersonController {
         return "persons/all";
     }
 
+    //   what to rename here?
     @RequestMapping(value = "/personDelete")
     public String personDelete(@RequestParam Integer id) throws SQLException {
         Person person = personService.getById(id);
