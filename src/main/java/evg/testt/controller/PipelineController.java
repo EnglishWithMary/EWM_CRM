@@ -22,8 +22,6 @@ public class PipelineController {
     private PipeTypeService pipeTypeService;
     @Autowired
     private CardService cardService;
-//    @Autowired
-//    private SpringOvalValidator validator;
     @Autowired
     private LeadService leadService;
     @Autowired
