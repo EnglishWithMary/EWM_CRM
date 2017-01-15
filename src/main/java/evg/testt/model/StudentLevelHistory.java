@@ -16,6 +16,9 @@ public @Data class StudentLevelHistory extends BaseModel{
     @Temporal(TemporalType.TIMESTAMP)
     private Date checkpointDate;
 
+    @Transient
+    private String testingDate;
+
     @Enumerated
     private StudentLevelPoints grammar;
 

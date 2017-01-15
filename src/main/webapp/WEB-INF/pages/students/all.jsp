@@ -81,9 +81,9 @@
                                 <th>Student group</th>
                                 <th>Registration Date</th>
                                 <th>Comments</th>
-                                <th>Testing results</th>
                                 <th>Teacher</th>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <th>Testing results</th>
                                     <th>Delete</th>
                                     <th>Save</th>
                                 </security:authorize>
@@ -97,9 +97,9 @@
                                 <th>Student group</th>
                                 <th>Registration Date</th>
                                 <th>Comments</th>
-                                <th>Testing results</th>
                                 <th>Teacher</th>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <th>Testing results</th>
                                     <th>Delete</th>
                                     <th>Save</th>
                                 </security:authorize>
@@ -115,12 +115,12 @@
                                     <td>${student.person.registrationDate}</td>
                                     <td>${student.person.comments}</td>
                                     <td>
-                                        <a href="/studentTestingResults?id=${student.id}">Testing results</a>
-                                    </td>
-                                    <td>
                                         <a href="/teacher/info?teacher_id=${student.teacher.id}">${student.teacher.person.firstName}</a>
                                     </td>
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
+                                        <td>
+                                            <a href="/studentTestingResults?id=${student.id}">Testing results</a>
+                                        </td>
                                         <td>
                                             <a href="/studentTrash?id=${student.id}">Delete</a>
                                         </td>
