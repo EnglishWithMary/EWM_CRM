@@ -46,16 +46,13 @@ public class PersonController {
     @Value("${pagination.page.size}")
     protected int pageSize;
 
-    @RequestMapping(value = "/personProfile", method = RequestMethod.GET)
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public String profilePerson(@ModelAttribute("person") @Valid PersonDTO personDTO,
                                 BindingResult bindingResult,
                                 Principal principal, Model model)
             throws PersonRoleNotFoundException, SQLException {
 
-//        validator.validate(personDTO, bindingResult);
-
         Person person = personService.getPersonByUserLogin(principal.getName());
-
         model.addAttribute("person", person);
         return "profile";
     }
@@ -70,29 +67,18 @@ public class PersonController {
             IOException, PersonException, PersonRoleNotFoundException,
             BadAvatarNameException, SQLException, ParseException {
 
-//        validator.validate(personDTO, bindingResult);
-
-//        if (bindingResult.hasErrors()) {
-//            return "redirect:/personProfile";
-//        }
-
         String login = principal.getName();
 
         try {
-
             Person person = personService.getPersonByUserLogin(login);
-
             person = personDTOService.getUpdatedPerson(person,personDTO);
-
             personService.update(person);
-
             if (!multipartFile.isEmpty()) {
                 avatarService.changePersonAvatar(multipartFile, person);
             }
         } catch (SQLException e) {
             throw new PersonException("Can't update Person Profile with login" + login);
         }
-
         return "redirect:/home";
     }
 

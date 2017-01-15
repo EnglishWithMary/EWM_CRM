@@ -58,9 +58,9 @@
                            aria-haspopup="true"
                            aria-expanded="false">Pipelines <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/takeStudentpipe">Students</a></li>
+                            <li><a href="/pipeline/students">Students</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="/takeLeadtpipe">Leads</a></li>
+                            <li><a href="/pipeline/leads">Leads</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -76,7 +76,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <security:authorize access="isAuthenticated()">
                     <li class="minimize-it">
-                        <a href="/personProfile">
+                        <a href="/profile">
                         <c:choose>
                             <c:when test="${person.avatarURL == null}">
                                 <img class="img-size-vsm" alt="Responsive image"
