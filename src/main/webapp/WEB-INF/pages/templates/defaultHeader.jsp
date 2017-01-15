@@ -4,7 +4,7 @@
 
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container-fluid">
-        <security:authorize access="isAuthenticated()">
+        <%--<security:authorize access="isAuthenticated()">--%>
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -15,7 +15,7 @@
                 </button>
                 <a id="logo" class="navbar-brand" href="/home">Mary</a>
             </div>
-        </security:authorize>
+        <%--</security:authorize>--%>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <security:authorize access="isAuthenticated()">
