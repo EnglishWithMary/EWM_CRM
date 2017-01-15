@@ -217,36 +217,19 @@ public class LeadController {
     public String leadToStudent(Model model, Integer person_Id) throws SQLException, ParseException {
 
         Person person = personService.getById(person_Id);
-
-        Lead lead = leadService.getByPerson(person);
-        leadService.delete(lead);
-
-        PersonDTO studentDTO = new PersonDTO();
-        studentDTO.setFirstName(person.getFirstName());
-        studentDTO.setMiddleName(person.getMiddleName());
-        studentDTO.setLastName(person.getLastName());
-        studentDTO.setEmail(person.getEmail().getEmail());
-        studentDTO.setComments(person.getComments());
-        studentDTO.setOrganization(person.getOrganization());
-        studentDTO.setAvatarURL(person.getAvatarURL());
-        //Почему у DTO нет сеттеров для некоторых полей (для телефона, например)?
-
-        //В DTO для birthdayDate заложен String, а в Person - Date
-        Date birthdayDate = person.getBirthdayDate();
-        if (birthdayDate != null) {
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-            String stringBirthdayDate = dateFormat.format(birthdayDate);
-            studentDTO.setBirthdayDate(stringBirthdayDate);
-        }
-
         Student student = new Student();
+        Lead lead = leadService.getByPerson(person);
 
-        personDTOService.updateRegisteredUser(student, studentDTO);
+        person.setId(null);
+        person.getEmail().setId(null);
+        student.setPerson(person);
         studentService.insert(student);
 
+        leadService.delete(lead);
+
         // почему не работает?
-        //Integer student_Id = student.getId();
-        //return "redirect:/student/info"+student_Id;
+//        Integer student_Id = student.getId();
+//        return "redirect:/student/info?"+student_Id.toString();
 
         model.addAttribute("student", student);
         return "persons/student-info";
