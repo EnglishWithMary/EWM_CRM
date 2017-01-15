@@ -231,21 +231,26 @@ public class LeadController {
         studentDTO.setAvatarURL(person.getAvatarURL());
         //Почему у DTO нет сеттеров для некоторых полей (для телефона, например)?
 
-//        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-//        String stringBirthdayDate = dateFormat.format(person.getBirthdayDate());
-//        studentDTO.setBirthdayDate(stringBirthdayDate);
+        //В DTO для birthdayDate заложен String, а в Person - Date
+        Date birthdayDate = person.getBirthdayDate();
+        if (birthdayDate != null) {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+            String stringBirthdayDate = dateFormat.format(birthdayDate);
+            studentDTO.setBirthdayDate(stringBirthdayDate);
+        }
 
         Student student = new Student();
 
         personDTOService.updateRegisteredUser(student, studentDTO);
         studentService.insert(student);
-        Integer student_Id = student.getId();
-        //return "redirect:/student/info"+student_Id; // почему не работает?
+
+        // почему не работает?
+        //Integer student_Id = student.getId();
+        //return "redirect:/student/info"+student_Id;
 
         model.addAttribute("student", student);
         return "persons/student-info";
 
     }
-
 
 }
