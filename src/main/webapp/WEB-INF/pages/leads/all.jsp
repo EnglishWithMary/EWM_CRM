@@ -55,7 +55,7 @@
                     <tbody>
                     <c:forEach var="lead" items="${leads}">
                         <tr>
-                            <td><a href="/lead/info?personId=${lead.id}">${lead.person.firstName}</a></td>
+                            <td><a href="/lead/info?lead_Id=${lead.id}">${lead.person.firstName}</a></td>
                             <td>${lead.person.lastName}</td>
                             <td>${lead.person.middleName}</td>
                             <td>${lead.person.registrationDate}</td>

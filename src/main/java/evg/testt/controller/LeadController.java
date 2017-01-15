@@ -24,6 +24,10 @@ import java.text.ParseException;
 import java.util.Collections;
 import java.util.List;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Controller
 public class LeadController {
 
@@ -37,6 +41,8 @@ public class LeadController {
     private LeadService leadService;
     @Autowired
     private PersonService personService;
+    @Autowired
+    private StudentService studentService;
     @Autowired (required = false)
     private EmailService emailService;
     @Autowired
@@ -200,11 +206,46 @@ public class LeadController {
         return "redirect:"+request.getHeader("Referer");
     }
 
-
     @RequestMapping(value = "/lead/info", method = RequestMethod.GET)
-    public String leadInfo(Model model, @RequestParam int personId) throws SQLException {
-        Lead lead = leadService.getByPerson(personService.getById(personId));
+    public String leadInfo(Model model, @RequestParam int lead_Id) throws SQLException {
+        Lead lead = leadService.getById(lead_Id);
         model.addAttribute("lead", lead);
         return "persons/lead-info";
     }
+
+    @RequestMapping(value = "/leadToStudent")
+    public String leadToStudent(Model model, Integer person_Id) throws SQLException, ParseException {
+
+        Person person = personService.getById(person_Id);
+
+        Lead lead = leadService.getByPerson(person);
+        leadService.delete(lead);
+
+        PersonDTO studentDTO = new PersonDTO();
+        studentDTO.setFirstName(person.getFirstName());
+        studentDTO.setMiddleName(person.getMiddleName());
+        studentDTO.setLastName(person.getLastName());
+        studentDTO.setEmail(person.getEmail().getEmail());
+        studentDTO.setComments(person.getComments());
+        studentDTO.setOrganization(person.getOrganization());
+        studentDTO.setAvatarURL(person.getAvatarURL());
+        //Почему у DTO нет сеттеров для некоторых полей (для телефона, например)?
+
+//        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+//        String stringBirthdayDate = dateFormat.format(person.getBirthdayDate());
+//        studentDTO.setBirthdayDate(stringBirthdayDate);
+
+        Student student = new Student();
+
+        personDTOService.updateRegisteredUser(student, studentDTO);
+        studentService.insert(student);
+        Integer student_Id = student.getId();
+        //return "redirect:/student/info"+student_Id; // почему не работает?
+
+        model.addAttribute("student", student);
+        return "persons/student-info";
+
+    }
+
+
 }
