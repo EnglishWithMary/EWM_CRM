@@ -12,7 +12,7 @@
                 <strong>Add New Teacher</strong>
             </div>
             <div class="panel-body">
-                <sf:form method="post" modelAttribute="teacherWithPersonnelAdd" id="form" action="/teachersSaveWithPersonnel">
+                <sf:form method="post" modelAttribute="teacherWithPersonnelAdd" id="form" action="/personnel/saveTeacher">
                     <fieldset class="form-group">
 
                         <div class="row padding-bot">

@@ -31,13 +31,13 @@ public class PersonnelController {
     @Autowired
     PersonService personService;
 
-    @RequestMapping(value = "/adminsWithPersonnelAdd")
+    @RequestMapping(value = "/personnel/addAdmins")
     public String addAdmin(Model model) {
         PersonDTO person = new PersonDTO();
         model.addAttribute("adminWithPersonnel", person);
         return "personnels/addAdmin";
     }
-    @RequestMapping(value = "/adminsSaveWithPersonnel", method = RequestMethod.POST)
+    @RequestMapping(value = "/personnel/saveAdmin", method = RequestMethod.POST)
     public String saveAdmin(@ModelAttribute("adminWithPersonnel") @Valid PersonDTO personDTO,
                             BindingResult bindingResult, Model model) throws SQLException, ParseException {
 
@@ -59,7 +59,7 @@ public class PersonnelController {
         }
     }
 
-    @RequestMapping(value = "/adminsTrashWithPersonnel")
+    @RequestMapping(value = "/personnel/trashed")
     public String adminTrash(@RequestParam(required = false) Integer id) throws SQLException {
         Person admin = personService.getById(id);
         admin.getState().setState("TRASHED");
@@ -67,14 +67,14 @@ public class PersonnelController {
         return "redirect:/persons";
     }
 
-    @RequestMapping(value = "/managersWithPersonnelAdd")
+    @RequestMapping(value = "/personnel/addManagers")
     public String addManagerPersonnel(Model model) {
         PersonDTO person = new PersonDTO();
         model.addAttribute("managerWithPersonnel", person);
         return "personnels/addManager";
     }
 
-    @RequestMapping(value = "/managersSaveWithPersonnel", method = RequestMethod.POST)
+    @RequestMapping(value = "/personnel/saveManager", method = RequestMethod.POST)
     public String saveManagerPersonnel(@ModelAttribute("managerWithPersonnel") @Valid PersonDTO personDTO,
                               BindingResult bindingResult, Model model) throws SQLException, ParseException {
 
@@ -94,14 +94,14 @@ public class PersonnelController {
         }
     }
 
-    @RequestMapping(value = "/teachersWithPersonnelAdd")
+    @RequestMapping(value = "/personnel/addTeachers")
     public String addTeacher(Model model) {
         PersonDTO person =  new PersonDTO();
         model.addAttribute("teacherWithPersonnelAdd", person);
         return "personnels/addTeacher";
     }
 
-    @RequestMapping(value = "/teachersSaveWithPersonnel", method = RequestMethod.POST)
+    @RequestMapping(value = "/personnel/saveTeacher", method = RequestMethod.POST)
     public String saveTeacher(@Valid @ModelAttribute("teacherWithPersonnelAdd")  PersonDTO personDTO,
                               BindingResult bindingResult,
                               Model model) throws SQLException, ParseException {

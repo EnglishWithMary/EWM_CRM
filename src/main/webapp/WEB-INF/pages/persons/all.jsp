@@ -114,7 +114,7 @@
                                     <td>${person.modifyDate}</td>
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
                                     <td>
-                                        <a href="/adminsTrashWithPersonnel?id=${person.id}">Delete</a>
+                                        <a href="/personnel/trashed?id=${person.id}">Delete</a>
                                     </td>
                                     </security:authorize>
                                 </tr>
@@ -148,13 +148,13 @@
                 <div class="panel-body">
                     <h4>Add person</h4>
                     <p>
-                        <form method="get" action="/adminsWithPersonnelAdd" >
+                        <form method="get" action="/personnel/addAdmins" >
                             <button class="btn btn-success" type="submit">Add Admin</button>
                         </form>
-                        <form method="get" action="/managersWithPersonnelAdd">
+                        <form method="get" action="/personnel/addManagers">
                             <button class="btn btn-success" type="submit" >Add Manager</button>
                         </form>
-                        <form method="get" action="/teachersWithPersonnelAdd">
+                        <form method="get" action="/personnel/addTeachers">
                             <button class="btn btn-success" type="submit">Add Teacher</button>
                         </form>
                     </p>
