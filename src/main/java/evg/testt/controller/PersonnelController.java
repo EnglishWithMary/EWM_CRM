@@ -1,10 +1,7 @@
 package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
-import evg.testt.model.Admin;
-import evg.testt.model.Manager;
-import evg.testt.model.Teacher;
-import evg.testt.model.User;
+import evg.testt.model.*;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.sql.SQLException;
@@ -29,7 +27,9 @@ public class PersonnelController {
     @Autowired
     TeacherService teacherService;
     @Autowired
-    private AdminService adminService;
+    AdminService adminService;
+    @Autowired
+    PersonService personService;
 
     @RequestMapping(value = "/adminsWithPersonnelAdd")
     public String addAdmin(Model model) {
@@ -55,8 +55,16 @@ public class PersonnelController {
 
             return "redirect:/persons";
         } else {
-            return "personnel/addAdmin";
+            return "personnels/addAdmin";
         }
+    }
+
+    @RequestMapping(value = "/adminsTrashWithPersonnel")
+    public String adminTrash(@RequestParam(required = false) Integer id) throws SQLException {
+        Person admin = personService.getById(id);
+        admin.getState().setState("TRASHED");
+        personService.update(admin);
+        return "redirect:/persons";
     }
 
     @RequestMapping(value = "/managersWithPersonnelAdd")
@@ -111,10 +119,7 @@ public class PersonnelController {
 
             return "redirect:/persons";
         } else {
-            return "personnel/addTeacher";
+            return "personnels/addTeacher";
         }
     }
-
-
-
 }

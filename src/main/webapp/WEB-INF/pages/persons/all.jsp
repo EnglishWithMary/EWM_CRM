@@ -1,3 +1,5 @@
+<%@ page import="javax.persistence.Query" %>
+<%@ page import="java.sql.ResultSet" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -91,7 +93,19 @@
                             <tbody>
                             <c:forEach var="person" items="${personnel}">
                                 <tr>
-                                    <td><a href="/admins/info?admin_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</td>
+                                    <td><c:choose>
+                                        <c:when test="${person.role == 'ROLE_ADMIN'}">
+                                        <a href="/admins/info?admin_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                        </c:when>
+                                        <c:when test="${person.role == 'ROLE_MANAGER'}">
+                                            <a href="/managers/info?manager_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                        </c:when>
+                                        <c:when test="${person.role == 'ROLE_TEACHER'}">
+                                            <a href="/teacher/info?teacher_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                        </c:when>
+                                    </c:choose>
+
+                                    </td>
                                     <td>${person.login}</td>
                                     <td>${person.role}</td>
                                     <td>${person.state}</td>
@@ -100,7 +114,7 @@
                                     <td>${person.modifyDate}</td>
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
                                     <td>
-                                        <a href="/personDelete?id=${person.id}">Delete</a>
+                                        <a href="/adminsTrashWithPersonnel?id=${person.id}">Delete</a>
                                     </td>
                                     </security:authorize>
                                 </tr>
@@ -134,7 +148,7 @@
                 <div class="panel-body">
                     <h4>Add person</h4>
                     <p>
-                        <form method="get" action="/adminsWithPersonnelAdd">
+                        <form method="get" action="/adminsWithPersonnelAdd" >
                             <button class="btn btn-success" type="submit">Add Admin</button>
                         </form>
                         <form method="get" action="/managersWithPersonnelAdd">
@@ -151,3 +165,4 @@
     </div>
 </div>
 
+</div>
