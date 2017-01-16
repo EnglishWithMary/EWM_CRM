@@ -30,7 +30,12 @@
                 <td><sf:input path="email"/><br/>
                     <sf:errors path="email"/></td>
             </tr>
-
+            <tr>
+                <td><sf:label path="comments">Comments:</sf:label></td>
+                <td><sf:textarea path="comments" rows="5"/><br/>
+                    <sf:errors path="comments"/>
+                </td>
+            </tr>
             <c:if test="${lead.cardId!=null || card_id==null}">
                 <tr>
                     <td><sf:label path="cardId">Pipe card:</sf:label></td>

@@ -33,6 +33,7 @@
                                 <th>Last name</th>
                                 <th>Middle name</th>
                                 <th>Registration Date</th>
+                                <th>Comments</th>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
                                     <th>Delete</th>
                                     <th>Save</th>
@@ -45,6 +46,7 @@
                                 <th>Last name</th>
                                 <th>Middle name</th>
                                 <th>Registration Date</th>
+                                <th>Comments</th>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
                                     <th>Delete</th>
                                     <th>Save</th>
@@ -58,6 +60,7 @@
                                     <td>${manager.person.lastName}</td>
                                     <td>${manager.person.middleName}</td>
                                     <td>${manager.person.registrationDate}</td>
+                                    <td><textarea name="comments" cols="16" disabled>${manager.person.comments}</textarea></td>
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
                                         <td>
                                             <a href="/managerTrash?id=${manager.id}">Delete</a>

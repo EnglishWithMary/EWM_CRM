@@ -34,6 +34,7 @@
                         <th>Last name</th>
                         <th>Middle name</th>
                         <th>Registration Date</th>
+                        <th>Comments</th>
                         <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
                             <td>Edit</td>
                             <td>Delete</td>
@@ -46,6 +47,7 @@
                         <th>Last name</th>
                         <th>Middle name</th>
                         <th>Registration Date</th>
+                        <th>Comments</th>
                         <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
                             <td>Edit</td>
                             <td>Delete</td>
@@ -55,10 +57,11 @@
                     <tbody>
                     <c:forEach var="lead" items="${leads}">
                         <tr>
-                            <td><a href="/lead/info?personId=${lead.id}">${lead.person.firstName}</a></td>
+                            <td><a href="/lead/info?person_id=${lead.person.id}">${lead.person.firstName}</a></td>
                             <td>${lead.person.lastName}</td>
                             <td>${lead.person.middleName}</td>
                             <td>${lead.person.registrationDate}</td>
+                            <td><textarea name="comments" cols="16" disabled>${lead.person.comments}</textarea></td>
                             <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
                                 <td>
                                     <form method="post" action="/">

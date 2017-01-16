@@ -86,6 +86,16 @@
                                 <sf:errors path="confirmPassword" cssClass="has-error"/>
                             </div>
                         </div>
+                        <div class="row padding-bot">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-4">
+                                <sf:label path="comments">Comments:</sf:label>
+                            </div>
+                            <div class="col-sm-6">
+                                <sf:textarea path="comments" rows="5"/>
+                                <sf:errors path="comments"/>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-sm-4 col-sm-offset-4">
                                 <input type="submit" value="Add teacher" class="btn btn-success"/>

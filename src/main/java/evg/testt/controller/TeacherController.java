@@ -142,4 +142,16 @@ public class TeacherController {
 
         return "persons/teacher-info";
     }
+
+    @RequestMapping(value = "/teacherUpdateComments", method = RequestMethod.POST)
+    public String studentUpdate(Model model,
+                                @RequestParam Integer id,
+                                @RequestParam String comments) throws SQLException {
+        Teacher teacher = teacherService.getById(id);
+        teacher.getPerson().setComments(comments);
+        teacherService.update(teacher);
+        model.addAttribute("teacher", teacher);
+
+        return "persons/teacher-info";
+    }
 }

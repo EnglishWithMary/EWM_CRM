@@ -81,7 +81,7 @@
                                 <th>Student group</th>
                                 <th>Registration Date</th>
                                 <th>Comments</th>
-                                <th>Testing results</th>
+                                <%--<th>Testing results</th>--%>
                                 <th>Teacher</th>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
                                     <th>Delete</th>
@@ -97,7 +97,7 @@
                                 <th>Student group</th>
                                 <th>Registration Date</th>
                                 <th>Comments</th>
-                                <th>Testing results</th>
+                                <%--<th>Testing results</th>--%>
                                 <th>Teacher</th>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
                                     <th>Delete</th>
@@ -113,10 +113,10 @@
                                     <td>${student.person.middleName}</td>
                                     <td><a href="/group/info?group_id=${student.group.id}">${student.group.name}</a></td>
                                     <td>${student.person.registrationDate}</td>
-                                    <td>${student.person.comments}</td>
-                                    <td>
-                                        <a href="/studentTestingResults?id=${student.id}">Testing results</a>
-                                    </td>
+                                    <td><textarea name="comments" cols="12" disabled>${student.person.comments}</textarea></td>
+                                    <%--<td>--%>
+                                        <%--<a href="/studentTestingResults?id=${student.id}">Testing results</a>--%>
+                                    <%--</td>--%>
                                     <td>
                                         <a href="/teacher/info?teacher_id=${student.teacher.id}">${student.teacher.person.firstName}</a>
                                     </td>
