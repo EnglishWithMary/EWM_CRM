@@ -11,7 +11,7 @@
                 <div class="pipe scrollbox">
 
                     <div class="editToolbar">
-                        <form method="post" action="/editCardName" id="cardNameForm">
+                        <form method="post" action="/pipeline/editCardName" id="cardNameForm">
                             <input type="text" class="form-control" value="${card.cardName}" name="cardName"
                                    id="cardName">
                             <input type="hidden" value="${card.id}" name="cardId">
@@ -20,7 +20,7 @@
                                     class="glyphicon glyphicon-pencil"></span></button>
                         </form>
 
-                        <form method="post" action="/deleteCard" id="deleteCardForm">
+                        <form method="post" action="/pipeline/deleteCard" id="deleteCardForm">
                             <button type="submit" class="btn btn-default btn-xs"><span
                                     class="glyphicon glyphicon-remove"></span></button>
                             <input type="hidden" value="${card.id}" name="cardId">
@@ -147,7 +147,7 @@
 
         <c:if test="${pipeType.id > 0 || pipeType.id != null}">
             <div class="pipe_wrapper">
-                <form class="pipe" method="post" action="/addCard">
+                <form class="pipe" method="post" action="/pipeline/addCard">
                     <input type="submit" value="Add Card" class="add_pipe btn btn-success">
                     <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
                 </form>

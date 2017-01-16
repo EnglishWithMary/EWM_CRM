@@ -4,7 +4,7 @@
 
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container-fluid">
-        <security:authorize access="isAuthenticated()">
+        <%--<security:authorize access="isAuthenticated()">--%>
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -15,7 +15,7 @@
                 </button>
                 <a id="logo" class="navbar-brand" href="/home">Mary</a>
             </div>
-        </security:authorize>
+        <%--</security:authorize>--%>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <security:authorize access="isAuthenticated()">
@@ -58,9 +58,9 @@
                            aria-haspopup="true"
                            aria-expanded="false">Pipelines <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/takeStudentpipe">Students</a></li>
+                            <li><a href="/pipeline/students">Students</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="/takeLeadtpipe">Leads</a></li>
+                            <li><a href="/pipeline/leads">Leads</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -76,7 +76,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <security:authorize access="isAuthenticated()">
                     <li class="minimize-it">
-                        <a href="/personProfile">
+                        <a href="/profile">
                         <c:choose>
                             <c:when test="${person.avatarURL == null}">
                                 <img class="img-size-vsm" alt="Responsive image"
