@@ -3,6 +3,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+
+<link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/favicon/favicon-32x32.png">
+
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/assets/css/main.css" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/assets/css/style.css" />

@@ -2,12 +2,6 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <div class="row">
-    <div class="col-sm-12">
-        <h1 class="page-header">Leads</h1>
-    </div>
-</div>
-
-<div class="row">
     <div class="col-sm-8">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -30,9 +24,7 @@
                 <table class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th>First name</th>
-                        <th>Last name</th>
-                        <th>Middle name</th>
+                        <th>Name</th>
                         <th>Registration Date</th>
                         <th>Comments</th>
                         <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
@@ -43,9 +35,7 @@
                     </thead>
                     <tfoot>
                     <tr>
-                        <th>First name</th>
-                        <th>Last name</th>
-                        <th>Middle name</th>
+                        <th>Name</th>
                         <th>Registration Date</th>
                         <th>Comments</th>
                         <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
@@ -57,9 +47,13 @@
                     <tbody>
                     <c:forEach var="lead" items="${leads}">
                         <tr>
-                            <td><a href="/lead/info?person_id=${lead.person.id}">${lead.person.firstName}</a></td>
-                            <td>${lead.person.lastName}</td>
-                            <td>${lead.person.middleName}</td>
+                            <td>
+                                <a href="/lead/info?person_id=${lead.person.id}">
+                                    ${lead.person.firstName}
+                                    ${lead.person.middleName}
+                                    ${lead.person.lastName}
+                                </a>
+                            </td>
                             <td>${lead.person.registrationDate}</td>
                             <td><textarea name="comments" cols="16" disabled>${lead.person.comments}</textarea></td>
                             <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
