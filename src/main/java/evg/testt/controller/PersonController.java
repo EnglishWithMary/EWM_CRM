@@ -46,53 +46,40 @@ public class PersonController {
     @Value("${pagination.page.size}")
     protected int pageSize;
 
-    @RequestMapping(value = "/personProfile", method = RequestMethod.GET)
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public String profilePerson(@ModelAttribute("person") @Valid PersonDTO personDTO,
                                 BindingResult bindingResult,
                                 Principal principal, Model model)
             throws PersonRoleNotFoundException, SQLException {
 
-//        validator.validate(personDTO, bindingResult);
-
         Person person = personService.getPersonByUserLogin(principal.getName());
-
         model.addAttribute("person", person);
         return "profile";
     }
 
+//    /persons/updatePerson
+//    old name /personUpdate
     @RequestMapping(value = "/personUpdate", method = RequestMethod.POST)
     public String updatePerson(@ModelAttribute("person") @Valid PersonDTO personDTO,
                                BindingResult bindingResult,
                                @RequestParam("image") MultipartFile multipartFile,
-                               Principal principal,
-                               Model model)
+                               Principal principal)
             throws
             IOException, PersonException, PersonRoleNotFoundException,
             BadAvatarNameException, SQLException, ParseException {
 
-//        validator.validate(personDTO, bindingResult);
-
-//        if (bindingResult.hasErrors()) {
-//            return "redirect:/personProfile";
-//        }
-
         String login = principal.getName();
 
         try {
-
             Person person = personService.getPersonByUserLogin(login);
-
             person = personDTOService.getUpdatedPerson(person,personDTO);
-
             personService.update(person);
-
             if (!multipartFile.isEmpty()) {
                 avatarService.changePersonAvatar(multipartFile, person);
             }
         } catch (SQLException e) {
             throw new PersonException("Can't update Person Profile with login" + login);
         }
-
         return "redirect:/home";
     }
 
@@ -110,6 +97,7 @@ public class PersonController {
         return "persons/all";
     }
 
+//   what to rename here?
     @RequestMapping(value = "/personSortByDate", method = RequestMethod.POST)
     public String filterPersons(Model model) throws SQLException {
         List<Person> persons = personService.getSortedByRegistrationDate();
@@ -117,6 +105,7 @@ public class PersonController {
         return "persons/all";
     }
 
+    //   what to rename here?
     @RequestMapping(value = "/personDelete")
     public String personDelete(@RequestParam Integer id) throws SQLException {
         Person person = personService.getById(id);

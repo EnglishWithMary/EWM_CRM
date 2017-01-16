@@ -5,7 +5,7 @@
 <div class="12u">
     <h3>Update profile</h3>
 
-    <sf:form method="post" modelAttribute="person" action="/personUpdate" enctype="multipart/form-data">
+    <sf:form method="post" modelAttribute="person" action="/persons/updatePerson" enctype="multipart/form-data">
         <div class="file_upload">
 
             <c:choose>
