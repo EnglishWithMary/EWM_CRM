@@ -1,3 +1,5 @@
+<%@ page import="javax.persistence.Query" %>
+<%@ page import="java.sql.ResultSet" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -68,6 +70,9 @@
                                 <%--<th>Birth Date</th>--%>
                                 <th>Reg. Date</th>
                                 <th>Mod. Date</th>
+                                <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <th>Delete</th>
+                                </security:authorize>
                             </tr>
                             </thead>
                             <tfoot>
@@ -79,19 +84,39 @@
                                 <%--<th>Birth Date</th>--%>
                                 <th>Reg. Date</th>
                                 <th>Mod. Date</th>
+                                <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <th>Delete</th>
+                                </security:authorize>
                             </tr>
                             </tfoot>
 
                             <tbody>
                             <c:forEach var="person" items="${personnel}">
                                 <tr>
-                                    <td>${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</td>
+                                    <td><c:choose>
+                                        <c:when test="${person.role == 'ROLE_ADMIN'}">
+                                        <a href="/admins/info?admin_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                        </c:when>
+                                        <c:when test="${person.role == 'ROLE_MANAGER'}">
+                                            <a href="/managers/info?manager_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                        </c:when>
+                                        <c:when test="${person.role == 'ROLE_TEACHER'}">
+                                            <a href="/teacher/info?teacher_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                        </c:when>
+                                    </c:choose>
+
+                                    </td>
                                     <td>${person.login}</td>
                                     <td>${person.role}</td>
                                     <td>${person.state}</td>
                                     <%--<td>${person.birthdayDate}</td>--%>
                                     <td>${person.registrationDate}</td>
                                     <td>${person.modifyDate}</td>
+                                    <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <td>
+                                        <a href="/personnel/trashed?id=${person.id}">Delete</a>
+                                    </td>
+                                    </security:authorize>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -123,15 +148,21 @@
                 <div class="panel-body">
                     <h4>Add person</h4>
                     <p>
-                        <button class="btn btn-success" type="button">Add Admin</button>
-                        <button class="btn btn-success" type="button">Add Manager</button>
-                        <button class="btn btn-success" type="button">Add Teacher</button>
+                        <form method="get" action="/personnel/addAdmins" >
+                            <button class="btn btn-success" type="submit">Add Admin</button>
+                        </form>
+                        <form method="get" action="/personnel/addManagers">
+                            <button class="btn btn-success" type="submit" >Add Manager</button>
+                        </form>
+                        <form method="get" action="/personnel/addTeachers">
+                            <button class="btn btn-success" type="submit">Add Teacher</button>
+                        </form>
                     </p>
                     <h4>Some Statistics</h4>
-                    <p>In development</p>
-                </div>
+                </p>
             </div>
         </div>
     </div>
 </div>
 
+</div>
