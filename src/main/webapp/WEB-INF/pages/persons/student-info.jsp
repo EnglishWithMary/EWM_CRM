@@ -97,7 +97,11 @@
                         <div class="col-md-12">
                             <div class="btn-group btn-group-md">
                                 <a href="" class="btn btn-success" type="button">Become Graduate</a>
-                                <a href="/studentTrash?id=${student.id}" class="btn btn-danger" >Delete Student</a>
+                                <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <a href="/studentTestingResults?id=${student.id}" class="btn btn-success" type="button">Set level</a>
+                                    <a href="/studentTrash?id=${student.id}" class="btn btn-danger" >Delete Student</a>
+                               </security:authorize>
+
                             </div>
                         </div>
                     </div>
