@@ -204,7 +204,7 @@ public class StudentController {
         Student student = studentService.getById(student_id);
 
         studentLevelHistory.setStudent(student);
-
+        studentLevelHistory.setCheckpointDate(getDateFromString(studentLevelHistory.getTestingDate()));
         studentLevelHistoryService.insert(studentLevelHistory);
 
         return "redirect:/students";
