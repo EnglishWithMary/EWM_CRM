@@ -24,6 +24,10 @@ import java.text.ParseException;
 import java.util.Collections;
 import java.util.List;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Controller
 public class LeadController {
 
@@ -37,6 +41,8 @@ public class LeadController {
     private LeadService leadService;
     @Autowired
     private PersonService personService;
+    @Autowired
+    private StudentService studentService;
     @Autowired (required = false)
     private EmailService emailService;
     @Autowired
@@ -200,11 +206,34 @@ public class LeadController {
         return "redirect:"+request.getHeader("Referer");
     }
 
-
     @RequestMapping(value = "/lead/info", method = RequestMethod.GET)
-    public String leadInfo(Model model, @RequestParam int personId) throws SQLException {
-        Lead lead = leadService.getByPerson(personService.getById(personId));
+    public String leadInfo(Model model, @RequestParam int lead_Id) throws SQLException {
+        Lead lead = leadService.getById(lead_Id);
         model.addAttribute("lead", lead);
         return "persons/lead-info";
     }
+
+    @RequestMapping(value = "/leadToStudent")
+    public String leadToStudent(Model model, Integer person_Id) throws SQLException, ParseException {
+
+        Person person = personService.getById(person_Id);
+        Student student = new Student();
+        Lead lead = leadService.getByPerson(person);
+
+        person.setId(null);
+        person.getEmail().setId(null);
+        student.setPerson(person);
+        studentService.insert(student);
+
+        leadService.delete(lead);
+
+        // почему не работает?
+//        Integer student_Id = student.getId();
+//        return "redirect:/student/info?"+student_Id.toString();
+
+        model.addAttribute("student", student);
+        return "persons/student-info";
+
+    }
+
 }
