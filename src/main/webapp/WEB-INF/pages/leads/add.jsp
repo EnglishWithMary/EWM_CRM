@@ -2,11 +2,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-<script>
-    window.onload = function () {
-        window.history.pushState(null, '', 'leadAdd');
-    };
-</script>
+<%--<script>--%>
+    <%--window.onload = function () {--%>
+        <%--window.history.pushState(null, '', 'leadAdd');--%>
+    <%--};--%>
+<%--</script>--%>
+
+<div class="row">
+    <div class="col-sm-12">
+        <h2 class="">Add Lead</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-5 col-sm-offset-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>Add new Student</strong>
+            </div>
+
 <sf:form method="post" modelAttribute="lead" id="form" action="/leadSave">
     <fieldset>
         <table>
