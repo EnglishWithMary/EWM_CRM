@@ -4,19 +4,17 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-    <definition name="personnels/addManager" extends="home">
+    <definition name="personnel/addManager" extends="default">
         <put-attribute name="title" value="Add manager page" />
-        <put-attribute name="body" value="/WEB-INF/pages/personnels/addManager.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/pages/personnel/addManager.jsp"/>
     </definition>
 
-    <definition name="personnels/addTeacher" extends="home">
+    <definition name="personnel/addTeacher" extends="default">
         <put-attribute name="title" value="Add teacher page" />
-        <put-attribute name="body" value="/WEB-INF/pages/personnels/addTeacher.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/pages/personnel/addTeacher.jsp"/>
     </definition>
-    <definition name="personnels/addAdmin" extends="home">
+    <definition name="personnel/addAdmin" extends="default">
         <put-attribute name="title" value="Add admin page" />
-        <put-attribute name="body" value="/WEB-INF/pages/personnels/addAdmin.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/pages/personnel/addAdmin.jsp"/>
     </definition>
-
-
 </tiles-definitions>
