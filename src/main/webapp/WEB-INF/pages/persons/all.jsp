@@ -126,7 +126,7 @@
                                 <ul class="pagination">
                                     <c:forEach var="page" begin="1" end="${pages}">
                                         <li class="${(page eq param.page) or ((param.page eq null) and (page eq 1))? 'active' : ''}">
-                                            <a href="/persons?page=${page}">
+                                            <a href="/personnel?page=${page}">
                                                     ${page}
                                             </a>
                                         </li>
