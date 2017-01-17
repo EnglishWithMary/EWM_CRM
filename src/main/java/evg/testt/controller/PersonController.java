@@ -58,7 +58,7 @@ public class PersonController {
 
 //    /persons/updatePerson
 //    old name /personUpdate
-    @RequestMapping(value = "/personUpdate", method = RequestMethod.POST)
+    @RequestMapping(value = "/persons/updatePerson", method = RequestMethod.POST)
     public String updatePerson(@ModelAttribute("person") @Valid PersonDTO personDTO,
                                BindingResult bindingResult,
                                @RequestParam("image") MultipartFile multipartFile,
@@ -79,21 +79,7 @@ public class PersonController {
         } catch (SQLException e) {
             throw new PersonException("Can't update Person Profile with login" + login);
         }
-        return "redirect:/home";
-    }
-
-    @RequestMapping(value = "/persons", method = RequestMethod.GET)
-    public String showGroups(Model model, @RequestParam(required = false) Integer page) throws SQLException {
-
-        page = (page == null || page < 1) ? 1 : page;
-
-        int count = personnelService.count();
-        int pages = count % pageSize == 0 ? count / pageSize : count / pageSize + 1;
-
-        List<Personnel> personnel = personnelService.getAllSortedAndPaginated(page);
-        model.addAttribute("personnel", personnel);
-        model.addAttribute("pages", pages);
-        return "persons/all";
+        return "redirect:/profile";
     }
 
 //   what to rename here?
