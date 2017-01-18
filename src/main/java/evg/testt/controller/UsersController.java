@@ -1,10 +1,8 @@
 package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
-import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.Person;
 import evg.testt.model.User;
-//import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.PersonService;
 import evg.testt.service.RoleService;
 import evg.testt.service.UserService;
@@ -12,18 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
+
+//import evg.testt.oval.SpringOvalValidator;
 
 
 /**
@@ -46,7 +44,7 @@ public class UsersController {
     }
 
     @RequestMapping(value = {"","/","/home"})
-    public String homePage(Model model, Principal principal) throws SQLException, PersonRoleNotFoundException {
+    public String homePage(Model model, Principal principal) throws SQLException /*, PersonRoleNotFoundException*/ {
 
         if (principal != null) {
 

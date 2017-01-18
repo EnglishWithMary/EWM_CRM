@@ -40,7 +40,16 @@ public @Data class Person extends BaseModel{
     private Integer position = 0;
 
     private static class NullPerson extends Person {
-        private NullPerson() {}
+        private NullPerson() {
+            setFirstName("");
+            setLastName("");
+            setMiddleName("");
+            setAvatarURL("");
+            setBirthdayDate(new Date());
+            setOrganization("");
+            setEmail(new Email(""));
+            setComments("");
+        }
     }
 
     public static final Person NULL = new NullPerson();
