@@ -39,7 +39,7 @@ public class UsersController {
     }
 
     @RequestMapping(value = {"","/","/home"})
-    public String homePage(Model model, Principal principal) throws SQLException /*, PersonRoleNotFoundException*/ {
+    public String homePage(Model model, Principal principal) throws SQLException {
 
         if (principal != null) {
             Person person = personService.getPersonByUserLogin(principal.getName());

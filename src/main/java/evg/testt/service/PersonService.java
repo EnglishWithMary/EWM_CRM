@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PersonService extends Service<Person> {
 
-    public Person getPersonByUserLogin(String userLogin) throws SQLException/*, PersonRoleNotFoundException*/;
+    public Person getPersonByUserLogin(String userLogin) throws SQLException;
 
     public List<Person> getSortedByRegistrationDate() throws SQLException;
 

@@ -1,6 +1,5 @@
 package evg.testt.dao.Jpa;
 
-//import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.*;
 import evg.testt.dao.PersonRepository;
 import evg.testt.service.PersonService;

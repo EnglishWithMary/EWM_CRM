@@ -1,6 +1,5 @@
 package evg.testt.model;
 
-
 import lombok.Data;
 
 import javax.persistence.*;

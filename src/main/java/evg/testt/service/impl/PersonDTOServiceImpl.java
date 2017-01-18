@@ -5,7 +5,6 @@ import evg.testt.model.*;
 import evg.testt.service.PersonDTOService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,21 +26,6 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
 
     public Lead updateLead(Lead lead, PersonDTO personDTO) throws ParseException{
 
-//        if (personDTO == null || lead == null) {
-////            throw new NullObjectPersonDTOException("Can`t update person with empty data. First initialize objects.");
-//            lead.setPerson(Person.NULL);
-//
-//        }
-//
-//        Person person;
-//
-//        if (lead.getPerson() == Person.NULL){
-//            person = new Person();
-//        }
-//        else {
-//            person = lead.getPerson();
-//        }
-
         lead.setPerson(getUpdatedPerson(lead.getPerson(), personDTO));
 
         return lead;
@@ -50,7 +34,7 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
     public Person getUpdatedPerson(Person person, PersonDTO personDTO) throws ParseException {
 
         if(personDTO!= null) {
-            if(person==Person.NULL){
+            if (person == Person.NULL) {
                 person = new Person();
             }
 
