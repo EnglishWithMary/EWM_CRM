@@ -241,7 +241,7 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/student/info", method = RequestMethod.GET)
-    public String studentInfo(Model model, @RequestParam Integer studentId) throws SQLException {
+    public String studentInfo(Model model, @RequestParam(value = "student_id") Integer studentId) throws SQLException {
         Student student = studentService.getById(studentId);
         model.addAttribute("student", student);
         model.addAttribute("level", studentLevelHistoryService.getLastByStudent(student));
