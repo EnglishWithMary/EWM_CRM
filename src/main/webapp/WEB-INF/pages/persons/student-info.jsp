@@ -116,51 +116,20 @@
                         <div class="col-md-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <strong>Activities</strong>
+                                    <strong>Last test results</strong>
                                 </div>
                                 <div class="panel-body">
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Activity</th>
-                                            <th>Edit</th>
-                                            <th>Delete</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Activity1</td>
-                                            <td>edit</td>
-                                            <td>delete</td>
-                                        </tr>
-                                        <tr class="active">
-                                            <td>1</td>
-                                            <td>Activity2</td>
-                                            <td>edit</td>
-                                            <td>delete</td>
-                                        </tr>
-                                        <tr class="success">
-                                            <td>2</td>
-                                            <td>Activity3</td>
-                                            <td>edit</td>
-                                            <td>delete</td>
-                                        </tr>
-                                        <tr class="warning">
-                                            <td>4</td>
-                                            <td>Activity4</td>
-                                            <td>edit</td>
-                                            <td>delete</td>
-                                        </tr>
-                                        <tr class="danger">
-                                            <td>5</td>
-                                            <td>Activity5</td>
-                                            <td>edit</td>
-                                            <td>delete</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                    <p><strong>Date:</strong>${level.checkpointDate}</p>
+                                    <p><strong>Test:</strong>${level.testType}</p>
+                                    <p><strong>Grammar:</strong>${level.grammar}</p>
+                                    <p><strong>Speaking:</strong>${level.speaking}</p>
+                                    <p><strong>Listening:</strong>${level.listening}</p>
+                                    <p><strong>Reading:</strong>${level.reading}</p>
+                                    <p><strong>Vocabulary:</strong>${level.vocabulary}</p>
+                                    <p><strong>Pronunciation:</strong>${level.pronunciation}</p>
+                                    <p><strong>Writing:</strong>${level.writing}</p>
+                                    <p><strong>Fluency:</strong>${level.fluency}</p>
+                                    <p><strong>Spelling:</strong>${level.spelling}</p>
                                 </div>
                             </div>
                         </div>
