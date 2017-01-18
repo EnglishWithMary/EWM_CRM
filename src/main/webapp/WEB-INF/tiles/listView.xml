@@ -4,7 +4,7 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-    <definition name="listView" extends="home">
+    <definition name="listView" extends="default">
         <put-attribute name="body" value="/WEB-INF/pages/listView.jsp" />
         <put-attribute name="title" value="List pages" />
     </definition>

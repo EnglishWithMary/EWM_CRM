@@ -5,6 +5,7 @@ import evg.testt.model.GroupEvent;
 import evg.testt.service.GroupEventsService;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -15,6 +16,11 @@ public class GroupEventsServiceImpl extends BaseService<GroupEvent, GroupEventsR
     @Override
     public List<GroupEvent> getAllByGroupId(Integer id) {
         return dao.findAllByGroupId(id);
+    }
+
+    @Override
+    public List<GroupEvent> getAllByDate(Date start, Date end) {
+        return dao.findAllByDate(start, end);
     }
 
     @Override

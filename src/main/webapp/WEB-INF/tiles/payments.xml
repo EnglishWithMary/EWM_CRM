@@ -4,7 +4,7 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-    <definition name="payments/payments" extends="home">
+    <definition name="payments/payments" extends="default">
         <put-attribute name="title" value="Payments" />
         <put-attribute name="body" value="/WEB-INF/pages/payments/payments.jsp" />
     </definition>

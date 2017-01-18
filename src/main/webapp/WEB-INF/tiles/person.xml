@@ -4,7 +4,7 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-    <definition name="persons/all" extends="home">
+    <definition name="persons/all" extends="default">
         <put-attribute name="title" value="Persons page" />
         <put-attribute name="body" value="/WEB-INF/pages/persons/all.jsp"/>
     </definition>
