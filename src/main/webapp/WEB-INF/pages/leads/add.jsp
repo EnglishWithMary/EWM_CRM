@@ -18,7 +18,7 @@
     <div class="col-sm-5 col-sm-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong>Add new Student</strong>
+                <strong>Add new Lead</strong>
             </div>
             <div class="panel-body">
 
