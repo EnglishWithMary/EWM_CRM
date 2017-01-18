@@ -23,6 +23,9 @@ public @Data class Person extends BaseModel{
     @Temporal(TemporalType.TIMESTAMP)
     private Date birthdayDate;
 
+    @Transient
+    private String birthdayString;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate = new Date();
 
