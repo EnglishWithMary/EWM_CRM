@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
@@ -223,5 +224,15 @@ public class GroupController {
         GroupEvent groupEvent = groupEventsService.getById(fullcalendarEvent.getId());
         groupEventsService.delete(groupEvent);
         return new Gson().toJson("msg = success, code = 200");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/groups/this-day-events", method = RequestMethod.GET)
+    public String getEventsAllDay(@RequestParam (value = "start")Date start,
+                                  @RequestParam (value = "end")Date end) throws SQLException {
+        List<FullcalendarEvent> groupEvents = FullcalendarHeleper
+                .convertGroupEventsToFullcalendarEvents(groupEventsService.getAllByDate(start, end));
+
+        return new Gson().toJson(groupEvents);
     }
 }

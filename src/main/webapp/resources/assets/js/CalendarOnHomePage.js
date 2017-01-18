@@ -57,8 +57,8 @@ $(document).ready(function () {
         navLinks: false, // can click day/week names to navigate views
         editable: false,
         droppable: false,
-        events: window.location.pathname + "/this-day-events",
-        defaulView: 'agendaDay',
+        events: '/groups/this-day-events',
+        defaultView: 'agendaDay',
         timezone: 'local'
         /*
          * eventReceive isn't working correctly right now

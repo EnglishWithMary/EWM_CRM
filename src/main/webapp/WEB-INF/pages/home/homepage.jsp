@@ -3,7 +3,8 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <div class="calendar"></div>
+        <div>Home Page</div>
+        <div id="calendar"></div>
     </div>
 </div>
 

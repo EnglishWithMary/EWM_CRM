@@ -21,7 +21,8 @@
     <definition name="home" extends="default">
         <put-attribute name="title" value="Home page" />
         <put-attribute name="header" value="/WEB-INF/pages/templates/defaultHeader.jsp" />
-        <put-attribute name="additionalScripts" value="/resources/assets/js/CalendarOnHomePage.js" />
+        <put-attribute name="body" value="/WEB-INF/pages/home/homepage.jsp" />
+        <put-attribute name="additionalScripts" value="/WEB-INF/pages/home/scripts.jsp" />
         <!--<put-attribute name="menu" value="/WEB-INF/pages/templates/defaultMenu.jsp" />-->
     </definition>
 
