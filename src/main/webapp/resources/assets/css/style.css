@@ -1,6 +1,6 @@
 
 @charset "UTF-8";
-@import url(font-awesome.min.css);
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
 @import "https://fonts.googleapis.com/css?family=Montserrat:700|Open+Sans:300,400|Pacifico";
 /*body {*/
     /*background: #eee !important;*/
@@ -95,6 +95,23 @@
 }
 
 /*PIPELINE STYLES*/
+.pipe_name{
+    background-color: #E2E4E6 !important;
+    margin: 3px 0px 3px 3px;
+    padding: 3px 12px;
+    height: auto;
+    border: none;
+    box-shadow: none !important;
+}
+
+.pipe_name:focus{
+
+    background-color: white !important;
+    margin: 3px 0px 3px 3px;
+    padding: 3px 12px;
+    height: auto;
+}
+
 .pipe_line_canvas{
     position: absolute !important;
     left: 0;
@@ -127,17 +144,18 @@
     white-space: nowrap;
 }
 
+.pipe_wrapper form {
+    position: relative;
+    top: -1%;
+}
 .pipe{
     display: inline-block;
     height: auto;
-    max-height: 100%;
-    min-height: 5%;
     width: 100%;
     background: #E2E4E6;
     -webkit-box-shadow: 0px 1px 1px -1px rgba(0,0,0,0.3);
     -moz-box-shadow: 0px 1px 1px -1px rgba(0,0,0,0.3);
     box-shadow: 0px 1px 1px -1px rgba(0,0,0,0.3);
-    border: 1px solid #b7b7b7;
     overflow-y: auto;
 }
 
@@ -169,6 +187,18 @@
     -webkit-user-select: none;
 }
 
+.add-person{
+    border: none;
+    color: #555 !important;
+    background-color: #E2E4E6!important;
+}
+
+.add-person:hover{
+    border: none;
+    color: #f6755e !important;
+    background-color: #e7e7e7 !important;
+}
+
 .add_pipe{
     width: 100% !important;
 }
@@ -189,18 +219,16 @@
     width: 100%;
     margin: 0;
     padding: 0;
-    height: 50px;
+
 }
 
 .editToolbar form{
-    height: 50px;
+
     margin: 0px;
-    padding: 3% 0 3% 3%;
 }
 
 #cardName{
     width: 90%;
-    margin-right: 1.5%;
 }
 
 .editToolbar #cardNameForm {
@@ -214,7 +242,6 @@
 }
 
 .editToolbar #deleteCardForm {
-    padding: 3% 0 3% 0%;
     width: 12%;
     float: right;
 }
@@ -226,14 +253,14 @@
 .person-edit-tool-bar{
     overflow: visible;
     position: relative;
-    right: 3%;
     top: 0;
     width: inherit;
+    height: 100%;
 }
 
 .editPersonFrom {
     margin: 0%;
-    padding: 0%;
+    padding: 5px 0%;
     float: left;
 }
 
@@ -255,7 +282,7 @@
 .personData {
     height: 80%;
     margin-top: 0.1em;
-    width: 70%;
+    width: 60%;
     font-size: small;
     float: left;
 }
@@ -266,3 +293,47 @@
     top: 0;
 }
 /*END OF PIPELINE STYLES*/
+
+.profile{
+    display: table;
+}
+
+.file_upload{
+    display: table-cell;
+    vertical-align: middle;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile p{
+    text-align: center !important;
+}
+
+.file_upload img{
+    position: relative;
+    width: 30%;
+    margin-left: 50%;
+    left: -15%;
+}
+
+.file_upload > button{
+    float: right;
+    width: 8em;            /* example */
+    height: 100%
+}
+.file_upload > div{
+    padding-left: 1em      /* example */
+}
+
+.file_upload input[type=file]{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform: scale(20);
+    letter-spacing: 10em;     /* IE 9 fix */
+    -ms-transform: scale(20); /* IE 9 fix */
+    opacity: 0;
+    cursor: pointer          /* example */
+}

@@ -31,8 +31,6 @@ public class LeadController {
     private PipeTypeService pipeTypeService;
     @Autowired
     private CardService cardService;
-//    @Autowired
-//    private SpringOvalValidator validator;
     @Autowired
     private LeadService leadService;
     @Autowired
@@ -202,9 +200,22 @@ public class LeadController {
 
 
     @RequestMapping(value = "/lead/info", method = RequestMethod.GET)
-    public String leadInfo(Model model, @RequestParam int personId) throws SQLException {
-        Lead lead = leadService.getByPerson(personService.getById(personId));
+    public String leadInfo(Model model, @RequestParam int person_id) throws SQLException {
+        Person person = personService.getById(person_id);
+        Lead lead = leadService.getByPerson(person);
         model.addAttribute("lead", lead);
+        return "persons/lead-info";
+    }
+
+    @RequestMapping(value = "/leadUpdateComments", method = RequestMethod.POST)
+    public String studentUpdate(Model model,
+                                @RequestParam Integer id,
+                                @RequestParam String comments) throws SQLException {
+        Lead lead = leadService.getById(id);
+        lead.getPerson().setComments(comments);
+        leadService.update(lead);
+        model.addAttribute("lead", lead);
+
         return "persons/lead-info";
     }
 }

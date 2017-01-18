@@ -12,32 +12,37 @@
     <beans:bean id="bcrypt" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
     <http auto-config="true" use-expressions="true">
-        <!--<intercept-url pattern="/**" access="permitAll" />-->
+        <intercept-url pattern="/" access="isAuthenticated()"/>
+        <intercept-url pattern="/home" access="isAuthenticated()"/>
+        <intercept-url pattern="/profile" access="isAuthenticated()"/>
+        <intercept-url pattern="/test" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/test/**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/users**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/users/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/managers**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/managers/**" access="hasRole('ROLE_ADMIN')"/>
-        <!--<intercept-url pattern="/login.jsp*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
+        <intercept-url pattern="/teachers**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/teachers/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/students**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/students/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/pipeline**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/pipeline/**" access="hasRole('ROLE_ADMIN')"/>
         <form-login
                 login-processing-url="/security_check"
                 login-page="/login"
-                default-target-url="/home"
+                default-target-url="/profile"
                 authentication-failure-url="/login?error"
                 username-parameter="username"
                 password-parameter="password"/>
-        <logout logout-success-url="/home"/>
+        <logout logout-success-url="/login"/>
         <csrf disabled="true"/>
     </http>
 
     <authentication-manager>
         <authentication-provider user-service-ref="userDetailsServiceImpl">
             <password-encoder ref = "bcrypt"/>
-            <!--<jdbc-user-service data-source-ref="dataSource" id="userService"-->
-            <!--users-by-username-query="select login as username, password, true from users where login=?"-->
-            <!--authorities-by-username-query="select users.login as username, roles.role as authority from users-->
-            <!--left join roles on users.id=roles.user_id where users.login=?"/>-->
         </authentication-provider>
     </authentication-manager>
 </beans:beans>

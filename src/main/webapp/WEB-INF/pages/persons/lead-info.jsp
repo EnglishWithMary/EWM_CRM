@@ -55,7 +55,17 @@
                                         <fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ss.SSS" value="${lead.person.birthdayDate}" var="birth"/>
                                         <input type="datetime-local" value= "${birth}" />
                                     </p>
-                                    <p><strong>Comment: </strong><input type="text" value="${lead.person.comments}"></p>
+                                    <p><strong>Comment: </strong></p>
+
+                                    <p><textarea name="comments" form="comments" cols="30">${lead.person.comments}</textarea>
+                                    <form id=comments method="post" modelAttribute="lead.person" action="/leadUpdateComments">
+                                        <input name="id" type=hidden value="${lead.id}">
+                                        <%--<input name="role" type=hidden value="2">--%>
+                                        <security:authorize access="hasRole('ROLE_ADMIN')">
+                                            <input type="submit" value="Submit comment"/>
+                                        </security:authorize>
+                                    </form></p>
+
                                     <p><strong>Referral: </strong>Some info</p>
                                     <p><strong>Groups he wants to try: </strong>Group Name?</p>
                                     <p><strong>Language: </strong>English</p>

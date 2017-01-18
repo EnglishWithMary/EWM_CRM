@@ -11,8 +11,8 @@
                 <div class="pipe scrollbox">
 
                     <div class="editToolbar">
-                        <form method="post" action="/editCardName" id="cardNameForm">
-                            <input type="text" class="form-control" value="${card.cardName}" name="cardName"
+                        <form method="post" action="/pipeline/editCardName" id="cardNameForm">
+                            <input type="text" class="form-control pipe_name" value="${card.cardName}" name="cardName"
                                    id="cardName">
                             <input type="hidden" value="${card.id}" name="cardId">
                             <input type="hidden" value="${pipeType.id}" name="pipeTypeId">
@@ -20,7 +20,7 @@
                                     class="glyphicon glyphicon-pencil"></span></button>
                         </form>
 
-                        <form method="post" action="/deleteCard" id="deleteCardForm">
+                        <form method="post" action="/pipeline/deleteCard" id="deleteCardForm">
                             <button type="submit" class="btn btn-default btn-xs"><span
                                     class="glyphicon glyphicon-remove"></span></button>
                             <input type="hidden" value="${card.id}" name="cardId">
@@ -44,27 +44,24 @@
 
                             <div class="personData">
                                 <input type="hidden" id="personId" name="personId" value="${person.id}">
-                                <a class="btn btn-default btn-lg btn-block" href="/lead/info?personId=${person.id}" role="button">
+                                <a class="" href="/lead/info?person_id=${person.id}" role="button">
                                         ${person.lastName}
                                         ${fn:substring(person.firstName,0,1)}.${fn:substring(person.middleName,0,1)}.
                                 </a>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-2">
-                                    <div class="person-edit-tool-bar">
-                                        <button type="button" class="btn btn-default btn-xs"
-                                                data-toggle="modal" data-target="#modal${person.id}">
-                                            <span class="glyphicon glyphicon-remove"></span>
+                                <div class="person-edit-tool-bar col-md-3">
+                                    <form method="post" action="/leadAdd" class="editPersonFrom btn-xs">
+                                        <input type="hidden" name="personId" value="${person.id}">
+                                        <button type="submit" class="pipe-button btn btn-default btn-xs">
+                                            <span class="glyphicon glyphicon-pencil"></span>
                                         </button>
-                                        </br>
-                                        <form method="post" action="/leadAdd" class="editPersonFrom btn-xs">
-                                            <input type="hidden" name="personId" value="${person.id}">
-                                            <button type="submit" class="pipe-button btn btn-default btn-xs">
-                                                <span class="glyphicon glyphicon-pencil"></span>
-                                            </button>
-                                        </form>
-                                    </div>
+                                    </form>
+                                    <button type="button" class="btn btn-default btn-xs"
+                                            data-toggle="modal" data-target="#modal${person.id}">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
                                 </div>
                             </div>
 
@@ -125,8 +122,8 @@
                 <c:if test="${pipeType.id==1}">
                     <form method="post" action="/leadAdd">
                         <input type="hidden" name="cardId" value="${card.id}">
-                        <button type="submit" class="btn btn-success">
-                            <span>Add Lead</span>
+                        <button type="submit" class="btn btn-success add-person">
+                            Add Lead
                         </button>
                     </form>
                 </c:if>
@@ -135,8 +132,8 @@
                     <form method="post" action="/studentAdd">
                         <input type="hidden" name="cardId" value="${card.id}">
                         <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
-                        <button type="submit" class="btn btn-success">
-                            <span>Add Student</span>
+                        <button type="submit" class="btn btn-success add-person">
+                            Add Student
                         </button>
                     </form>
                 </c:if>
@@ -147,8 +144,8 @@
 
         <c:if test="${pipeType.id > 0 || pipeType.id != null}">
             <div class="pipe_wrapper">
-                <form class="pipe" method="post" action="/addCard">
-                    <input type="submit" value="Add Card" class="add_pipe btn btn-success">
+                <form class="pipe" method="post" action="/pipeline/addCard">
+                    <input type="submit" value="Add Pipe" class="add_pipe btn">
                     <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
                 </form>
             </div>

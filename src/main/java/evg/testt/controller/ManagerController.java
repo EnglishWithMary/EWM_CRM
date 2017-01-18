@@ -28,8 +28,6 @@ import java.util.List;
 @PropertySource(value = "classpath:standard.properties")
 public class ManagerController {
 
-//    @Autowired
-//    private SpringOvalValidator validator;
     @Autowired
     private ManagerService managerService;
     @Autowired
@@ -83,8 +81,6 @@ public class ManagerController {
     @RequestMapping(value = "/managerSave", method = RequestMethod.POST)
     public String saveManager(@ModelAttribute("manager") @Valid PersonDTO personDTO,
                               BindingResult bindingResult, Model model) throws SQLException, ParseException {
-//        validator.validate(personDTO, bindingResult);
-
         User u = userService.findByUserLogin(personDTO.getLogin());
 
         if (u != null)
@@ -120,6 +116,18 @@ public class ManagerController {
     public String managerInfo(Model model, @RequestParam int manager_id) throws SQLException {
         Manager manager = managerService.getById(manager_id);
         model.addAttribute("manager", manager);
+        return "persons/manager-info";
+    }
+
+    @RequestMapping(value = "/managerUpdateComments", method = RequestMethod.POST)
+    public String studentUpdate(Model model,
+                                @RequestParam Integer id,
+                                @RequestParam String comments) throws SQLException {
+        Manager manager = managerService.getById(id);
+        manager.getPerson().setComments(comments);
+        managerService.update(manager);
+        model.addAttribute("manager", manager);
+
         return "persons/manager-info";
     }
 }

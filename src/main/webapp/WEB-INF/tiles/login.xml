@@ -4,9 +4,10 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-    <definition name="login" extends="home">
+    <definition name="login" extends="default">
         <put-attribute name="body" value="/WEB-INF/pages/login.jsp" />
         <put-attribute name="title" value="Login page" />
+        <!--<put-attribute name="header" value="/WEB-INF/pages/users/loginHeader.jsp" />-->
         <put-attribute name="formValidationScripts" value="/WEB-INF/pages/templates/defaultFormValidationScripts.jsp" />
     </definition>
 </tiles-definitions>

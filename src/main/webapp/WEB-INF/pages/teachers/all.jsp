@@ -2,12 +2,6 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <div class="row">
-    <div class="col-sm-12">
-        <h1 class="page-header">Teachers list</h1>
-    </div>
-</div>
-
-<div class="row">
     <div class="col-sm-8">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -21,13 +15,12 @@
                 </form>
 
                 <%--<div class="table-wrapper">--%>
-                <table id = "table-list" class="table table-striped table-bordered">
+                <table class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th>First name</th>
-                        <th>Last name</th>
-                        <th>Middle name</th>
+                        <th>Name</th>
                         <th>Registration Date</th>
+                        <th>Comments</th>
                         <security:authorize access="hasRole('ROLE_ADMIN')">
                             <th>Delete</th>
                             <th>Save</th>
@@ -36,10 +29,9 @@
                     </thead>
                     <tfoot>
                     <tr>
-                        <th>First name</th>
-                        <th>Last name</th>
-                        <th>Middle name</th>
+                        <th>Name</th>
                         <th>Registration Date</th>
+                        <th>Comments</th>
                         <security:authorize access="hasRole('ROLE_ADMIN')">
                             <th>Delete</th>
                             <th>Save</th>
@@ -49,10 +41,15 @@
                     <tbody>
                     <c:forEach var="teacher" items="${teachers}">
                         <tr>
-                            <td>${teacher.person.firstName}</td>
-                            <td>${teacher.person.lastName}</td>
-                            <td>${teacher.person.middleName}</td>
+                            <td>
+                                <a href="/teacher/info?teacher_id=${teacher.id}">
+                                    ${teacher.person.firstName}
+                                    ${teacher.person.middleName}
+                                    ${teacher.person.lastName}
+                                </a>
+                            </td>
                             <td>${teacher.person.registrationDate}</td>
+                            <td><textarea name="comments" cols="16" disabled>${teacher.person.comments}</textarea></td>
                             <security:authorize access="hasRole('ROLE_ADMIN')">
                             <td>
                                 <a href="/teacherTrash?id=${teacher.id}">Delete</a>
