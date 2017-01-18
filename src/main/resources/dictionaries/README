@@ -1,0 +1,2 @@
+Copy this files to /usr/share/postgresql/9.5/tsearch_data/ or /usr/share/postgresql/9.6/tsearch_data.
+If database was created drop and run script again.

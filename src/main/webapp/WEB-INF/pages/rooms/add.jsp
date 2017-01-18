@@ -26,7 +26,7 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row padding-bot">
                             <div class="col-sm-4 col-sm-offset-4">
                                 <input type="submit" value="Add Room" class="btn btn-success"/>
                             </div>

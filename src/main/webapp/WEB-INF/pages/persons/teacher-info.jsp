@@ -50,7 +50,17 @@
                                     <p><strong>web : </strong><a href=""></a><input type="text"></p>
                                     <p><strong>Date of Birth: </strong><input type="date"></p>
 
-                                    <p><strong>Comment: </strong><input type="text" value="${teacher.person.comments}"></p>
+                                    <p><strong>Comment: </strong></p>
+
+                                    <p><textarea name="comments" form="comments" cols="30">${teacher.person.comments}</textarea>
+                                    <form id=comments method="post" modelAttribute="teacher.person" action="/teacherUpdateComments">
+                                        <input name="id" type=hidden value="${teacher.id}">
+                                        <%--<input name="role" type=hidden value="2">--%>
+                                        <security:authorize access="hasRole('ROLE_ADMIN')">
+                                            <input type="submit" value="Submit comment"/>
+                                        </security:authorize>
+                                    </form></p>
+
                                     <p><strong>Groups: </strong>
                                         <select name="gropus" onchange="location = this.value;">
                                             <option value="Groups" checked>Groups</option>

@@ -4,7 +4,7 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-    <definition name="error" extends="home">
+    <definition name="error" extends="default">
         <put-attribute name="title" value="Error page" />
         <put-attribute name="body" value="/WEB-INF/pages/error.jsp" />
 

@@ -4,13 +4,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-
-<div class="row">
-    <div class="col-sm-12">
-        <h1 class="page-header">Students</h1>
-    </div>
-</div>
-
 <div class="row">
     <div class="col-sm-8">
         <div class="panel panel-default">
@@ -73,12 +66,11 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <table class="table table-striped table-bordered">                            <thead>
+                        <table class="table table-striped table-bordered">
+                            <thead>
                             <tr>
-                                <th>First name</th>
-                                <th>Last name</th>
-                                <th>Middle name</th>
-                                <th>Student group</th>
+                                <th>Name</th>
+                                <th>Group</th>
                                 <th>Registration Date</th>
                                 <th>Comments</th>
                                 <th>Testing results</th>
@@ -91,10 +83,8 @@
                             </thead>
                             <tfoot>
                             <tr>
-                                <th>First name</th>
-                                <th>Last name</th>
-                                <th>Middle name</th>
-                                <th>Student group</th>
+                                <th>Name</th>
+                                <th>Group</th>
                                 <th>Registration Date</th>
                                 <th>Comments</th>
                                 <th>Testing results</th>
@@ -108,14 +98,18 @@
                             <tbody>
                             <c:forEach var="student" items="${students}">
                                 <tr>
-                                    <td><a href="/student/info?student_id=${student.id}">${student.person.firstName}</a></td>
-                                    <td>${student.person.lastName}</td>
-                                    <td>${student.person.middleName}</td>
+                                    <td>
+                                        <a href="/student/info?student_id=${student.id}">
+                                            ${student.person.firstName}
+                                            ${student.person.middleName}
+                                            ${student.person.lastName}
+                                        </a>
+                                    </td>
                                     <td><a href="/group/info?group_id=${student.group.id}">${student.group.name}</a></td>
                                     <td>${student.person.registrationDate}</td>
                                     <td>${student.person.comments}</td>
                                     <td>
-                                        <a href="/studentTestingResults?id=${student.id}">Testing results</a>
+                                        <a href="/students/${student.id}/add-testing-result">Testing results</a>
                                     </td>
                                     <td>
                                         <a href="/teacher/info?teacher_id=${student.teacher.id}">${student.teacher.person.firstName}</a>
@@ -160,6 +154,7 @@
             </div>
             <div class="panel-body">
                 <p><a href="/studentAdd" class="btn btn-success">Add Student</a></p>
+                <p><a href="/students/tests" class="btn btn-success">Test Results</a></p>
             </div>
         </div>
     </div>

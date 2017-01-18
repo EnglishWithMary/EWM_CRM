@@ -4,18 +4,20 @@
 
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container-fluid">
-        <security:authorize access="isAuthenticated()">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+        <%--<security:authorize access="isAuthenticated()">--%>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <security:authorize access="isAuthenticated()">
                 <a id="logo" class="navbar-brand" href="/home">Mary</a>
-            </div>
-        </security:authorize>
+            </security:authorize>
+        </div>
+        <%--</security:authorize>--%>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <security:authorize access="isAuthenticated()">
@@ -26,7 +28,7 @@
                            aria-expanded="false">Admin tools <span class="caret"></span> </a>
                         <ul class="dropdown-menu">
                             <li><a href="/users">All Users</a></li>
-                            <li><a href="/persons">All Personnel</a></li>
+                            <li><a href="/personnel">All Personnel</a></li>
                             <li class="divider"></li>
                             <li><a href="#">..in development</a></li>
                         </ul>
@@ -58,16 +60,16 @@
                            aria-haspopup="true"
                            aria-expanded="false">Pipelines <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/takeStudentpipe">Students</a></li>
+                            <li><a href="/pipeline/students">Students</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="/takeLeadtpipe">Leads</a></li>
+                            <li><a href="/pipeline/leads">Leads</a></li>
                         </ul>
                     </li>
                 </ul>
                 <!--Search in All fields-->
-                <form class="navbar-form navbar-left">
+                <form class="navbar-form navbar-left" action="/fullSearch">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" placeholder="Search" name="searchText">
                     </div>
                     <button type="submit" class="btn btn-default">Search</button>
                 </form>
@@ -76,17 +78,17 @@
             <ul class="nav navbar-nav navbar-right">
                 <security:authorize access="isAuthenticated()">
                     <li class="minimize-it">
-                        <a href="/personProfile">
-                        <c:choose>
-                            <c:when test="${person.avatarURL == null}">
-                                <img class="img-size-vsm" alt="Responsive image"
-                                     src="${pageContext.request.contextPath}/resources/img/defaultAvatar.jpg">
-                            </c:when>
-                            <c:otherwise>
-                                <img class="img-size-vsm" alt="Responsive image"
-                                     src="${person.avatarURL}">
-                            </c:otherwise>
-                        </c:choose>
+                        <a href="/profile">
+                            <c:choose>
+                                <c:when test="${person.avatarURL == null}">
+                                    <img class="img-size-vsm" alt="Responsive image"
+                                         src="${pageContext.request.contextPath}/resources/img/defaultAvatar.jpg">
+                                </c:when>
+                                <c:otherwise>
+                                    <img class="img-size-vsm" alt="Responsive image"
+                                         src="${person.avatarURL}">
+                                </c:otherwise>
+                            </c:choose>
                             Profile
                         </a>
                     </li>
@@ -98,11 +100,11 @@
                             <button type="submit" class="btn btn-default">Log Out</button>
                         </form>
                     </security:authorize>
-                    <security:authorize access="isAnonymous()">
-                        <form class=" navbar-form" action="/login">
-                            <button type="submit" class="btn btn-default">Log In</button>
-                        </form>
-                    </security:authorize>
+                    <%--<security:authorize access="isAnonymous()">--%>
+                    <%--<form class=" navbar-form" action="/login">--%>
+                    <%--<button type="submit" class="btn btn-default">Log In</button>--%>
+                    <%--</form>--%>
+                    <%--</security:authorize>--%>
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->

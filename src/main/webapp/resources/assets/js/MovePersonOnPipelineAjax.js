@@ -63,7 +63,7 @@ $(document).ready(function () {
 
             // if(destination != from) {
                 $.ajax({
-                    url: '/moveLeadAjax',
+                    url: '/pipeline/moveLeadAjax',
                     dataType: 'json',
                     type: 'POST',
                     data: JSON.stringify(json),

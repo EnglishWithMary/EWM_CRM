@@ -4,11 +4,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="row">
-    <div class="col-sm-12">
-        <h1 class="page-header">Managers</h1>
-    </div>
-</div>
-<div class="row">
     <div class="col-sm-8">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -29,10 +24,9 @@
                         <table class="table table-striped table-bordered">
                             <thead>
                             <tr>
-                                <th>First name</th>
-                                <th>Last name</th>
-                                <th>Middle name</th>
+                                <th>Name</th>
                                 <th>Registration Date</th>
+                                <th>Comments</th>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
                                     <th>Delete</th>
                                     <th>Save</th>
@@ -41,10 +35,9 @@
                             </thead>
                             <tfoot>
                             <tr>
-                                <th>First name</th>
-                                <th>Last name</th>
-                                <th>Middle name</th>
+                                <th>Name</th>
                                 <th>Registration Date</th>
+                                <th>Comments</th>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
                                     <th>Delete</th>
                                     <th>Save</th>
@@ -54,10 +47,15 @@
                             <tbody>
                             <c:forEach var="manager" items="${managers}">
                                 <tr>
-                                    <td><a href="/managers/info?manager_id=${manager.id}">${manager.person.firstName}</a></td>
-                                    <td>${manager.person.lastName}</td>
-                                    <td>${manager.person.middleName}</td>
+                                    <td>
+                                        <a href="/managers/info?manager_id=${manager.id}">
+                                            ${manager.person.firstName}
+                                            ${manager.person.middleName}
+                                            ${manager.person.lastName}
+                                        </a>
+                                    </td>
                                     <td>${manager.person.registrationDate}</td>
+                                    <td><textarea name="comments" cols="16" disabled>${manager.person.comments}</textarea></td>
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
                                         <td>
                                             <a href="/managerTrash?id=${manager.id}">Delete</a>

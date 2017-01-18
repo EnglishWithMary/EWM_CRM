@@ -7,6 +7,8 @@ import evg.testt.service.PersonService;
 import evg.testt.service.RoleService;
 import evg.testt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,13 +22,6 @@ import java.security.Principal;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
-
-//import evg.testt.oval.SpringOvalValidator;
-
-
-/**
- * TODO: add functionality to interact with User - CRUD
- */
 
 @Controller
 public class UsersController {
@@ -47,9 +42,7 @@ public class UsersController {
     public String homePage(Model model, Principal principal) throws SQLException /*, PersonRoleNotFoundException*/ {
 
         if (principal != null) {
-
             Person person = personService.getPersonByUserLogin(principal.getName());
-
             model.addAttribute("person", person);
         }
         return "home";
@@ -77,10 +70,8 @@ public class UsersController {
 
     @RequestMapping(value = "/userSave", method = RequestMethod.POST)
     public String saveUser(Model model, @Valid @ModelAttribute("user")  User user, BindingResult bindingResult) {
-//   validator.validate(user, bindingResult);
 
-        User u = null;
-        u =  userService.findByUserLogin(user.getLogin());
+        User u =  userService.findByUserLogin(user.getLogin());
         if (u != null)
         bindingResult.rejectValue("login", "1", "Login already exist.");
 
@@ -100,15 +91,17 @@ public class UsersController {
             @RequestParam(value = "error", required = false) String error,
             @RequestParam(value = "logout", required = false) String logout) {
 
-//        ModelAndView model = new ModelAndView();
+        if(!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)){
+            return "redirect:/";
+        }
+
         if (error != null) {
-            model.addAttribute("error", "Invalid username and password!");
+            model.addAttribute("error", "Invalid username or password!");
         }
 
         if (logout != null) {
             model.addAttribute("msg", "You've been logged out successfully.");
         }
-//        model.setViewName("login");
 
         return "login";
     }

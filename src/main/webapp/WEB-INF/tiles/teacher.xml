@@ -4,13 +4,13 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-    <definition name="teachers/add" extends="home">
+    <definition name="teachers/add" extends="default">
         <put-attribute name="title" value="Teacher page" />
         <put-attribute name="body" value="/WEB-INF/pages/teachers/add.jsp" />
         <put-attribute name="formValidationScripts" value="/WEB-INF/pages/templates/defaultFormValidationScripts.jsp" />
     </definition>
 
-    <definition name="teachers/all" extends="home">
+    <definition name="teachers/all" extends="default">
         <put-attribute name="title" value="Teachers page" />
         <put-attribute name="body" value="/WEB-INF/pages/teachers/all.jsp" />
     </definition>
