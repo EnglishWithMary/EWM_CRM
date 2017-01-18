@@ -202,9 +202,21 @@ public class LeadController {
 
 
     @RequestMapping(value = "/lead/info", method = RequestMethod.GET)
-    public String leadInfo(Model model, @RequestParam int personId) throws SQLException {
-        Lead lead = leadService.getByPerson(personService.getById(personId));
+    public String leadInfo(Model model, @RequestParam int person_id) throws SQLException {
+        Lead lead = leadService.getById(person_id);
         model.addAttribute("lead", lead);
+        return "persons/lead-info";
+    }
+
+    @RequestMapping(value = "/leadUpdateComments", method = RequestMethod.POST)
+    public String studentUpdate(Model model,
+                                @RequestParam Integer id,
+                                @RequestParam String comments) throws SQLException {
+        Lead lead = leadService.getById(id);
+        lead.getPerson().setComments(comments);
+        leadService.update(lead);
+        model.addAttribute("lead", lead);
+
         return "persons/lead-info";
     }
 }

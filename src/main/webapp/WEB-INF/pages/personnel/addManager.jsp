@@ -1,29 +1,18 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-
-<%--<script>--%>
-<%--window.onload = function () {--%>
-<%--window.history.pushState(null, '', 'leadAdd');--%>
-<%--};--%>
-<%--</script>--%>
 
 <div class="row">
     <div class="col-sm-12">
-        <h2 class="">Add Lead</h2>
+        <h2 class="page-header">Create manager from the page Personnel</h2>
     </div>
 </div>
-
 <div class="row">
     <div class="col-sm-5 col-sm-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong>Add new Student</strong>
+                <strong>Add new Manager</strong>
             </div>
             <div class="panel-body">
-
-                <sf:form method="post" modelAttribute="lead" id="form" action="/leadSave">
-
+                <sf:form method="post" modelAttribute="managerWithPersonnel" id="form" action="/personnel/saveManager">
                     <fieldset class="form-group">
 
                         <div class="row padding-bot">
@@ -77,38 +66,29 @@
                                 <sf:errors path="login" cssClass="has-error"/>
                             </div>
                         </div>
-                        <div class="row padding-bot">
+                        <div class="row">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-4">
-                                <sf:label path="comments">Comments:</sf:label>
+                                <sf:label path="password">Password:</sf:label>
                             </div>
                             <div class="col-sm-6">
-                                <sf:textarea path="comments" rows="5"/>
-                                <sf:errors path="comments"/>
+                                <sf:password path="password" cssClass="form-control"/>
+                                <sf:errors path="password" cssClass="has-error"/>
                             </div>
                         </div>
-
-                        <c:if test="${lead.cardId!=null || card_id==null}">
-                            <div class="row padding-bot">
-                                <div class="col-sm-1"></div>
-                                <div class="col-sm-4"><sf:label path="cardId">Pipe card:</sf:label></div>
-                                <div class="col-sm-6">
-                                    <sf:select path="cardId" class="form-control">
-                                        <c:forEach items="${cards}" var="card">
-                                            <option value="${card.id}"
-                                                    <c:if test="${card.id == lead.cardId}">selected</c:if>>
-                                                    ${card.cardName} (id=${card.id})
-                                            </option>
-                                        </c:forEach>
-                                    </sf:select>
-                                </div>
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-4">
+                                <sf:label path="confirmPassword">Confirm password:</sf:label>
                             </div>
-                        </c:if>
-
-                        <div class="row padding-bot">
+                            <div class="col-sm-6">
+                                <sf:password path="confirmPassword" cssClass="form-control"/>
+                                <sf:errors path="confirmPassword" cssClass="has-error"/>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-sm-4 col-sm-offset-4">
-                                <input type="hidden" value="${personId}" class="hidden" name="personId" />
-                                <input type="submit" value="Add lead" class="btn btn-success"/>
+                                <input type="submit" value="Add Manager" class="btn btn-success"/>
                             </div>
                         </div>
                     </fieldset>

@@ -45,7 +45,16 @@
                                     <p><strong>email: </strong><input type="text" value="${manager.person.email.email}"></p>
                                     <p><strong>web : </strong><a href=""></a><input type="text"></p>
                                     <p><strong>Date of Birth: </strong><input type="date" value="${manager.person.birthdayDate}"></p>
-                                    <p><strong>Comment: </strong><input type="text" value="${manager.person.comments}"></p>
+                                    <p><strong>Comment: </strong></p>
+
+                                    <p><textarea name="comments" form="comments" cols="30">${manager.person.comments}</textarea>
+                                    <form id=comments method="post" modelAttribute="manager.person" action="/managerUpdateComments">
+                                        <input name="id" type=hidden value="${manager.id}">
+                                        <%--<input name="role" type=hidden value="2">--%>
+                                        <security:authorize access="hasRole('ROLE_ADMIN')">
+                                            <input type="submit" value="Submit comment"/>
+                                        </security:authorize>
+                                    </form></p>
 
                                     <p><strong>State: </strong>${manager.person.state.state}</p>
                                     <p><strong>Last modified: </strong>${manager.person.modifyDate}</p>

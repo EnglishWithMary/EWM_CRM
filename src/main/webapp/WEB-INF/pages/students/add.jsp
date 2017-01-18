@@ -67,7 +67,7 @@
                                 <sf:errors path="login" cssClass="has-error"/>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row padding-bot">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-4">
                                 <sf:label path="password">Password:</sf:label>
@@ -77,7 +77,7 @@
                                 <sf:errors path="password" cssClass="has-error"/>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row padding-bot">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-4">
                                 <sf:label path="confirmPassword">Confirm password:</sf:label>
@@ -119,7 +119,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row padding-bot">
                             <div class="col-sm-4 col-sm-offset-4">
                                 <input type="submit" value="Add student" class="btn btn-success"/>
                             </div>

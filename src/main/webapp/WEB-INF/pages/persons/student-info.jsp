@@ -63,7 +63,16 @@
                                     <p><strong>email: </strong><input type="text" value="${student.person.email.email}"></p>
                                     <p><strong>web : </strong><a href="">null</a></p>
                                     <p><strong>Date of Birth: </strong><input type="date" name="" id=""></p>
-                                    <p><strong>Comment: </strong><input type="text" value="${student.person.comments}"></p>
+                                    <p><strong>Comment: </strong></p>
+                                    <%--<input type="text" value="${student.person.comments}">--%>
+                                    <p><textarea name="comments" form="comments" cols="30">${student.person.comments}</textarea>
+                                    <form id=comments method="post" modelAttribute="student.person" action="/studentUpdateComments">
+                                        <input name="id" type=hidden value="${student.id}">
+                                        <%--<input name="role" type=hidden value="4">--%>
+                                        <security:authorize access="hasRole('ROLE_ADMIN')">
+                                            <input type="submit" value="Submit comment"/>
+                                        </security:authorize>
+                                    </form></p>
 
                                     <p><strong>State: </strong><input type="text" value="${student.person.state.state}"></p>
                                     <p><strong>Last modified: </strong>${student.person.modifyDate}</p>
@@ -88,7 +97,11 @@
                         <div class="col-md-12">
                             <div class="btn-group btn-group-md">
                                 <a href="" class="btn btn-success" type="button">Become Graduate</a>
-                                <a href="/studentTrash?id=${student.id}" class="btn btn-danger" >Delete Student</a>
+                                <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <a href="/studentTestingResults?id=${student.id}" class="btn btn-success" type="button">Set level</a>
+                                    <a href="/studentTrash?id=${student.id}" class="btn btn-danger" >Delete Student</a>
+                               </security:authorize>
+
                             </div>
                         </div>
                     </div>

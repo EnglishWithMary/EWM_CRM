@@ -6,8 +6,7 @@
 <tiles-definitions>
     <definition name="default" template="/WEB-INF/pages/templates/defaultLayout.jsp">
         <put-attribute name="header" value="/WEB-INF/pages/templates/defaultHeader.jsp" />
-        <put-attribute name="authentification" value="/WEB-INF/pages/templates/defaultAuthentification.jsp" />
-        <put-attribute name="menu" value="/WEB-INF/pages/templates/defaultMenu.jsp" />
+        <!--<put-attribute name="menu" value="/WEB-INF/pages/templates/defaultMenu.jsp" />-->
         <put-attribute name="body" value="/WEB-INF/pages/templates/defaultBody.jsp" />
         <put-attribute name="footer" value="/WEB-INF/pages/templates/defaultFooter.jsp" />
         <put-attribute name="scripts" value="/WEB-INF/pages/templates/defaultScripts.jsp" />
@@ -22,7 +21,7 @@
     <definition name="home" extends="default">
         <put-attribute name="title" value="Home page" />
         <put-attribute name="header" value="/WEB-INF/pages/templates/defaultHeader.jsp" />
-        <put-attribute name="menu" value="/WEB-INF/pages/templates/defaultMenu.jsp" />
+        <!--<put-attribute name="menu" value="/WEB-INF/pages/templates/defaultMenu.jsp" />-->
     </definition>
 
 </tiles-definitions>
