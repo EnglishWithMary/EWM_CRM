@@ -69,11 +69,11 @@
 
                         <div class="row padding-bot">
                             <div class="col-sm-4">
-                                <sf:label path="birthdayDate">Birthday:</sf:label>
+                                <sf:label path="birthdayString">Birthday:</sf:label>
                             </div>
                             <div class="col-sm-8">
-                                <sf:input path="birthdayDate" type="date" cssClass="form-control"/>
-                                <sf:errors path="birthdayDate" cssClass="has-error"/>
+                                <sf:input path="birthdayString" type="date" cssClass="form-control"/>
+                                <sf:errors path="birthdayString" cssClass="has-error"/>
                             </div>
                         </div>
 
