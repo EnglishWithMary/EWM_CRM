@@ -66,7 +66,8 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <table class="table table-striped table-bordered">                            <thead>
+                        <table class="table table-striped table-bordered">
+                            <thead>
                             <tr>
                                 <th>Name</th>
                                 <th>Group</th>
@@ -108,7 +109,7 @@
                                     <td>${student.person.registrationDate}</td>
                                     <td>${student.person.comments}</td>
                                     <td>
-                                        <a href="/studentTestingResults?id=${student.id}">Testing results</a>
+                                        <a href="/students/${student.id}/add-testing-result">Testing results</a>
                                     </td>
                                     <td>
                                         <a href="/teacher/info?teacher_id=${student.teacher.id}">${student.teacher.person.firstName}</a>
@@ -153,6 +154,7 @@
             </div>
             <div class="panel-body">
                 <p><a href="/studentAdd" class="btn btn-success">Add Student</a></p>
+                <p><a href="/students/tests" class="btn btn-success">Test Results</a></p>
             </div>
         </div>
     </div>

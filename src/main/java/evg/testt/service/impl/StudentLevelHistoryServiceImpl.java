@@ -5,6 +5,12 @@ import evg.testt.model.StudentLevelHistory;
 import evg.testt.service.StudentLevelHistoryService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StudentLevelHistoryServiceImpl extends BaseService<StudentLevelHistory, StudentLevelHistoryRepository> implements StudentLevelHistoryService {
+    @Override
+    public List<StudentLevelHistory> getAllByStudentId(Integer id) {
+        return dao.getByStudentId(id);
+    }
 }
