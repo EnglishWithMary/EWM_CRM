@@ -4,25 +4,15 @@ import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
 //import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
-import evg.testt.service.impl.BaseService;
-import evg.testt.service.impl.PersonDTOServiceImpl;
-import evg.testt.service.impl.StudentLevelHistoryServiceImpl;
-import evg.testt.service.impl.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -187,8 +177,17 @@ public class StudentController {
         return "students/all";
     }
 
-    @RequestMapping(value = "/studentTestingResults")
-    public String studentEditLevel(@RequestParam Integer id, Model model) throws SQLException {
+    @RequestMapping(value = "/students/tests")
+    public String studentTests(Model model) throws SQLException {
+        model.addAttribute("levels", studentLevelHistoryService.getAll());
+        return "students/tests";
+    }
+
+
+//    /students/{studentId}/testing-result
+//    old mapping /studentTestingResults
+    @RequestMapping(value = "/students/{studentId}/add-testing-result")
+    public String studentEditLevel(@PathVariable(value = "studentId") Integer id, Model model) throws SQLException {
         Student student = studentService.getById(id);
         model.addAttribute("student", student);
         model.addAttribute("person", student.getPerson());
@@ -196,17 +195,17 @@ public class StudentController {
         return "students/testingResults";
     }
 
-    @RequestMapping(value = "/saveTestingResults", method = RequestMethod.POST)
+//    /students/{studentId}/save-testing-results
+//    old value /saveTestingResults
+    @RequestMapping(value = "/students/{studentId}/save-testing-result", method = RequestMethod.POST)
     public String saveTestingResults(@ModelAttribute("studentLevelHistory") StudentLevelHistory studentLevelHistory,
-                                     @RequestParam Integer student_id)
+                                     @PathVariable(value = "studentId") Integer studentId)
             throws SQLException, ParseException {
 
-        Student student = studentService.getById(student_id);
-
+        Student student = studentService.getById(studentId);
         studentLevelHistory.setStudent(student);
         studentLevelHistory.setCheckpointDate(getDateFromString(studentLevelHistory.getTestingDate()));
         studentLevelHistoryService.insert(studentLevelHistory);
-
         return "redirect:/students";
     }
 
@@ -242,9 +241,10 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/student/info", method = RequestMethod.GET)
-    public String studentInfo(Model model, @RequestParam int student_id) throws SQLException {
-        Student student = studentService.getById(student_id);
+    public String studentInfo(Model model, @RequestParam(value = "student_id") Integer studentId) throws SQLException {
+        Student student = studentService.getById(studentId);
         model.addAttribute("student", student);
+        model.addAttribute("level", studentLevelHistoryService.getLastByStudent(student));
         return "persons/student-info";
     }
 
