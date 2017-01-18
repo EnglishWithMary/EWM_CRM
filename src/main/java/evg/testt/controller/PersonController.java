@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -96,6 +97,17 @@ public class PersonController {
         Person person = personService.getById(id);
         personService.delete(person);
         return "persons/all";
+    }
+
+    @RequestMapping(value = "/fullSearch")
+    public String search(Model model, @RequestParam String searchText) throws SQLException {
+        List<Personnel> persons = Collections.EMPTY_LIST;
+
+        if(!searchText.equals(""))
+        persons = personService.getPersonsByKeyWord(searchText);
+
+        model.addAttribute("persons", persons);
+        return "search/all";
     }
 
     /*
