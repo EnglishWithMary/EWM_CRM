@@ -62,13 +62,16 @@ WITH ispell_en, english_stem;
 SET default_text_search_config = 'en';
 
 CREATE OR REPLACE VIEW staffview AS
-SELECT persons.*, groups.name as group_name,
+SELECT persons.*, groups.name as group_name, users.login as login, roles.role as role,
 setweight( coalesce( to_tsvector('en', persons.firstname),''),'A') || ' ' ||
 setweight( coalesce( to_tsvector('en', persons.lastname),''),'B') || ' ' ||
 setweight( coalesce( to_tsvector('en', groups.name),''),'C') as searchtext
 FROM persons
   LEFT JOIN admins ON persons.id = admins.person_id
+  LEFT JOIN teachers ON persons.id = teachers.person_id
   LEFT JOIN managers ON persons.id = managers.person_id
   LEFT JOIN students ON persons.id = students.person_id
   LEFT JOIN leads ON persons.id = leads.person_id
-  LEFT JOIN groups ON students.group_id = groups.id;
+  LEFT JOIN groups ON students.group_id = groups.id
+  LEFT JOIN users on admins.user_id = users.id or managers.user_id = users.id or teachers.user_id = users.id
+  LEFT JOIN roles on users.role_id = roles.id;

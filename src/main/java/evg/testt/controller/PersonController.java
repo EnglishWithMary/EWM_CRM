@@ -101,7 +101,7 @@ public class PersonController {
 
     @RequestMapping(value = "/fullSearch")
     public String search(Model model, @RequestParam String searchText) throws SQLException {
-        List<Person> persons = Collections.EMPTY_LIST;
+        List<Personnel> persons = Collections.EMPTY_LIST;
 
         if(!searchText.equals(""))
         persons = personService.getPersonsByKeyWord(searchText);

@@ -60,16 +60,43 @@
                                 <th>State</th>
                                 <th>Reg. Date</th>
                                 <th>Mod. Date</th>
+                                <th>Login</th>
+                                <th>Role</th>
                             </tr>
                             </tfoot>
 
                             <tbody>
                             <c:forEach var="person" items="${persons}">
                                 <tr>
-                                    <td>${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</td>
+                                    <td>
+
+                                        <c:choose>
+                                            <c:when test="${person.role eq 'ROLE_ADMIN'}">
+                                                <a href="/admins/info?admin_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                            </c:when>
+
+                                            <c:when test="${person.role eq 'ROLE_MANAGER'}">
+                                                <a href="/managers/info?manager_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                            </c:when>
+
+                                            <c:when test="${person.role eq 'ROLE_TEACHER'}">
+                                                <a href="/teacher/info?teacher_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                            </c:when>
+
+                                            <c:when test="${person.role eq 'ROLE_STUDENT'}">
+                                                <a href="/student/info?student_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                            </c:when>
+
+                                            <c:otherwise>
+                                                <a href="/lead/info?person_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
                                     <td>${person.state}</td>
                                     <td>${person.registrationDate}</td>
                                     <td>${person.modifyDate}</td>
+                                    <td>${person.login}</td>
+                                    <td>${person.role}</td>
                                 </tr>
                             </c:forEach>
                             </tbody>

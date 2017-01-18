@@ -2,6 +2,7 @@ package evg.testt.service;
 
 import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.Person;
+import evg.testt.model.Personnel;
 
 import java.sql.SQLException;
 
@@ -15,6 +16,6 @@ public interface PersonService extends Service<Person> {
 
     public void delete(Person person) throws SQLException;
 
-    List<Person> getPersonsByKeyWord(String keyWords) throws SQLException;
+    List<Personnel> getPersonsByKeyWord(String keyWords) throws SQLException;
 
 }
