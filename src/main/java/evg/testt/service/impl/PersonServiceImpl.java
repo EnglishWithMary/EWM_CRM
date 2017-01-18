@@ -3,6 +3,7 @@ package evg.testt.service.impl;
 import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.Person;
 import evg.testt.dao.PersonRepository;
+import evg.testt.model.Personnel;
 import evg.testt.model.State;
 import evg.testt.model.StateType;
 import evg.testt.service.PersonService;
@@ -28,6 +29,21 @@ public class PersonServiceImpl extends BaseService<Person, PersonRepository> imp
     @Override
     public List<Person>  getSortedByRegistrationDate() throws SQLException{
         return personRepository.findSortedByRegistrationDate();
+    }
+
+    @Override
+    public List<Personnel> getPersonsByKeyWord(String keyWords) throws SQLException {
+        StringBuilder searchText = new StringBuilder();
+
+        String[] words = keyWords.split("\\s");
+
+        for (int i = 0; i < words.length; i++) {
+            searchText.append(words[i] + ":*");
+            if (i < words.length - 1)
+                searchText.append("|");
+        }
+
+        return dao.findPersonByKeyWord(searchText.toString());
     }
 
     @Override
