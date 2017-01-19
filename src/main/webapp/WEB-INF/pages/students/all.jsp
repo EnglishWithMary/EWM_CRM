@@ -107,7 +107,7 @@
                                     </td>
                                     <td><a href="/group/info?group_id=${student.group.id}">${student.group.name}</a></td>
                                     <td>${student.person.registrationDate}</td>
-                                    <td>${student.person.comments}</td>
+                                    <td><textarea name="comments" cols="16" disabled>${student.person.comments}</textarea></td>
                                     <td>
                                         <a href="/students/${student.id}/add-testing-result">Testing results</a>
                                     </td>

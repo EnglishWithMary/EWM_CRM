@@ -154,4 +154,15 @@ public class TeacherController {
 
         return "persons/teacher-info";
     }
+
+    @RequestMapping(value = "/setTeacherLevel")
+    public String setTeacherLevel(int level, int teacher_id) throws SQLException {
+        Teacher teacher = teacherService.getById(teacher_id);
+        TeacherLevelEnum level_Id = TeacherLevelEnum.valueOf(level);
+        teacher.setLevel(level_Id);
+        teacherService.update(teacher);
+
+        return "redirect:/teacher/info?teacher_id="+teacher_id;
+
+    }
 }
