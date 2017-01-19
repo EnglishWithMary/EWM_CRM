@@ -41,16 +41,22 @@ public @Data class Person extends BaseModel{
 
     private Integer position = 0;
 
-    private static class NullPerson extends Person {
+    private static class NullPerson extends Person implements Null {
+
         private NullPerson() {
-            setFirstName("");
-            setLastName("");
-            setMiddleName("");
-            setAvatarURL("");
+            setFirstName("none");
+            setLastName("none");
+            setMiddleName("none");
+            setAvatarURL("none");
             setBirthdayDate(new Date());
-            setOrganization("");
-            setEmail(new Email(""));
-            setComments("");
+            setOrganization("none");
+            setEmail(new Email("none@none.none"));
+            setComments("none");
+        }
+
+        @Override
+        public String toString() {
+            return "NullPerson";
         }
     }
 
