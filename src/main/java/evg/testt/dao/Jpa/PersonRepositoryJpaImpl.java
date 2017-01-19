@@ -1,6 +1,5 @@
 package evg.testt.dao.Jpa;
 
-import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.*;
 import evg.testt.dao.PersonRepository;
 import evg.testt.service.PersonService;
@@ -24,7 +23,7 @@ public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> imple
     PersonService personService;
 
     @Override
-    public Person findPersonByUserLogin(String userLogin) throws PersonRoleNotFoundException {
+    public Person findPersonByUserLogin(String userLogin) {
 
         User user = userService.findByUserLogin(userLogin);
         Role role = user.getRole();
@@ -48,7 +47,7 @@ public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> imple
             query.setParameter("id", user.getId());
             return ((Student) query.getSingleResult()).getPerson();
         default:
-            throw new PersonRoleNotFoundException("Such Role of Person is unknown. Go to PersonRepositoryJpaImpl and add new handler.");
+            return Person.NULL;
         }
     }
 

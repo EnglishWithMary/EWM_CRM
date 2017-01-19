@@ -3,16 +3,15 @@ package evg.testt.controller;
 import evg.testt.dto.PersonDTO;
 import evg.testt.exception.BadAvatarNameException;
 import evg.testt.exception.PersonException;
-import evg.testt.exception.PersonRoleNotFoundException;
-import evg.testt.model.*;
-//import evg.testt.oval.SpringOvalValidator;
+import evg.testt.model.Person;
+import evg.testt.model.Personnel;
+import evg.testt.model.SearchedPerson;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +25,9 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Collections;
 import java.util.List;
+
+//import evg.testt.exception.PersonRoleNotFoundException;
+//import evg.testt.oval.SpringOvalValidator;
 
 @Controller
 public class PersonController {
@@ -49,7 +51,7 @@ public class PersonController {
     public String profilePerson(@ModelAttribute("person") @Valid PersonDTO personDTO,
                                 BindingResult bindingResult,
                                 Principal principal, Model model)
-            throws PersonRoleNotFoundException, SQLException {
+            throws SQLException {
 
         Person person = personService.getPersonByUserLogin(principal.getName());
         model.addAttribute("person", person);
@@ -64,8 +66,8 @@ public class PersonController {
                                @RequestParam("image") MultipartFile multipartFile,
                                Principal principal)
             throws
-            IOException, PersonException, PersonRoleNotFoundException,
-            BadAvatarNameException, SQLException, ParseException {
+            IOException, PersonException, BadAvatarNameException,
+            SQLException, ParseException {
 
         String login = principal.getName();
 

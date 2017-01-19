@@ -1,7 +1,6 @@
 package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
-import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.Person;
 import evg.testt.model.User;
 import evg.testt.service.PersonService;
@@ -40,7 +39,7 @@ public class UsersController {
     }
 
     @RequestMapping(value = {"","/","/home"})
-    public String homePage(Model model, Principal principal) throws SQLException, PersonRoleNotFoundException {
+    public String homePage(Model model, Principal principal) throws SQLException {
 
         if (principal != null) {
             Person person = personService.getPersonByUserLogin(principal.getName());

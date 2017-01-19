@@ -1,7 +1,6 @@
 package evg.testt.service.impl;
 
 import evg.testt.dto.PersonDTO;
-import evg.testt.exception.NullObjectPersonDTOException;
 import evg.testt.model.*;
 import evg.testt.service.PersonDTOService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,72 +17,49 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
 
     public <T extends RegisteredUser> T updateRegisteredUser(T someRegisteredUser, PersonDTO personDTO) throws SQLException, ParseException{
 
-        if (personDTO == null || someRegisteredUser == null) {
-            throw new NullObjectPersonDTOException("Can`t update person with empty data. First initialize objects.");
-        }
-
-        Person person;
-
-        if (someRegisteredUser.getPerson() == null){
-            person = new Person();
-        }
-        else {
-            person = someRegisteredUser.getPerson();
-        }
-
-        someRegisteredUser.setPerson(getUpdatedPerson(person, personDTO));
+        someRegisteredUser.setPerson(getUpdatedPerson(someRegisteredUser.getPerson(), personDTO));
 
         someRegisteredUser.setUser(getUpdatedUser(someRegisteredUser.getUser(), personDTO));
 
         return someRegisteredUser;
     }
 
-    public Lead updateLead(Lead lead, PersonDTO personDTO) throws NullObjectPersonDTOException, ParseException{
+    public Lead updateLead(Lead lead, PersonDTO personDTO) throws ParseException{
 
-        if (personDTO == null || lead == null) {
-            throw new NullObjectPersonDTOException("Can`t update person with empty data. First initialize objects.");
-        }
-
-        Person person;
-
-        if (lead.getPerson() == null){
-            person = new Person();
-        }
-        else {
-            person = lead.getPerson();
-        }
-
-        lead.setPerson(getUpdatedPerson(person, personDTO));
+        lead.setPerson(getUpdatedPerson(lead.getPerson(), personDTO));
 
         return lead;
     }
 
-    public Person getUpdatedPerson(Person person, PersonDTO personDTO) throws NullObjectPersonDTOException, ParseException {
+    public Person getUpdatedPerson(Person person, PersonDTO personDTO) throws ParseException {
 
-        if (personDTO == null || person == null) {
-            throw new NullObjectPersonDTOException("Can`t update person with empty data. First initialize objects.");
+        if(personDTO!= null) {
+            if (person == Person.NULL) {
+                person = new Person();
+            }
+
+            person.setFirstName(personDTO.getFirstName());
+            person.setLastName(personDTO.getLastName());
+            person.setMiddleName(personDTO.getMiddleName());
+            person.setComments(personDTO.getComments());
+            person.setOrganization(personDTO.getOrganization());
+            person.setBirthdayDate(getDateFromString(personDTO.getBirthdayString()));
+            person.setEmail(new Email(personDTO.getEmail()));
+            person.setState(new State());
         }
-
-        person.setFirstName(personDTO.getFirstName());
-        person.setLastName(personDTO.getLastName());
-        person.setMiddleName(personDTO.getMiddleName());
-        person.setComments(personDTO.getComments());
-        person.setOrganization(personDTO.getOrganization());
-        person.setBirthdayDate(getDateFromString(personDTO.getBirthdayString()));
-        person.setEmail(new Email(personDTO.getEmail()));
-        person.setState(new State());
 
         return person;
     }
 
     public User getUpdatedUser (User user, PersonDTO personDTO){
+        if(personDTO!=null) {
+            if (user.getLogin() == null) {
+                user.setLogin(personDTO.getLogin());
+            }
 
-        if (user.getLogin() == null) {
-            user.setLogin(personDTO.getLogin());
-        }
-
-        if (personDTO.getPassword() != null) {
-            user.setPassword(passwordEncoder.encode(personDTO.getPassword()));
+            if (personDTO.getPassword() != null) {
+                user.setPassword(passwordEncoder.encode(personDTO.getPassword()));
+            }
         }
 
         return user;
