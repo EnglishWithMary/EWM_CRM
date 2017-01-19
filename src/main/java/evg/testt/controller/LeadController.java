@@ -201,8 +201,7 @@ public class LeadController {
 
     @RequestMapping(value = "/lead/info", method = RequestMethod.GET)
     public String leadInfo(Model model, @RequestParam int person_id) throws SQLException {
-        Person person = personService.getById(person_id);
-        Lead lead = leadService.getByPerson(person);
+        Lead lead = leadService.getById(person_id);
         model.addAttribute("lead", lead);
         return "persons/lead-info";
     }

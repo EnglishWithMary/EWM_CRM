@@ -62,16 +62,4 @@ public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> imple
         }
         return null;
     }
-
-    @Override
-    public List<Personnel> findPersonByKeyWord(String keywords) throws SQLException {
-        List<Personnel> peoples = Collections.EMPTY_LIST;
-
-        Query nativeQuery = em.createNativeQuery("SELECT * FROM staffview WHERE searchtext @@ to_tsquery(:text);", Personnel.class);
-        nativeQuery.setParameter("text", keywords);
-        peoples = nativeQuery.getResultList();
-
-        return peoples;
-    }
-
 }

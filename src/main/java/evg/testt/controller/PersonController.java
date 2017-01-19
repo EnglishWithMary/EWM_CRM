@@ -6,10 +6,7 @@ import evg.testt.exception.PersonException;
 import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.*;
 //import evg.testt.oval.SpringOvalValidator;
-import evg.testt.service.AvatarService;
-import evg.testt.service.PersonDTOService;
-import evg.testt.service.PersonService;
-import evg.testt.service.PersonnelService;
+import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -35,6 +32,8 @@ public class PersonController {
 
 //    @Autowired
 //    private SpringOvalValidator validator;
+    @Autowired
+    private SearchService searchService;
     @Autowired
     private PersonService personService;
     @Autowired
@@ -101,10 +100,10 @@ public class PersonController {
 
     @RequestMapping(value = "/fullSearch")
     public String search(Model model, @RequestParam String searchText) throws SQLException {
-        List<Personnel> persons = Collections.EMPTY_LIST;
 
+        List<SearchedPerson> persons = Collections.EMPTY_LIST;
         if(!searchText.equals(""))
-        persons = personService.getPersonsByKeyWord(searchText);
+        persons = searchService.getPersonsByKeyWord(searchText);
 
         model.addAttribute("persons", persons);
         return "search/all";
