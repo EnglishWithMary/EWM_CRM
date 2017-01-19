@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <h2 class="page-header">Create teacher</h2>
+        <h2 class="page-header">Add Room</h2>
     </div>
 </div>
 <div class="row">
@@ -18,7 +18,7 @@
                         <div class="row padding-bot">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-4">
-                                <sf:label path="Name">First Name:</sf:label>
+                                <sf:label path="Name">Room's Name:</sf:label>
                             </div>
                             <div class="col-sm-6">
                                 <sf:input path="Name" cssClass="form-control"/>

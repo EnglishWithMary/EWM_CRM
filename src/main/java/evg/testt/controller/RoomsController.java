@@ -49,7 +49,8 @@ public class RoomsController {
         if (room == null) {
             return "redirect:/rooms/all";
         }
-        model.addAttribute("events", roomService.getAllEventsInRoom(room.getId()))
+        model
+//                .addAttribute("events", roomService.getAllEventsInRoom(room.getId()))
                 .addAttribute("room", room);
         return "rooms/info";
     }
@@ -61,12 +62,13 @@ public class RoomsController {
     }
 
     @RequestMapping(value = "/rooms/add", method = RequestMethod.POST)
-    public String saveRoom(Model model, @ModelAttribute("room") @Validated Room room, BindingResult result)
+    public String saveRoom(Model model,
+                           @ModelAttribute("room") @Validated Room room, BindingResult result)
             throws SQLException, IOException {
         if (result.hasErrors()) {
             return "rooms/add";
         }
-        roomService.insertIntoCalendar(room);
+        roomService.insert(room);
         return "redirect:/rooms";
     }
 
@@ -74,9 +76,9 @@ public class RoomsController {
     @RequestMapping(value = "/rooms/{ID}/info/events", method = RequestMethod.GET)
     public String getEventsByRoomId(@PathVariable(value = "ID") Integer id)
             throws SQLException, IOException {
-        List<Event> events = roomService.getAllEventsInRoom(id);
-        List<RoomEvent> roomEvents = RoomsEventsHelper.convertGoogleEventsToRoomEvents(events);
-        return new Gson().toJson(roomEvents);
+//        List<Event> events = roomService.getAllEventsInRoom(id);
+//        List<RoomEvent> roomEvents = RoomsEventsHelper.convertGoogleEventsToRoomEvents(events);
+        return new Gson().toJson("");
     }
 
     @RequestMapping(value = "/rooms/{ID}/add-event", method = RequestMethod.GET)
@@ -95,7 +97,7 @@ public class RoomsController {
             return "rooms/add/event";
         }
         Event event = RoomsEventsHelper.convertRoomEventToGoogleEvent(roomEvent);
-        roomService.insertEventIntoRoom(event, id);
+//        roomService.insertEventIntoRoom(event, id);
         return "redirect:/rooms/" + id.toString() + "/info";
     }
 }
