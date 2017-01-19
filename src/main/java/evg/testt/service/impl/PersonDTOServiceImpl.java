@@ -33,8 +33,8 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
 
     public Person getUpdatedPerson(Person person, PersonDTO personDTO) throws ParseException {
 
-        if(personDTO!= null) {
-            if (person == Person.NULL) {
+        if(personDTO != null) {
+            if (person == null) {
                 person = new Person();
             }
 
