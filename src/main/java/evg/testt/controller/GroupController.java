@@ -197,20 +197,21 @@ public class GroupController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/group/{group_id}/calendar/room/{room_id}/add-event-test", method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String  saveEventAjaxMethod(@RequestBody FullcalendarEvent fullcalendarEvent,
-                                                       @PathVariable(value = "group_id") Integer groupId,
-                                                       @PathVariable(value = "room_id") Integer roomId,
-                                                       HttpServletResponse response
+    @RequestMapping(value = "/group/{group_id}/calendar/room/{room_id}/add-event-test",
+            method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String saveEventAjaxMethod(@RequestBody FullcalendarEvent fullcalendarEvent,
+                                      @PathVariable(value = "group_id") Integer groupId,
+                                      @PathVariable(value = "room_id") Integer roomId,
+                                      HttpServletResponse response
     ) throws SQLException {
         Room room = roomService.getById(roomId);
         GroupEvent groupEvent = FullcalendarHeleper
                 .convertFullcalendarEventToGroupEvent(fullcalendarEvent);
-        groupEvent.setRoomId(room.getId());
+        groupEvent.setRoom(room);
         groupEvent.setGroupId(groupId);
-        if(groupEvent.getTitle().equals(""))
-            groupEvent.setTitle("No title!");
+        if (groupEvent.getTitle().equals("")) {
+            groupEvent.setTitle("Default Title");
+        }
         groupEventsService.insert(groupEvent);
         return new Gson().toJson("msg = success, code = 200");
     }
@@ -218,8 +219,8 @@ public class GroupController {
     @ResponseBody
     @RequestMapping(value = "/group/{group_id}/calendar/delete/event", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String  deleteEventAjaxMethod(@RequestBody FullcalendarEvent fullcalendarEvent,
-                                       HttpServletResponse response) throws SQLException {
+    public String deleteEventAjaxMethod(@RequestBody FullcalendarEvent fullcalendarEvent,
+                                        HttpServletResponse response) throws SQLException {
 
         GroupEvent groupEvent = groupEventsService.getById(fullcalendarEvent.getId());
         groupEventsService.delete(groupEvent);
@@ -228,10 +229,11 @@ public class GroupController {
 
     @ResponseBody
     @RequestMapping(value = "/groups/this-day-events", method = RequestMethod.GET)
-    public String getEventsAllDay(@RequestParam (value = "start")Date start,
-                                  @RequestParam (value = "end")Date end) throws SQLException {
+    public String getEventsAllDay(@RequestParam(value = "start") Date start,
+                                  @RequestParam(value = "end") Date end) throws SQLException {
         List<FullcalendarEvent> groupEvents = FullcalendarHeleper
-                .convertGroupEventsToFullcalendarEvents(groupEventsService.getAllByDate(start, end));
+                .convertGroupEventsToFullcalendarEventsWithUrls(
+                        groupEventsService.getAllByDate(start, end));
 
         return new Gson().toJson(groupEvents);
     }

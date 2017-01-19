@@ -11,6 +11,10 @@ class FullcalendarEvent {
 
     private String title;
 
+    private String color;
+
+    private String url;
+
     private Date start;
 
     private Date end;
@@ -18,16 +22,18 @@ class FullcalendarEvent {
     public FullcalendarEvent(){
 
     }
-
-    public FullcalendarEvent(
-            Integer id,
-            Date start,
-            Date end,
-            String title
-    ){
-        this.id = id;
-        this.start = start;
-        this.end = end;
-        this.title = title;
-    }
+//
+//    public FullcalendarEvent(
+//            Integer id,
+//            Date start,
+//            Date end,
+//            String title,
+//            String color
+//    ){
+//        this.id = id;
+//        this.start = start;
+//        this.end = end;
+//        this.title = title;
+//        this.color = color;
+//    }
 }
