@@ -2,18 +2,20 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <h2 class="page-header">Add Room</h2>
+        <h2 class="page-header">Edit Room</h2>
     </div>
 </div>
 <div class="row">
     <div class="col-sm-5 col-sm-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong>Add Room</strong>
+                <strong>Edit Room's values</strong>
             </div>
             <div class="panel-body">
-                <sf:form method="post" modelAttribute="room" action="/rooms/add" id="form">
+                <sf:form method="post" modelAttribute="room" action="/rooms/${room.id}/edit" id="form">
                     <fieldset class="form-group">
+
+                        <input type="hidden" class="hidden-xs-up" name="id" value="${room.id}"/>
 
                         <div class="row padding-bot">
                             <div class="col-sm-1"></div>
@@ -21,19 +23,19 @@
                                 <sf:label path="name">Room's Name:</sf:label>
                             </div>
                             <div class="col-sm-6">
-                                <sf:input path="name" cssClass="form-control"/>
-                                <sf:errors path="name" cssClass="has-error"/>
+                                <input id="name" name="name" class="form-control" value="${room.name}"/>
+                                <sf:errors path="name" cssClass=""/>
                             </div>
                         </div>
 
                         <div class="row padding-bot">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-4">
-                                <sf:label path="color">Pick Color:</sf:label>
+                                <sf:label path="Color">Pick Color:</sf:label>
                             </div>
                             <div class="col-sm-6">
                                 <div id="color-picker" class="input-group colorpicker-component">
-                                    <input name="color" type="text" value="${room.color==null?"#00AABB":room.color}" class="form-control" />
+                                    <input name="Color" type="text" value="${room.color}" class="form-control"/>
                                     <span class="input-group-addon"><i></i></span>
                                 </div>
                             </div>
@@ -41,7 +43,7 @@
 
                         <div class="row padding-bot">
                             <div class="col-sm-4 col-sm-offset-4">
-                                <input type="submit" value="Add Room" class="btn btn-success"/>
+                                <input type="submit" value="Save" class="btn btn-success"/>
                             </div>
                         </div>
                     </fieldset>

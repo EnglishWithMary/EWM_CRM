@@ -9,6 +9,7 @@ import evg.testt.google.utils.calendar.RoomsEventsHelper;
 import evg.testt.model.Room;
 import evg.testt.model.RoomEvent;
 import evg.testt.service.RoomService;
+import evg.testt.util.helpers.RoomUpdateHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,6 +70,30 @@ public class RoomsController {
             return "rooms/add";
         }
         roomService.insert(room);
+        return "redirect:/rooms";
+    }
+
+    @RequestMapping(value = "/rooms/{ID}/edit", method = RequestMethod.GET)
+    public String showEditRoom(Model model, @PathVariable(value = "ID")Integer id) throws SQLException{
+        Room room = roomService.getById(id);
+        if(room == null){
+            return "redirect: rooms/all";
+        }
+        model.addAttribute("room", room);
+        return "rooms/edit";
+    }
+
+    @RequestMapping(value = "/rooms/{ID}/edit", method = RequestMethod.POST)
+    public String saveEditRoom(Model model, @PathVariable(value = "ID")Integer id,
+                           @ModelAttribute("room") @Validated Room room, BindingResult result)
+            throws SQLException, IOException {
+        if (result.hasErrors()) {
+//            model.addAttribute("room", room);
+            return "rooms/edit";
+        }
+        if(roomService.getById(room.getId()) != null) {
+            roomService.update(room);
+        }
         return "redirect:/rooms";
     }
 

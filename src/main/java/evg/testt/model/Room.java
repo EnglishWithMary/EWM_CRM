@@ -13,7 +13,7 @@ import java.util.List;
 public @Data class Room extends BaseModel{
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Should be not empty")
     @Size(min = 3, max = 20, message = "Name should be between 3 and 20 chars.")
     private String name;
 
