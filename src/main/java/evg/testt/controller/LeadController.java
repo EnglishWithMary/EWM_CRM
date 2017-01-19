@@ -220,9 +220,9 @@ public class LeadController {
     }
 
     @RequestMapping(value = "/leadToStudent")
-    public String leadToStudent(Model model, Integer person_Id) throws SQLException, ParseException {
+    public String leadToStudent(Model model, Integer personId) throws SQLException, ParseException {
 
-        Person person = personService.getById(person_Id);
+        Person person = personService.getById(personId);
         Student student = new Student();
         Lead lead = leadService.getByPerson(person);
 

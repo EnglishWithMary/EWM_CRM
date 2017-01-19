@@ -81,7 +81,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="btn-group btn-group-md">
-                                <a href="/leadToStudent?person_Id=${lead.person.id}" class="btn btn-success" type="button">Enroll as a Student</a>
+                                <a href="/leadToStudent?personId=${lead.person.id}" class="btn btn-success" type="button">Enroll as a Student</a>
                                 <a href="" class="btn btn-danger" type="button">Delete Lead</a>
                             </div>
                         </div>
