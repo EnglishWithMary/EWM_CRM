@@ -18,13 +18,20 @@
                     <thead>
                     <tr>
                         <th>Room Name</th>
+                        <th>Color</th>
                         <th>Calendar</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach var="room" items="${rooms}">
                         <tr>
-                            <td>${room.name}</td>
+                            <td><a href="rooms/${room.id}/edit">${room.name}</a></td>
+                            <td>
+                                <c:if test="${not empty room.color}">
+                                    ${room.color} <span style="color : ${room.color}; background-color : ${room.color}">___</span>
+                                </c:if>
+                                <c:if test="${empty room.color}">null</c:if>
+                            </td>
                             <td><a href="/rooms/${room.id}/info" class="btn btn-default btn-sm">Calendar</a></td>
                         </tr>
                     </c:forEach>
