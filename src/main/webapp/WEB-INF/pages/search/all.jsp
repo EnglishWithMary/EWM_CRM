@@ -52,6 +52,8 @@
                                 <th>State</th>
                                 <th>Reg. Date</th>
                                 <th>Mod. Date</th>
+                                <th>Login</th>
+                                <th>Role</th>
                             </tr>
                             </thead>
                             <tfoot>
