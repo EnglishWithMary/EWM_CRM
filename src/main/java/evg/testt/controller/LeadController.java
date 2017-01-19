@@ -34,6 +34,8 @@ public class LeadController {
     @Autowired
     private LeadService leadService;
     @Autowired
+    private StudentService studentService;
+    @Autowired
     private PersonService personService;
     @Autowired (required = false)
     private EmailService emailService;
@@ -231,6 +233,8 @@ public class LeadController {
         student.setPerson(person);
 
         leadService.delete(lead);
+
+        studentService.insert(student);
 
         model.addAttribute("student", student);
         return "persons/student-info";
