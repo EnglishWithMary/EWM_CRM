@@ -1,8 +1,7 @@
 package evg.testt.service.impl;
 
-import evg.testt.exception.PersonRoleNotFoundException;
-import evg.testt.model.Person;
 import evg.testt.dao.PersonRepository;
+import evg.testt.model.Person;
 import evg.testt.model.Personnel;
 import evg.testt.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ public class PersonServiceImpl extends BaseService<Person, PersonRepository> imp
     PersonRepository personRepository;
 
     @Override
-    public Person getPersonByUserLogin(String userLogin) throws SQLException, PersonRoleNotFoundException {
+    public Person getPersonByUserLogin(String userLogin) throws SQLException {
         Person person = dao.findPersonByUserLogin(userLogin);
 
         try {

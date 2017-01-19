@@ -1,9 +1,7 @@
 package evg.testt.aop.persons.activity.strategy;
 
 import evg.testt.aop.persons.activity.strategy.service.StrategyAspectActivityExecutorService;
-import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.Activity;
-import evg.testt.model.BelongsToPerson;
 import evg.testt.model.Human;
 import evg.testt.model.Person;
 import evg.testt.service.ActivityService;
@@ -14,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Field;
 import java.sql.SQLException;
 
 /**
@@ -74,9 +71,9 @@ public class CRUDAspectActivityExecutor implements StrategyAspectActivityExecuto
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                catch (PersonRoleNotFoundException e) {
-                    e.printStackTrace();
-                }
+//                catch (PersonRoleNotFoundException e) {
+//                    e.printStackTrace();
+//                }
             }
         }
 
