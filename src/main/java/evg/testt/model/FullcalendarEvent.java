@@ -19,6 +19,8 @@ class FullcalendarEvent {
 
     private Date end;
 
+    private Boolean overlap = false;
+
     public FullcalendarEvent(){
 
     }
