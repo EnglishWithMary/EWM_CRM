@@ -52,7 +52,7 @@ public class FullcalendarHeleper {
         List<FullcalendarEvent> fullcalendarEvents = new ArrayList<>();
         for(GroupEvent groupEvent : groupEvents){
             FullcalendarEvent fullcalendarEvent = convertGroupEventToFullcalendarEvent(groupEvent);
-            fullcalendarEvent.setColor("red");
+            fullcalendarEvent.setColor("#ff0000");
             fullcalendarEvent.setOverlap(false);
             fullcalendarEvent.setRendering("background");
             fullcalendarEvents.add(fullcalendarEvent);
