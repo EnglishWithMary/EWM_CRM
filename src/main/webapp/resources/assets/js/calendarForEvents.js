@@ -110,7 +110,7 @@ $(document).ready(function () {
                 type: 'POST',
                 data: JSON.stringify(json),
                 contentType: 'application/json',
-                timeout: 100000,
+                timeout: 100000
             });
         }
     })

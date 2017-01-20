@@ -15,26 +15,24 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public <T extends RegisteredUser> T updateRegisteredUser(T someRegisteredUser, PersonDTO personDTO) throws SQLException, ParseException{
+    public <T extends RegisteredUser> T updateRegisteredUser(T someRegisteredUser, PersonDTO personDTO)
+            throws SQLException, ParseException{
 
         someRegisteredUser.setPerson(getUpdatedPerson(someRegisteredUser.getPerson(), personDTO));
-
         someRegisteredUser.setUser(getUpdatedUser(someRegisteredUser.getUser(), personDTO));
-
         return someRegisteredUser;
     }
 
     public Lead updateLead(Lead lead, PersonDTO personDTO) throws ParseException{
 
         lead.setPerson(getUpdatedPerson(lead.getPerson(), personDTO));
-
         return lead;
     }
 
     public Person getUpdatedPerson(Person person, PersonDTO personDTO) throws ParseException {
 
-        if(personDTO!= null) {
-            if (person == Person.NULL) {
+        if(personDTO != null) {
+            if (person == null) {
                 person = new Person();
             }
 

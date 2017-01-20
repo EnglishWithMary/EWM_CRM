@@ -34,6 +34,8 @@ public class LeadController {
     @Autowired
     private LeadService leadService;
     @Autowired
+    private StudentService studentService;
+    @Autowired
     private PersonService personService;
     @Autowired (required = false)
     private EmailService emailService;
@@ -217,4 +219,25 @@ public class LeadController {
 
         return "persons/lead-info";
     }
+
+    @RequestMapping(value = "/leadToStudent")
+    public String leadToStudent(Model model, Integer personId) throws SQLException, ParseException {
+
+        Person person = personService.getById(personId);
+        Student student = new Student();
+        Lead lead = leadService.getByPerson(person);
+
+        person.setId(null);
+        person.getEmail().setId(null);
+        student.setPerson(person);
+
+        leadService.delete(lead);
+
+        studentService.insert(student);
+
+        model.addAttribute("student", student);
+        return "persons/student-info";
+
+    }
+
 }
