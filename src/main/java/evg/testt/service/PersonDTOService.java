@@ -17,4 +17,6 @@ public interface PersonDTOService {
     User getUpdatedUser (User user, PersonDTO personDTO);
 
     Lead updateLead(Lead lead, PersonDTO personDTO) throws ParseException, NullObjectPersonDTOException;
+
+    Teacher getUpdateTeacher(Teacher teacher, PersonDTO personDTO)throws NullObjectPersonDTOException, ParseException;
 }

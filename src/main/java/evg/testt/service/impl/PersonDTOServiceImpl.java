@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTOService {
@@ -56,6 +58,25 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
         lead.setPerson(getUpdatedPerson(person, personDTO));
 
         return lead;
+    }
+
+    @Override
+    public Teacher getUpdateTeacher(Teacher teacher, PersonDTO personDTO) throws NullObjectPersonDTOException, ParseException {
+
+        if (personDTO == null || teacher == null) {
+            throw new NullObjectPersonDTOException("Can`t update teacher with empty data. First initialize objects.");
+        }
+
+        List<Language> languages = new ArrayList<>();
+
+
+        for (String langName:personDTO.getLanguages()) {
+            Language language = null;
+            language.setLanguage(langName);
+            languages.add(language);
+        }
+        teacher.setLanguages(languages);
+        return teacher;
     }
 
     public Person getUpdatedPerson(Person person, PersonDTO personDTO) throws NullObjectPersonDTOException, ParseException {

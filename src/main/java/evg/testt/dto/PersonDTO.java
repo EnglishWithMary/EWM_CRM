@@ -6,6 +6,7 @@ import net.sf.oval.constraint.Length;
 import net.sf.oval.constraint.MatchPattern;
 
 import javax.persistence.Transient;
+import java.util.List;
 
 public @Data class PersonDTO {
 
@@ -42,4 +43,6 @@ public @Data class PersonDTO {
     private String avatarURL;
 
     private Integer cardId;
+
+    private List<String>languages;
 }
