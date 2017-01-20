@@ -25,10 +25,8 @@
             </div>
             <div class="panel-body">
                 <p><a href="/rooms/${room.id}/add-event" class="btn btn-success">Add Event</a></p>
+                <p><a href="/rooms/${room.id}/edit" class="btn btn-success">Edit Room</a></p>
             </div>
         </div>
     </div>
 </div>
-<script>
-    var roomId = ${room.id};
-</script>
