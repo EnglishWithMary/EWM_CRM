@@ -36,4 +36,21 @@ public class GroupEventsRepositoryJpaImpl
         query.setParameter("room", room);
         return query.getResultList();
     }
+
+    @Override
+    public List<GroupEvent> findAllByRoomIdWhereGroupIsNotPresented(Integer groupId, Room room) {
+        Query query = em.createQuery("SELECT g FROM group_events g WHERE g.room=:room AND g.groupId<>:groupId");
+        query.setParameter("room", room);
+        query.setParameter("groupId", groupId);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<GroupEvent> findAllByGroupIdAndRoom(Integer groupId, Room room) {
+        Query query = em.createQuery(
+                "SELECT g FROM group_events g WHERE g.room=:room AND g.groupId=:groupId");
+        query.setParameter("room", room);
+        query.setParameter("groupId", groupId);
+        return query.getResultList();
+    }
 }

@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <h1 class="page-header">List of Rooms</h1>
+        <h1 class="page-header">Choose Room</h1>
     </div>
 </div>
 
@@ -24,7 +24,7 @@
                     <tbody>
                     <c:forEach var="room" items="${rooms}">
                         <tr>
-                            <td><a href="group/${group_id}/room/${room.id}/calendar">${room.name}</a></td>
+                            <td><a href="/group/${group.id}/room/${room.id}/calendar">${room.name}</a></td>
                             <td>
                                 <c:if test="${not empty room.color}">
                                     ${room.color} <span style="color : ${room.color}; background-color : ${room.color}">___</span>

@@ -25,4 +25,15 @@
         <put-attribute name="body" value="/WEB-INF/pages/groups/add-event.jsp" />
         <put-attribute name="additionalScripts" value="/WEB-INF/pages/groups/additionalScripts.jsp"/>
     </definition>
+
+    <definition name="persons/group-info" extends="default">
+        <put-attribute name="title" value="Group info" />
+        <put-attribute name="body" value="/WEB-INF/pages/groups/group-info.jsp" />
+        <put-attribute name="additionalScripts" value="/WEB-INF/pages/rooms/additionalScripts-info.jsp"/>
+    </definition>
+
+    <definition name="group/choose-room" extends="default">
+        <put-attribute name="title" value="Choose Room" />
+        <put-attribute name="body" value="/WEB-INF/pages/groups/choose-room.jsp" />
+    </definition>
 </tiles-definitions>
