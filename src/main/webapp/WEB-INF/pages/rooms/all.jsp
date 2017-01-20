@@ -25,7 +25,7 @@
                     <tbody>
                     <c:forEach var="room" items="${rooms}">
                         <tr>
-                            <td><a href="rooms/${room.id}/edit">${room.name}</a></td>
+                            <td><a href="rooms/${room.id}/info">${room.name}</a></td>
                             <td>
                                 <c:if test="${not empty room.color}">
                                     ${room.color} <span style="color : ${room.color}; background-color : ${room.color}">___</span>

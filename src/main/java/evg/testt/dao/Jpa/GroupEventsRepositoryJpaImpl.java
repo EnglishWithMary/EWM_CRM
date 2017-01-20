@@ -2,6 +2,7 @@ package evg.testt.dao.Jpa;
 
 import evg.testt.dao.GroupEventsRepository;
 import evg.testt.model.GroupEvent;
+import evg.testt.model.Room;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
@@ -30,9 +31,9 @@ public class GroupEventsRepositoryJpaImpl
     }
 
     @Override
-    public List<GroupEvent> findAllByRoomId(Integer id) {
-        Query query = em.createQuery("SELECT g FROM group_events g WHERE g.roomId =: id");
-        query.setParameter("id", id);
+    public List<GroupEvent> findAllByRoom(Room room) {
+        Query query = em.createQuery("SELECT g FROM group_events g WHERE g.room=:room");
+        query.setParameter("room", room);
         return query.getResultList();
     }
 }

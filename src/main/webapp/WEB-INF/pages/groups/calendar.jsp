@@ -25,7 +25,6 @@
                 <strong>Tools</strong>
             </div>
             <div class="panel-body">
-                <p><a href="/group/${group.id}/add-event" class="btn btn-success">Add Event</a></p>
             </div>
         </div>
     </div>

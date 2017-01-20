@@ -2,6 +2,7 @@ package evg.testt.service.impl;
 
 import evg.testt.dao.GroupEventsRepository;
 import evg.testt.model.GroupEvent;
+import evg.testt.model.Room;
 import evg.testt.service.GroupEventsService;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,11 @@ public class GroupEventsServiceImpl extends BaseService<GroupEvent, GroupEventsR
     }
 
     @Override
+    public List<GroupEvent> getAllByRoom(Room room) {
+        return dao.findAllByRoom(room);
+    }
+
+    @Override
     public void update(GroupEvent groupEvent){
         GroupEvent updatedGroupEvent = dao.findOne(groupEvent.getId());
         updatedGroupEvent.setTitle(groupEvent.getTitle());
@@ -31,6 +37,7 @@ public class GroupEventsServiceImpl extends BaseService<GroupEvent, GroupEventsR
         updatedGroupEvent.setEndDate(groupEvent.getEndDate());
         dao.save(updatedGroupEvent);
     }
+
 }
 
 
