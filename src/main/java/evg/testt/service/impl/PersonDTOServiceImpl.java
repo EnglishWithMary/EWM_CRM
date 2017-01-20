@@ -71,7 +71,7 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
 
 
         for (String langName:personDTO.getLanguages()) {
-            Language language = null;
+            Language language = new Language();
             language.setLanguage(langName);
             languages.add(language);
         }
