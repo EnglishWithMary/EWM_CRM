@@ -56,7 +56,8 @@ public class RoomsController {
         if (room == null) {
             return "redirect:/rooms/all";
         }
-        model.addAttribute("room", room);
+        model.addAttribute("room", room)
+                .addAttribute("rooms", roomService.getAll());
         return "rooms/info";
     }
 
@@ -78,9 +79,9 @@ public class RoomsController {
     }
 
     @RequestMapping(value = "/rooms/{ID}/edit", method = RequestMethod.GET)
-    public String showEditRoom(Model model, @PathVariable(value = "ID")Integer id) throws SQLException{
+    public String showEditRoom(Model model, @PathVariable(value = "ID") Integer id) throws SQLException {
         Room room = roomService.getById(id);
-        if(room == null){
+        if (room == null) {
             return "redirect: rooms/all";
         }
         model.addAttribute("room", room);
@@ -88,13 +89,13 @@ public class RoomsController {
     }
 
     @RequestMapping(value = "/rooms/{ID}/edit", method = RequestMethod.POST)
-    public String saveEditRoom(Model model, @PathVariable(value = "ID")Integer id,
-                           @ModelAttribute("room") @Validated Room room, BindingResult result)
+    public String saveEditRoom(Model model, @PathVariable(value = "ID") Integer id,
+                               @ModelAttribute("room") @Validated Room room, BindingResult result)
             throws SQLException, IOException {
         if (result.hasErrors()) {
             return "rooms/edit";
         }
-        if(roomService.getById(room.getId()) != null) {
+        if (roomService.getById(room.getId()) != null) {
             roomService.update(room);
         }
         return "redirect:/rooms/" + id.toString() + "/info";

@@ -1,5 +1,10 @@
 $(document).ready(function () {
     var path = window.location.pathname;
+    $('#change-room-select').change(function () {
+        var href = this.options[this.selectedIndex].value;
+        if (href !== "")
+            window.location.pathname = href;
+    });
     // $('#success').click(function (data) {
     //
     //     var eventId = $('#myModal').find("#eventId").val();
@@ -58,7 +63,7 @@ $(document).ready(function () {
         editable: false,
         droppable: false,
         events: path + '/events',
-        defaultView: 'agendaDay',
+        defaultView: 'month',
         timezone: 'local'
         /*
          * eventReceive isn't working correctly right now
