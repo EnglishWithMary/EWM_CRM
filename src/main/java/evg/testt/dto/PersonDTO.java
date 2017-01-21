@@ -7,6 +7,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import javax.persistence.Transient;
+import java.util.List;
+
 @FieldEquals( field="password", equalsTo="confirmPassword" )
 public @Data class PersonDTO {
 
@@ -43,4 +45,6 @@ public @Data class PersonDTO {
     protected String avatarURL;
 
     protected Integer cardId;
+
+    private List<String>languages;
 }

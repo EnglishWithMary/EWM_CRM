@@ -10,7 +10,8 @@ public @Data class Group extends BaseModel {
 
     private String name;
 
-    private String language;
+    @ManyToOne
+    private Language language;
 
     @ManyToOne
     private Teacher teacher;

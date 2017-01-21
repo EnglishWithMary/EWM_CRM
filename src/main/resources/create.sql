@@ -3,6 +3,15 @@ INSERT INTO roles (id, role) VALUES (2, 'ROLE_MANAGER');
 INSERT INTO roles (id, role) VALUES (3, 'ROLE_TEACHER');
 INSERT INTO roles (id, role) VALUES (4, 'ROLE_STUDENT');
 
+INSERT INTO languages (id, language) VALUES (1, 'English');
+INSERT INTO languages (id, language) VALUES (2, 'Spanish');
+INSERT INTO languages (id, language) VALUES (3, 'Polish');
+INSERT INTO languages (id, language) VALUES (4, 'German');
+INSERT INTO languages (id, language) VALUES (5, 'Italian');
+INSERT INTO languages (id, language) VALUES (6, 'French');
+INSERT INTO languages (id, language) VALUES (7, 'Chinese');
+INSERT INTO languages (id, language) VALUES (8, 'Japanese');
+
 INSERT INTO persons (id, firstname, lastname, organization,modifydate,registrationdate,comments,state)
 VALUES (1, 'Dmitry', 'Serebryakov', 'EWM', now(), now(), 'Administrator', 'ACTIVE');
 

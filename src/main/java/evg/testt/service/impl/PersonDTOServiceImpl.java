@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTOService {
@@ -73,5 +75,26 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
             return null;
         }
     }
+
+    @Override
+    public Teacher getUpdateTeacher(Teacher teacher, PersonDTO personDTO) throws NullObjectPersonDTOException, ParseException {
+
+        if (personDTO != null) {
+            if (teacher == null) {
+                teacher = new Teacher();
+            }
+
+            List<Language> languages = new ArrayList<>();
+
+            for (String langName : personDTO.getLanguages()) {
+                Language language = new Language();
+                language.setLanguage(langName);
+                languages.add(language);
+            }
+            teacher.setLanguages(languages);
+            return teacher;
+        }
+    }
+
 
 }

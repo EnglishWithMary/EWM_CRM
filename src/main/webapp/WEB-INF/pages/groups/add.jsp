@@ -35,18 +35,16 @@
                             </div>
                         </div>
                         <div class="row padding-bot">
-                            <div class="col-sm-12">
-                                <sf:label path="language"> Language: </sf:label>
-                                <sf:select path="language" cssClass="form-control">
-                                    <option label="English">English</option>
-                                    <option label="Germany">Germany</option>
-                                    <option label="Germany">Spanish</option>
-                                    <option label="Germany">Russian</option>
-                                    <option label="Germany">Italian</option>
-                                    <option label="Germany">Polish</option>
-                                    <option label="Germany">French</option>
-                                    <option label="Germany">Ukrainian</option>
-                                </sf:select>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-4">
+                                <label path="languages">Languages:</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <select name="languages">
+                                    <c:forEach var="lang" items="${languages}" >
+                                        <option value="${lang.language}">${lang.language}</option>
+                                    </c:forEach>
+                                </select>
                             </div>
                         </div>
                         <div class="row padding-bot">

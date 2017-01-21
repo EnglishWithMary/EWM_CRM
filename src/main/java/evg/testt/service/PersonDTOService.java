@@ -1,10 +1,7 @@
 package evg.testt.service;
 
 import evg.testt.dto.PersonDTO;
-import evg.testt.model.Lead;
-import evg.testt.model.Person;
-import evg.testt.model.RegisteredUser;
-import evg.testt.model.User;
+import evg.testt.model.*;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -18,4 +15,6 @@ public interface PersonDTOService {
     User getUpdatedUser (User user, PersonDTO personDTO);
 
     Lead updateLead(Lead lead, PersonDTO personDTO) throws ParseException;
+
+    Teacher getUpdateTeacher(Teacher teacher, PersonDTO personDTO)throws ParseException;
 }

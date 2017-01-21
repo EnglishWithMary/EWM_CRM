@@ -93,6 +93,9 @@
             <div class="panel-body">
                 <p><a href="/teacherAdd" class="btn btn-success">Add Teacher</a></p>
             </div>
+            <div class="panel-body">
+                <p><a href="/languages" class="btn btn-success">Languages</a></p>
+            </div>
         </div>
     </div>
 </div>

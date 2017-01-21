@@ -31,6 +31,8 @@ public class GroupController {
     private TeacherService teacherService;
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private LanguageService languageService;
 
     @Autowired
     private RoomService roomService;
@@ -48,9 +50,11 @@ public class GroupController {
         List<Teacher> teachers = teacherService.getAll();
         List<Student> students = studentService.getAll();
         if (flagSorted == null) flagSorted = false;
+
         int totalGroups = 0, pages = 0, currentPage = 1;
-        if (page != null) {
-            if (page > 0) {
+
+        if (page != null){
+            if (page > 0){
                 currentPage = page;
             }
         }
@@ -78,7 +82,9 @@ public class GroupController {
     @RequestMapping(value = "/groupAdd")
     public String addGroup(Model model) throws SQLException {
         List<Teacher> teachers = teacherService.getAll();
+        List<Language> languages = languageService.getAll();
         model.addAttribute("teachers", teachers);
+        model.addAttribute("languages", languages);
         GroupDTO groupDTO = new GroupDTO();
         groupDTO.setName("Default Group");
         model.addAttribute("group", groupDTO);
@@ -93,10 +99,13 @@ public class GroupController {
         }
         Group newGroup = new Group();
         newGroup.setName(groupDTO.getName());
-        newGroup.setLanguage(groupDTO.getLanguage());
         groupService.insert(newGroup);
         if (groupDTO.getTeacherId() != null) {
             newGroup.setTeacher(teacherService.getById(groupDTO.getTeacherId()));
+            groupService.update(newGroup);
+        }
+        if (groupDTO.getLanguageId() != null) {
+            newGroup.setLanguage(languageService.getById(groupDTO.getLanguageId()));
             groupService.update(newGroup);
         }
         return "redirect:/groups";
