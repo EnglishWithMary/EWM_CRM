@@ -1,13 +1,7 @@
 package evg.testt.controller;
 
-import evg.testt.dto.PersonDTO;
 import evg.testt.model.Language;
-import evg.testt.model.Room;
-import evg.testt.model.Teacher;
-import evg.testt.model.User;
-import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
-import org.apache.commons.codec.language.bm.Lang;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
@@ -21,16 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
 @PropertySource(value = "classpath:standard.properties")
 public class LanguageController {
 
-    @Autowired(required = false)
-    SpringOvalValidator validator;
     @Autowired
     TeacherService teacherService;
     @Autowired
@@ -41,8 +31,6 @@ public class LanguageController {
     PersonService personService;
     @Autowired
     PersonDTOService personDTOService;
-    @Autowired
-    private GroupService groupService;
     @Autowired
     private LanguageService languageService;
 

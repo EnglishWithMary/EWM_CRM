@@ -77,7 +77,7 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
     }
 
     @Override
-    public Teacher getUpdateTeacher(Teacher teacher, PersonDTO personDTO) throws NullObjectPersonDTOException, ParseException {
+    public Teacher getUpdateTeacher(Teacher teacher, PersonDTO personDTO) throws ParseException {
 
         if (personDTO != null) {
             if (teacher == null) {
@@ -92,8 +92,9 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
                 languages.add(language);
             }
             teacher.setLanguages(languages);
-            return teacher;
+
         }
+        return teacher;
     }
 
 

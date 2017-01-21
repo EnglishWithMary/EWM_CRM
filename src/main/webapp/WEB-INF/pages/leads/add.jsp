@@ -9,12 +9,6 @@
 <%--</script>--%>
 
 <div class="row">
-    <div class="col-sm-12">
-        <h2 class="">Add Lead</h2>
-    </div>
-</div>
-
-<div class="row">
     <div class="col-sm-5 col-sm-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">

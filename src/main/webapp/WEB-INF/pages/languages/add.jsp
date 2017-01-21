@@ -2,11 +2,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="row">
-    <div class="col-sm-12">
-        <h2 class="page-header">Create Language</h2>
-    </div>
-</div>
-<div class="row">
     <div class="col-sm-5 col-sm-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">
