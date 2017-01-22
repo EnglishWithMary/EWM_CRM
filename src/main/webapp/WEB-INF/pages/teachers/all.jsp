@@ -16,28 +16,30 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="row">
-                            <form method="get" action="/students">
-                                <div class="col-sm-7">
-                                    <select name="level"  class="selectpicker form-control" title="Filter teachers by Level">
-                                        <option value="0">JUNIOR_1</option>
-                                        <option value="1">JUNIOR_2</option>
-                                        <option value="2">JUNIOR_3</option>
-                                        <option value="3">MIDDLE_1</option>
-                                        <option value="4">MIDDLE_2</option>
-                                        <option value="5">MIDDLE_3</option>
-                                        <option value="6">SENIOR_1</option>
-                                        <option value="7">SENIOR_2</option>
-                                        <option value="8">SENIOR_3</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-5">
-                                    <input type="submit" class="btn btn-default" value="Find"/>
-                                </div>
-                            </form>
+                    <security:authorize access="hasRole('ROLE_ADMIN')">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <form method="get" action="/teacherFilterByLevel">
+                                    <div class="col-sm-7">
+                                        <select name="teacherLevel"  class="selectpicker form-control" title="Filter teachers by Level">
+                                            <option value="0">JUNIOR_1</option>
+                                            <option value="1">JUNIOR_2</option>
+                                            <option value="2">JUNIOR_3</option>
+                                            <option value="3">MIDDLE_1</option>
+                                            <option value="4">MIDDLE_2</option>
+                                            <option value="5">MIDDLE_3</option>
+                                            <option value="6">SENIOR_1</option>
+                                            <option value="7">SENIOR_2</option>
+                                            <option value="8">SENIOR_3</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <input type="submit" class="btn btn-default" value="Find"/>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                    </div>
+                    </security:authorize>
                 </div>
                 <%--<div class="table-wrapper">--%>
                 <table class="table table-striped table-bordered">
