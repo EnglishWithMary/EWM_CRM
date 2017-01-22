@@ -2,7 +2,6 @@ package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
-//import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+//import evg.testt.oval.SpringOvalValidator;
 
 @Controller
 @PropertySource(value = "classpath:standard.properties")
@@ -180,14 +181,34 @@ public class StudentController {
 
     //    /students/{studentId}/testing-result
 //    old mapping /studentTestingResults
-    @RequestMapping(value = "/students/{studentId}/add-testing-result")
-    public String studentEditLevel(@PathVariable(value = "studentId") Integer id, Model model) throws SQLException {
+    @RequestMapping(value = "/students/{studentId}/{studentLevelHistoryId}/add-testing-result")
+    public String studentEditLevel(@PathVariable(value = "studentId") Integer id, Model model,
+                                   @PathVariable(value = "studentLevelHistoryId") Integer levelId) throws SQLException {
+
         Student student = studentService.getById(id);
         model.addAttribute("student", student);
         model.addAttribute("person", student.getPerson());
-        model.addAttribute("checkpointDate", new Date());
+
+        model.addAttribute("studentLevelHistoryId", studentLevelHistoryService.getById(levelId));
+
+//        if(studentLevelHistory.getId() != null) {
+        if(levelId != null) {
+
+            StudentLevelHistory studentLevelHistory = studentLevelHistoryService.getById(levelId);
+            studentLevelHistory.getCheckpointDate();
+            studentLevelHistory.getFluency();
+            studentLevelHistory.getGrammar();
+            studentLevelHistory.getListening();
+            studentLevelHistory.setFluency(student);
+
+        } else {
+            model.addAttribute("checkpointDate", new Date());
+        }
+
         return "students/testingResults";
+
     }
+
 
     //    /students/{studentId}/save-testing-results
 //    old value /saveTestingResults
@@ -201,7 +222,12 @@ public class StudentController {
         studentLevelHistory.setCheckpointDate(getDateFromString(studentLevelHistory.getTestingDate()));
         studentLevelHistoryService.insert(studentLevelHistory);
         return "redirect:/students";
+
     }
+
+
+
+
 
     public Date getDateFromString(String dateFromForm) throws ParseException {
         if (dateFromForm == "") dateFromForm = "2001-01-01";

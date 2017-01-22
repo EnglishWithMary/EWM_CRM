@@ -30,6 +30,7 @@
                                 <th>Writing</th>
                                 <th>Fluency</th>
                                 <th>Spelling</th>
+                                <th>Edit</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -52,6 +53,25 @@
                                     <td>${level.writing}</td>
                                     <td>${level.fluency}</td>
                                     <td>${level.spelling}</td>
+                                    <td>
+                                        <%--<button class="btn btn-default" href="#" role="button">--%>
+                                            <%--Edit--%>
+                                        <%--</button>--%>
+                                        <form method="post" action="/students/{studentId}/add-testing-result" class="btn-xs">
+                                            <input type="hidden" name="levelId" value="${level.student.id}">
+                                            <button type="submit" class="btn btn-default btn-xs">
+                                                Edit
+                                            </button>
+                                        </form>
+                                        <%--<button type="button" class="bnt btn-default bnt-sm">--%>
+                                            <%--Edit--%>
+                                            <%--<a href="/student/info?student_id=${level.student.id}">--%>
+                                                    <%--${level.student.person.firstName}--%>
+                                                    <%--${level.student.person.middleName}--%>
+                                                    <%--${level.student.person.lastName}--%>
+                                            <%--</a>--%>
+                                            <%--</button>--%>
+                                    </td>
                                 </tr>
                             </c:forEach>
                             </tbody>
