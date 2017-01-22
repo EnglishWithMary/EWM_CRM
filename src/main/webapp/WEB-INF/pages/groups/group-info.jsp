@@ -83,11 +83,18 @@
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <div id="calendar"></div>
+                                <div class="col-sm-12">
+                                    <div id="calendar"></div>
+                                </div>
                             </div>
+                        </div>
+                        <div class="panel-footer">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <a href="/group/${group.id}/calendar" class="btn btn-success">Change Events</a>
+                                    <p>
+                                        <a href="/group/${group.id}/room/choose-room" class="btn btn-success">Change
+                                            Events</a>
+                                    </p>
                                 </div>
                             </div>
                         </div>

@@ -3,10 +3,7 @@ package evg.testt.model;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity(name = "group_events")
@@ -14,8 +11,9 @@ public
 @Data
 class GroupEvent extends BaseModel {
 
-    @Column(name = "room_id")
-    private Integer roomId;
+//    @Column(name = "room_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Room room;
 
     @Column(name = "group_id")
     private Integer groupId;

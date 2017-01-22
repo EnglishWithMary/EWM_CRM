@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <h1 class="page-header">List of Rooms</h1>
+        <h1 class="page-header">Choose Room</h1>
     </div>
 </div>
 
@@ -19,20 +19,18 @@
                     <tr>
                         <th>Room Name</th>
                         <th>Color</th>
-                        <th>Calendar</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach var="room" items="${rooms}">
                         <tr>
-                            <td><a href="rooms/${room.id}/info">${room.name}</a></td>
+                            <td><a href="/group/${group.id}/room/${room.id}/calendar">${room.name}</a></td>
                             <td>
                                 <c:if test="${not empty room.color}">
                                     ${room.color} <span style="color : ${room.color}; background-color : ${room.color}">___</span>
                                 </c:if>
                                 <c:if test="${empty room.color}">null</c:if>
                             </td>
-                            <td><a href="/rooms/${room.id}/info" class="btn btn-default btn-sm">Calendar</a></td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -46,7 +44,6 @@
                 <strong>Tools</strong>
             </div>
             <div class="panel-body">
-                <p><a href="/rooms/add" class="btn btn-success">Add Room</a></p>
             </div>
         </div>
     </div>

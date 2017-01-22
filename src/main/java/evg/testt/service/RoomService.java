@@ -11,11 +11,11 @@ import java.util.List;
 
 public interface RoomService extends Service<Room>{
 
-    void insertIntoCalendar(Room room)throws SQLException, IOException;
-
-    public List<Event> getAllEventsInRoom(Integer id) throws SQLException, IOException;
-
-    public void insertEventIntoRoom(Event event, Integer id) throws SQLException, IOException;
+//    void insertIntoCalendar(Room room)throws SQLException, IOException;
+//
+//    public List<Event> getAllEventsInRoom(Integer id) throws SQLException, IOException;
+//
+//    public void insertEventIntoRoom(Event event, Integer id) throws SQLException, IOException;
 
     public Room getRoomByName(String name);
 

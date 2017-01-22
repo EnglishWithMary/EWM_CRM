@@ -13,4 +13,9 @@ public @Data class Teacher extends RegisteredUser implements BelongsToPerson{
 
     @OneToOne(cascade = CascadeType.ALL)
     private User user = new User(new Role("ROLE_TEACHER",3));
+
+    @Column(name = "level")
+    @Enumerated(EnumType.ORDINAL)
+    private TeacherLevelEnum level;
+
 }
