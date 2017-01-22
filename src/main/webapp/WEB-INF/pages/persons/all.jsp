@@ -146,7 +146,7 @@
                 <div class="panel-body">
                     <h4>Add person</h4>
                     <p>
-                        <form method="get" action="/personnel/addAdmins" >
+                        <form method="get" action="/adminAdd" >
                             <button class="btn btn-success" type="submit">Add Admin</button>
                         </form>
                         <form method="get" action="/personnel/addManagers">

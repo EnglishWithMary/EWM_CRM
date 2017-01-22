@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -98,7 +99,9 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/adminAdd")
-    public String addAdmin(Model model) {
+    public String addAdmin(Model model,
+                           HttpServletRequest request) {
+        request.getSession().setAttribute("addAdmin", request.getHeader("Referer"));
         PersonDTO person = new PersonDTO();
         model.addAttribute("admin", person);
         return "admins/add";
@@ -106,7 +109,8 @@ public class AdminController {
 
     @RequestMapping(value = "/adminSave", method = RequestMethod.POST)
     public String saveAdmin(@ModelAttribute("admin") @Valid PersonDTO personDTO,
-                              BindingResult bindingResult, Model model) throws SQLException, ParseException {
+                              BindingResult bindingResult, Model model,
+                            HttpServletRequest request) throws SQLException, ParseException {
 
 
         User u = userService.findByUserLogin(personDTO.getLogin());
@@ -120,7 +124,7 @@ public class AdminController {
             admin = personDTOService.updateRegisteredUser(admin, personDTO);
             adminService.insert(admin);
 
-            return "redirect:/admins";
+            return "redirect:"+request.getSession().getAttribute("addAdmin").toString();
         } else {
             return "admins/add";
         }
