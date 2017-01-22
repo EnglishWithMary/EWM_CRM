@@ -8,12 +8,34 @@
                 <strong>List of Teachers</strong>
             </div>
             <div class="panel-body">
-                <form method="post" action="/teacherSortByDate">
-                    <div class="form-group">
-                        <input type="submit" value="Sort by Registration Date" class="btn btn-default">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <form method="post" action="/teacherSortByDate">
+                            <div class="form-group">
+                                <input type="submit" value="Sort by Registration Date" class="btn btn-default">
+                            </div>
+                        </form>
                     </div>
-                </form>
-
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <form method="get" action="/students">
+                                <div class="col-sm-7">
+                                    <select name="teacher_id" class="selectpicker form-control"
+                                            data-actions-box="true" data-size="5">
+                                        <option value="">All teachers</option>
+                                        <option value="-1">Students without teachers</option>
+                                        <c:forEach var="teacher" items="${teachers}">
+                                            <option value="${teacher.id}">${teacher.person.firstName}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="col-sm-5">
+                                    <input type="submit" class="btn btn-default" value="Find"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <%--<div class="table-wrapper">--%>
                 <table class="table table-striped table-bordered">
                     <thead>
