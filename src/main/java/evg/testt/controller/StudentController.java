@@ -28,6 +28,8 @@ public class StudentController {
     //    @Autowired
 //    private SpringOvalValidator validator;
     @Autowired
+    private CardService cardService;
+    @Autowired
     private StudentService studentService;
     @Autowired
     private UserService userService;
@@ -237,6 +239,10 @@ public class StudentController {
     @RequestMapping(value = "/student/info", method = RequestMethod.GET)
     public String studentInfo(Model model, @RequestParam(value = "student_id") Integer studentId) throws SQLException {
         Student student = studentService.getById(studentId);
+        Card currentCard = cardService.getCardByPerson(student.getPerson());
+        List<Card> personCardList = cardService.getCards(Pipe.STUDENT_PIPE);
+        model.addAttribute("currentCard", currentCard);
+        model.addAttribute("personCardList", personCardList);
         model.addAttribute("student", student);
         model.addAttribute("level", studentLevelHistoryService.getLastByStudent(student));
         return "persons/student-info";
