@@ -20,13 +20,16 @@
                         <div class="row">
                             <form method="get" action="/students">
                                 <div class="col-sm-7">
-                                    <select name="teacher_id" class="selectpicker form-control"
-                                            data-actions-box="true" data-size="5">
-                                        <option value="">All teachers</option>
-                                        <option value="-1">Students without teachers</option>
-                                        <c:forEach var="teacher" items="${teachers}">
-                                            <option value="${teacher.id}">${teacher.person.firstName}</option>
-                                        </c:forEach>
+                                    <select name="level"  class="selectpicker form-control" title="Filter teachers by Level">
+                                        <option value="0">JUNIOR_1</option>
+                                        <option value="1">JUNIOR_2</option>
+                                        <option value="2">JUNIOR_3</option>
+                                        <option value="3">MIDDLE_1</option>
+                                        <option value="4">MIDDLE_2</option>
+                                        <option value="5">MIDDLE_3</option>
+                                        <option value="6">SENIOR_1</option>
+                                        <option value="7">SENIOR_2</option>
+                                        <option value="8">SENIOR_3</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-5">
