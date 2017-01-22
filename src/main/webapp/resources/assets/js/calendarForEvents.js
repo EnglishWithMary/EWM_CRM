@@ -1,5 +1,10 @@
 $(document).ready(function () {
     var path = window.location.pathname;
+    $('#change-room-select').change(function () {
+        var href = this.options[this.selectedIndex].value;
+        if (href !== "")
+            window.location.pathname = href;
+    });
     $('#success').click(function (data) {
 
         var eventId = $('#myModal').find("#eventId").val();
@@ -10,7 +15,7 @@ $(document).ready(function () {
             "end": new Date($('#date-end').find("input").val())
         };
         $.ajax({
-            url: path + '/room/' + $('#room').val() + '/add-event-test',
+            url: path + '/add-event',
             dataType: 'json',
             type: 'POST',
             data: JSON.stringify(json),
@@ -34,7 +39,7 @@ $(document).ready(function () {
 
         if(eventId > 0) {
             $.ajax({
-                url: path + '/delete/event',
+                url: path + '/delete-event',
                 dataType: 'json',
                 type: 'POST',
                 data: JSON.stringify(json),
@@ -105,12 +110,12 @@ $(document).ready(function () {
                 "end": new Date(formatDate(event.end))
             };
             $.ajax({
-                url: path + '/room/' + $('#room').val() + '/add-event-test',
+                url: path + '/add-event',
                 dataType: 'json',
                 type: 'POST',
                 data: JSON.stringify(json),
                 contentType: 'application/json',
-                timeout: 100000,
+                timeout: 100000
             });
         }
     })

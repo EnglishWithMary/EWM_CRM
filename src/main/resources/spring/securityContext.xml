@@ -32,7 +32,7 @@
         <form-login
                 login-processing-url="/security_check"
                 login-page="/login"
-                default-target-url="/personProfile"
+                default-target-url="/profile"
                 authentication-failure-url="/login?error"
                 username-parameter="username"
                 password-parameter="password"/>

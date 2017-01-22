@@ -11,11 +11,17 @@
     <definition name="rooms/add" extends="default">
         <put-attribute name="title" value="Add Room"/>
         <put-attribute name="body" value="/WEB-INF/pages/rooms/add.jsp"/>
+        <put-attribute name="additionalScripts" value="/WEB-INF/pages/rooms/room-add-scripts.jsp"/>
+    </definition>
+    <definition name="rooms/edit" extends="default">
+        <put-attribute name="title" value="Add Room"/>
+        <put-attribute name="body" value="/WEB-INF/pages/rooms/edit.jsp"/>
+        <put-attribute name="additionalScripts" value="/WEB-INF/pages/rooms/room-add-scripts.jsp"/>
     </definition>
     <definition name="rooms/info" extends="default">
         <put-attribute name="title" value="Room's Calendar"/>
         <put-attribute name="body" value="/WEB-INF/pages/rooms/info.jsp"/>
-        <put-attribute name="additionalScripts" value="/WEB-INF/pages/rooms/additionalScripts.jsp"/>
+        <put-attribute name="additionalScripts" value="/WEB-INF/pages/rooms/room-info-scripts.jsp"/>
     </definition>
     <definition name="rooms/add/event" extends="default">
         <put-attribute name="title" value="Add Event"/>

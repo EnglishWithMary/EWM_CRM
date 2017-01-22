@@ -4,10 +4,8 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-
-    <definition name="persons/lead-info" extends="default">
-        <put-attribute name="title" value="Lead info" />
-        <put-attribute name="body" value="/WEB-INF/pages/persons/lead-info.jsp" />
+    <definition name="search/all" extends="default">
+        <put-attribute name="title" value="Search results" />
+        <put-attribute name="body" value="/WEB-INF/pages/search/all.jsp" />
     </definition>
-
 </tiles-definitions>

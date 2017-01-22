@@ -38,7 +38,7 @@ public @Data class PersonDTO {
 
     private String organization;
 
-    private String birthdayDate;
+    private String birthdayString;
 
     protected String avatarURL;
 

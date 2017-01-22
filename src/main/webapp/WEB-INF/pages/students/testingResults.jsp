@@ -13,7 +13,7 @@
                 <strong>Testing results</strong>
             </div>
             <div class="panel-body">
-                <sf:form method="post" modelAttribute="studentLevelHistory" action="/saveTestingResults">
+                <sf:form method="post" modelAttribute="studentLevelHistory" action="/students/${student.id}/save-testing-result">
                     <div class="container">
                         <h4>Testing date <input name="testingDate" type="date" value=${checkpointDate}/></h4>
                     </div>

@@ -4,14 +4,20 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-    <definition name="admins/add" extends="home">
+    <definition name="admins/add" extends="default">
         <put-attribute name="title" value="Add new Admin" />
         <put-attribute name= "body" value="/WEB-INF/pages/admins/add.jsp" />
         <put-attribute name="formValidationScripts" value="/WEB-INF/pages/templates/defaultFormValidationScripts.jsp" />
     </definition>
 
-    <definition name="admins/all" extends="home">
+    <definition name="admins/all" extends="default">
         <put-attribute name="title" value="Admins page" />
         <put-attribute name="body" value="/WEB-INF/pages/admins/all.jsp" />
+    </definition>
+
+    <definition name="persons/admin-info" extends="default">
+        <put-attribute name="title" value="Admin info" />
+        <put-attribute name="body" value="/WEB-INF/pages/persons/admin-info.jsp" />
+        <put-attribute name="additionalScripts" value="/WEB-INF/pages/rooms/additionalScripts.jsp"/>
     </definition>
 </tiles-definitions>

@@ -3,9 +3,8 @@ package evg.testt.controller;
 import evg.testt.dto.PersonDTO;
 import evg.testt.exception.BadAvatarNameException;
 import evg.testt.exception.PersonException;
-import evg.testt.exception.PersonRoleNotFoundException;
-import evg.testt.model.*;
-//import evg.testt.oval.SpringOvalValidator;
+import evg.testt.model.Person;
+import evg.testt.model.Personnel;
 import evg.testt.service.AvatarService;
 import evg.testt.service.PersonDTOService;
 import evg.testt.service.PersonService;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,7 +25,11 @@ import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Collections;
 import java.util.List;
+
+//import evg.testt.exception.PersonRoleNotFoundException;
+//import evg.testt.oval.SpringOvalValidator;
 
 @Controller
 public class PersonController {
@@ -49,7 +51,7 @@ public class PersonController {
     public String profilePerson(@ModelAttribute("person") @Valid PersonDTO personDTO,
                                 BindingResult bindingResult,
                                 Principal principal, Model model)
-            throws PersonRoleNotFoundException, SQLException {
+            throws SQLException {
 
         Person person = personService.getPersonByUserLogin(principal.getName());
         model.addAttribute("person", person);
@@ -58,14 +60,14 @@ public class PersonController {
 
 //    /persons/updatePerson
 //    old name /personUpdate
-    @RequestMapping(value = "/personUpdate", method = RequestMethod.POST)
+    @RequestMapping(value = "/persons/updatePerson", method = RequestMethod.POST)
     public String updatePerson(@ModelAttribute("person") @Valid PersonDTO personDTO,
                                BindingResult bindingResult,
                                @RequestParam("image") MultipartFile multipartFile,
                                Principal principal)
             throws
-            IOException, PersonException, PersonRoleNotFoundException,
-            BadAvatarNameException, SQLException, ParseException {
+            IOException, PersonException, BadAvatarNameException,
+            SQLException, ParseException {
 
         String login = principal.getName();
 
@@ -79,21 +81,7 @@ public class PersonController {
         } catch (SQLException e) {
             throw new PersonException("Can't update Person Profile with login" + login);
         }
-        return "redirect:/home";
-    }
-
-    @RequestMapping(value = "/persons", method = RequestMethod.GET)
-    public String showGroups(Model model, @RequestParam(required = false) Integer page) throws SQLException {
-
-        page = (page == null || page < 1) ? 1 : page;
-
-        int count = personnelService.count();
-        int pages = count % pageSize == 0 ? count / pageSize : count / pageSize + 1;
-
-        List<Personnel> personnel = personnelService.getAllSortedAndPaginated(page);
-        model.addAttribute("personnel", personnel);
-        model.addAttribute("pages", pages);
-        return "persons/all";
+        return "redirect:/profile";
     }
 
 //   what to rename here?
@@ -110,6 +98,17 @@ public class PersonController {
         Person person = personService.getById(id);
         personService.delete(person);
         return "persons/all";
+    }
+
+    @RequestMapping(value = "/fullSearch")
+    public String search(Model model, @RequestParam String searchText) throws SQLException {
+        List<Personnel> persons = Collections.EMPTY_LIST;
+
+        if(!searchText.equals(""))
+        persons = personService.getPersonsByKeyWord(searchText);
+
+        model.addAttribute("persons", persons);
+        return "search/all";
     }
 
     /*
@@ -139,24 +138,4 @@ public class PersonController {
     public String testGroupInfo(){
         return "persons/groups/test/info";
     }
-
-    /*
-    This can be apply not for "comments" only
-
-    @RequestMapping(value = "/personUpdateComments", method = RequestMethod.POST)
-    public String studentUpdate(Model model,
-                                @RequestParam Integer id,
-                                @RequestParam Integer role,
-                                @RequestParam String comments) throws SQLException {
-
-        Person person = personService.getById(id);
-        person.setComments(comments);
-        //personService.update(person);
-
-        // надо возвращать туда, откуда вызван метод
-        //model.addAttribute("student", student);
-
-        return "redirect:/students";
-    }
-    */
 }

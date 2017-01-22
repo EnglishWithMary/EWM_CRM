@@ -4,6 +4,7 @@ import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.validation.Valid;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.List;
 
 @Controller
 public class PersonnelController {
@@ -30,12 +32,31 @@ public class PersonnelController {
     AdminService adminService;
     @Autowired
     PersonService personService;
+    @Autowired
+    private PersonnelService personnelService;
+    @Value("${pagination.page.size}")
+    protected int pageSize;
+
+
+    @RequestMapping(value = "/personnel", method = RequestMethod.GET)
+    public String showGroups(Model model, @RequestParam(required = false) Integer page) throws SQLException {
+
+        page = (page == null || page < 1) ? 1 : page;
+
+        int count = personnelService.count();
+        int pages = count % pageSize == 0 ? count / pageSize : count / pageSize + 1;
+
+        List<Personnel> personnel = personnelService.getAllSortedAndPaginated(page);
+        model.addAttribute("personnel", personnel);
+        model.addAttribute("pages", pages);
+        return "persons/all";
+    }
 
     @RequestMapping(value = "/personnel/addAdmins")
     public String addAdmin(Model model) {
         PersonDTO person = new PersonDTO();
         model.addAttribute("adminWithPersonnel", person);
-        return "personnels/addAdmin";
+        return "personnel/addAdmin";
     }
     @RequestMapping(value = "/personnel/saveAdmin", method = RequestMethod.POST)
     public String saveAdmin(@ModelAttribute("adminWithPersonnel") @Valid PersonDTO personDTO,
@@ -55,7 +76,7 @@ public class PersonnelController {
 
             return "redirect:/persons";
         } else {
-            return "personnels/addAdmin";
+            return "personnel/addAdmin";
         }
     }
 
@@ -71,7 +92,7 @@ public class PersonnelController {
     public String addManagerPersonnel(Model model) {
         PersonDTO person = new PersonDTO();
         model.addAttribute("managerWithPersonnel", person);
-        return "personnels/addManager";
+        return "personnel/addManager";
     }
 
     @RequestMapping(value = "/personnel/saveManager", method = RequestMethod.POST)
@@ -88,9 +109,9 @@ public class PersonnelController {
             manager = personDTOService.updateRegisteredUser(manager, personDTO);
             managerService.insert(manager);
 
-            return "redirect:/persons";
+            return "redirect:/personnel";
         } else {
-            return "personnels/addManager";
+            return "personnel/addManager";
         }
     }
 
@@ -98,7 +119,7 @@ public class PersonnelController {
     public String addTeacher(Model model) {
         PersonDTO person =  new PersonDTO();
         model.addAttribute("teacherWithPersonnelAdd", person);
-        return "personnels/addTeacher";
+        return "personnel/addTeacher";
     }
 
     @RequestMapping(value = "/personnel/saveTeacher", method = RequestMethod.POST)
@@ -119,7 +140,7 @@ public class PersonnelController {
 
             return "redirect:/persons";
         } else {
-            return "personnels/addTeacher";
+            return "personnel/addTeacher";
         }
     }
 }

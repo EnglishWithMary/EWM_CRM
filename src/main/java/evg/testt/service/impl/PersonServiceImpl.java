@@ -1,16 +1,16 @@
 package evg.testt.service.impl;
 
-import evg.testt.exception.PersonRoleNotFoundException;
-import evg.testt.model.Person;
 import evg.testt.dao.PersonRepository;
-import evg.testt.model.State;
-import evg.testt.model.StateType;
+import evg.testt.model.Person;
+import evg.testt.model.Personnel;
 import evg.testt.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -21,13 +21,36 @@ public class PersonServiceImpl extends BaseService<Person, PersonRepository> imp
     PersonRepository personRepository;
 
     @Override
-    public Person getPersonByUserLogin(String userLogin) throws SQLException, PersonRoleNotFoundException {
-        return dao.findPersonByUserLogin(userLogin);
+    public Person getPersonByUserLogin(String userLogin) throws SQLException {
+        Person person = dao.findPersonByUserLogin(userLogin);
+
+        try {
+            DateFormat birthdayDate = new SimpleDateFormat("yyyy-MM-dd");
+            person.setBirthdayString(birthdayDate.format(person.getBirthdayDate()));
+        }
+        catch (NullPointerException e){}
+
+        return person;
     }
 
     @Override
     public List<Person>  getSortedByRegistrationDate() throws SQLException{
         return personRepository.findSortedByRegistrationDate();
+    }
+
+    @Override
+    public List<Personnel> getPersonsByKeyWord(String keyWords) throws SQLException {
+        StringBuilder searchText = new StringBuilder();
+
+        String[] words = keyWords.split("\\s");
+
+        for (int i = 0; i < words.length; i++) {
+            searchText.append(words[i] + ":*");
+            if (i < words.length - 1)
+                searchText.append("|");
+        }
+
+        return dao.findPersonByKeyWord(searchText.toString());
     }
 
     @Override

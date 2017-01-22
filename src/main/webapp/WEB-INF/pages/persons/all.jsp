@@ -1,5 +1,3 @@
-<%@ page import="javax.persistence.Query" %>
-<%@ page import="java.sql.ResultSet" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -128,7 +126,7 @@
                                 <ul class="pagination">
                                     <c:forEach var="page" begin="1" end="${pages}">
                                         <li class="${(page eq param.page) or ((param.page eq null) and (page eq 1))? 'active' : ''}">
-                                            <a href="/persons?page=${page}">
+                                            <a href="/personnel?page=${page}">
                                                     ${page}
                                             </a>
                                         </li>

@@ -3,11 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-    <title><tiles:getAsString name="title"/></title>
     <tiles:insertAttribute name="resources"/>
     <tiles:insertAttribute name="additionalResources"/>
-
 </head>
 <%--<body class="subpage">--%>
 <body>

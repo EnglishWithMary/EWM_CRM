@@ -1,6 +1,5 @@
 package evg.testt.dao.Jpa;
 
-import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.*;
 import evg.testt.dao.PersonRepository;
 import evg.testt.service.PersonService;
@@ -9,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import java.sql.SQLException;
@@ -22,7 +23,7 @@ public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> imple
     PersonService personService;
 
     @Override
-    public Person findPersonByUserLogin(String userLogin) throws PersonRoleNotFoundException {
+    public Person findPersonByUserLogin(String userLogin) {
 
         User user = userService.findByUserLogin(userLogin);
         Role role = user.getRole();
@@ -46,7 +47,7 @@ public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> imple
             query.setParameter("id", user.getId());
             return ((Student) query.getSingleResult()).getPerson();
         default:
-            throw new PersonRoleNotFoundException("Such Role of Person is unknown. Go to PersonRepositoryJpaImpl and add new handler.");
+            return Person.NULL;
         }
     }
 
@@ -59,6 +60,17 @@ public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> imple
             return result;
         }
         return null;
+    }
+
+    @Override
+    public List<Personnel> findPersonByKeyWord(String keywords) throws SQLException {
+        List<Personnel> peoples = Collections.EMPTY_LIST;
+
+        Query nativeQuery = em.createNativeQuery("SELECT * FROM staffview WHERE searchtext @@ to_tsquery(:text);", Personnel.class);
+        nativeQuery.setParameter("text", keywords);
+        peoples = nativeQuery.getResultList();
+
+        return peoples;
     }
 
 }

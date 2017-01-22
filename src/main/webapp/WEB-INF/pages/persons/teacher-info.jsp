@@ -85,6 +85,31 @@
                                     <p><strong>Registration date: </strong>${teacher.person.registrationDate}</p>
                                     <p><strong>Organization: </strong><input type="text"></p>
 
+                                    <p><strong>Knowledge level: </strong>${teacher.level}</p>
+
+                                    <security:authorize access="hasRole('ROLE_ADMIN')">
+                                        <p><strong>Set knowledge level: </strong></p>
+                                        <form action="/setTeacherLevel" method="get">
+                                            <input type="hidden" name="teacher_id" value="${teacher.id}">
+                                            <tr>
+                                                <td><input type="radio" name="level" value="0" checked>JUNIOR_1</td><td></td>
+                                                <td><input type="radio" name="level" value="3">MIDDLE_1</td><td></td>
+                                                <td><input type="radio" name="level" value="6">SENIOR_1</td><td></td>
+                                            </tr><br>
+                                            <tr>
+                                                <td><input type="radio" name="level" value="1">JUNIOR_2</td><td></td>
+                                                <td><input type="radio" name="level" value="4">MIDDLE_2</td><td></td>
+                                                <td><input type="radio" name="level" value="7">SENIOR_2</td><td></td>
+                                            </tr><br>
+                                            <tr>
+                                                <td><input type="radio" name="level" value="2">JUNIOR_3</td>
+                                                <td><input type="radio" name="level" value="5">MIDDLE_3</td>
+                                                <td><input type="radio" name="level" value="8">SENIOR_3</td>
+                                            </tr><br>
+                                            <input type="submit">
+                                        </form>
+                                    </security:authorize><br>
+
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
                                     <p><strong>Salary: </strong><input type="text"></p>
                                     </security:authorize>
