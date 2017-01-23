@@ -30,7 +30,8 @@ import java.util.List;
 //import evg.testt.oval.SpringOvalValidator;
 
 @Controller
-public class PersonController {
+public class
+PersonController {
 
 //    @Autowired
 //    private SpringOvalValidator validator;
