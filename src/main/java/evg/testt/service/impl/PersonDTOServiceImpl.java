@@ -2,7 +2,10 @@ package evg.testt.service.impl;
 
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
+import evg.testt.service.CardService;
 import evg.testt.service.PersonDTOService;
+import evg.testt.service.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.sql.SQLException;
@@ -12,6 +15,11 @@ import java.util.Date;
 
 @Service
 public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTOService {
+
+    @Autowired
+    PersonService personService;
+    @Autowired
+    CardService cardService;
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -48,6 +56,29 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
         }
 
         return person;
+    }
+
+    public PersonDTO getUpdatedPersonDTO (PersonDTO personDTO, Integer personId, Integer cardId) throws SQLException{
+
+        if (personId != null) {
+            Person person = personService.getById(personId);
+            personDTO.setFirstName(person.getFirstName());
+            personDTO.setMiddleName(person.getMiddleName());
+            personDTO.setLastName(person.getLastName());
+            personDTO.setAvatarURL(person.getAvatarURL());
+            personDTO.setEmail(person.getEmail().getEmail());
+            Card card = cardService.getCardByPerson(person);
+            cardId = card.getId();
+            personDTO.setCardId(cardId);
+        } else {
+//          By Default cardId for Lead
+            if (cardId == null) {
+                cardId = 1;
+            }
+            personDTO.setCardId(cardId);
+        }
+
+        return personDTO;
     }
 
     public User getUpdatedUser (User user, PersonDTO personDTO){

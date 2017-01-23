@@ -89,25 +89,14 @@ public class LeadController {
                                 @RequestParam(required = false) Integer personId
     ) throws SQLException {
         request.getSession().setAttribute("callback", request.getHeader("Referer"));
+
+        PersonDTO personDTO = personDTOService.getUpdatedPersonDTO(new PersonDTO(), personId, cardId);
+
+        model.addAttribute("lead", personDTO);
         model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
         model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.LEAD_PIPE));
         model.addAttribute("personId", personId);
-        PersonDTO lead = new PersonDTO();
-        if (personId != null) {
-            Person person = personService.getById(personId);
-            lead.setFirstName(person.getFirstName());
-            lead.setMiddleName(person.getMiddleName());
-            lead.setLastName(person.getLastName());
-            lead.setAvatarURL(person.getAvatarURL());
-            lead.setEmail(person.getEmail().getEmail());
-            Card card = cardService.getCardByPerson(person);
-            cardId = card.getId();
-            lead.setCardId(cardId);
-        } else {
-            if (cardId == null) cardId = 1;
-            lead.setCardId(cardId);
-        }
-        model.addAttribute("lead", lead);
+
         return "leads/add";
     }
 

@@ -81,15 +81,19 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/studentAdd")
-    public String addStudent(Model model) throws SQLException {
-        PersonDTO person = new PersonDTO();
+    public String addStudent(Model model,
+                             @RequestParam(required = false) Integer cardId,
+                             @RequestParam(required = false) Integer personId) throws SQLException {
+
+        PersonDTO personDTO = personDTOService.getUpdatedPersonDTO(new PersonDTO(), personId, cardId);
 
         List<Teacher> teachers = teacherService.getAll();
-
         List<Group> groups = groupService.getAll();
 
-        model.addAttribute("student", person).addAttribute("teachers", teachers);
+        model.addAttribute("student", personDTO);
+        model.addAttribute("teachers", teachers);
         model.addAttribute("groups", groups);
+        model.addAttribute("pipes", cardService.getCards(Pipe.STUDENT_PIPE));
         return "students/add";
     }
 
