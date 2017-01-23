@@ -24,7 +24,7 @@ import java.util.List;
 @Repository
 @PropertySource(value = "classpath:standard.properties")
 public abstract class BaseRepositoryJpaImpl<T extends BaseModel>
-        implements BaseRepository<T>{
+        implements BaseRepository<T> {
 
     protected Class<T> entityClass;
 
@@ -34,14 +34,14 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel>
     @Value("${pagination.page.size}")
     protected int pageSize;
 
-    public BaseRepositoryJpaImpl(){
+    public BaseRepositoryJpaImpl() {
         ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
     }
 
     public Collection<T> findAll() {
         Query query = em.createQuery("SELECT t FROM " + entityClass.getName() + " t");
-        return (List<T>)query.getResultList();
+        return (List<T>) query.getResultList();
     }
 
     public T findOne(Integer id) {
@@ -56,31 +56,31 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel>
         }
     }
 
-    public void delete(T t){
-            em.remove(t);
+    public void delete(T t) {
+        em.remove(t);
     }
 
-    public boolean exists(Integer id){
+    public boolean exists(Integer id) {
         return findOne(id) != null;
     }
 
     public int count() {
-        long total = 0;
+        long count;
         Query query = em.createQuery("SELECT count(t) FROM " + entityClass.getName() + " t");
-        total = (long)query.getSingleResult();
-        return (int)total;
+        count = (long) query.getSingleResult();
+        return (int) count;
     }
 
     public List<T> findByPage(int pageNumber) {
         Query query = em.createQuery("SELECT t FROM " + entityClass.getName() + " t");
-        query.setFirstResult((pageNumber-1) * pageSize);
+        query.setFirstResult((pageNumber - 1) * pageSize);
         query.setMaxResults(pageSize);
-        return query.getResultList();
+        return (List<T>) query.getResultList();
     }
 
-    public Query findPaginated(int pageNumber){
+    public Query findPaginated(int pageNumber) {
         Query query = em.createQuery("SELECT t FROM " + entityClass.getName() + " t");
-        query.setFirstResult((pageNumber-1) * pageSize);
+        query.setFirstResult((pageNumber - 1) * pageSize);
         query.setMaxResults(pageSize);
         return query;
     }
@@ -88,16 +88,16 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel>
     /*
         Here should be sorting parameters
      */
-    public List<T> findAllSortedAndPaginated(int pageNumber){
+    public List<T> findAllSortedAndPaginated(int pageNumber) {
         return findPaginated(pageNumber).getResultList();
     }
 
-    private Boolean hasPerson(){
-        Boolean hasPerson=false;
+    private Boolean hasPerson() {
+        Boolean hasPerson = false;
         Field[] fields = entityClass.getDeclaredFields();
-        for (Field field:fields) {
-            if (field.getType().equals(Person.class)){
-                hasPerson=true;
+        for (Field field : fields) {
+            if (field.getType().equals(Person.class)) {
+                hasPerson = true;
                 break;
             }
         }
@@ -106,11 +106,11 @@ public abstract class BaseRepositoryJpaImpl<T extends BaseModel>
 
     @Override
     public List<T> findByPageSorted(int pageNumber) throws SQLException {
-        if(!hasPerson())throw new PersonFieldTypeNotFoundException(entityClass.getName() +
+        if (!hasPerson()) throw new PersonFieldTypeNotFoundException(entityClass.getName() +
                 " has no field of " + Person.class.getName() + " type.");
-        Query query = em.createQuery("select t from "+entityClass.getName()+
+        Query query = em.createQuery("select t from " + entityClass.getName() +
                 " t join t.person p order by p.registrationDate asc");
-        query.setFirstResult((pageNumber-1) * pageSize);
+        query.setFirstResult((pageNumber - 1) * pageSize);
         query.setMaxResults(pageSize);
         return query.getResultList();
     }

@@ -41,7 +41,7 @@ public class PersonnelController {
     @RequestMapping(value = "/personnel", method = RequestMethod.GET)
     public String showGroups(Model model, @RequestParam(required = false) Integer page) throws SQLException {
 
-        page = (page == null || page < 1) ? 1 : page;
+        page = page > 1 ? page : 1;
 
         int count = personnelService.count();
         int pages = count % pageSize == 0 ? count / pageSize : count / pageSize + 1;
@@ -65,15 +65,14 @@ public class PersonnelController {
 
         User u = userService.findByUserLogin(personDTO.getLogin());
 
-        if (u != null)
+        if (u != null){
             bindingResult.rejectValue("login", "1", "Login already exist.");
+        }
 
         if (!bindingResult.hasErrors()) {
-
             Admin admin = new Admin();
             admin = personDTOService.updateRegisteredUser(admin, personDTO);
             adminService.insert(admin);
-
             return "redirect:/persons";
         } else {
             return "personnel/addAdmin";
@@ -101,8 +100,9 @@ public class PersonnelController {
 
         User u = userService.findByUserLogin(personDTO.getLogin());
 
-        if (u != null)
+        if (u != null) {
             bindingResult.rejectValue("login", "1", "Login already exist.");
+        }
 
         if (!bindingResult.hasErrors()) {
             Manager manager = new Manager();
@@ -129,11 +129,11 @@ public class PersonnelController {
 
         User u = userService.findByUserLogin(personDTO.getLogin());
 
-        if (u != null)
+        if (u != null) {
             bindingResult.rejectValue("login", "1", "Login already exist.");
+        }
 
         if (!bindingResult.hasErrors()) {
-
             Teacher teacher = new Teacher();
             teacher = personDTOService.updateRegisteredUser(teacher, personDTO);
             teacherService.insert(teacher);
