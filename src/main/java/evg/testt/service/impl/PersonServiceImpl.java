@@ -17,25 +17,26 @@ import java.util.List;
 @Service
 public class PersonServiceImpl extends BaseService<Person, PersonRepository> implements PersonService {
 
-    @Autowired
-    PersonRepository personRepository;
+//    @Autowired
+//    PersonRepository personRepository;
 
     @Override
     public Person getPersonByUserLogin(String userLogin) throws SQLException {
         Person person = dao.findPersonByUserLogin(userLogin);
 
-        try {
+//        try {
+        if (person.getBirthdayDate() != null) {
             DateFormat birthdayDate = new SimpleDateFormat("yyyy-MM-dd");
             person.setBirthdayString(birthdayDate.format(person.getBirthdayDate()));
         }
-        catch (NullPointerException e){}
-
+//        } catch (NullPointerException e) {}
         return person;
     }
 
     @Override
-    public List<Person>  getSortedByRegistrationDate() throws SQLException{
-        return personRepository.findSortedByRegistrationDate();
+    public List<Person> getSortedByRegistrationDate() throws SQLException {
+//        return personRepository.findSortedByRegistrationDate();
+        return dao.findSortedByRegistrationDate();
     }
 
     @Override

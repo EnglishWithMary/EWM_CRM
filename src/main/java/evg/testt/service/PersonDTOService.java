@@ -15,6 +15,8 @@ public interface PersonDTOService {
 
     Person getUpdatedPerson(Person person, PersonDTO personDTO) throws ParseException;
 
+    PersonDTO getUpdatedPersonDTO (PersonDTO personDTO, Integer personId, Integer cardId) throws SQLException;
+
     User getUpdatedUser (User user, PersonDTO personDTO);
 
     Lead updateLead(Lead lead, PersonDTO personDTO) throws ParseException;
