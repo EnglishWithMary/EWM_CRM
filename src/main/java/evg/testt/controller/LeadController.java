@@ -2,23 +2,19 @@ package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
-//import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.security.Principal;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Collections;
@@ -89,41 +85,34 @@ public class LeadController {
 
     @RequestMapping(value = "/leads/add", method = RequestMethod.POST)
     public String addLeadOnPipe(HttpServletRequest request, Model model,
+    @RequestMapping(value = "/leadAdd", method = RequestMethod.POST)
+    public String leadAdd(HttpServletRequest request, Model model,
                                 @RequestParam(required = false) Integer cardId,
                                 @RequestParam(required = false) Integer personId
     ) throws SQLException {
         request.getSession().setAttribute("callback", request.getHeader("Referer"));
+
+        PersonDTO personDTO = personDTOService.getUpdatedPersonDTO(new PersonDTO(), personId, cardId);
+
+        model.addAttribute("lead", personDTO);
         model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
         model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.LEAD_PIPE));
         model.addAttribute("personId", personId);
-        PersonDTO lead = new PersonDTO();
-        if (personId != null) {
-            Person person = personService.getById(personId);
-            lead.setFirstName(person.getFirstName());
-            lead.setMiddleName(person.getMiddleName());
-            lead.setLastName(person.getLastName());
-            lead.setAvatarURL(person.getAvatarURL());
-            lead.setEmail(person.getEmail().getEmail());
-            Card card = cardService.getCardByPerson(person);
-            cardId = card.getId();
-            lead.setCardId(cardId);
-        } else {
-            if (cardId == null) cardId = 1;
-            lead.setCardId(cardId);
-        }
-        model.addAttribute("lead", lead);
+
         return "leads/add";
     }
 
     @RequestMapping(value = "/leads/save", method = RequestMethod.POST)
     public String saveLeadOnPipe(HttpServletRequest request, Model model,
+    @RequestMapping(value = "/leadSave", method = RequestMethod.POST)
+    public String leadSave(HttpServletRequest request, Model model,
                                  @ModelAttribute("lead") @Valid PersonDTO personDTO,
                                  BindingResult bindingResult,
                                  @RequestParam(required = false) Integer personId
     ) throws SQLException, ParseException {
+
         model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
         model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.LEAD_PIPE));
-//        validator.validate(personDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("personId", personId);

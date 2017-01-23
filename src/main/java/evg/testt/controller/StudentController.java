@@ -26,6 +26,8 @@ import java.util.List;
 public class StudentController {
 
     @Autowired
+    private CardService cardService;
+    @Autowired
     private StudentService studentService;
     @Autowired
     private UserService userService;
@@ -81,13 +83,20 @@ public class StudentController {
     @RequestMapping(value = "/students/add")
     public String addStudent(Model model) throws SQLException {
         PersonDTO person = new PersonDTO();
+    @RequestMapping(value = "/studentAdd")
+    public String addStudent(Model model,
+                             @RequestParam(required = false) Integer cardId,
+                             @RequestParam(required = false) Integer personId) throws SQLException {
+
+        PersonDTO personDTO = personDTOService.getUpdatedPersonDTO(new PersonDTO(), personId, cardId);
 
         List<Teacher> teachers = teacherService.getAll();
-
         List<Group> groups = groupService.getAll();
 
-        model.addAttribute("student", person).addAttribute("teachers", teachers);
+        model.addAttribute("student", personDTO);
+        model.addAttribute("teachers", teachers);
         model.addAttribute("groups", groups);
+        model.addAttribute("cards", cardService.getCards(Pipe.STUDENT_PIPE));
         return "students/add";
     }
 
@@ -97,9 +106,6 @@ public class StudentController {
                               @RequestParam(required = false) Integer teacher_id,
                               @RequestParam(required = false) Integer group_id)
             throws SQLException, ParseException {
-//        validator.validate(personDTO, bindingResult);
-        Teacher teacher;
-        Group group;
 
         User u = userService.findByUserLogin(personDTO.getLogin());
         if (u != null) {
@@ -109,11 +115,11 @@ public class StudentController {
             Student student = new Student();
             student = personDTOService.updateRegisteredUser(student, personDTO);
             if (teacher_id != null && teacher_id > 0) {
-                teacher = teacherService.getById(teacher_id);
+                Teacher teacher = teacherService.getById(teacher_id);
                 student.setTeacher(teacher);
             }
             if (group_id != null && group_id > 0) {
-                group = groupService.getById(group_id);
+                Group group = groupService.getById(group_id);
                 student.setGroup(group);
             }
             studentService.insert(student);
@@ -241,6 +247,10 @@ public class StudentController {
     @RequestMapping(value = "/students/info", method = RequestMethod.GET)
     public String studentInfo(Model model, @RequestParam(value = "student_id") Integer studentId) throws SQLException {
         Student student = studentService.getById(studentId);
+        Card currentCard = cardService.getCardByPerson(student.getPerson());
+        List<Card> personCardList = cardService.getCards(Pipe.STUDENT_PIPE);
+        model.addAttribute("currentCard", currentCard);
+        model.addAttribute("personCardList", personCardList);
         model.addAttribute("student", student);
         model.addAttribute("level", studentLevelHistoryService.getLastByStudent(student));
         return "persons/student-info";

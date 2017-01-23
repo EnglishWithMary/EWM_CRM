@@ -97,7 +97,7 @@
                                         <c:forEach items="${cards}" var="card">
                                             <option value="${card.id}"
                                                     <c:if test="${card.id == lead.cardId}">selected</c:if>>
-                                                    ${card.cardName} (id=${card.id})
+                                                    ${card.cardName}
                                             </option>
                                         </c:forEach>
                                     </sf:select>
