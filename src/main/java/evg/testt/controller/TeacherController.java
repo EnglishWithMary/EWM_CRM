@@ -82,17 +82,15 @@ public class TeacherController {
 
 
     @RequestMapping(value = "/teachers/add")
-    public String addTeacher(Model model) {
-    @RequestMapping(value = "/teacherAdd")
     public String addTeacher(Model model,
                              HttpServletRequest request) {
-        request.getSession().setAttribute("teacherAdd", request.getHeader("Referer"));
+        request.getSession().setAttribute("teachers/add", request.getHeader("Referer"));
         PersonDTO person = new PersonDTO();
         model.addAttribute("teacher", person);
         return "teachers/add";
     }
 
-    @RequestMapping(value = "/teacherSave", method = RequestMethod.POST)
+    @RequestMapping(value = "/teachers/save", method = RequestMethod.POST)
     public String saveTeacher(@Valid @ModelAttribute("teacher") PersonDTO personDTO, BindingResult bindingResult,
                               Model model,
                               HttpServletRequest request) throws SQLException, ParseException {
@@ -108,7 +106,7 @@ public class TeacherController {
             teacher = personDTOService.updateRegisteredUser(teacher, personDTO);
             teacherService.insert(teacher);
 
-            return "redirect:" + request.getSession().getAttribute("teacherAdd").toString();
+            return "redirect:" + request.getSession().getAttribute("teachers/add").toString();
         } else {
             return "teachers/add";
         }
@@ -167,6 +165,5 @@ public class TeacherController {
         teacherService.update(teacher);
 
         return "redirect:/teacher/info?teacher_id=" + teacher_id;
-
     }
 }

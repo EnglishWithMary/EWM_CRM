@@ -82,11 +82,9 @@ public class AdminController {
         return "admins/all";
     }
 
-    @RequestMapping(value = "/adminAdd")
-    public String addAdmin(Model model, HttpServletRequest request) {
-        request.getSession().setAttribute("adminAdd", request.getHeader("Referer"));
     @RequestMapping(value = "/admins/add")
-    public String addAdmin(Model model) {
+    public String addAdmin(Model model, HttpServletRequest request) {
+        request.getSession().setAttribute("admins/add", request.getHeader("Referer"));
         PersonDTO person = new PersonDTO();
         model.addAttribute("admin", person);
         return "admins/add";
@@ -108,7 +106,7 @@ public class AdminController {
             Admin admin = new Admin();
             admin = personDTOService.updateRegisteredUser(admin, personDTO);
             adminService.insert(admin);
-            return "redirect:" + request.getSession().getAttribute("adminAdd").toString();
+            return "redirect:" + request.getSession().getAttribute("admins/add").toString();
         } else {
             return "admins/add";
         }
