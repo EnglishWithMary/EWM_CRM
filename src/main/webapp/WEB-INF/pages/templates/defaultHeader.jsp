@@ -67,7 +67,7 @@
                     </li>
                 </ul>
                 <!--Search in All fields-->
-                <form class="navbar-form navbar-left" action="/fullSearch">
+                <form class="navbar-form navbar-left" action="/persons/fullSearch">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search" name="searchText">
                     </div>
