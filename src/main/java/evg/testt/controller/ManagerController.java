@@ -45,16 +45,18 @@ public class ManagerController {
 
         if (flagSorted == null) flagSorted = false;
 
-        int totalManagers = 0, pages = 0, currentPage = 1;
+        int totalManagers;
+        int pages;
+        int currentPage = 1;
 
-        if (page != null)
-            if (page > 0)
-                currentPage = page;
+        if (page != null && page > 0) {
+            currentPage = page;
+        }
 
         totalManagers = managerService.count();
 
         List<Manager> managers = Collections.EMPTY_LIST;
-        if (flagSorted == false) {
+        if (!flagSorted) {
             managers = managerService.getByPage(currentPage);
         } else {
             managers = managerService.getByPageSorted(currentPage);
@@ -62,8 +64,9 @@ public class ManagerController {
 
         pages = ((totalManagers / pageSize) + 1);
 
-        if (totalManagers % pageSize == 0)
+        if (totalManagers % pageSize == 0) {
             pages--;
+        }
 
         model.addAttribute("managers", managers);
         model.addAttribute("pages", pages);

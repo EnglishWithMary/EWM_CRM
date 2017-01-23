@@ -17,17 +17,14 @@ import java.util.List;
 public class GroupServiceImpl extends BaseService<Group, GroupRepository>
         implements GroupService{
 
-    @Autowired
-    GroupRepository groupRepository;
-
     @Override
     public List<Group> getByTeacher(Teacher teacher) throws SQLException {
-        return groupRepository.findByTeacher(teacher);
+        return dao.findByTeacher(teacher);
     }
 
     @Override
     public List<Group> getByGroup(Group group) throws SQLException {
-        return groupRepository.findByGroup(group);
+        return dao.findByGroup(group);
     }
 }
 

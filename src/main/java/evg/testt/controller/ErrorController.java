@@ -21,8 +21,9 @@ public class ErrorController {
             ex.printStackTrace();
             return "error";
         }
-        else
+        else {
             throw ex;
+        }
     }
 
     @ExceptionHandler(value = Exception.class)
@@ -32,8 +33,9 @@ public class ErrorController {
             ex.printStackTrace();
             return "error";
         }
-        else
+        else{
             throw ex;
+        }
     }
 }
 
