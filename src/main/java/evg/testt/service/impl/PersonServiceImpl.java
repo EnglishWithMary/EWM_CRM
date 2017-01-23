@@ -55,6 +55,11 @@ public class PersonServiceImpl extends BaseService<Person, PersonRepository> imp
     }
 
     @Override
+    public List<Person> getTrashedPersons() throws SQLException {
+        return dao.findTrashedPersons();
+    }
+
+    @Override
     public void update(Person o) throws SQLException {
         o.setModifyDate(new Date());
         dao.save(o);
