@@ -45,10 +45,12 @@ public class GroupController {
     public String showGroups(@RequestParam(required = false) Integer page,
                              @RequestParam(required = false) Boolean flagSorted,
                              Model model) throws SQLException {
+        int totalGroups = 0, pages = 0, currentPage = 1;
+
         List<Teacher> teachers = teacherService.getAll();
         List<Student> students = studentService.getAll();
+
         if (flagSorted == null) flagSorted = false;
-        int totalGroups = 0, pages = 0, currentPage = 1;
         if (page != null) {
             if (page > 0) {
                 currentPage = page;
@@ -56,7 +58,7 @@ public class GroupController {
         }
         totalGroups = groupService.count();
         List<Group> groups = Collections.EMPTY_LIST;
-        if (flagSorted == false) {
+        if (!flagSorted) {
             groups = groupService.getByPage(currentPage);
         } else {
             groups = groupService.getByPageSorted(currentPage);
@@ -64,7 +66,7 @@ public class GroupController {
         pages = ((totalGroups / pageSize) + 1);
         if (totalGroups % pageSize == 0)
             pages--;
-        groups = groupService.getAll();
+//        groups = groupService.getAll();
         model.addAttribute("groups", groups);
         model.addAttribute("pages", pages);
         model.addAttribute("flagSorted", flagSorted);
