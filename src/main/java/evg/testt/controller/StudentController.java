@@ -78,7 +78,7 @@ public class StudentController {
         return "students/all";
     }
 
-    @RequestMapping(value = "/studentAdd")
+    @RequestMapping(value = "/students/add")
     public String addStudent(Model model) throws SQLException {
         PersonDTO person = new PersonDTO();
 
@@ -91,7 +91,7 @@ public class StudentController {
         return "students/add";
     }
 
-    @RequestMapping(value = "/studentSave", method = RequestMethod.POST)
+    @RequestMapping(value = "/students/save", method = RequestMethod.POST)
     public String saveStudent(@ModelAttribute("student") @Valid PersonDTO personDTO,
                               BindingResult bindingResult, Model model,
                               @RequestParam(required = false) Integer teacher_id,
@@ -125,7 +125,7 @@ public class StudentController {
         }
     }
 
-    @RequestMapping(value = "/studentSortByDate", method = RequestMethod.POST)
+    @RequestMapping(value = "/students/SortByDate", method = RequestMethod.POST)
     public String filterStudents(Model model) throws SQLException {
 
         List<Student> students = studentService.getSortedByRegistrationDate();
@@ -137,14 +137,14 @@ public class StudentController {
         return "students/all";
     }
 
-    @RequestMapping(value = "/studentDelete")
+    @RequestMapping(value = "/students/delete")
     public String studentDelete(@RequestParam Integer id) throws SQLException {
         Student student = studentService.getById(id);
         studentService.delete(student);
         return "students/all";
     }
 
-    @RequestMapping(value = "/studentTrash")
+    @RequestMapping(value = "/students/trash")
     public String studentTrash(@RequestParam Integer id) throws SQLException {
         Student student = studentService.getById(id);
         studentService.trash(student);
@@ -152,7 +152,7 @@ public class StudentController {
     }
 
 
-    @RequestMapping(value = "/studentSortByTeacher", method = RequestMethod.POST)
+    @RequestMapping(value = "/students/SortByTeacher", method = RequestMethod.POST)
     public String showSortedByTeacher(@RequestParam(required = false) Integer teacher_id, Model model) throws SQLException {
 
         List<Student> students = Collections.EMPTY_LIST;
@@ -210,7 +210,7 @@ public class StudentController {
         return date;
     }
 
-    @RequestMapping(value = "/studentsSortedByGroup", method = RequestMethod.POST)
+    @RequestMapping(value = "/students/SortedByGroup", method = RequestMethod.POST)
     public String showSortedStudent(Model model, @RequestParam(required = false) List<Integer> groupIdList)
             throws SQLException {
         List<Group> groups = groupService.getAll();
@@ -234,7 +234,7 @@ public class StudentController {
 
     }
 
-    @RequestMapping(value = "/student/info", method = RequestMethod.GET)
+    @RequestMapping(value = "/students/info", method = RequestMethod.GET)
     public String studentInfo(Model model, @RequestParam(value = "student_id") Integer studentId) throws SQLException {
         Student student = studentService.getById(studentId);
         model.addAttribute("student", student);
@@ -242,7 +242,7 @@ public class StudentController {
         return "persons/student-info";
     }
 
-    @RequestMapping(value = "/studentUpdateComments", method = RequestMethod.POST)
+    @RequestMapping(value = "/students/UpdateComments", method = RequestMethod.POST)
     public String studentUpdate(Model model,
                                 @RequestParam Integer id,
                                 @RequestParam String comments) throws SQLException {

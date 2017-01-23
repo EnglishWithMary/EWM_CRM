@@ -36,7 +36,7 @@
                             <c:forEach var="level" items="${levels}">
                                 <tr>
                                     <td>
-                                        <a href="/student/info?student_id=${level.student.id}">
+                                        <a href="/students/info?student_id=${level.student.id}">
                                                 ${level.student.person.firstName}
                                                 ${level.student.person.middleName}
                                                 ${level.student.person.lastName}

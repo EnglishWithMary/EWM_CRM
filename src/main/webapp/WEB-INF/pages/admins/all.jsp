@@ -39,18 +39,6 @@
                                 </security:authorize>
                             </tr>
                             </thead>
-                            <tfoot>
-                            <tr>
-                                <th>First name</th>
-                                <th>Last name</th>
-                                <th>Middle name</th>
-                                <th>Registration Date</th>
-                                <security:authorize access="hasRole('ROLE_ADMIN')">
-                                    <th>Delete</th>
-                                    <th>Save</th>
-                                </security:authorize>
-                            </tr>
-                            </tfoot>
                             <tbody>
                             <c:forEach var="admin" items="${admins}">
                                 <tr>

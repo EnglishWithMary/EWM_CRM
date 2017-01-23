@@ -34,7 +34,7 @@
                         <div class="col-md-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <strong>Information About Manager</strong>
+                                    <strong>Information About Administrator</strong>
                                 </div>
                                 <div class="panel-body">
 
@@ -50,14 +50,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="btn-group btn-group-md">
-                                <a href="" class="btn btn-default" type="button">Some buttons</a>
-                                we can use groups
-                            </div>
-                        </div>
-                    </div>
+                    <%--<div class="row">--%>
+                        <%--<div class="col-md-12">--%>
+                            <%--<div class="btn-group btn-group-md">--%>
+                                <%--<a href="" class="btn btn-default" type="button">Some buttons</a>--%>
+                                <%--we can use groups--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
                 </div>
                 <div class="col-md-5">
                     <div class="row">
