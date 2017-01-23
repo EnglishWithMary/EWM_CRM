@@ -29,8 +29,6 @@ import java.util.List;
 @PropertySource(value = "classpath:standard.properties")
 public class TeacherController {
 
-//    @Autowired
-//    SpringOvalValidator validator;
     @Autowired
     TeacherService teacherService;
     @Autowired
@@ -53,16 +51,18 @@ public class TeacherController {
 
             if (flagSorted == null) flagSorted = false;
 
-            int totalTeachers = 0, pages = 0, currentPage = 1;
+            int totalTeachers;
+            int pages;
+            int currentPage = 1;
 
-            if (page != null)
-                if (page > 0)
-                    currentPage = page;
+            if (page != null && page > 0) {
+                currentPage = page;
+            }
 
             totalTeachers = teacherService.count();
 
             List<Teacher> teachers = Collections.EMPTY_LIST;
-            if (flagSorted == false) {
+            if (!flagSorted) {
                 teachers = teacherService.getByPage(currentPage);
             } else {
                 teachers = teacherService.getByPageSorted(currentPage);
@@ -70,9 +70,9 @@ public class TeacherController {
 
             pages = ((totalTeachers / pageSize) + 1);
 
-            if (totalTeachers % pageSize == 0)
+            if (totalTeachers % pageSize == 0) {
                 pages--;
-
+            }
             model.addAttribute("teachers", teachers);
             model.addAttribute("pages", pages);
             model.addAttribute("flagSorted", flagSorted);

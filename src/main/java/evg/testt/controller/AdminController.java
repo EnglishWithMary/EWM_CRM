@@ -42,54 +42,39 @@ public class AdminController {
     @Value("${pagination.page.size}")
     protected int pageSize;
 
-//    @ModelAttribute
-//    public Admin createAdmin(){
-//        Admin admin = new Admin();
-//        admin.setPerson(new Person());
-//        return admin;
-//    }
-//
-//    @RequestMapping(value = "/admin")
-//    public String adminPage(Model model){
-//        return "admin";
-//    }
-//
-//    @RequestMapping(value = "/admins")
-//    public String admins(Model model) throws SQLException {
-//        List<Admin> admins = Collections.EMPTY_LIST;
-//        admins = adminService.getAll();
-//        model.addAttribute("admins", admins);
-//        return "admins/all";
-//    }
-
-
-
-        @RequestMapping(value = "/admins", method = RequestMethod.GET)
+    @RequestMapping(value = "/admins", method = RequestMethod.GET)
     public String showAdmins(@RequestParam(required = false) Integer page,
-                               @RequestParam(required = false) Boolean flagSorted,
-                               Model model) throws SQLException {
+                             @RequestParam(required = false) Boolean flagSorted,
+                             Model model) throws SQLException {
 
-        if (flagSorted == null) flagSorted = false;
 
-        int totalManagers = 0, pages = 0, currentPage = 1;
+        int totalAdmins;
+        int pages;
+        int currentPage = 1;
 
-        if (page != null)
-            if (page > 0)
-                currentPage = page;
+        if (flagSorted == null) {
+            flagSorted = false;
+        }
 
-        totalManagers = adminService.count();
+        if (page != null && page > 0) {
+            currentPage = page;
+        }
+
+        totalAdmins = adminService.count();
 
         List<Admin> admins = Collections.EMPTY_LIST;
+
         if (flagSorted == false) {
             admins = adminService.getByPage(currentPage);
         } else {
             admins = adminService.getByPageSorted(currentPage);
         }
 
-        pages = ((totalManagers / pageSize) + 1);
+        pages = ((totalAdmins / pageSize) + 1);
 
-        if (totalManagers % pageSize == 0)
+        if (totalAdmins % pageSize == 0) {
             pages--;
+        }
 
         model.addAttribute("admins", admins);
         model.addAttribute("pages", pages);
@@ -106,20 +91,19 @@ public class AdminController {
 
     @RequestMapping(value = "/adminSave", method = RequestMethod.POST)
     public String saveAdmin(@ModelAttribute("admin") @Valid PersonDTO personDTO,
-                              BindingResult bindingResult, Model model) throws SQLException, ParseException {
+                            BindingResult bindingResult, Model model) throws SQLException, ParseException {
 
 
         User u = userService.findByUserLogin(personDTO.getLogin());
 
-        if (u != null)
+        if (u != null){
             bindingResult.rejectValue("login", "1", "Login already exist.");
+        }
 
         if (!bindingResult.hasErrors()) {
-
             Admin admin = new Admin();
             admin = personDTOService.updateRegisteredUser(admin, personDTO);
             adminService.insert(admin);
-
             return "redirect:/admins";
         } else {
             return "admins/add";
@@ -128,7 +112,7 @@ public class AdminController {
 
     @RequestMapping(value = "/adminDelete")
     public String adminDelete(@RequestParam Integer id) throws SQLException {
-      Admin admin =adminService.getById(id);
+        Admin admin = adminService.getById(id);
         adminService.delete(admin);
         return "redirect:/admins";
     }
@@ -136,7 +120,7 @@ public class AdminController {
     @RequestMapping(value = "/adminTrash")
     public String adminTrash(@RequestParam Integer id) throws SQLException {
         Admin admin = adminService.getById(id);
-       adminService.trash(admin);
+        adminService.trash(admin);
         return "redirect:/admins";
     }
 

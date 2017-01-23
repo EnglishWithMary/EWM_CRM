@@ -25,8 +25,6 @@ import java.util.List;
 @PropertySource(value = "classpath:standard.properties")
 public class StudentController {
 
-    //    @Autowired
-//    private SpringOvalValidator validator;
     @Autowired
     private StudentService studentService;
     @Autowired
@@ -50,7 +48,9 @@ public class StudentController {
             , @RequestParam(required = false) String studentSortByDate
     ) throws SQLException {
 
-        int totalStudents = 0, pages = 0, currentPage = 1;
+        int totalStudents;
+        int pages;
+        int currentPage = 1;
 
         if (page != null) {
             if (page > 0) currentPage = page;
