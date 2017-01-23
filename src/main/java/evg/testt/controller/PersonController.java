@@ -26,15 +26,9 @@ import java.text.ParseException;
 import java.util.Collections;
 import java.util.List;
 
-//import evg.testt.exception.PersonRoleNotFoundException;
-//import evg.testt.oval.SpringOvalValidator;
-
 @Controller
-public class
-PersonController {
+public class PersonController {
 
-    //    @Autowired
-//    private SpringOvalValidator validator;
     @Autowired
     private SearchService searchService;
     @Autowired
