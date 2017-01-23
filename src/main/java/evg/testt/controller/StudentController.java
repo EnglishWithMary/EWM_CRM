@@ -81,9 +81,6 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/students/add")
-    public String addStudent(Model model) throws SQLException {
-        PersonDTO person = new PersonDTO();
-    @RequestMapping(value = "/studentAdd")
     public String addStudent(Model model,
                              @RequestParam(required = false) Integer cardId,
                              @RequestParam(required = false) Integer personId) throws SQLException {

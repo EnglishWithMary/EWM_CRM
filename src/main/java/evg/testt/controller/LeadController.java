@@ -84,8 +84,6 @@ public class LeadController {
     }
 
     @RequestMapping(value = "/leads/add", method = RequestMethod.POST)
-    public String addLeadOnPipe(HttpServletRequest request, Model model,
-    @RequestMapping(value = "/leadAdd", method = RequestMethod.POST)
     public String leadAdd(HttpServletRequest request, Model model,
                                 @RequestParam(required = false) Integer cardId,
                                 @RequestParam(required = false) Integer personId
@@ -103,8 +101,6 @@ public class LeadController {
     }
 
     @RequestMapping(value = "/leads/save", method = RequestMethod.POST)
-    public String saveLeadOnPipe(HttpServletRequest request, Model model,
-    @RequestMapping(value = "/leadSave", method = RequestMethod.POST)
     public String leadSave(HttpServletRequest request, Model model,
                                  @ModelAttribute("lead") @Valid PersonDTO personDTO,
                                  BindingResult bindingResult,
