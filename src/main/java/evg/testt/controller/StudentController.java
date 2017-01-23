@@ -93,7 +93,7 @@ public class StudentController {
         model.addAttribute("student", personDTO);
         model.addAttribute("teachers", teachers);
         model.addAttribute("groups", groups);
-        model.addAttribute("pipes", cardService.getCards(Pipe.STUDENT_PIPE));
+        model.addAttribute("cards", cardService.getCards(Pipe.STUDENT_PIPE));
         return "students/add";
     }
 
