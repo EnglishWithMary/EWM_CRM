@@ -52,6 +52,8 @@
                             <security:authorize access="hasRole('ROLE_ADMIN')">
                                 <li role="separator" class="divider"></li>
                                 <li><a href="/admins">Admins</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="/trash" class="glyphicon glyphicon-trash"> Trash</a></li>
                             </security:authorize>
                         </ul>
                     </li>

@@ -16,4 +16,5 @@ public interface PersonService extends Service<Person> {
 
     List<Personnel> getPersonsByKeyWord(String keyWords) throws SQLException;
 
+    List<Person> getTrashedPersons() throws SQLException;
 }
