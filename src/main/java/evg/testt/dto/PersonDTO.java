@@ -8,7 +8,6 @@ import javax.validation.constraints.Size;
 
 import javax.persistence.Transient;
 import java.sql.Date;
-//import java.util.Date;
 
 @FieldEquals( field="password", equalsTo="confirmPassword" )
 public @Data class PersonDTO {

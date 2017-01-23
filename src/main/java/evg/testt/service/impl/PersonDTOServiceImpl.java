@@ -60,23 +60,22 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
 
     public PersonDTO getUpdatedPersonDTO (PersonDTO personDTO, Integer personId, Integer cardId) throws SQLException{
 
-        if (personId != null) {
-            Person person = personService.getById(personId);
-            personDTO.setFirstName(person.getFirstName());
-            personDTO.setMiddleName(person.getMiddleName());
-            personDTO.setLastName(person.getLastName());
-            personDTO.setAvatarURL(person.getAvatarURL());
-            personDTO.setEmail(person.getEmail().getEmail());
-            Card card = cardService.getCardByPerson(person);
-            cardId = card.getId();
-            personDTO.setCardId(cardId);
-        } else {
-//          By Default cardId for Lead
-            if (cardId == null) {
-                cardId = 1;
-            }
-            personDTO.setCardId(cardId);
+        Person person = Person.NULL;
+
+        if (cardId == null) {
+            cardId = 1;//By Default cardId for Lead
         }
+
+        if (personId != null) {
+            person = personService.getById(personId);
+        }
+
+        personDTO.setFirstName(person.getFirstName());
+        personDTO.setMiddleName(person.getMiddleName());
+        personDTO.setLastName(person.getLastName());
+        personDTO.setAvatarURL(person.getAvatarURL());
+        personDTO.setEmail(person.getEmail().getEmail());
+        personDTO.setCardId(cardId);
 
         return personDTO;
     }
