@@ -99,9 +99,6 @@ public class StudentController {
                               @RequestParam(required = false) Integer teacher_id,
                               @RequestParam(required = false) Integer group_id)
             throws SQLException, ParseException {
-//        validator.validate(personDTO, bindingResult);
-        Teacher teacher;
-        Group group;
 
         User u = userService.findByUserLogin(personDTO.getLogin());
         if (u != null) {
@@ -111,11 +108,11 @@ public class StudentController {
             Student student = new Student();
             student = personDTOService.updateRegisteredUser(student, personDTO);
             if (teacher_id != null && teacher_id > 0) {
-                teacher = teacherService.getById(teacher_id);
+                Teacher teacher = teacherService.getById(teacher_id);
                 student.setTeacher(teacher);
             }
             if (group_id != null && group_id > 0) {
-                group = groupService.getById(group_id);
+                Group group = groupService.getById(group_id);
                 student.setGroup(group);
             }
             studentService.insert(student);

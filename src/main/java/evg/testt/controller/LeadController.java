@@ -2,23 +2,19 @@ package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
-//import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.security.Principal;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Collections;
@@ -88,7 +84,7 @@ public class LeadController {
     }
 
     @RequestMapping(value = "/leadAdd", method = RequestMethod.POST)
-    public String addLeadOnPipe(HttpServletRequest request, Model model,
+    public String leadAdd(HttpServletRequest request, Model model,
                                 @RequestParam(required = false) Integer cardId,
                                 @RequestParam(required = false) Integer personId
     ) throws SQLException {
@@ -116,14 +112,14 @@ public class LeadController {
     }
 
     @RequestMapping(value = "/leadSave", method = RequestMethod.POST)
-    public String saveLeadOnPipe(HttpServletRequest request, Model model,
+    public String leadSave(HttpServletRequest request, Model model,
                                  @ModelAttribute("lead") @Valid PersonDTO personDTO,
                                  BindingResult bindingResult,
                                  @RequestParam(required = false) Integer personId
     ) throws SQLException, ParseException {
+
         model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
         model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.LEAD_PIPE));
-//        validator.validate(personDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("personId", personId);
