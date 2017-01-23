@@ -67,7 +67,7 @@
                                     <p><strong>Comment: </strong></p>
                                     <%--<input type="text" value="${student.person.comments}">--%>
                                     <p><textarea name="comments" form="comments" cols="30">${student.person.comments}</textarea>
-                                    <form id=comments method="post" modelAttribute="student.person" action="/studentUpdateComments">
+                                    <form id=comments method="post" modelAttribute="student.person" action="/students/UpdateComments">
                                         <input name="id" type=hidden value="${student.id}">
                                         <%--<input name="role" type=hidden value="4">--%>
                                         <security:authorize access="hasRole('ROLE_ADMIN')">
@@ -80,10 +80,10 @@
                                     <p><strong>Registration date: </strong>${student.person.registrationDate}</p>
                                     <p><strong>Organization: </strong><input type="text"></p>
 
-                                    <p><strong>Group: </strong><a href="/group/info?group_id=${student.group.id}">${student.group.name}</a></p>
+                                    <p><strong>Group: </strong><a href="/groups/info?group_id=${student.group.id}">${student.group.name}</a></p>
                                     <p><strong>Last Groups: </strong><a href="">link to other groups</a>
                                         (status) </p>
-                                    <p><strong>Teacher: </strong><a href="/teacher/info?teacher_id=${student.teacher.id}">${student.teacher.person.firstName}</a></p>
+                                    <p><strong>Teacher: </strong><a href="/teachers/info?teacher_id=${student.teacher.id}">${student.teacher.person.firstName}</a></p>
                                     <p><strong>Referral: </strong><input type="text"></p>
                                     <p><strong>Student's contacts: </strong><input type="text"></p>
                                     <p><strong>Schedule: </strong><input type="text"></p>
@@ -99,8 +99,8 @@
                             <div class="btn-group btn-group-md">
                                 <a href="" class="btn btn-success" type="button">Become Graduate</a>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
-                                    <a href="/studentTestingResults?id=${student.id}" class="btn btn-success" type="button">Set level</a>
-                                    <a href="/studentTrash?id=${student.id}" class="btn btn-danger" >Delete Student</a>
+                                    <a href="/students/TestingResults?id=${student.id}" class="btn btn-success" type="button">Set level</a>
+                                    <a href="/students/trash?id=${student.id}" class="btn btn-danger" >Delete Student</a>
                                </security:authorize>
 
                             </div>

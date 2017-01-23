@@ -242,7 +242,7 @@ public class GroupController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/groups/this-day-events", method = RequestMethod.GET)
+    @RequestMapping(value = "/home/this-day-events", method = RequestMethod.GET)
     public String getEventsAllDay(@RequestParam(value = "start") Date start,
                                   @RequestParam(value = "end") Date end) throws SQLException {
         List<FullcalendarEvent> groupEvents = FullcalendarHeleper

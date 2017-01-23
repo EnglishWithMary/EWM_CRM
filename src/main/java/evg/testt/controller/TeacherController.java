@@ -164,6 +164,6 @@ public class TeacherController {
         teacher.setLevel(level_Id);
         teacherService.update(teacher);
 
-        return "redirect:/teacher/info?teacher_id=" + teacher_id;
+        return "redirect:/teachers/info?teacher_id=" + teacher_id;
     }
 }

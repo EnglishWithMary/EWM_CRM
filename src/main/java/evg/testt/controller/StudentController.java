@@ -203,8 +203,12 @@ public class StudentController {
         return "redirect:/students";
     }
 
+
+    //change the date format
     public Date getDateFromString(String dateFromForm) throws ParseException {
-        if (dateFromForm == "") dateFromForm = "2001-01-01";
+        if (dateFromForm.equals("")){
+            dateFromForm = "2001-01-01";
+        }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = simpleDateFormat.parse(dateFromForm);
         return date;
