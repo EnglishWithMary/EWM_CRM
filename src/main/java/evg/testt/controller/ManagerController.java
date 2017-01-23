@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -28,15 +29,14 @@ import java.util.List;
 @PropertySource(value = "classpath:standard.properties")
 public class ManagerController {
 
+    @Value("${pagination.page.size}")
+    protected int pageSize;
+    @Autowired
+    PersonDTOService personDTOService;
     @Autowired
     private ManagerService managerService;
     @Autowired
     private UserService userService;
-    @Autowired
-    PersonDTOService personDTOService;
-
-    @Value("${pagination.page.size}")
-    protected int pageSize;
 
     @RequestMapping(value = "/managers", method = RequestMethod.GET)
     public String showManagers(@RequestParam(required = false) Integer page,
@@ -75,7 +75,9 @@ public class ManagerController {
     }
 
     @RequestMapping(value = "/managerAdd")
-    public String addManager(Model model) {
+    public String addManager(Model model,
+                             HttpServletRequest request) {
+        request.getSession().setAttribute("managerAdd", request.getHeader("Referer"));
         PersonDTO person = new PersonDTO();
         model.addAttribute("manager", person);
         return "managers/add";
@@ -83,7 +85,8 @@ public class ManagerController {
 
     @RequestMapping(value = "/managerSave", method = RequestMethod.POST)
     public String saveManager(@ModelAttribute("manager") @Valid PersonDTO personDTO,
-                              BindingResult bindingResult, Model model) throws SQLException, ParseException {
+                              BindingResult bindingResult, Model model,
+                              HttpServletRequest request) throws SQLException, ParseException {
         User u = userService.findByUserLogin(personDTO.getLogin());
 
         if (u != null)
@@ -95,7 +98,7 @@ public class ManagerController {
             manager = personDTOService.updateRegisteredUser(manager, personDTO);
             managerService.insert(manager);
 
-            return "redirect:/managers";
+            return "redirect:" + request.getSession().getAttribute("managerAdd").toString();
         } else {
             return "managers/add";
         }

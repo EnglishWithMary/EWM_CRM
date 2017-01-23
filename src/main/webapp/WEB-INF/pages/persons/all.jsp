@@ -146,13 +146,13 @@
                 <div class="panel-body">
                     <h4>Add person</h4>
                     <p>
-                        <form method="get" action="/personnel/addAdmins" >
+                        <form method="get" action="/adminAdd" >
                             <button class="btn btn-success" type="submit">Add Admin</button>
                         </form>
-                        <form method="get" action="/personnel/addManagers">
+                        <form method="get" action="/managerAdd">
                             <button class="btn btn-success" type="submit" >Add Manager</button>
                         </form>
-                        <form method="get" action="/personnel/addTeachers">
+                        <form method="get" action="/teacherAdd">
                             <button class="btn btn-success" type="submit">Add Teacher</button>
                         </form>
                     </p>
