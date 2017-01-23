@@ -82,15 +82,15 @@
                                             </c:when>
 
                                             <c:when test="${person.role eq 'ROLE_TEACHER'}">
-                                                <a href="/teacher/info?teacher_id=${person.teacher_id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                                <a href="/teachers/info?teacher_id=${person.teacher_id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
                                             </c:when>
 
                                             <c:when test="${person.role eq 'ROLE_STUDENT'}">
-                                                <a href="/student/info?student_id=${person.student_id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                                <a href="/students/info?student_id=${person.student_id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
                                             </c:when>
 
                                             <c:when test="${person.role eq null}">
-                                                <a href="/lead/info?person_id=${person.lead_id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                                <a href="/leads/info?person_id=${person.lead_id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
                                             </c:when>
                                         </c:choose>
                                     </td>

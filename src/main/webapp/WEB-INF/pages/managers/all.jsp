@@ -58,10 +58,10 @@
                                     <td><textarea name="comments" cols="16" disabled>${manager.person.comments}</textarea></td>
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
                                         <td>
-                                            <a href="/managerTrash?id=${manager.id}">Delete</a>
+                                            <a href="/managers/trash?id=${manager.id}">Delete</a>
                                         </td>
                                         <td>
-                                            <a href="/managerSave?id=${manager.id}">Save</a>
+                                            <a href="/managers/save?id=${manager.id}">Save</a>
                                         </td>
                                     </security:authorize>
                                 </tr>
@@ -97,7 +97,7 @@
                 <strong>Tools</strong>
             </div>
             <div class="panel-body">
-                <a href="/managerAdd" class="btn btn-success">Add Manager</a>
+                <a href="/managers/add" class="btn btn-success">Add Manager</a>
             </div>
         </div>
     </div>

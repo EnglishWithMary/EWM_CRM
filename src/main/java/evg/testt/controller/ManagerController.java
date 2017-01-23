@@ -74,7 +74,7 @@ public class ManagerController {
         return "managers/all";
     }
 
-    @RequestMapping(value = "/managerAdd")
+    @RequestMapping(value = "/managers/add")
     public String addManager(Model model,
                              HttpServletRequest request) {
         request.getSession().setAttribute("managerAdd", request.getHeader("Referer"));
@@ -83,7 +83,7 @@ public class ManagerController {
         return "managers/add";
     }
 
-    @RequestMapping(value = "/managerSave", method = RequestMethod.POST)
+    @RequestMapping(value = "/managers/save", method = RequestMethod.POST)
     public String saveManager(@ModelAttribute("manager") @Valid PersonDTO personDTO,
                               BindingResult bindingResult, Model model,
                               HttpServletRequest request) throws SQLException, ParseException {
@@ -104,14 +104,14 @@ public class ManagerController {
         }
     }
 
-    @RequestMapping(value = "/managerDelete")
+    @RequestMapping(value = "/managers/delete")
     public String managerDelete(@RequestParam Integer id) throws SQLException {
         Manager manager = managerService.getById(id);
         managerService.delete(manager);
         return "redirect:/managers";
     }
 
-    @RequestMapping(value = "/managerTrash")
+    @RequestMapping(value = "/managers/trash")
     public String managerTrash(@RequestParam Integer id) throws SQLException {
         Manager manager = managerService.getById(id);
         managerService.trash(manager);
@@ -125,7 +125,7 @@ public class ManagerController {
         return "persons/manager-info";
     }
 
-    @RequestMapping(value = "/managerUpdateComments", method = RequestMethod.POST)
+    @RequestMapping(value = "/managers/UpdateComments", method = RequestMethod.POST)
     public String studentUpdate(Model model,
                                 @RequestParam Integer id,
                                 @RequestParam String comments) throws SQLException {

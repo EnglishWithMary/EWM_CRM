@@ -14,7 +14,7 @@
                 <strong>Enter Details:</strong>
             </div>
             <div class="panel-body">
-                <sf:form method="post" modelAttribute="group" action="/groupSave">
+                <sf:form method="post" modelAttribute="group" action="/groups/save">
                     <fieldset>
                         <div class="row pad ding-bot">
                             <div class="col-sm-12">
@@ -29,7 +29,7 @@
                                 <sf:select path="teacherId" cssClass="form-control">
                                     <c:forEach items="${teachers}" var="teach">
                                         <sf:option value="${teach.id}"
-                                                   label="${teach.user.login} (${teach.person.firstName} ${teach.person.middleName} ${teach.person.lastName})"/>
+                                                   label="${teach.person.lastName} ${teach.person.firstName} ${teach.person.middleName}"/>
                                     </c:forEach>
                                 </sf:select>
                             </div>

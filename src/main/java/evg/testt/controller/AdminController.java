@@ -64,7 +64,7 @@ public class AdminController {
 
         List<Admin> admins = Collections.EMPTY_LIST;
 
-        if (flagSorted == false) {
+        if (!flagSorted) {
             admins = adminService.getByPage(currentPage);
         } else {
             admins = adminService.getByPageSorted(currentPage);
@@ -82,19 +82,19 @@ public class AdminController {
         return "admins/all";
     }
 
-    @RequestMapping(value = "/adminAdd")
+    @RequestMapping(value = "/admins/add")
     public String addAdmin(Model model, HttpServletRequest request) {
-        request.getSession().setAttribute("adminAdd", request.getHeader("Referer"));
+        request.getSession().setAttribute("admins/add", request.getHeader("Referer"));
         PersonDTO person = new PersonDTO();
         model.addAttribute("admin", person);
         return "admins/add";
     }
 
-    @RequestMapping(value = "/adminSave", method = RequestMethod.POST)
+    @RequestMapping(value = "/admins/save", method = RequestMethod.POST)
     public String saveAdmin(@ModelAttribute("admin") @Valid PersonDTO personDTO,
                             BindingResult bindingResult, Model model,
-                            HttpServletRequest request) throws SQLException, ParseException {
-
+                            HttpServletRequest request)
+            throws SQLException, ParseException {
 
         User u = userService.findByUserLogin(personDTO.getLogin());
 
@@ -106,20 +106,20 @@ public class AdminController {
             Admin admin = new Admin();
             admin = personDTOService.updateRegisteredUser(admin, personDTO);
             adminService.insert(admin);
-            return "redirect:" + request.getSession().getAttribute("adminAdd").toString();
+            return "redirect:" + request.getSession().getAttribute("admins/add").toString();
         } else {
             return "admins/add";
         }
     }
 
-    @RequestMapping(value = "/adminDelete")
+    @RequestMapping(value = "/admins/delete")
     public String adminDelete(@RequestParam Integer id) throws SQLException {
         Admin admin = adminService.getById(id);
         adminService.delete(admin);
         return "redirect:/admins";
     }
 
-    @RequestMapping(value = "/adminTrash")
+    @RequestMapping(value = "/admins/trash")
     public String adminTrash(@RequestParam Integer id) throws SQLException {
         Admin admin = adminService.getById(id);
         adminService.trash(admin);

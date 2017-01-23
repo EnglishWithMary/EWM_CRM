@@ -76,14 +76,14 @@ public class LeadController {
         return "leads/all";
     }
 
-    @RequestMapping(value = "/leadSortByDate", method = RequestMethod.POST)
+    @RequestMapping(value = "/leads/SortByDate", method = RequestMethod.POST)
     public String filterLeads(Model model) throws SQLException {
         List<Lead> leads = leadService.getSortedByRegistrationDate();
         model.addAttribute("leads", leads);
         return "leads/all";
     }
 
-    @RequestMapping(value = "/leadAdd", method = RequestMethod.POST)
+    @RequestMapping(value = "/leads/add", method = RequestMethod.POST)
     public String leadAdd(HttpServletRequest request, Model model,
                                 @RequestParam(required = false) Integer cardId,
                                 @RequestParam(required = false) Integer personId
@@ -100,7 +100,7 @@ public class LeadController {
         return "leads/add";
     }
 
-    @RequestMapping(value = "/leadSave", method = RequestMethod.POST)
+    @RequestMapping(value = "/leads/save", method = RequestMethod.POST)
     public String leadSave(HttpServletRequest request, Model model,
                                  @ModelAttribute("lead") @Valid PersonDTO personDTO,
                                  BindingResult bindingResult,
@@ -141,7 +141,7 @@ public class LeadController {
         return "redirect:" + request.getSession().getAttribute("callback").toString();
     }
 
-    @RequestMapping(value = "/deleteLead", method = RequestMethod.POST)
+    @RequestMapping(value = "/leads/delete", method = RequestMethod.POST)
     public String deleteLead(HttpServletRequest request, Model model,
                              @RequestParam(required = true) Integer personId) throws SQLException {
         model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
@@ -156,7 +156,7 @@ public class LeadController {
         return "redirect:" + request.getHeader("Referer");
     }
 
-    @RequestMapping(value = "/leadTrash", method = RequestMethod.POST)
+    @RequestMapping(value = "/leads/trash", method = RequestMethod.POST)
     public String leadTrash(HttpServletRequest request, Model model,
                             @RequestParam(required = true) Integer personId) throws SQLException {
         model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
@@ -172,7 +172,7 @@ public class LeadController {
         return "redirect:" + request.getHeader("Referer");
     }
 
-    @RequestMapping(value = "/leadDeleteFromPipe", method = RequestMethod.POST)
+    @RequestMapping(value = "/leads/DeleteFromPipe", method = RequestMethod.POST)
     public String leadDeleteFromPipe(HttpServletRequest request, Model model,
                                      @RequestParam(required = true) Integer personId) throws SQLException {
         model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
@@ -189,14 +189,14 @@ public class LeadController {
     }
 
 
-    @RequestMapping(value = "/lead/info", method = RequestMethod.GET)
+    @RequestMapping(value = "/leads/info", method = RequestMethod.GET)
     public String leadInfo(Model model, @RequestParam int person_id) throws SQLException {
         Lead lead = leadService.getById(person_id);
         model.addAttribute("lead", lead);
         return "persons/lead-info";
     }
 
-    @RequestMapping(value = "/leadUpdateComments", method = RequestMethod.POST)
+    @RequestMapping(value = "/leads/UpdateComments", method = RequestMethod.POST)
     public String studentUpdate(Model model,
                                 @RequestParam Integer id,
                                 @RequestParam String comments) throws SQLException {
@@ -208,7 +208,7 @@ public class LeadController {
         return "persons/lead-info";
     }
 
-    @RequestMapping(value = "/leadToStudent")
+    @RequestMapping(value = "/leads/ToStudent")
     public String leadToStudent(Model model, Integer personId) throws SQLException, ParseException {
 
         Person person = personService.getById(personId);
@@ -225,7 +225,5 @@ public class LeadController {
 
         model.addAttribute("student", student);
         return "persons/student-info";
-
     }
-
 }
