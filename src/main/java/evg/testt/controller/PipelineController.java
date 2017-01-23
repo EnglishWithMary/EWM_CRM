@@ -26,7 +26,7 @@ public class PipelineController {
     private LeadService leadService;
     @Autowired
     private PersonService personService;
-    @Autowired (required = false)
+    @Autowired(required = false)
     private EmailService emailService;
 
     @RequestMapping(value = "/pipeline", method = RequestMethod.GET)
@@ -37,7 +37,7 @@ public class PipelineController {
         return "pipeline/pipeline";
     }
 
-//    /pipeline/addCard
+    //    /pipeline/addCard
 //    old naming is "/addCard
     @RequestMapping(value = "/pipeline/addCard", method = RequestMethod.POST)
     public String addCard(Model model, @RequestParam int pipeTypeId)
@@ -48,25 +48,25 @@ public class PipelineController {
         card.setType(pt);
         cardService.insert(card);
         this.inserAttributes(model, pipe);
-        if (pipe==Pipe.LEAD_PIPE){
+        if (pipe == Pipe.LEAD_PIPE) {
             return "redirect:/pipeline/leads";
-        }else if (pipe==Pipe.STUDENT_PIPE){
+        } else if (pipe == Pipe.STUDENT_PIPE) {
             return "redirect:/pipeline/students";
-        }else{
+        } else {
             return "redirect:/pipeline";
         }
     }
 
 
-//    /pipeline/students
+    //    /pipeline/students
 //    old naming "/takeStudentpipe
     @RequestMapping(value = "/pipeline/students", method = RequestMethod.GET)
-    public String takeStudent(Model model)throws SQLException{
+    public String takeStudent(Model model) throws SQLException {
         this.inserAttributes(model, Pipe.STUDENT_PIPE);
         return "pipeline/pipeline";
     }
 
-//    /pipeline/leads
+    //    /pipeline/leads
 //    old naming "/takeLeadtpipe
     @RequestMapping(value = "/pipeline/leads", method = RequestMethod.GET)
     public String takeLead(Model model) throws SQLException {
@@ -74,7 +74,7 @@ public class PipelineController {
         return "pipeline/pipeline";
     }
 
-//    /pipeline/deleteCard
+    //    /pipeline/deleteCard
 //    old naming "/deleteCard
     @RequestMapping(value = "/pipeline/deleteCard", method = RequestMethod.POST)
     public String deleteCard(Model model,
@@ -90,7 +90,7 @@ public class PipelineController {
         return "redirect:/pipeline/leads";
     }
 
-//    /pipeline/editCardName
+    //    /pipeline/editCardName
 //    old naming "/editCardName
     @RequestMapping(value = "/pipeline/editCardName", method = RequestMethod.POST)
     public String editCardName(Model model, String cardName,
@@ -104,12 +104,12 @@ public class PipelineController {
         return "redirect:/pipeline/leads";
     }
 
-//    /pipeline/moveLeadAjax
+    //    /pipeline/moveLeadAjax
 //    old naming "/moveLeadAjax
     @ResponseBody
     @RequestMapping(value = "/pipeline/moveLeadAjax", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void moveLeadAjax(@RequestBody AjaxFormCall ajaxFormCall) throws SQLException {
-            cardService.movePersonOnCards(ajaxFormCall);
+        cardService.movePersonOnCards(ajaxFormCall);
     }
 
     private void inserAttributes(Model model, Pipe pipe)
