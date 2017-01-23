@@ -74,24 +74,24 @@
 
                                         <c:choose>
                                             <c:when test="${person.role eq 'ROLE_ADMIN'}">
-                                                <a href="/admins/info?admin_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                                <a href="/admins/info?admin_id=${person.admin_id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
                                             </c:when>
 
                                             <c:when test="${person.role eq 'ROLE_MANAGER'}">
-                                                <a href="/managers/info?manager_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                                <a href="/managers/info?manager_id=${person.manager_id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
                                             </c:when>
 
                                             <c:when test="${person.role eq 'ROLE_TEACHER'}">
-                                                <a href="/teacher/info?teacher_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                                <a href="/teacher/info?teacher_id=${person.teacher_id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
                                             </c:when>
 
                                             <c:when test="${person.role eq 'ROLE_STUDENT'}">
-                                                <a href="/student/info?student_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                                <a href="/student/info?student_id=${person.student_id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
                                             </c:when>
 
-                                            <c:otherwise>
-                                                <a href="/lead/info?person_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
-                                            </c:otherwise>
+                                            <c:when test="${person.role eq null}">
+                                                <a href="/lead/info?person_id=${person.lead_id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                            </c:when>
                                         </c:choose>
                                     </td>
                                     <td>${person.state}</td>
