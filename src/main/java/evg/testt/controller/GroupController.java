@@ -3,11 +3,8 @@ package evg.testt.controller;
 import com.google.gson.Gson;
 import evg.testt.dto.GroupDTO;
 import evg.testt.model.*;
-//import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import evg.testt.util.fullcalendar.FullcalendarHeleper;
-import org.apache.http.HttpStatus;
-import org.mortbay.util.ajax.AjaxFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -28,8 +25,6 @@ import java.util.List;
 @PropertySource(value = "classpath:standard.properties")
 public class GroupController {
 
-    //    @Autowired
-//    private SpringOvalValidator validator;
     @Autowired
     private GroupService groupService;
     @Autowired
@@ -46,35 +41,32 @@ public class GroupController {
     @Value("${pagination.page.size}")
     protected int pageSize;
 
-
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
     public String showGroups(@RequestParam(required = false) Integer page,
                              @RequestParam(required = false) Boolean flagSorted,
                              Model model) throws SQLException {
-        List<Teacher> teachers = teacherService.getAll();
-        List<Student> students = studentService.getAll();
-        if (flagSorted == null) flagSorted = false;
-
         int totalGroups = 0, pages = 0, currentPage = 1;
 
-        if (page != null)
-            if (page > 0)
+        List<Teacher> teachers = teacherService.getAll();
+        List<Student> students = studentService.getAll();
+
+        if (flagSorted == null) flagSorted = false;
+        if (page != null) {
+            if (page > 0) {
                 currentPage = page;
-
+            }
+        }
         totalGroups = groupService.count();
-
         List<Group> groups = Collections.EMPTY_LIST;
-        if (flagSorted == false) {
+        if (!flagSorted) {
             groups = groupService.getByPage(currentPage);
         } else {
             groups = groupService.getByPageSorted(currentPage);
         }
-
         pages = ((totalGroups / pageSize) + 1);
-
         if (totalGroups % pageSize == 0)
             pages--;
-        groups = groupService.getAll();
+//        groups = groupService.getAll();
         model.addAttribute("groups", groups);
         model.addAttribute("pages", pages);
         model.addAttribute("flagSorted", flagSorted);
@@ -122,7 +114,6 @@ public class GroupController {
     @RequestMapping(value = "/groupFilter", method = RequestMethod.POST)
     public String filterGroups(Model model, @RequestParam(required = false) Integer teacherId)
             throws SQLException {
-
         GroupDTO groupFilter = new GroupDTO();
         List<Teacher> teachers = teacherService.getAll();
         List<Group> groups;
@@ -142,14 +133,11 @@ public class GroupController {
     @RequestMapping(value = "/group/{ID}/info")
     public String groupInfo(Model model, @PathVariable(value = "ID") Integer groupId)
             throws SQLException {
-
         if (!groupService.isExists(groupId)) {
             return "redirect:/groups";
         }
         Group group = groupService.getById(groupId);
-
         model.addAttribute("group", group);
-
         return "persons/group-info";
     }
 
@@ -165,14 +153,42 @@ public class GroupController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/group/{ID}/calendar/events", method = RequestMethod.GET)
-    public String getEventsByRoomId(@PathVariable(value = "ID") Integer id)
+    @RequestMapping(value = "/group/{ID}/room/{roomID}/calendar/events", method = RequestMethod.GET)
+    public String getEventsByRoomId(@PathVariable(value = "ID") Integer id,
+                                    @PathVariable(value = "roomID") Integer roomId)
             throws SQLException {
-        List<FullcalendarEvent> groupEvents = FullcalendarHeleper
-                .convertGroupEventsToFullcalendarEvents(groupEventsService.getAllByGroupId(id));
-
+        List<FullcalendarEvent> groupEvents = groupEventsService.getAllByGroupIdAndRoomId(id,
+                roomService.getById(roomId));
         return new Gson().toJson(groupEvents);
     }
+
+    @RequestMapping(value = "/group/{ID}/room/choose-room", method = RequestMethod.GET)
+    public String chooseRomeForEvent(Model model, @PathVariable(value = "ID") Integer id)
+            throws SQLException {
+        model.addAttribute("rooms", roomService.getAll())
+                .addAttribute("group", groupService.getById(id));
+        return "group/choose-room";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/group/{ID}/info/calendar/events", method = RequestMethod.GET)
+    public String calendarForGroup(Model model, @PathVariable(value = "ID") Integer id)
+            throws SQLException {
+        List<FullcalendarEvent> groupEvents = FullcalendarHeleper.convertGroupEventsToFullcalendarEvents(
+                groupEventsService.getAllByGroupId(id));
+        return new Gson().toJson(groupEvents);
+    }
+
+    @RequestMapping(value = "/group/{ID}/room/{roomID}/calendar", method = RequestMethod.GET)
+    public String calendarForGroupWithRoom(Model model, @PathVariable(value = "ID") Integer id,
+                                           @PathVariable(value = "roomID") Integer roomId)
+            throws SQLException {
+        model.addAttribute("rooms", roomService.getAll())
+                .addAttribute("room", roomService.getById(roomId))
+                .addAttribute("group", groupService.getById(id));
+        return "group/calendar";
+    }
+
 
     @RequestMapping(value = "/group/{ID}/add-event", method = RequestMethod.GET)
     public String showAddEvent(Model model, @PathVariable(value = "ID") Integer id)
@@ -197,13 +213,12 @@ public class GroupController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/group/{group_id}/calendar/room/{room_id}/add-event-test",
+    @RequestMapping(value = "/group/{group_id}/room/{room_id}/calendar/add-event",
             method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public String saveEventAjaxMethod(@RequestBody FullcalendarEvent fullcalendarEvent,
                                       @PathVariable(value = "group_id") Integer groupId,
-                                      @PathVariable(value = "room_id") Integer roomId,
-                                      HttpServletResponse response
-    ) throws SQLException {
+                                      @PathVariable(value = "room_id") Integer roomId)
+            throws SQLException {
         Room room = roomService.getById(roomId);
         GroupEvent groupEvent = FullcalendarHeleper
                 .convertFullcalendarEventToGroupEvent(fullcalendarEvent);
@@ -217,11 +232,10 @@ public class GroupController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/group/{group_id}/calendar/delete/event", method = RequestMethod.POST,
+    @RequestMapping(value = "/group/{group_id}/room/{room_id}/calendar/delete-event", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String deleteEventAjaxMethod(@RequestBody FullcalendarEvent fullcalendarEvent,
-                                        HttpServletResponse response) throws SQLException {
-
+    public String deleteEventAjaxMethod(@RequestBody FullcalendarEvent fullcalendarEvent)
+            throws SQLException {
         GroupEvent groupEvent = groupEventsService.getById(fullcalendarEvent.getId());
         groupEventsService.delete(groupEvent);
         return new Gson().toJson("msg = success, code = 200");
@@ -234,7 +248,6 @@ public class GroupController {
         List<FullcalendarEvent> groupEvents = FullcalendarHeleper
                 .convertGroupEventsToFullcalendarEventsWithUrls(
                         groupEventsService.getAllByDate(start, end));
-
         return new Gson().toJson(groupEvents);
     }
 }

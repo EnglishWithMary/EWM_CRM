@@ -23,4 +23,9 @@ public @Data class Group extends BaseModel {
 
     @Embedded
     private State state;
+
+    @Override
+    public String toString() {
+        return "".toString();
+    }
 }

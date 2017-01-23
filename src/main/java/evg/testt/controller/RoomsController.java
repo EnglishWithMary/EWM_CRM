@@ -6,9 +6,13 @@ import com.google.api.services.calendar.model.EventDateTime;
 import com.google.gson.Gson;
 import evg.testt.google.utils.calendar.DateGoogleConverter;
 import evg.testt.google.utils.calendar.RoomsEventsHelper;
+import evg.testt.model.FullcalendarEvent;
 import evg.testt.model.Room;
 import evg.testt.model.RoomEvent;
+import evg.testt.service.GroupEventsService;
+import evg.testt.service.GroupService;
 import evg.testt.service.RoomService;
+import evg.testt.util.fullcalendar.FullcalendarHeleper;
 import evg.testt.util.helpers.RoomUpdateHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +34,8 @@ public class RoomsController {
 
     @Autowired
     RoomService roomService;
+    @Autowired
+    GroupEventsService groupEventsService;
 
     @ModelAttribute
     private Room createRoom() {
@@ -50,9 +56,8 @@ public class RoomsController {
         if (room == null) {
             return "redirect:/rooms/all";
         }
-        model
-//                .addAttribute("events", roomService.getAllEventsInRoom(room.getId()))
-                .addAttribute("room", room);
+        model.addAttribute("room", room)
+                .addAttribute("rooms", roomService.getAll());
         return "rooms/info";
     }
 
@@ -74,9 +79,9 @@ public class RoomsController {
     }
 
     @RequestMapping(value = "/rooms/{ID}/edit", method = RequestMethod.GET)
-    public String showEditRoom(Model model, @PathVariable(value = "ID")Integer id) throws SQLException{
+    public String showEditRoom(Model model, @PathVariable(value = "ID") Integer id) throws SQLException {
         Room room = roomService.getById(id);
-        if(room == null){
+        if (room == null) {
             return "redirect: rooms/all";
         }
         model.addAttribute("room", room);
@@ -84,26 +89,29 @@ public class RoomsController {
     }
 
     @RequestMapping(value = "/rooms/{ID}/edit", method = RequestMethod.POST)
-    public String saveEditRoom(Model model, @PathVariable(value = "ID")Integer id,
-                           @ModelAttribute("room") @Validated Room room, BindingResult result)
+    public String saveEditRoom(Model model, @PathVariable(value = "ID") Integer id,
+                               @ModelAttribute("room") @Validated Room room, BindingResult result)
             throws SQLException, IOException {
         if (result.hasErrors()) {
-//            model.addAttribute("room", room);
             return "rooms/edit";
         }
-        if(roomService.getById(room.getId()) != null) {
+        if (roomService.getById(room.getId()) != null) {
             roomService.update(room);
         }
-        return "redirect:/rooms";
+        return "redirect:/rooms/" + id.toString() + "/info";
     }
 
     @ResponseBody
     @RequestMapping(value = "/rooms/{ID}/info/events", method = RequestMethod.GET)
     public String getEventsByRoomId(@PathVariable(value = "ID") Integer id)
             throws SQLException, IOException {
-//        List<Event> events = roomService.getAllEventsInRoom(id);
-//        List<RoomEvent> roomEvents = RoomsEventsHelper.convertGoogleEventsToRoomEvents(events);
-        return new Gson().toJson("");
+        List<FullcalendarEvent> events = FullcalendarHeleper
+                .convertGroupEventsToFullcalendarEventsWithUrls(
+                        groupEventsService.getAllByRoom(
+                                roomService.getById(id)
+                        )
+                );
+        return new Gson().toJson(events);
     }
 
     @RequestMapping(value = "/rooms/{ID}/add-event", method = RequestMethod.GET)

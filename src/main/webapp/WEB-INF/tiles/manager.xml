@@ -14,4 +14,10 @@
         <put-attribute name="title" value="Managers page" />
         <put-attribute name="body" value="/WEB-INF/pages/managers/all.jsp" />
     </definition>
+
+    <definition name="persons/manager-info" extends="default">
+        <put-attribute name="title" value="Manager info" />
+        <put-attribute name="body" value="/WEB-INF/pages/persons/manager-info.jsp" />
+        <put-attribute name="additionalScripts" value="/WEB-INF/pages/rooms/additionalScripts.jsp"/>
+    </definition>
 </tiles-definitions>

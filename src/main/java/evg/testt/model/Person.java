@@ -19,7 +19,7 @@ public @Data class Person extends BaseModel{
     @Embedded
     private State state = new State();
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date birthdayDate;
 
     @Transient
@@ -44,14 +44,14 @@ public @Data class Person extends BaseModel{
     private static class NullPerson extends Person implements Null {
 
         private NullPerson() {
-            setFirstName("none");
-            setLastName("none");
-            setMiddleName("none");
-            setAvatarURL("none");
+            setFirstName("First name");
+            setLastName("Last name");
+            setMiddleName("Middle name");
+            setAvatarURL("");
             setBirthdayDate(new Date());
-            setOrganization("none");
+            setOrganization("EWM");
             setEmail(new Email("none@none.none"));
-            setComments("none");
+            setComments("");
         }
 
         @Override

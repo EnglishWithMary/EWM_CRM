@@ -61,4 +61,13 @@ public class PersonRepositoryJpaImpl extends BaseRepositoryJpaImpl<Person> imple
         }
         return null;
     }
+
+    @Override
+    public List<Person> findTrashedPersons() throws SQLException {
+        Query query;
+        query = em.createQuery("SELECT person FROM persons person WHERE state =:state");
+        query.setParameter("state", new State(StateType.STATE_TRASHED));
+        return query.getResultList();
+    }
+
 }

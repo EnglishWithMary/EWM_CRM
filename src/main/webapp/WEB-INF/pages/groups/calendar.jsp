@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <h1 class="page-header">Group "${group.name}'s" Calendar</h1>
+        <h1 class="page-header">${group.name} Calendar</h1>
     </div>
 </div>
 
@@ -12,7 +12,7 @@
     <div class="col-sm-8">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong>List of Events in ${group.name}</strong>
+                <strong>List of Events in ${room.name}</strong>
             </div>
             <div class="panel-body">
                 <div id="calendar"></div>
@@ -25,7 +25,14 @@
                 <strong>Tools</strong>
             </div>
             <div class="panel-body">
-                <p><a href="/group/${group.id}/add-event" class="btn btn-success">Add Event</a></p>
+                <p>
+                    <select id="change-room-select" class="form-control">
+                        <option value="">Click to change room</option>
+                        <c:forEach var="roomItem" items="${rooms}">
+                            <option value="/group/${group.id}/room/${roomItem.id}/calendar">${roomItem.name}</option>
+                        </c:forEach>
+                    </select>
+                </p>
             </div>
         </div>
     </div>
@@ -49,20 +56,20 @@
                         <label class="col-sm-2 control-label" for="title">Title:</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="title"
-                                   id="title" placeholder="title"/>
+                                   id="title" placeholder="title" value="${group.name}"/>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="room">Room:</label>
-                        <div class="col-sm-10">
-                            <select id="room" class="form-select-button">
-                                <c:forEach var="room" items="${rooms}">
-                                    <option value="${room.id}">${room.name}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                    </div>
+                    <%--<div class="form-group">--%>
+                        <%--<label class="col-sm-2 control-label" for="room">Room:</label>--%>
+                        <%--<div class="col-sm-10">--%>
+                            <%--<select id="room" class="form-select-button">--%>
+                                <%--<c:forEach var="room" items="${rooms}">--%>
+                                    <%--<option value="${room.id}">${room.name}</option>--%>
+                                <%--</c:forEach>--%>
+                            <%--</select>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="date-start">Start Time</label>
@@ -99,7 +106,6 @@
                         <button id="delete" type="button" class="btn btn-success">Delete Event</button>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>
