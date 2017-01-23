@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -29,6 +30,8 @@ import java.util.List;
 @PropertySource(value = "classpath:standard.properties")
 public class TeacherController {
 
+    @Value("${pagination.page.size}")
+    protected int pageSize;
     @Autowired
     TeacherService teacherService;
     @Autowired
@@ -41,9 +44,6 @@ public class TeacherController {
     PersonDTOService personDTOService;
     @Autowired
     private GroupService groupService;
-
-    @Value("${pagination.page.size}")
-    protected int pageSize;
 
     @RequestMapping(value = "/teachers", method = RequestMethod.GET)
     public String showTeachers(@RequestParam(required = false) Integer page,
@@ -83,6 +83,10 @@ public class TeacherController {
 
     @RequestMapping(value = "/teachers/add")
     public String addTeacher(Model model) {
+    @RequestMapping(value = "/teacherAdd")
+    public String addTeacher(Model model,
+                             HttpServletRequest request) {
+        request.getSession().setAttribute("teacherAdd", request.getHeader("Referer"));
         PersonDTO person = new PersonDTO();
         model.addAttribute("teacher", person);
         return "teachers/add";
@@ -90,7 +94,8 @@ public class TeacherController {
 
     @RequestMapping(value = "/teacherSave", method = RequestMethod.POST)
     public String saveTeacher(@Valid @ModelAttribute("teacher") PersonDTO personDTO, BindingResult bindingResult,
-                              Model model) throws SQLException, ParseException {
+                              Model model,
+                              HttpServletRequest request) throws SQLException, ParseException {
 
         User u = userService.findByUserLogin(personDTO.getLogin());
 
@@ -103,7 +108,7 @@ public class TeacherController {
             teacher = personDTOService.updateRegisteredUser(teacher, personDTO);
             teacherService.insert(teacher);
 
-            return "redirect:/teachers";
+            return "redirect:" + request.getSession().getAttribute("teacherAdd").toString();
         } else {
             return "teachers/add";
         }

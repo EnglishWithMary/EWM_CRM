@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -32,15 +33,14 @@ import java.util.List;
 @PropertySource(value = "classpath:standard.properties")
 public class AdminController {
 
-    @Autowired
-    private AdminService adminService;
+    @Value("${pagination.page.size}")
+    protected int pageSize;
     @Autowired
     PersonDTOService personDTOService;
     @Autowired
+    private AdminService adminService;
+    @Autowired
     private UserService userService;
-
-    @Value("${pagination.page.size}")
-    protected int pageSize;
 
     @RequestMapping(value = "/admins", method = RequestMethod.GET)
     public String showAdmins(@RequestParam(required = false) Integer page,
@@ -82,6 +82,9 @@ public class AdminController {
         return "admins/all";
     }
 
+    @RequestMapping(value = "/adminAdd")
+    public String addAdmin(Model model, HttpServletRequest request) {
+        request.getSession().setAttribute("adminAdd", request.getHeader("Referer"));
     @RequestMapping(value = "/admins/add")
     public String addAdmin(Model model) {
         PersonDTO person = new PersonDTO();
@@ -91,7 +94,8 @@ public class AdminController {
 
     @RequestMapping(value = "/admins/save", method = RequestMethod.POST)
     public String saveAdmin(@ModelAttribute("admin") @Valid PersonDTO personDTO,
-                            BindingResult bindingResult, Model model)
+                            BindingResult bindingResult, Model model,
+                            HttpServletRequest request)
             throws SQLException, ParseException {
 
         User u = userService.findByUserLogin(personDTO.getLogin());
@@ -104,7 +108,7 @@ public class AdminController {
             Admin admin = new Admin();
             admin = personDTOService.updateRegisteredUser(admin, personDTO);
             adminService.insert(admin);
-            return "redirect:/admins";
+            return "redirect:" + request.getSession().getAttribute("adminAdd").toString();
         } else {
             return "admins/add";
         }
