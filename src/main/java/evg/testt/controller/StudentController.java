@@ -98,13 +98,13 @@ public class StudentController {
                               @RequestParam(required = false) Integer group_id)
             throws SQLException, ParseException {
 //        validator.validate(personDTO, bindingResult);
+        Teacher teacher;
+        Group group;
 
         User u = userService.findByUserLogin(personDTO.getLogin());
-        Teacher teacher = null;
-        Group group = null;
-        if (u != null)
+        if (u != null) {
             bindingResult.rejectValue("login", "1", "Login already exist.");
-
+        }
         if (!bindingResult.hasErrors()) {
             Student student = new Student();
             student = personDTOService.updateRegisteredUser(student, personDTO);
