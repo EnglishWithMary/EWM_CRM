@@ -5,10 +5,8 @@ import evg.testt.exception.BadAvatarNameException;
 import evg.testt.exception.PersonException;
 import evg.testt.model.Person;
 import evg.testt.model.Personnel;
-import evg.testt.service.AvatarService;
-import evg.testt.service.PersonDTOService;
-import evg.testt.service.PersonService;
-import evg.testt.service.PersonnelService;
+import evg.testt.model.SearchedPerson;
+import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -32,10 +30,13 @@ import java.util.List;
 //import evg.testt.oval.SpringOvalValidator;
 
 @Controller
-public class PersonController {
+public class
+PersonController {
 
     //    @Autowired
 //    private SpringOvalValidator validator;
+    @Autowired
+    private SearchService searchService;
     @Autowired
     private PersonService personService;
     @Autowired
@@ -103,13 +104,11 @@ public class PersonController {
 
     @RequestMapping(value = "/persons/fullSearch")
     public String search(Model model, @RequestParam String searchText) throws SQLException {
-        List<Personnel> persons = Collections.EMPTY_LIST;
 
-        if (!searchText.equals("")) {
-            persons = personService.getPersonsByKeyWord(searchText);
-        }else{
-            persons = personnelService.getAll();
-        }
+        List<SearchedPerson> persons = Collections.EMPTY_LIST;
+        if(!searchText.equals(""))
+        persons = searchService.getPersonsByKeyWord(searchText);
+
         model.addAttribute("persons", persons);
         return "search/all";
     }

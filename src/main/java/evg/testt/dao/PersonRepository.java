@@ -12,8 +12,5 @@ public interface PersonRepository extends BaseRepository <Person>{
 
     List<Person> findSortedByRegistrationDate() throws SQLException;
 
-    List<Personnel> findPersonByKeyWord(String keywords) throws SQLException;
-
     List<Person> findTrashedPersons() throws SQLException;
-
 }
