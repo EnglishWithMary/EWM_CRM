@@ -41,7 +41,8 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
             person.setMiddleName(personDTO.getMiddleName());
             person.setComments(personDTO.getComments());
             person.setOrganization(personDTO.getOrganization());
-            person.setBirthdayDate(getDateFromString(personDTO.getBirthdayString()));
+            person.setBirthdayDate(personDTO.getBirthdayDate());
+//            person.setBirthdayDate(getDateFromString(personDTO.getBirthdayString()));
             person.setEmail(new Email(personDTO.getEmail()));
             person.setState(new State());
         }

@@ -19,7 +19,7 @@ public @Data class Person extends BaseModel{
     @Embedded
     private State state = new State();
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date birthdayDate;
 
     @Transient
