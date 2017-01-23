@@ -24,12 +24,9 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <h3>Language</h3>
-                            <p>(In development)</p>
-                            <h5>English</h5>
-                            <h5>German</h5>
-                            <h5>French</h5>
-                            <h5>Italian</h5>
+                            <c:forEach var="lang" items="${teacher.languages}" >
+                                <p>${lang.language}</p>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>
@@ -71,10 +68,10 @@
                                     </p>
 
                                     <p><strong>Languages: </strong>
-                                        <select name="languages">
-                                            <option>English</option>
-                                            <option>Spanish</option>
-                                            <option>French</option>
+                                        <select name="languages" multiple size="3">
+                                            <c:forEach var="lang" items="${allLanguages}" >
+                                                <option value="${lang.language}">${lang.language}</option>
+                                            </c:forEach>
                                         </select>
                                     </p>
                                     <p><strong>Referral: </strong><input type="text"></p>
@@ -123,7 +120,7 @@
                                 <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
                                     <a href="/teacherTrash?id=${teacher.id}" class="btn btn-danger">Delete Teacher</a>
 
-                                    <a href="" class="btn btn-success" type="button">Update Teacher</a>
+                                    <a href="/teacherSave" class="btn btn-success" type="submit">Update Teacher</a>
 
                                     <a href="" class="btn btn-warning" type="button">Create New Teacher</a>
                                 </security:authorize>
