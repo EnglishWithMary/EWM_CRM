@@ -16,8 +16,8 @@ import java.sql.SQLException;
 @Controller
 public class PaymentsController {
 
-    @RequestMapping(value = "/payments", method = RequestMethod.GET)
-    public String payments(Model model) {
-        return "payments/payments";
-    }
+//    @RequestMapping(value = "/payments", method = RequestMethod.GET)
+//    public String payments(Model model) {
+//        return "payments/payments";
+//    }
 }

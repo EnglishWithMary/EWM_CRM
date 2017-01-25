@@ -12,6 +12,8 @@
     <beans:bean id="bcrypt" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
     <http auto-config="true" use-expressions="true">
+        <!--<intercept-url pattern="/login" access="isAnonymous()"/>-->
+        <!--<intercept-url pattern="/**" access="isAuthenticated()"/>-->
         <intercept-url pattern="/" access="isAuthenticated()"/>
         <intercept-url pattern="/home" access="isAuthenticated()"/>
         <intercept-url pattern="/profile" access="isAuthenticated()"/>
@@ -19,16 +21,24 @@
         <intercept-url pattern="/test/**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
-        <intercept-url pattern="/users**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/users/**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/managers**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/managers/**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/teachers**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/teachers/**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/students**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/students/**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/pipeline**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/pipeline/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/users**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"/>
+        <intercept-url pattern="/users/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"/>
+        <intercept-url pattern="/managers**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"/>
+        <intercept-url pattern="/managers/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"/>
+        <intercept-url pattern="/teachers**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"/>
+        <intercept-url pattern="/teachers/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"/>
+        <intercept-url pattern="/students**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"/>
+        <intercept-url pattern="/students/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"/>
+        <intercept-url pattern="/rooms**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"/>
+        <intercept-url pattern="/rooms/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"/>
+        <intercept-url pattern="/trash**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"/>
+        <intercept-url pattern="/trash/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"/>
+        <intercept-url pattern="/pipeline**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"/>
+        <intercept-url pattern="/pipeline/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"/>
+        <intercept-url pattern="/personnel**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"/>
+        <intercept-url pattern="/personnel/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"/>
+        <intercept-url pattern="/persons**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"/>
+        <intercept-url pattern="/persons/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"/>
         <form-login
                 login-processing-url="/security_check"
                 login-page="/login"
@@ -39,7 +49,6 @@
         <logout logout-success-url="/login"/>
         <csrf disabled="true"/>
     </http>
-
     <authentication-manager>
         <authentication-provider user-service-ref="userDetailsServiceImpl">
             <password-encoder ref = "bcrypt"/>
