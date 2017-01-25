@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ListViewController {
 
-    @RequestMapping(value = "/listView")
-    public String listViews(){return "listView";}
+//    @RequestMapping(value = "/listView")
+//    public String listViews(){return "listView";}
 }
