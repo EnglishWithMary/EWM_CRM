@@ -15,7 +15,7 @@
                         <div class="col-md-12">
                             <img alt="Student --Name--"
                                  src="${pageContext.request.contextPath}/resources/img/defaultAvatar.jpg"
-                            class="img-size-sm">
+                                 class="img-size-sm">
                         </div>
                     </div>
 
@@ -40,7 +40,8 @@
                                     <%--<c:set var="currentCardId" value="${currentCard.id}"/>--%>
 
                                     <c:if test="${personCard.id==currentCard.id}">
-                                        <button class="btn btn-default" type="button"><h4>${personCard.cardName}</h4></button>
+                                        <button class="btn btn-default" type="button"><h4>${personCard.cardName}</h4>
+                                        </button>
                                     </c:if>
                                     <c:if test="${personCard.id != currentCard.id}">
                                         <button class="btn btn-default" type="button">${personCard.cardName}</button>
@@ -64,33 +65,45 @@
 
                                 <%--Information from request--%>
                                 <div class="panel-body">
-                                    <p><strong>First Name: </strong><input type="text" value="${student.person.firstName}"></p>
-                                    <p><strong>Last Name: </strong><input type="text" value="${student.person.lastName}"></p>
-                                    <p><strong>Middle Name: </strong><input type="text" value="${student.person.middleName}"></p>
+                                    <p><strong>First Name: </strong><input type="text"
+                                                                           value="${student.person.firstName}"></p>
+                                    <p><strong>Last Name: </strong><input type="text"
+                                                                          value="${student.person.lastName}"></p>
+                                    <p><strong>Middle Name: </strong><input type="text"
+                                                                            value="${student.person.middleName}"></p>
                                     <p><strong>Phone: </strong><input type="text"></p>
-                                    <p><strong>email: </strong><input type="text" value="${student.person.email.email}"></p>
+                                    <p><strong>email: </strong><input type="text" value="${student.person.email.email}">
+                                    </p>
                                     <p><strong>web : </strong><a href="">null</a></p>
                                     <p><strong>Date of Birth: </strong><input type="date" name="" id=""></p>
                                     <p><strong>Comment: </strong></p>
                                     <%--<input type="text" value="${student.person.comments}">--%>
-                                    <p><textarea name="comments" form="comments" cols="30">${student.person.comments}</textarea>
-                                    <form id=comments method="post" modelAttribute="student.person" action="/studentUpdateComments">
+                                    <p><textarea name="comments" form="comments"
+                                                 cols="30">${student.person.comments}</textarea>
+                                    <form id=comments method="post" modelAttribute="student.person"
+                                          action="/students/UpdateComments">
                                         <input name="id" type=hidden value="${student.id}">
                                         <%--<input name="role" type=hidden value="4">--%>
                                         <security:authorize access="hasRole('ROLE_ADMIN')">
                                             <input type="submit" value="Submit comment"/>
                                         </security:authorize>
-                                    </form></p>
+                                    </form>
+                                    </p>
 
-                                    <p><strong>State: </strong><input type="text" value="${student.person.state.state}"></p>
+                                    <p><strong>State: </strong><input type="text" value="${student.person.state.state}">
+                                    </p>
                                     <p><strong>Last modified: </strong>${student.person.modifyDate}</p>
                                     <p><strong>Registration date: </strong>${student.person.registrationDate}</p>
                                     <p><strong>Organization: </strong><input type="text"></p>
 
-                                    <p><strong>Group: </strong><a href="/group/info?group_id=${student.group.id}">${student.group.name}</a></p>
+                                    <p><strong>Group: </strong><a
+                                            href="/groups/info?group_id=${student.group.id}">${student.group.name}</a>
+                                    </p>
                                     <p><strong>Last Groups: </strong><a href="">link to other groups</a>
                                         (status) </p>
-                                    <p><strong>Teacher: </strong><a href="/teacher/info?teacher_id=${student.teacher.id}">${student.teacher.person.firstName}</a></p>
+                                    <p><strong>Teacher: </strong><a
+                                            href="/teachers/info?teacher_id=${student.teacher.id}">${student.teacher.person.firstName}</a>
+                                    </p>
                                     <p><strong>Referral: </strong><input type="text"></p>
                                     <p><strong>Student's contacts: </strong><input type="text"></p>
                                     <p><strong>Schedule: </strong><input type="text"></p>
@@ -106,9 +119,10 @@
                             <div class="btn-group btn-group-md">
                                 <a href="" class="btn btn-success" type="button">Become Graduate</a>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
-                                    <a href="/students/${student.id}/add-testing-result" class="btn btn-success" type="button">Set level</a>
-                                    <a href="/studentTrash?id=${student.id}" class="btn btn-danger" >Delete Student</a>
-                               </security:authorize>
+                                    <a href="/students/trash?id=${student.id}" class="btn btn-danger">Delete Student</a>
+                                    <a href="/students/${student.id}/add-testing-result" class="btn btn-success"
+                                       type="button">Set level</a>
+                                </security:authorize>
 
                             </div>
                         </div>
@@ -127,7 +141,8 @@
                                     <strong>Last test results</strong>
                                 </div>
                                 <div class="panel-body">
-                                    <p><strong>Date:</strong> <fmt:formatDate value="${level.checkpointDate}" type="date"></fmt:formatDate></p>
+                                    <p><strong>Date:</strong> <fmt:formatDate value="${level.checkpointDate}"
+                                                                              type="date"></fmt:formatDate></p>
                                     <p><strong>Test:</strong> ${level.testType}</p>
                                     <p><strong>Grammar:</strong> ${level.grammar}</p>
                                     <p><strong>Speaking:</strong> ${level.speaking}</p>
@@ -204,19 +219,18 @@
                         </div>
                     </div>
 
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <strong>Calendar</strong>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div id="calendar"></div>
-                                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <strong>Calendar</strong>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="calendar"></div>
                                 </div>
                             </div>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>

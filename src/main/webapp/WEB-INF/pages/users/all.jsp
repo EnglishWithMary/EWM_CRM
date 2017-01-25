@@ -12,13 +12,13 @@
                 <a href="user/${user.id}">${user.login}</a>
             </td>
             <td>
-                <a href="userAddRole?id=${user.id}">add role</a>
+                <a href="#">add role</a>
             </td>
             <td>
-                <a href="userDel?id=${user.id}">delete user</a>
+                <a href="#">delete user</a>
             </td>
         </tr>
     </c:forEach>
 </table>
-<p><a href="/userAdd">Add User</a></p>
+<p><a href="#">Add User</a></p>
 </div>

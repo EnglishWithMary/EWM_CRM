@@ -13,7 +13,7 @@
                 <strong>Add Event</strong>
             </div>
             <div class="panel-body">
-                <sf:form method="post" modelAttribute="GroupEvent" action="/group/${group_id}/add-event">
+                <sf:form method="post" modelAttribute="GroupEvent" action="/groups/${group_id}/add-event">
                     <fieldset class="form-group">
                         <div class="row hidden">
                             <input type="hidden" name="groupId" value="${group_id}" class="hidden"/>

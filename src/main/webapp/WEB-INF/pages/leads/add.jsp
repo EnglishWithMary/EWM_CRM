@@ -22,7 +22,7 @@
             </div>
             <div class="panel-body">
 
-                <sf:form method="post" modelAttribute="lead" id="form" action="/leadSave">
+                <sf:form method="post" modelAttribute="lead" id="form" action="/leads/save">
 
                     <fieldset class="form-group">
 

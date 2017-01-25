@@ -81,21 +81,19 @@ public class TeacherController {
     }
 
 
-    @RequestMapping(value = "/teacherAdd")
+    @RequestMapping(value = "/teachers/add")
     public String addTeacher(Model model,
                              HttpServletRequest request) {
-        request.getSession().setAttribute("teacherAdd", request.getHeader("Referer"));
+        request.getSession().setAttribute("teachers/add", request.getHeader("Referer"));
         PersonDTO person = new PersonDTO();
         model.addAttribute("teacher", person);
         return "teachers/add";
     }
 
-    @RequestMapping(value = "/teacherSave", method = RequestMethod.POST)
+    @RequestMapping(value = "/teachers/save", method = RequestMethod.POST)
     public String saveTeacher(@Valid @ModelAttribute("teacher") PersonDTO personDTO, BindingResult bindingResult,
                               Model model,
                               HttpServletRequest request) throws SQLException, ParseException {
-
-//        validator.validate(personDTO, bindingResult);
 
         User u = userService.findByUserLogin(personDTO.getLogin());
 
@@ -108,34 +106,34 @@ public class TeacherController {
             teacher = personDTOService.updateRegisteredUser(teacher, personDTO);
             teacherService.insert(teacher);
 
-            return "redirect:" + request.getSession().getAttribute("teacherAdd").toString();
+            return "redirect:" + request.getSession().getAttribute("teachers/add").toString();
         } else {
             return "teachers/add";
         }
     }
 
-    @RequestMapping(value = "/teacherSortByDate", method = RequestMethod.POST)
+    @RequestMapping(value = "/teachers/SortByDate", method = RequestMethod.POST)
     public String filterTeachers(Model model) throws SQLException {
         List<Teacher> teachers = teacherService.getSortedByRegistrationDate();
         model.addAttribute("teachers", teachers);
         return "teachers/all";
     }
 
-    @RequestMapping(value = "/teacherDelete")
+    @RequestMapping(value = "/teachers/delete")
     public String teacherDelete(@RequestParam Integer id) throws SQLException {
         Teacher teacher = teacherService.getById(id);
         teacherService.delete(teacher);
         return "redirect:/teachers";
     }
 
-    @RequestMapping(value = "/teacherTrash")
+    @RequestMapping(value = "/teachers/trash")
     public String teacherTrash(@RequestParam Integer id) throws SQLException {
         Teacher teacher = teacherService.getById(id);
         teacherService.trash(teacher);
         return "redirect:/teachers";
     }
 
-    @RequestMapping(value = "/teacher/info")
+    @RequestMapping(value = "/teachers/info")
     public String teacherInfo(Model model, @RequestParam int teacher_id) throws SQLException {
 
         Teacher teacher = teacherService.getById(teacher_id);
@@ -147,7 +145,7 @@ public class TeacherController {
         return "persons/teacher-info";
     }
 
-    @RequestMapping(value = "/teacherUpdateComments", method = RequestMethod.POST)
+    @RequestMapping(value = "/teachers/UpdateComments", method = RequestMethod.POST)
     public String studentUpdate(Model model,
                                 @RequestParam Integer id,
                                 @RequestParam String comments) throws SQLException {
@@ -159,14 +157,13 @@ public class TeacherController {
         return "persons/teacher-info";
     }
 
-    @RequestMapping(value = "/setTeacherLevel")
+    @RequestMapping(value = "/teachers/setTeacherLevel")
     public String setTeacherLevel(int level, int teacher_id) throws SQLException {
         Teacher teacher = teacherService.getById(teacher_id);
         TeacherLevelEnum level_Id = TeacherLevelEnum.valueOf(level);
         teacher.setLevel(level_Id);
         teacherService.update(teacher);
 
-        return "redirect:/teacher/info?teacher_id=" + teacher_id;
-
+        return "redirect:/teachers/info?teacher_id=" + teacher_id;
     }
 }
