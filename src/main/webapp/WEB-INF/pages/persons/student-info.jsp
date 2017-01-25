@@ -219,6 +219,44 @@
                         </div>
                     </div>
 
+                        <%--Panel with Notes--%>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <strong>Notes</strong>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>PayName</th>
+                                                <th>ExpirationDate</th>
+                                                <th>Edit</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Payment1</td>
+                                                <td>Oct-16-2017</td>
+                                                <td>edit</td>
+                                                <td>delete</td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
                     <div class="row">
                         <div class="col-md-12">
                             <div class="panel panel-default">
