@@ -171,7 +171,7 @@ public class LeadController {
         return "redirect:" + request.getHeader("Referer");
     }
 
-    @RequestMapping(value = "/leads/DeleteFromPipe", method = RequestMethod.POST)
+    @RequestMapping(value = "/lead/DeleteFromPipe", method = RequestMethod.POST)
     public String leadDeleteFromPipe(HttpServletRequest request, Model model,
                                      @RequestParam(required = true) Integer personId) throws SQLException {
         model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
@@ -189,17 +189,17 @@ public class LeadController {
 
 
     @RequestMapping(value = "/leads/info", method = RequestMethod.GET)
-    public String leadInfo(Model model, @RequestParam int person_id) throws SQLException {
-        Lead lead = leadService.getById(person_id);
+    public String leadInfo(Model model, @RequestParam int personId) throws SQLException {
+        Lead lead = leadService.getLeadByPersonId(personId);
         model.addAttribute("lead", lead);
         return "persons/lead-info";
     }
 
-    @RequestMapping(value = "/leads/UpdateComments", method = RequestMethod.POST)
-    public String studentUpdate(Model model,
-                                @RequestParam Integer id,
+    @RequestMapping(value = "/lead/UpdateComments", method = RequestMethod.POST)
+    public String leadUpdate(Model model,
+                                @RequestParam Integer personId,
                                 @RequestParam String comments) throws SQLException {
-        Lead lead = leadService.getById(id);
+        Lead lead = leadService.getLeadByPersonId(personId);
         lead.getPerson().setComments(comments);
         leadService.update(lead);
         model.addAttribute("lead", lead);
@@ -210,13 +210,12 @@ public class LeadController {
     @RequestMapping(value = "/leads/ToStudent")
     public String leadToStudent(Model model, Integer personId) throws SQLException, ParseException {
 
-        Person person = personService.getById(personId);
         Student student = new Student();
-        Lead lead = leadService.getByPerson(person);
+        Lead lead = leadService.getLeadByPersonId(personId);
 
-        person.setId(null);
-        person.getEmail().setId(null);
-        student.setPerson(person);
+        lead.getPerson().setId(null);
+        lead.getPerson().getEmail().setId(null);
+        student.setPerson(lead.getPerson());
 
         leadService.delete(lead);
 

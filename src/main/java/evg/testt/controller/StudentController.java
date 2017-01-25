@@ -117,9 +117,6 @@ public class StudentController {
             if (personId != null) {
                 student = studentService.getStudentByPersonId(personId);
             }
-
-            student = personDTOService.updateRegisteredUser(student, personDTO);
-
             if (teacher_id != null && teacher_id > 0) {
                 Teacher teacher = teacherService.getById(teacher_id);
                 student.setTeacher(teacher);
@@ -128,8 +125,11 @@ public class StudentController {
                 Group group = groupService.getById(group_id);
                 student.setGroup(group);
             }
-            if (personId == null){
-                studentService.insert(student);
+
+            student = personDTOService.updateRegisteredUser(student, personDTO);
+
+            if (personId == null) {
+                studentService.update(student);
             }
             else {
                 studentService.update(student);
@@ -258,8 +258,8 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/students/info", method = RequestMethod.GET)
-    public String studentInfo(Model model, @RequestParam(value = "student_id") Integer studentId) throws SQLException {
-        Student student = studentService.getById(studentId);
+    public String studentInfo(Model model, @RequestParam(value = "personId") Integer personId) throws SQLException {
+        Student student = studentService.getStudentByPersonId(personId);
         Card currentCard = cardService.getCardByPerson(student.getPerson());
         List<Card> personCardList = cardService.getCards(Pipe.STUDENT_PIPE);
         model.addAttribute("currentCard", currentCard);

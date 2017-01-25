@@ -44,13 +44,13 @@ public @Data class Person extends BaseModel{
     private static class NullPerson extends Person implements Null {
 
         private NullPerson() {
-            setFirstName("First name");
-            setLastName("Last name");
-            setMiddleName("Middle name");
+            setFirstName("");
+            setLastName("");
+            setMiddleName("");
             setAvatarURL("");
             setBirthdayDate(new Date());
-            setOrganization("EWM");
-            setEmail(new Email("none@none.none"));
+            setOrganization("");
+            setEmail(new Email(""));
             setComments("");
         }
 

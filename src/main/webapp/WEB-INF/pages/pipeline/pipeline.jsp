@@ -43,11 +43,20 @@
                             </div>
 
                             <div class="personData">
-                                <input type="hidden" id="personId" name="personId" value="${person.id}">
-                                <a class="" href="/lead/info?personId=${person.id}" role="button">
-                                        ${person.lastName}
-                                        ${fn:substring(person.firstName,0,1)}.${fn:substring(person.middleName,0,1)}.
-                                </a>
+                                <c:if test="${pipeType.id==1}">
+                                    <input type="hidden" id="personId" name="personId" value="${person.id}">
+                                    <a class="" href="/leads/info?personId=${person.id}" role="button">
+                                            ${person.lastName}
+                                            ${fn:substring(person.firstName,0,1)}.${fn:substring(person.middleName,0,1)}.
+                                    </a>
+                                </c:if>
+                                <c:if test="${pipeType.id==2}">
+                                    <input type="hidden" id="personId" name="personId" value="${person.id}">
+                                    <a class="" href="/students/info?personId=${person.id}" role="button">
+                                            ${person.lastName}
+                                            ${fn:substring(person.firstName,0,1)}.${fn:substring(person.middleName,0,1)}.
+                                    </a>
+                                </c:if>
                             </div>
 
                             <div class="row">

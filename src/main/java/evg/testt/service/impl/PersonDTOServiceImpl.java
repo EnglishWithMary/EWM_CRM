@@ -52,9 +52,6 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
             person.setBirthdayDate(personDTO.getBirthdayDate());
             person.setEmail(new Email(personDTO.getEmail()));
             person.setState(new State());
-            if (personDTO.getCardId() != null) {
-                person.setPosition(updatePersonPositionOnPipeline(person, personDTO));
-            }
         }
 
         return person;
@@ -107,37 +104,36 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
         }
     }
 
-    public Integer updatePersonPositionOnPipeline(Person person, PersonDTO personDTO) throws SQLException{
-
-        Integer personId = person.getId();
-        Integer cardId = personDTO.getCardId();
-        Card card;
-
-        if (personId == null){
-            card = cardService.getById(cardId);
-
-//          Add new person to Card
-            card.getPersons().add(person);
-            cardService.update(card);
-        }
-        else {
-            card = cardService.getCardByPerson(person);
-
-            if (!cardId.equals(card.getId())) {
-
-//              Delete person from old Card
-                card.getPersons().remove(person);
-                cardService.update(card);
-
-//              Add person to new Card
-                card = cardService.getById(cardId);
-                card.getPersons().add(person);
-                cardService.update(card);
-            }
-        }
-
-
-        return card.getPersons().size() + 1;
-    }
+//    public Integer updatePersonPositionOnPipeline(Person person, PersonDTO personDTO) throws SQLException{
+//
+//        Integer personId = person.getId();
+//        Integer cardId = personDTO.getCardId();
+//        Card card;
+//
+//        if (personId == null){
+//            card = cardService.getById(cardId);
+//
+////          Add new person to Card
+//            card.getPersons().add(person);
+//            cardService.update(card);
+//        }
+//        else {
+//            card = cardService.getCardByPerson(person);
+//
+//            if (!cardId.equals(card.getId())) {
+//
+////              Delete person from old Card
+//                card.getPersons().remove(person);
+//                cardService.update(card);
+//
+////              Add person to new Card
+//                card = cardService.getById(cardId);
+//                card.getPersons().add(person);
+//                cardService.update(card);
+//            }
+//        }
+//
+//        return card.getPersons().size() + 1;
+//    }
 
 }

@@ -25,7 +25,8 @@ public class LeadRepositoryJpaImpl extends HumanRepositoryJpaImpl<Lead> implemen
 
     public Lead findLeadByPersonId(Integer personId){
 
-        Query query = em.createQuery("SELECT student FROM students student WHERE student.person.id =:id");
+        Query query = em.createQuery("SELECT lead FROM leads lead WHERE lead.person.id =:id");
+        query.setParameter("id",personId);
 
         return (Lead) query.getSingleResult();
     }
