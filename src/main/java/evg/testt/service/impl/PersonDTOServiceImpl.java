@@ -52,7 +52,9 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
             person.setBirthdayDate(personDTO.getBirthdayDate());
             person.setEmail(new Email(personDTO.getEmail()));
             person.setState(new State());
-            person.setPosition(updatePersonPositionOnPipeline(person, personDTO));
+            if (personDTO.getCardId() != null) {
+                person.setPosition(updatePersonPositionOnPipeline(person, personDTO));
+            }
         }
 
         return person;
