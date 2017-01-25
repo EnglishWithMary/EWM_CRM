@@ -57,8 +57,8 @@
                                                 ${group.teacher.person.lastName}${" "}
                                         </a></td>
                                     <td>${group.language}</td>
-                                    <td>!add status</td>
-                                    <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <td></td>
+                                    <security:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
                                         <td>
                                             <a href="/teachers/delete?id=${teacher.id}">Delete</a>
                                         </td>

@@ -27,23 +27,12 @@
                                 <th>Name</th>
                                 <th>Registration Date</th>
                                 <th>Comments</th>
-                                <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
-                                    <td>Edit</td>
-                                    <td>Delete</td>
+                                <security:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
+                                    <th>Edit</th>
+                                    <th>Delete</th>
                                 </security:authorize>
                             </tr>
                             </thead>
-                            <tfoot>
-                            <tr>
-                                <th>Name</th>
-                                <th>Registration Date</th>
-                                <th>Comments</th>
-                                <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
-                                    <td>Edit</td>
-                                    <td>Delete</td>
-                                </security:authorize>
-                            </tr>
-                            </tfoot>
                             <tbody>
                             <c:forEach var="lead" items="${leads}">
                                 <tr>
@@ -57,7 +46,7 @@
                                     <td>${lead.person.registrationDate}</td>
                                     <td><textarea name="comments" cols="16" disabled>${lead.person.comments}</textarea>
                                     </td>
-                                    <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
+                                    <security:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
                                         <td>
                                             <form method="post" action="/">
                                                 <button type="submit" class="btn btn-default btn-sm">
