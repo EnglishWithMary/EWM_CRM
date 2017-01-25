@@ -112,14 +112,12 @@ public class StudentController {
 
         if (!bindingResult.hasErrors()) {
 
-            Student student;
+            Student student = new Student();
 
-            if (personId == null) {
-                student = new Student();
+            if (personId != null) {
+                student = studentService.getStudentByPersonId(personId);
             }
-            else {
-                student = studentService.getById(1);
-            }
+
             student = personDTOService.updateRegisteredUser(student, personDTO);
 
             if (teacher_id != null && teacher_id > 0) {

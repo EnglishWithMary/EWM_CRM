@@ -3,6 +3,7 @@ package evg.testt.dao.Jpa;
 import evg.testt.model.Lead;
 import evg.testt.model.Person;
 import evg.testt.dao.LeadRepository;
+import evg.testt.model.Student;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
@@ -20,5 +21,12 @@ public class LeadRepositoryJpaImpl extends HumanRepositoryJpaImpl<Lead> implemen
         if (result.size()>0)
             return (Lead)result.get(0);
         else return null;
+    }
+
+    public Lead findLeadByPersonId(Integer personId){
+
+        Query query = em.createQuery("SELECT student FROM students student WHERE student.person.id =:id");
+
+        return (Lead) query.getSingleResult();
     }
 }
