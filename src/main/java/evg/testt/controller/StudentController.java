@@ -101,16 +101,27 @@ public class StudentController {
     public String saveStudent(@ModelAttribute("student") @Valid PersonDTO personDTO,
                               BindingResult bindingResult, Model model,
                               @RequestParam(required = false) Integer teacher_id,
-                              @RequestParam(required = false) Integer group_id)
-            throws SQLException, ParseException {
+                              @RequestParam(required = false) Integer group_id,
+                              @RequestParam(required = false) Integer personId) throws SQLException, ParseException {
 
         User u = userService.findByUserLogin(personDTO.getLogin());
+
         if (u != null) {
             bindingResult.rejectValue("login", "1", "Login already exist.");
         }
+
         if (!bindingResult.hasErrors()) {
-            Student student = new Student();
+
+            Student student;
+
+            if (personId == null) {
+                student = new Student();
+            }
+            else {
+                student = studentService.getById(1);
+            }
             student = personDTOService.updateRegisteredUser(student, personDTO);
+
             if (teacher_id != null && teacher_id > 0) {
                 Teacher teacher = teacherService.getById(teacher_id);
                 student.setTeacher(teacher);
@@ -119,11 +130,18 @@ public class StudentController {
                 Group group = groupService.getById(group_id);
                 student.setGroup(group);
             }
-            studentService.insert(student);
+            if (personId == null){
+                studentService.insert(student);
+            }
+            else {
+                studentService.update(student);
+            }
+
             return "redirect:/students";
         } else {
             model.addAttribute("groups", groupService.getAll());
             model.addAttribute("teachers", teacherService.getAll());
+            model.addAttribute("cards", cardService.getCards(Pipe.STUDENT_PIPE));
             return "students/add";
         }
     }
