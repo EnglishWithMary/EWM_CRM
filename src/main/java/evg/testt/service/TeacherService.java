@@ -8,4 +8,7 @@ import java.util.List;
 
 
 public interface TeacherService extends RegisteredUserService<Teacher> {
+
+    public List<Teacher> getTeacherByLevel(int teacherLevel)throws SQLException;
+
 }

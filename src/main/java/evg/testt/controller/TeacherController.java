@@ -166,4 +166,14 @@ public class TeacherController {
 
         return "redirect:/teachers/info?teacher_id=" + teacher_id;
     }
+
+    @RequestMapping(value = "/teacherFilterByLevel", method = RequestMethod.GET)
+    public String teacherFilterByLevel(Model model,
+                                       @RequestParam Integer teacherLevel) throws SQLException {
+        List<Teacher> teachersByLevel = Collections.EMPTY_LIST;
+        teachersByLevel = teacherService.getTeacherByLevel(teacherLevel);
+
+        model.addAttribute("teachers", teachersByLevel);
+        return "teachers/all";
+    }
 }
