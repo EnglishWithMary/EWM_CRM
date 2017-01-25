@@ -44,7 +44,7 @@
 
                             <div class="personData">
                                 <input type="hidden" id="personId" name="personId" value="${person.id}">
-                                <a class="" href="/leads/info?person_id=${person.id}" role="button">
+                                <a class="" href="/lead/info?personId=${person.id}" role="button">
                                         ${person.lastName}
                                         ${fn:substring(person.firstName,0,1)}.${fn:substring(person.middleName,0,1)}.
                                 </a>

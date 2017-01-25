@@ -51,4 +51,9 @@ public class StudentServiceImpl extends RegisteredUserServiceImpl<Student, Stude
     public int countByFilter(Integer teacher_id, List<Integer> groupIdList) throws SQLException{
         return dao.countByFilter(teacher_id,groupIdList);
     }
+
+    @Override
+    public Student getStudentByPersonId(Integer personId){
+        return dao.findStudentByPersonId(personId);
+    }
 }

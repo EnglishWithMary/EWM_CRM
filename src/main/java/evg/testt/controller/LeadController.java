@@ -107,9 +107,6 @@ public class LeadController {
                                  @RequestParam(required = false) Integer personId
     ) throws SQLException, ParseException {
 
-        model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
-        model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.LEAD_PIPE));
-
         if (bindingResult.hasErrors()) {
             model.addAttribute("personId", personId);
             return "leads/add";
@@ -138,6 +135,8 @@ public class LeadController {
                 cardService.update(cardNew);
             }
         }
+        model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
+        model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.LEAD_PIPE));
         return "redirect:" + request.getSession().getAttribute("callback").toString();
     }
 
