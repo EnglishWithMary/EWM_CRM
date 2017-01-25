@@ -1,7 +1,6 @@
 package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
-import evg.testt.exception.PersonRoleNotFoundException;
 import evg.testt.model.Person;
 import evg.testt.model.User;
 import evg.testt.service.PersonService;
@@ -40,7 +39,7 @@ public class UsersController {
     }
 
     @RequestMapping(value = {"","/","/home"})
-    public String homePage(Model model, Principal principal) throws SQLException, PersonRoleNotFoundException {
+    public String homePage(Model model, Principal principal) throws SQLException {
 
         if (principal != null) {
             Person person = personService.getPersonByUserLogin(principal.getName());
@@ -62,14 +61,14 @@ public class UsersController {
         return "users/all";
     }
 
-    @RequestMapping(value = "/userAdd")
+    @RequestMapping(value = "/users/add")
     public String addUser(Model model) {
         PersonDTO person =  new PersonDTO();
         model.addAttribute("user", person);
         return "users/add";
     }
 
-    @RequestMapping(value = "/userSave", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/save", method = RequestMethod.POST)
     public String saveUser(Model model, @Valid @ModelAttribute("user")  User user, BindingResult bindingResult) {
 
         User u =  userService.findByUserLogin(user.getLogin());
@@ -95,16 +94,12 @@ public class UsersController {
         if(!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)){
             return "redirect:/";
         }
-
         if (error != null) {
             model.addAttribute("error", "Invalid username or password!");
         }
-
         if (logout != null) {
             model.addAttribute("msg", "You've been logged out successfully.");
         }
-
         return "login";
     }
-
 }

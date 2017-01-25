@@ -15,7 +15,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-sm-3">
-                        <form method="post" action="/studentSortByDate">
+                        <form method="post" action="/students/SortByDate">
                             <div class="form-group">
                                 <input type="submit" value="Sort by Registration Date" class="btn btn-default">
                             </div>
@@ -44,7 +44,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="row">
-                                    <form action="/studentsSortedByGroup" method="post">
+                                    <form action="/students/SortedByGroup" method="post">
                                         <div class="col-sm-7">
                                             <select name="groupIdList"  class="selectpicker form-control"
                                                     multiple title="Select group">
@@ -66,7 +66,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <table class="table table-striped table-bordered">
+                        <table class="table table-bordered">
                             <thead>
                             <tr>
                                 <th>Name</th>
@@ -75,51 +75,37 @@
                                 <th>Comments</th>
                                 <th>Testing results</th>
                                 <th>Teacher</th>
-                                <security:authorize access="hasRole('ROLE_ADMIN')">
+                                <security:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
                                     <th>Delete</th>
                                     <th>Save</th>
                                 </security:authorize>
                             </tr>
                             </thead>
-                            <tfoot>
-                            <tr>
-                                <th>Name</th>
-                                <th>Group</th>
-                                <th>Registration Date</th>
-                                <th>Comments</th>
-                                <th>Testing results</th>
-                                <th>Teacher</th>
-                                <security:authorize access="hasRole('ROLE_ADMIN')">
-                                    <th>Delete</th>
-                                    <th>Save</th>
-                                </security:authorize>
-                            </tr>
-                            </tfoot>
                             <tbody>
                             <c:forEach var="student" items="${students}">
                                 <tr>
                                     <td>
-                                        <a href="/student/info?student_id=${student.id}">
+                                        <a href="/students/info?personId=${student.person.id}">
                                             ${student.person.firstName}
                                             ${student.person.middleName}
                                             ${student.person.lastName}
                                         </a>
                                     </td>
-                                    <td><a href="/group/info?group_id=${student.group.id}">${student.group.name}</a></td>
+                                    <td><a href="/groups/info?group_id=${student.group.id}">${student.group.name}</a></td>
                                     <td>${student.person.registrationDate}</td>
-                                    <td>${student.person.comments}</td>
+                                    <td><textarea name="comments" cols="16" disabled>${student.person.comments}</textarea></td>
                                     <td>
                                         <a href="/students/${student.id}/add-testing-result">Testing results</a>
                                     </td>
                                     <td>
-                                        <a href="/teacher/info?teacher_id=${student.teacher.id}">${student.teacher.person.firstName}</a>
+                                        <a href="/teachers/info?teacher_id=${student.teacher.id}">${student.teacher.person.firstName}</a>
                                     </td>
-                                    <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <security:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
                                         <td>
-                                            <a href="/studentTrash?id=${student.id}">Delete</a>
+                                            <a href="/students/trash?id=${student.id}">Delete</a>
                                         </td>
                                         <td>
-                                            <a href="/studentSave?id=${student.id}">Save</a>
+                                            <a href="/students/save?id=${student.id}">Save</a>
                                         </td>
                                     </security:authorize>
                                 </tr>
@@ -153,7 +139,7 @@
                 <strong>Tools</strong>
             </div>
             <div class="panel-body">
-                <p><a href="/studentAdd" class="btn btn-success">Add Student</a></p>
+                <p><a href="/students/add" class="btn btn-success">Add Student</a></p>
                 <p><a href="/students/tests" class="btn btn-success">Test Results</a></p>
             </div>
         </div>

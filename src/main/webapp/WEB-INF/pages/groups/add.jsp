@@ -14,22 +14,22 @@
                 <strong>Enter Details:</strong>
             </div>
             <div class="panel-body">
-                <sf:form method="post" modelAttribute="group" action="/groupSave">
+                <sf:form method="post" modelAttribute="group" action="/groups/save">
                     <fieldset>
-                        <div class="row padding-bot">
+                        <div class="row pad ding-bot">
                             <div class="col-sm-12">
                                 <sf:label path="name">Group Name:</sf:label>
-                                <sf:input path="name"/>
-                                <sf:errors path="name"/>
+                                <sf:input path="name" cssClass="form-control"/>
+                                <sf:errors path="name" cssClass="has-error"/>
                             </div>
                         </div>
                         <div class="row padding-bot">
                             <div class="col-sm-12">
                                 <sf:label path="teacherId"> Teacher: </sf:label>
-                                <sf:select path="teacherId">
+                                <sf:select path="teacherId" cssClass="form-control">
                                     <c:forEach items="${teachers}" var="teach">
                                         <sf:option value="${teach.id}"
-                                                   label="${teach.user.login} (${teach.person.firstName} ${teach.person.middleName} ${teach.person.lastName})"/>
+                                                   label="${teach.person.lastName} ${teach.person.firstName} ${teach.person.middleName}"/>
                                     </c:forEach>
                                 </sf:select>
                             </div>
@@ -37,7 +37,7 @@
                         <div class="row padding-bot">
                             <div class="col-sm-12">
                                 <sf:label path="language"> Language: </sf:label>
-                                <sf:select path="language">
+                                <sf:select path="language" cssClass="form-control">
                                     <option label="English">English</option>
                                     <option label="Germany">Germany</option>
                                     <option label="Germany">Spanish</option>

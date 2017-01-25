@@ -1,9 +1,11 @@
 package evg.testt.service.impl;
 
 import evg.testt.dto.PersonDTO;
-import evg.testt.exception.NullObjectPersonDTOException;
 import evg.testt.model.*;
+import evg.testt.service.CardService;
 import evg.testt.service.PersonDTOService;
+import evg.testt.service.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.sql.SQLException;
@@ -14,76 +16,78 @@ import java.util.Date;
 @Service
 public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTOService {
 
+    @Autowired
+    PersonService personService;
+    @Autowired
+    CardService cardService;
+
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public <T extends RegisteredUser> T updateRegisteredUser(T someRegisteredUser, PersonDTO personDTO) throws SQLException, ParseException{
+    public <T extends RegisteredUser> T updateRegisteredUser(T someRegisteredUser, PersonDTO personDTO)
+            throws SQLException, ParseException{
 
-        if (personDTO == null || someRegisteredUser == null) {
-            throw new NullObjectPersonDTOException("Can`t update person with empty data. First initialize objects.");
-        }
-
-        Person person;
-
-        if (someRegisteredUser.getPerson() == null){
-            person = new Person();
-        }
-        else {
-            person = someRegisteredUser.getPerson();
-        }
-
-        someRegisteredUser.setPerson(getUpdatedPerson(person, personDTO));
-
+        someRegisteredUser.setPerson(getUpdatedPerson(someRegisteredUser.getPerson(), personDTO));
         someRegisteredUser.setUser(getUpdatedUser(someRegisteredUser.getUser(), personDTO));
-
         return someRegisteredUser;
     }
 
-    public Lead updateLead(Lead lead, PersonDTO personDTO) throws NullObjectPersonDTOException, ParseException{
+    public Lead updateLead(Lead lead, PersonDTO personDTO) throws ParseException, SQLException{
 
-        if (personDTO == null || lead == null) {
-            throw new NullObjectPersonDTOException("Can`t update person with empty data. First initialize objects.");
-        }
-
-        Person person;
-
-        if (lead.getPerson() == null){
-            person = new Person();
-        }
-        else {
-            person = lead.getPerson();
-        }
-
-        lead.setPerson(getUpdatedPerson(person, personDTO));
-
+        lead.setPerson(getUpdatedPerson(lead.getPerson(), personDTO));
         return lead;
     }
 
-    public Person getUpdatedPerson(Person person, PersonDTO personDTO) throws NullObjectPersonDTOException, ParseException {
+    public Person getUpdatedPerson(Person person, PersonDTO personDTO) throws ParseException, SQLException {
 
-        if (personDTO == null || person == null) {
-            throw new NullObjectPersonDTOException("Can`t update person with empty data. First initialize objects.");
+        if(personDTO != null) {
+            if (person == null) {
+                person = new Person();
+            }
+
+            person.setFirstName(personDTO.getFirstName());
+            person.setLastName(personDTO.getLastName());
+            person.setMiddleName(personDTO.getMiddleName());
+            person.setComments(personDTO.getComments());
+            person.setOrganization(personDTO.getOrganization());
+            person.setBirthdayDate(personDTO.getBirthdayDate());
+            person.setEmail(new Email(personDTO.getEmail()));
+            person.setState(new State());
         }
-
-        person.setFirstName(personDTO.getFirstName());
-        person.setLastName(personDTO.getLastName());
-        person.setMiddleName(personDTO.getMiddleName());
-        person.setComments(personDTO.getComments());
-        person.setOrganization(personDTO.getOrganization());
-        person.setBirthdayDate(getDateFromString(personDTO.getBirthdayDate()));
-        person.setEmail(new Email(personDTO.getEmail()));
-        person.setState(new State());
 
         return person;
     }
 
-    public User getUpdatedUser (User user, PersonDTO personDTO){
+    public PersonDTO getUpdatedPersonDTO (PersonDTO personDTO, Integer personId, Integer cardId) throws SQLException{
 
-        if (user.getLogin() == null) {
-            user.setLogin(personDTO.getLogin());
+        Person person = Person.NULL;
+
+        if (cardId == null) {
+            cardId = 1;//By Default cardId for Lead
         }
 
-        if (personDTO.getPassword() != null) {
-            user.setPassword(passwordEncoder.encode(personDTO.getPassword()));
+        if (personId != null) {
+            person = personService.getById(personId);
+        }
+
+        personDTO.setFirstName(person.getFirstName());
+        personDTO.setMiddleName(person.getMiddleName());
+        personDTO.setLastName(person.getLastName());
+        personDTO.setAvatarURL(person.getAvatarURL());
+        personDTO.setEmail(person.getEmail().getEmail());
+        personDTO.setCardId(cardId);
+
+        return personDTO;
+    }
+
+    public User getUpdatedUser (User user, PersonDTO personDTO){
+        if(personDTO!=null) {
+            if (user.getLogin() == null) {
+                user.setLogin(personDTO.getLogin());
+            }
+
+            if (personDTO.getPassword() != null) {
+                user.setPassword(passwordEncoder.encode(personDTO.getPassword()));
+            }
         }
 
         return user;
@@ -99,5 +103,37 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
             return null;
         }
     }
+
+//    public Integer updatePersonPositionOnPipeline(Person person, PersonDTO personDTO) throws SQLException{
+//
+//        Integer personId = person.getId();
+//        Integer cardId = personDTO.getCardId();
+//        Card card;
+//
+//        if (personId == null){
+//            card = cardService.getById(cardId);
+//
+////          Add new person to Card
+//            card.getPersons().add(person);
+//            cardService.update(card);
+//        }
+//        else {
+//            card = cardService.getCardByPerson(person);
+//
+//            if (!cardId.equals(card.getId())) {
+//
+////              Delete person from old Card
+//                card.getPersons().remove(person);
+//                cardService.update(card);
+//
+////              Add person to new Card
+//                card = cardService.getById(cardId);
+//                card.getPersons().add(person);
+//                cardService.update(card);
+//            }
+//        }
+//
+//        return card.getPersons().size() + 1;
+//    }
 
 }

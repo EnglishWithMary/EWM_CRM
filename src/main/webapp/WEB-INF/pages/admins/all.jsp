@@ -39,18 +39,6 @@
                                 </security:authorize>
                             </tr>
                             </thead>
-                            <tfoot>
-                            <tr>
-                                <th>First name</th>
-                                <th>Last name</th>
-                                <th>Middle name</th>
-                                <th>Registration Date</th>
-                                <security:authorize access="hasRole('ROLE_ADMIN')">
-                                    <th>Delete</th>
-                                    <th>Save</th>
-                                </security:authorize>
-                            </tr>
-                            </tfoot>
                             <tbody>
                             <c:forEach var="admin" items="${admins}">
                                 <tr>
@@ -60,10 +48,10 @@
                                     <td>${admin.person.registrationDate}</td>
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
                                         <td>
-                                            <a href="/adminTrash?id=${admin.id}">Delete</a>
+                                            <a href="/admins/trash?id=${admin.id}">Delete</a>
                                         </td>
                                         <td>
-                                            <a href="/adminSave?id=${admin.id}">Save</a>
+                                            <a href="/admins/save?id=${admin.id}">Save</a>
                                         </td>
                                     </security:authorize>
 
@@ -97,7 +85,7 @@
                 <strong>Tools</strong>
             </div>
             <div class="panel-body">
-                <a href="/adminAdd" class="btn btn-success">Add Admin</a>
+                <a href="/admins/add" class="btn btn-success">Add Admin</a>
             </div>
         </div>
     </div>

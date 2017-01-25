@@ -41,31 +41,38 @@
                                     <strong>Information About Teacher</strong>
                                 </div>
                                 <div class="panel-body">
-                                    <p><strong>First Name: </strong><input type="text" value="${teacher.person.firstName}"></p>
-                                    <p><strong>Last Name: </strong><input type="text" value="${teacher.person.lastName}"></p>
-                                    <p><strong>Middle Name: </strong><input type="text" value="${teacher.person.middleName}"></p>
+                                    <p><strong>First Name: </strong><input type="text"
+                                                                           value="${teacher.person.firstName}"></p>
+                                    <p><strong>Last Name: </strong><input type="text"
+                                                                          value="${teacher.person.lastName}"></p>
+                                    <p><strong>Middle Name: </strong><input type="text"
+                                                                            value="${teacher.person.middleName}"></p>
                                     <p><strong>Phone: </strong><input type="text"></p>
                                     <p><strong>Address: </strong><input type="text"></p>
-                                    <p><strong>email: </strong><input type="text" value="${teacher.person.email.email}"></p>
+                                    <p><strong>email: </strong><input type="text" value="${teacher.person.email.email}">
+                                    </p>
                                     <p><strong>web : </strong><a href=""></a><input type="text"></p>
                                     <p><strong>Date of Birth: </strong><input type="date"></p>
 
                                     <p><strong>Comment: </strong></p>
 
-                                    <p><textarea name="comments" form="comments" cols="30">${teacher.person.comments}</textarea>
-                                    <form id=comments method="post" modelAttribute="teacher.person" action="/teacherUpdateComments">
+                                    <p><textarea name="comments" form="comments"
+                                                 cols="30">${teacher.person.comments}</textarea>
+                                    <form id=comments method="post" modelAttribute="teacher.person"
+                                          action="/teachers/UpdateComments">
                                         <input name="id" type=hidden value="${teacher.id}">
                                         <%--<input name="role" type=hidden value="2">--%>
                                         <security:authorize access="hasRole('ROLE_ADMIN')">
                                             <input type="submit" value="Submit comment"/>
                                         </security:authorize>
-                                    </form></p>
+                                    </form>
+                                    </p>
 
                                     <p><strong>Groups: </strong>
-                                        <select name="gropus" onchange="location = this.value;">
+                                        <select name="groups" onchange="location = this.value;">
                                             <option value="Groups" checked>Groups</option>
                                             <c:forEach items="${groups}" var="group">
-                                                <option value="/group/info?group_id=${group.id}">${group.name}</option>
+                                                <option value="/groups/info?group_id=${group.id}">${group.name}</option>
                                             </c:forEach>
                                         </select>
                                     </p>
@@ -85,8 +92,42 @@
                                     <p><strong>Registration date: </strong>${teacher.person.registrationDate}</p>
                                     <p><strong>Organization: </strong><input type="text"></p>
 
+                                    <p><strong>Knowledge level: </strong>${teacher.level}</p>
+
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
-                                    <p><strong>Salary: </strong><input type="text"></p>
+                                        <p><strong>Set knowledge level: </strong></p>
+                                        <form action="/teachers/setTeacherLevel" method="get">
+                                            <input type="hidden" name="teacher_id" value="${teacher.id}">
+                                            <tr>
+                                                <td><input type="radio" name="level" value="0" checked>JUNIOR_1</td>
+                                                <td></td>
+                                                <td><input type="radio" name="level" value="3">MIDDLE_1</td>
+                                                <td></td>
+                                                <td><input type="radio" name="level" value="6">SENIOR_1</td>
+                                                <td></td>
+                                            </tr>
+                                            <br>
+                                            <tr>
+                                                <td><input type="radio" name="level" value="1">JUNIOR_2</td>
+                                                <td></td>
+                                                <td><input type="radio" name="level" value="4">MIDDLE_2</td>
+                                                <td></td>
+                                                <td><input type="radio" name="level" value="7">SENIOR_2</td>
+                                                <td></td>
+                                            </tr>
+                                            <br>
+                                            <tr>
+                                                <td><input type="radio" name="level" value="2">JUNIOR_3</td>
+                                                <td><input type="radio" name="level" value="5">MIDDLE_3</td>
+                                                <td><input type="radio" name="level" value="8">SENIOR_3</td>
+                                            </tr>
+                                            <br>
+                                            <input type="submit">
+                                        </form>
+                                    </security:authorize><br>
+
+                                    <security:authorize access="hasRole('ROLE_ADMIN')">
+                                        <p><strong>Salary: </strong><input type="text"></p>
                                     </security:authorize>
                                 </div>
                             </div>
@@ -96,7 +137,7 @@
                         <div class="col-md-12">
                             <div class="btn-group btn-group-md">
                                 <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
-                                    <a href="/teacherTrash?id=${teacher.id}" class="btn btn-danger">Delete Teacher</a>
+                                    <a href="/teachers/trash?id=${teacher.id}" class="btn btn-danger">Delete Teacher</a>
 
                                     <a href="" class="btn btn-success" type="button">Update Teacher</a>
 

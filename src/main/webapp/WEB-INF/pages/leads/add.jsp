@@ -18,11 +18,11 @@
     <div class="col-sm-5 col-sm-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong>Add new Student</strong>
+                <strong>Add new Lead</strong>
             </div>
             <div class="panel-body">
 
-                <sf:form method="post" modelAttribute="lead" id="form" action="/leadSave">
+                <sf:form method="post" modelAttribute="lead" id="form" action="/leads/save">
 
                     <fieldset class="form-group">
 
@@ -83,7 +83,7 @@
                                 <sf:label path="comments">Comments:</sf:label>
                             </div>
                             <div class="col-sm-6">
-                                <sf:textarea path="comments" rows="5"/>
+                                <sf:textarea class="form-control" id="comment" path="comments" rows="5"/>
                                 <sf:errors path="comments"/>
                             </div>
                         </div>
@@ -97,7 +97,7 @@
                                         <c:forEach items="${cards}" var="card">
                                             <option value="${card.id}"
                                                     <c:if test="${card.id == lead.cardId}">selected</c:if>>
-                                                    ${card.cardName} (id=${card.id})
+                                                    ${card.cardName}
                                             </option>
                                         </c:forEach>
                                     </sf:select>

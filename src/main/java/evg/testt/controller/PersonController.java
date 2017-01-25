@@ -3,19 +3,15 @@ package evg.testt.controller;
 import evg.testt.dto.PersonDTO;
 import evg.testt.exception.BadAvatarNameException;
 import evg.testt.exception.PersonException;
-import evg.testt.exception.PersonRoleNotFoundException;
-import evg.testt.model.*;
-//import evg.testt.oval.SpringOvalValidator;
-import evg.testt.service.AvatarService;
-import evg.testt.service.PersonDTOService;
-import evg.testt.service.PersonService;
-import evg.testt.service.PersonnelService;
+import evg.testt.model.Person;
+import evg.testt.model.Personnel;
+import evg.testt.model.SearchedPerson;
+import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,8 +29,8 @@ import java.util.List;
 @Controller
 public class PersonController {
 
-//    @Autowired
-//    private SpringOvalValidator validator;
+    @Autowired
+    private SearchService searchService;
     @Autowired
     private PersonService personService;
     @Autowired
@@ -50,14 +46,14 @@ public class PersonController {
     public String profilePerson(@ModelAttribute("person") @Valid PersonDTO personDTO,
                                 BindingResult bindingResult,
                                 Principal principal, Model model)
-            throws PersonRoleNotFoundException, SQLException {
+            throws SQLException {
 
         Person person = personService.getPersonByUserLogin(principal.getName());
         model.addAttribute("person", person);
         return "profile";
     }
 
-//    /persons/updatePerson
+    //    /persons/updatePerson
 //    old name /personUpdate
     @RequestMapping(value = "/persons/updatePerson", method = RequestMethod.POST)
     public String updatePerson(@ModelAttribute("person") @Valid PersonDTO personDTO,
@@ -65,15 +61,16 @@ public class PersonController {
                                @RequestParam("image") MultipartFile multipartFile,
                                Principal principal)
             throws
-            IOException, PersonException, PersonRoleNotFoundException,
-            BadAvatarNameException, SQLException, ParseException {
+            IOException, PersonException, BadAvatarNameException,
+            SQLException, ParseException {
 
         String login = principal.getName();
 
         try {
             Person person = personService.getPersonByUserLogin(login);
-            person = personDTOService.getUpdatedPerson(person,personDTO);
+            person = personDTOService.getUpdatedPerson(person, personDTO);
             personService.update(person);
+
             if (!multipartFile.isEmpty()) {
                 avatarService.changePersonAvatar(multipartFile, person);
             }
@@ -83,8 +80,8 @@ public class PersonController {
         return "redirect:/profile";
     }
 
-//   what to rename here?
-    @RequestMapping(value = "/personSortByDate", method = RequestMethod.POST)
+    //   what to rename here?
+    @RequestMapping(value = "/persons/SortByDate", method = RequestMethod.POST)
     public String filterPersons(Model model) throws SQLException {
         List<Person> persons = personService.getSortedByRegistrationDate();
         model.addAttribute("persons", persons);
@@ -92,19 +89,19 @@ public class PersonController {
     }
 
     //   what to rename here?
-    @RequestMapping(value = "/personDelete")
+    @RequestMapping(value = "/persons/delete")
     public String personDelete(@RequestParam Integer id) throws SQLException {
         Person person = personService.getById(id);
         personService.delete(person);
         return "persons/all";
     }
 
-    @RequestMapping(value = "/fullSearch")
+    @RequestMapping(value = "/persons/fullSearch")
     public String search(Model model, @RequestParam String searchText) throws SQLException {
-        List<Personnel> persons = Collections.EMPTY_LIST;
 
+        List<SearchedPerson> persons = Collections.EMPTY_LIST;
         if(!searchText.equals(""))
-        persons = personService.getPersonsByKeyWord(searchText);
+        persons = searchService.getPersonsByKeyWord(searchText);
 
         model.addAttribute("persons", persons);
         return "search/all";
@@ -114,27 +111,27 @@ public class PersonController {
         Feature is added with one reason - to test if Student info is acceptable to work with
      */
     @RequestMapping(value = "/test/student-info")
-    public String testStudentInfo(){
+    public String testStudentInfo() {
         return "persons/students/test/info";
     }
 
     @RequestMapping(value = "/test/teacher-info")
-    public String testTeacherInfo(){
+    public String testTeacherInfo() {
         return "persons/teachers/test/info";
     }
 
     @RequestMapping(value = "/test/manager-info")
-    public String testManagerInfo(){
+    public String testManagerInfo() {
         return "persons/managers/test/info";
     }
 
     @RequestMapping(value = "/test/lead-info")
-    public String testLeadInfo(){
+    public String testLeadInfo() {
         return "persons/leads/test/info";
     }
 
     @RequestMapping(value = "/test/group-info")
-    public String testGroupInfo(){
+    public String testGroupInfo() {
         return "persons/groups/test/info";
     }
 }

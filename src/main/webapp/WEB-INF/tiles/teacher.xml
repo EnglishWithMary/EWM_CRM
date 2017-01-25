@@ -14,4 +14,10 @@
         <put-attribute name="title" value="Teachers page" />
         <put-attribute name="body" value="/WEB-INF/pages/teachers/all.jsp" />
     </definition>
+
+    <definition name="persons/teacher-info" extends="default">
+        <put-attribute name="title" value="Teacher info" />
+        <put-attribute name="body" value="/WEB-INF/pages/persons/teacher-info.jsp" />
+        <put-attribute name="additionalScripts" value="/WEB-INF/pages/rooms/additionalScripts.jsp"/>
+    </definition>
 </tiles-definitions>

@@ -7,6 +7,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import javax.persistence.Transient;
+import java.sql.Date;
+
 @FieldEquals( field="password", equalsTo="confirmPassword" )
 public @Data class PersonDTO {
 
@@ -38,7 +40,9 @@ public @Data class PersonDTO {
 
     private String organization;
 
-    private String birthdayDate;
+    private String birthdayString;
+
+    private Date birthdayDate;
 
     protected String avatarURL;
 

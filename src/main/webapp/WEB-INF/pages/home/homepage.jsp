@@ -2,8 +2,7 @@
 
 
 <div class="row">
-    <div class="col-sm-12">
-        <div>Home Page</div>
+    <div class="col-sm-6 col-sm-offset-3">
         <div id="calendar"></div>
     </div>
 </div>

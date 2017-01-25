@@ -48,7 +48,7 @@
                                     <p><strong>Comment: </strong></p>
 
                                     <p><textarea name="comments" form="comments" cols="30">${manager.person.comments}</textarea>
-                                    <form id=comments method="post" modelAttribute="manager.person" action="/managerUpdateComments">
+                                    <form id=comments method="post" modelAttribute="manager.person" action="/managers/UpdateComments">
                                         <input name="id" type=hidden value="${manager.id}">
                                         <%--<input name="role" type=hidden value="2">--%>
                                         <security:authorize access="hasRole('ROLE_ADMIN')">
@@ -73,7 +73,7 @@
                         <div class="col-md-12">
                             <div class="btn-group btn-group-md">
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
-                                    <a href="/managerTrash?id=${manager.id}" class="btn btn-danger">Delete Manager</a>
+                                    <a href="/managers/trash?id=${manager.id}" class="btn btn-danger">Delete Manager</a>
                                         <a href="" class="btn btn-success" type="button">Update Manager</a>
                                         <a href="" class="btn btn-warning" type="button">Create New Manager</a>
                                 </security:authorize>

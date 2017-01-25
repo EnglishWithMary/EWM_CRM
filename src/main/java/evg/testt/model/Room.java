@@ -12,17 +12,16 @@ import java.util.List;
 @Entity(name = "rooms")
 public @Data class Room extends BaseModel{
 
-//    @NotNull
-//    @Size(min=3, max=20)
-//    @Pattern(regexp = "^[A-Za-z0-9_\\s\\-]*$")
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Should be not empty")
     @Size(min = 3, max = 20, message = "Name should be between 3 and 20 chars.")
     private String name;
 
-    @Column(name = "calendar_id")
-    private String calendarId;
+    private String color;
 
+//    @Column(name = "calendar_id")
+//    private String calendarId;
+//
     @Transient
     private List<Event> events;
 }

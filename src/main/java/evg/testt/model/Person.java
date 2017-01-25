@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity (name = "persons")
 public @Data class Person extends BaseModel{
@@ -20,7 +19,7 @@ public @Data class Person extends BaseModel{
     @Embedded
     private State state = new State();
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date birthdayDate;
 
     @Transient
@@ -41,6 +40,27 @@ public @Data class Person extends BaseModel{
     private String comments;
 
     private Integer position = 0;
+
+    private static class NullPerson extends Person implements Null {
+
+        private NullPerson() {
+            setFirstName("");
+            setLastName("");
+            setMiddleName("");
+            setAvatarURL("");
+            setBirthdayDate(new Date());
+            setOrganization("");
+            setEmail(new Email(""));
+            setComments("");
+        }
+
+        @Override
+        public String toString() {
+            return "NullPerson";
+        }
+    }
+
+    public static final Person NULL = new NullPerson();
 
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person", fetch = FetchType.LAZY)
 //    List<Activity> activities;

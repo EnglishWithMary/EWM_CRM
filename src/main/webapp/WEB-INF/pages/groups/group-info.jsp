@@ -16,7 +16,7 @@
                             <p><strong>Group Name: </strong>${group.name}</p>
 
                             <p><strong>Group Teacher:</strong>
-                                <a href="/teacher/info?teacher_id=${group.teacher.id}">${group.teacher.person.firstName}</a>
+                                <a href="/teachers/info?teacher_id=${group.teacher.id}">${group.teacher.person.firstName}</a>
                             </p>
 
                             <p><strong>Studying Language:</strong>English(null)</p>
@@ -36,7 +36,7 @@
                                 <tbody>
                                 <c:forEach items="${group.students}" var="student">
                                     <tr>
-                                        <th><a href="/student/info?student_id=${student.id}">
+                                        <th><a href="/students/info?student_id=${student.id}">
                                                 ${student.person.lastName}
                                                 ${fn:substring(student.person.firstName,0,1)}.
                                                 ${fn:substring(student.person.middleName,0,1)}.
@@ -60,7 +60,7 @@
                         </div>
                         <div class="panel-body">
                             <p>
-                                <a href="/studentAdd" class="btn btn-success" type="button">Add Student</a>
+                                <a href="/students/add" class="btn btn-success" type="button">Add Student</a>
                                 <a href="" class="btn btn-warning" type="button">Change Teacher</a>
                                 <a href="" class="btn btn-danger" type="button">Close Group</a>
                             </p>
@@ -83,11 +83,18 @@
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <div id="calendar"></div>
+                                <div class="col-sm-12">
+                                    <div id="calendar"></div>
+                                </div>
                             </div>
+                        </div>
+                        <div class="panel-footer">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <a href="/group/${group.id}/calendar" class="btn btn-success">Change Events</a>
+                                    <p>
+                                        <a href="/groups/${group.id}/room/choose-room" class="btn btn-success">Change
+                                            Events</a>
+                                    </p>
                                 </div>
                             </div>
                         </div>
