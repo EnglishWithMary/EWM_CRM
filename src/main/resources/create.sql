@@ -35,15 +35,19 @@ LEFT JOIN roles ON users.role_id = roles.id;
 DROP TABLE if EXISTS searched_person;
 CREATE TEXT SEARCH DICTIONARY ispell_ru (
 template  =   ispell,
-  dictfile  =   ru,
-  afffile   =   ru,
+  dictfile  =   russian,
+--   dictfile  =   ru,
+--   afffile   =   ru,
+  afffile   =   russian,
   stopwords =   russian
 );
 
 CREATE TEXT SEARCH DICTIONARY ispell_en (
 template  =   ispell,
-  dictfile  =   "en",
-  afffile   =   "en",
+  dictfile  =   english,
+--   dictfile  =   "en",
+--   afffile   =   "en",
+  afffile   =   english,
   stopwords =   english
 );
 
@@ -79,5 +83,8 @@ FROM persons
   LEFT JOIN students ON persons.id = students.person_id
   LEFT JOIN leads ON persons.id = leads.person_id
   LEFT JOIN groups ON students.group_id = groups.id
-  LEFT JOIN users ON admins.user_id = users.id or managers.user_id = users.id or teachers.user_id = users.id or students.user_id = users.id
+  LEFT JOIN users ON admins.user_id = users.id
+    or managers.user_id = users.id
+    or teachers.user_id = users.id
+    or students.user_id = users.id
   LEFT JOIN roles ON users.role_id = roles.id;
