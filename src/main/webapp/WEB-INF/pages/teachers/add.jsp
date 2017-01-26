@@ -8,7 +8,7 @@
                 <strong>Add new Teacher</strong>
             </div>
             <div class="panel-body">
-                <sf:form method="post" modelAttribute="teacher" id="form" action="/teacherSave">
+                <sf:form method="post" modelAttribute="teacher" id="form" action="/teachers/save">
                     <fieldset class="form-group">
 
                         <div class="row padding-bot">
@@ -101,7 +101,7 @@
                                 <sf:label path="comments">Comments:</sf:label>
                             </div>
                             <div class="col-sm-6">
-                                <sf:textarea path="comments" rows="5"/>
+                                <sf:textarea class="form-control" id="comment" path="comments" rows="5"/>
                                 <sf:errors path="comments"/>
                             </div>
                         </div>

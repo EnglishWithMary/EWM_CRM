@@ -58,7 +58,7 @@
                     </div>
                     <div class="padding-bot"></div>
                     <div class="col-sm-12">
-                        <table id = "table-list" class="table table-striped table-bordered">
+                        <table id="table-list" class="table table-striped table-bordered">
                             <thead>
                             <tr>
                                 <th>Full Name</th>
@@ -93,13 +93,13 @@
                                 <tr>
                                     <td><c:choose>
                                         <c:when test="${person.role == 'ROLE_ADMIN'}">
-                                        <a href="/admins/info?admin_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                            <a href="/admins/info?admin_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
                                         </c:when>
                                         <c:when test="${person.role == 'ROLE_MANAGER'}">
                                             <a href="/managers/info?manager_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
                                         </c:when>
                                         <c:when test="${person.role == 'ROLE_TEACHER'}">
-                                            <a href="/teacher/info?teacher_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                            <a href="/teachers/info?teacher_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
                                         </c:when>
                                     </c:choose>
 
@@ -107,13 +107,13 @@
                                     <td>${person.login}</td>
                                     <td>${person.role}</td>
                                     <td>${person.state}</td>
-                                    <%--<td>${person.birthdayDate}</td>--%>
+                                        <%--<td>${person.birthdayDate}</td>--%>
                                     <td>${person.registrationDate}</td>
                                     <td>${person.modifyDate}</td>
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
-                                    <td>
-                                        <a href="/personnel/trashed?id=${person.id}">Delete</a>
-                                    </td>
+                                        <td>
+                                            <a href="/personnel/trashed?id=${person.id}">Delete</a>
+                                        </td>
                                     </security:authorize>
                                 </tr>
                             </c:forEach>
@@ -146,21 +146,21 @@
                 <div class="panel-body">
                     <h4>Add person</h4>
                     <p>
-                        <form method="get" action="/personnel/addAdmins" >
-                            <button class="btn btn-success" type="submit">Add Admin</button>
-                        </form>
-                        <form method="get" action="/personnel/addManagers">
-                            <button class="btn btn-success" type="submit" >Add Manager</button>
-                        </form>
-                        <form method="get" action="/personnel/addTeachers">
-                            <button class="btn btn-success" type="submit">Add Teacher</button>
-                        </form>
+                    <form method="get" action="/admins/add">
+                        <button class="btn btn-success" type="submit">Add Admin</button>
+                    </form>
+                    <form method="get" action="/managers/add">
+                        <button class="btn btn-success" type="submit">Add Manager</button>
+                    </form>
+                    <form method="get" action="/teachers/add">
+                        <button class="btn btn-success" type="submit">Add Teacher</button>
+                    </form>
                     </p>
                     <h4>Some Statistics</h4>
-                </p>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 </div>

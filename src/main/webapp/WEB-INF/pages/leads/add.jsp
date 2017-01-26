@@ -12,11 +12,16 @@
     <div class="col-sm-5 col-sm-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong>Add new Lead</strong>
+                <c:if test="${lead.personId==null}">
+                    <strong>Add new Lead</strong>
+                </c:if>
+                <c:if test="${lead.personId!=null}">
+                    <strong>Update Lead</strong>
+                </c:if>
             </div>
             <div class="panel-body">
 
-                <sf:form method="post" modelAttribute="lead" id="form" action="/leadSave">
+                <sf:form method="post" modelAttribute="lead" id="form" action="/leads/save">
 
                     <fieldset class="form-group">
 
@@ -64,20 +69,10 @@
                         <div class="row padding-bot">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-4">
-                                <sf:label path="login">Login:</sf:label>
-                            </div>
-                            <div class="col-sm-6">
-                                <sf:input path="login" cssClass="form-control"/>
-                                <sf:errors path="login" cssClass="has-error"/>
-                            </div>
-                        </div>
-                        <div class="row padding-bot">
-                            <div class="col-sm-1"></div>
-                            <div class="col-sm-4">
                                 <sf:label path="comments">Comments:</sf:label>
                             </div>
                             <div class="col-sm-6">
-                                <sf:textarea path="comments" rows="5"/>
+                                <sf:textarea class="form-control" id="comment" path="comments" rows="5"/>
                                 <sf:errors path="comments"/>
                             </div>
                         </div>
@@ -91,7 +86,7 @@
                                         <c:forEach items="${cards}" var="card">
                                             <option value="${card.id}"
                                                     <c:if test="${card.id == lead.cardId}">selected</c:if>>
-                                                    ${card.cardName} (id=${card.id})
+                                                    ${card.cardName}
                                             </option>
                                         </c:forEach>
                                     </sf:select>

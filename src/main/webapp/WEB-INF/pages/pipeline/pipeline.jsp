@@ -43,16 +43,30 @@
                             </div>
 
                             <div class="personData">
-                                <input type="hidden" id="personId" name="personId" value="${person.id}">
-                                <a class="" href="/lead/info?person_id=${person.id}" role="button">
-                                        ${person.lastName}
-                                        ${fn:substring(person.firstName,0,1)}.${fn:substring(person.middleName,0,1)}.
-                                </a>
+                                <c:if test="${pipeType.id==1}">
+                                    <input type="hidden" id="personId" name="personId" value="${person.id}">
+                                    <a class="" href="/leads/info?personId=${person.id}" role="button">
+                                            ${person.lastName}
+                                            ${fn:substring(person.firstName,0,1)}.${fn:substring(person.middleName,0,1)}.
+                                    </a>
+                                </c:if>
+                                <c:if test="${pipeType.id==2}">
+                                    <input type="hidden" id="personId" name="personId" value="${person.id}">
+                                    <a class="" href="/students/info?personId=${person.id}" role="button">
+                                            ${person.lastName}
+                                            ${fn:substring(person.firstName,0,1)}.${fn:substring(person.middleName,0,1)}.
+                                    </a>
+                                </c:if>
                             </div>
 
                             <div class="row">
                                 <div class="person-edit-tool-bar col-md-3">
-                                    <form method="post" action="/leadAdd" class="editPersonFrom btn-xs">
+                                    <c:if test="${pipeType.id==1}">
+                                        <form method="post" action="/leads/add" class="editPersonFrom btn-xs">
+                                    </c:if>
+                                    <c:if test="${pipeType.id==2}">
+                                        <form method="post" action="/students/add" class="editPersonFrom btn-xs">
+                                    </c:if>
                                         <input type="hidden" name="personId" value="${person.id}">
                                         <button type="submit" class="pipe-button btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-pencil"></span>
@@ -80,7 +94,7 @@
                                     </div>
                                     <div class="modal-footer row">
                                         <div class="col-md-3">
-                                            <form method="post" action="/leadDeleteFromPipe"
+                                            <form method="post" action="/leads/DeleteFromPipe"
                                                   class="deletePersonForm">
                                                 <button type="submit" class="btn btn-default btn-xs">
                                                     Reset position
@@ -89,7 +103,7 @@
                                             </form>
                                         </div>
                                         <div class="col-md-3">
-                                            <form method="post" action="/deleteLead" class="deletePersonForm">
+                                            <form method="post" action="/leads/delete" class="deletePersonForm">
                                                 <button type="submit" class="btn btn-default btn-xs">
                                                     Delete
                                                 </button>
@@ -97,7 +111,7 @@
                                             </form>
                                         </div>
                                         <div class="col-md-3">
-                                            <form method="post" action="/leadTrash" class="deletePersonForm">
+                                            <form method="post" action="/leads/trash" class="deletePersonForm">
                                                 <button type="submit" class="btn btn-default btn-xs">
                                                     Move to trash
                                                 </button>
@@ -120,7 +134,7 @@
                 </div>
 
                 <c:if test="${pipeType.id==1}">
-                    <form method="post" action="/leadAdd">
+                    <form method="post" action="/leads/add">
                         <input type="hidden" name="cardId" value="${card.id}">
                         <button type="submit" class="btn btn-success add-person">
                             Add Lead
@@ -129,7 +143,7 @@
                 </c:if>
 
                 <c:if test="${pipeType.id==2}">
-                    <form method="post" action="/studentAdd">
+                    <form method="post" action="/students/add">
                         <input type="hidden" name="cardId" value="${card.id}">
                         <input type="hidden" name="pipeTypeId" value="${pipeType.id}">
                         <button type="submit" class="btn btn-success add-person">

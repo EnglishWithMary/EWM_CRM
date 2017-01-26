@@ -41,6 +41,7 @@ LEFT JOIN users ON keys.usr = users.id
 LEFT JOIN roles ON users.role_id = roles.id;
 
 -- full text props
+DROP TABLE if EXISTS searched_person;
 CREATE TEXT SEARCH DICTIONARY ispell_ru (
 template  =   ispell,
   dictfile  =   ru,
@@ -72,6 +73,11 @@ SET default_text_search_config = 'en';
 
 CREATE OR REPLACE VIEW staffview AS
 SELECT persons.*, groups.name as group_name, users.login as login, roles.role as role,
+admins.id as admin_id,
+managers.id as manager_id,
+teachers.id as teacher_id,
+students.id as student_id,
+leads.id as lead_id,
 setweight( coalesce( to_tsvector('en', persons.firstname),''),'A') || ' ' ||
 setweight( coalesce( to_tsvector('en', persons.lastname),''),'B') || ' ' ||
 setweight( coalesce( to_tsvector('en', groups.name),''),'C') as searchtext
@@ -82,5 +88,8 @@ FROM persons
   LEFT JOIN students ON persons.id = students.person_id
   LEFT JOIN leads ON persons.id = leads.person_id
   LEFT JOIN groups ON students.group_id = groups.id
-  LEFT JOIN users on admins.user_id = users.id or managers.user_id = users.id or teachers.user_id = users.id
-  LEFT JOIN roles on users.role_id = roles.id;
+  LEFT JOIN users ON admins.user_id = users.id
+    or managers.user_id = users.id
+    or teachers.user_id = users.id
+    or students.user_id = users.id
+  LEFT JOIN roles ON users.role_id = roles.id;

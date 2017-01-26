@@ -8,7 +8,7 @@
                 <strong>List of Teachers</strong>
             </div>
             <div class="panel-body">
-                <form method="post" action="/teacherSortByDate">
+                <form method="post" action="/teachers/SortByDate">
                     <div class="form-group">
                         <input type="submit" value="Sort by Registration Date" class="btn btn-default">
                     </div>
@@ -42,7 +42,7 @@
                     <c:forEach var="teacher" items="${teachers}">
                         <tr>
                             <td>
-                                <a href="/teacher/info?teacher_id=${teacher.id}">
+                                <a href="/teachers/info?teacher_id=${teacher.id}">
                                     ${teacher.person.firstName}
                                     ${teacher.person.middleName}
                                     ${teacher.person.lastName}
@@ -52,10 +52,10 @@
                             <td><textarea name="comments" cols="16" disabled>${teacher.person.comments}</textarea></td>
                             <security:authorize access="hasRole('ROLE_ADMIN')">
                             <td>
-                                <a href="/teacherTrash?id=${teacher.id}">Delete</a>
+                                <a href="/teachers/trash?id=${teacher.id}">Delete</a>
                             </td>
                             <td>
-                                <a href="/teacherSave?id=${teacher.id}">Save</a>
+                                <a href="/teachers/save?id=${teacher.id}">Save</a>
                             </td>
                             </security:authorize>
                         </tr>
@@ -91,7 +91,7 @@
                 <strong>Tools</strong>
             </div>
             <div class="panel-body">
-                <p><a href="/teacherAdd" class="btn btn-success">Add Teacher</a></p>
+                <p><a href="/teachers/add" class="btn btn-success">Add Teacher</a></p>
             </div>
             <div class="panel-body">
                 <p><a href="/languages" class="btn btn-success">Languages</a></p>

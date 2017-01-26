@@ -10,7 +10,7 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <sf:form method="post" modelAttribute="groupFilter" action="/groupFilter">
+                    <sf:form method="post" modelAttribute="groupFilter" action="/groups/filter">
                         <div class="col-sm-5">
                             <div class="input-group">
                                 <span class="input-group-addon">By teacher:</span>
@@ -18,11 +18,10 @@
                                     <sf:option value=""></sf:option>
                                     <c:forEach items="${teachers}" var="teach">
                                         <sf:option value="${teach.id}">
-                                            ${teach.user.login} (
+                                            ${teach.person.lastName}
                                             ${teach.person.firstName}
                                             ${teach.person.middleName}
-                                            ${teach.person.lastName}
-                                            )</sf:option>
+                                            </sf:option>
                                     </c:forEach>
                                 </sf:select>
                             </div>
@@ -50,18 +49,18 @@
                             <tbody>
                             <c:forEach var="group" items="${groups}">
                                 <tr>
-                                    <td><a href="/group/${group.id}/info" alt="Group Profile">${group.name}</a></td>
+                                    <td><a href="/groups/${group.id}/info" alt="Group Profile">${group.name}</a></td>
                                     <td>
-                                        <a href="/teacher/info?teacher_id=${group.teacher.id}" alt="Teacher Profile">
+                                        <a href="/teachers/info?teacher_id=${group.teacher.id}" alt="Teacher Profile">
                                                 ${group.teacher.person.firstName}${" "}
                                                 ${group.teacher.person.middleName}${" "}
                                                 ${group.teacher.person.lastName}${" "}
                                         </a></td>
                                     <td>${group.language}</td>
-                                    <td>!add status</td>
-                                    <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <td></td>
+                                    <security:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
                                         <td>
-                                            <a href="/teacherDelete?id=${teacher.id}">Delete</a>
+                                            <a href="/teachers/delete?id=${teacher.id}">Delete</a>
                                         </td>
                                     </security:authorize>
                                 </tr>
@@ -94,7 +93,7 @@
                 <strong>Tools</strong>
             </div>
             <div class="panel-body">
-                <p><a class="btn btn-success" href="/groupAdd">Add Group</a></p>
+                <p><a class="btn btn-success" href="/groups/add">Add Group</a></p>
             </div>
         </div>
     </div>

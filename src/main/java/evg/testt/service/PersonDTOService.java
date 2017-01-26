@@ -8,13 +8,5 @@ import java.text.ParseException;
 
 public interface PersonDTOService {
 
-    <T extends RegisteredUser> T updateRegisteredUser(T someRegisteredUser, PersonDTO personDTO) throws SQLException, ParseException;
-
-    Person getUpdatedPerson(Person person, PersonDTO personDTO) throws ParseException;
-
-    User getUpdatedUser (User user, PersonDTO personDTO);
-
-    Lead updateLead(Lead lead, PersonDTO personDTO) throws ParseException;
-
-    Teacher getUpdateTeacher(Teacher teacher, PersonDTO personDTO)throws ParseException;
+    PersonDTO getUpdatedPersonDTO (PersonDTO personDTO, Integer personId, Integer cardId) throws SQLException;
 }

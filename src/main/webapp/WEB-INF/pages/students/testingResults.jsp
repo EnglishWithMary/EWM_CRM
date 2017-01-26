@@ -250,7 +250,7 @@
                         <div class="row">
                             <div class="col-sm-4 col-sm-offset-4">
                                 <input type="submit" value="Save results" class="btn btn-success"/>
-                                <input type="hidden" name="student_id" value="${student.id}"/>
+                                <input type="hidden" class="hidden" name="student_id" value="${student.id}"/>
                             </div>
                         </div>
                     </fieldset>

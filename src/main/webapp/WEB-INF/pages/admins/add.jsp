@@ -7,7 +7,7 @@
                 <strong>Add new Admin</strong>
             </div>
             <div class="panel-body">
-                <sf:form method="post" modelAttribute="admin" id="form" action="/adminSave">
+                <sf:form method="post" modelAttribute="admin" id="form" action="/admins/save">
                     <fieldset class="form-group">
 
                         <div class="row padding-bot">

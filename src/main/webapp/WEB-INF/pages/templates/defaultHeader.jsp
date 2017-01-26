@@ -15,6 +15,9 @@
             </button>
             <security:authorize access="isAuthenticated()">
                 <a id="logo" class="navbar-brand" href="/home">Mary</a>
+                <div class="trash">
+                    <a id="trash" href="#"><img width="100%" src="${pageContext.request.contextPath}/resources/img/trash.png"></a>
+                </div>
             </security:authorize>
         </div>
         <%--</security:authorize>--%>
@@ -22,17 +25,18 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <security:authorize access="isAuthenticated()">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-haspopup="true"
-                           aria-expanded="false">Admin tools <span class="caret"></span> </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/users">All Users</a></li>
-                            <li><a href="/personnel">All Personnel</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">..in development</a></li>
-                        </ul>
-                    </li>
+                    <security:authorize access="hasRole('ROLE_ADMIN')">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false">Admin tools <span class="caret"></span> </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/personnel">All Personnel</a></li>
+                                <li><a href="/admins">Admins</a></li>
+                                <li><a href="/trash" class="glyphicon glyphicon-trash"> Trash</a></li>
+                            </ul>
+                        </li>
+                    </security:authorize>
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -40,19 +44,15 @@
                            aria-expanded="false">Managing <span class="caret"></span> </a>
                         <ul class="dropdown-menu">
                             <li><a href="/rooms">Rooms</a></li>
-                            <li><a href="/teachers">Teachers</a></li>
-                            <li><a href="/managers">Managers</a></li>
+                            <%--<li><a href="/teachers">Teachers</a></li>--%>
+                            <%--<li><a href="/managers">Managers</a></li>--%>
                             <li><a href="/students">Students</a></li>
                             <li><a href="/leads">Leads</a></li>
-                            <li><a href="/schedules">Schedules</a></li>
-                            <li><a href="/payments">Payments</a></li>
+                            <%--<li><a href="/schedules">Schedules</a></li>--%>
+                            <%--<li><a href="/payments">Payments</a></li>--%>
                             <li><a href="/groups">Groups</a></li>
-                            <li><a href="/events">Events</a></li>
+                            <%--<li><a href="/events">Events</a></li>--%>
 
-                            <security:authorize access="hasRole('ROLE_ADMIN')">
-                                <li role="separator" class="divider"></li>
-                                <li><a href="/admins">Admins</a></li>
-                            </security:authorize>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -67,7 +67,7 @@
                     </li>
                 </ul>
                 <!--Search in All fields-->
-                <form class="navbar-form navbar-left" action="/fullSearch">
+                <form class="navbar-form navbar-left" action="/persons/fullSearch">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search" name="searchText">
                     </div>

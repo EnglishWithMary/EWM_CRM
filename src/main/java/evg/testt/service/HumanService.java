@@ -1,5 +1,6 @@
 package evg.testt.service;
 
+import evg.testt.dto.PersonDTO;
 import evg.testt.model.Human;
 
 import java.sql.SQLException;
@@ -16,4 +17,6 @@ public interface HumanService<T extends Human> extends Service <T> {
     List<T> getSortedByRegistrationDate() throws SQLException;
 
     List<T> getByPageSorted(int pageNumber) throws SQLException;
+
+    void updatePosition(T human, PersonDTO personDTO) throws SQLException;
 }
