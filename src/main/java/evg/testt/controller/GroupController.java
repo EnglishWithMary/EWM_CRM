@@ -33,10 +33,8 @@ public class GroupController {
     private StudentService studentService;
     @Autowired
     private LanguageService languageService;
-
     @Autowired
     private RoomService roomService;
-
     @Autowired
     private GroupEventsService groupEventsService;
 
@@ -97,18 +95,10 @@ public class GroupController {
         if (bindingResult.hasErrors()) {
             return "groups/add";
         }
-        Group newGroup = new Group();
-        newGroup.setName(groupDTO.getName());
+        Group group = new Group();
 
-        groupService.insert(newGroup);
-        if (groupDTO.getTeacherId() != null) {
-            newGroup.setTeacher(teacherService.getById(groupDTO.getTeacherId()));
-            groupService.update(newGroup);
-        }
-        if (groupDTO.getLanguageId() != null) {
-            newGroup.setLanguage(languageService.getById(groupDTO.getLanguageId()));
-            groupService.update(newGroup);
-        }
+        groupService.updateGroup(group,groupDTO);
+
         return "redirect:/groups";
     }
 

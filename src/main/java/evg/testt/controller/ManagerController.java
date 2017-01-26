@@ -119,8 +119,8 @@ public class ManagerController {
     }
 
     @RequestMapping(value = "/managers/info", method = RequestMethod.GET)
-    public String managerInfo(Model model, @RequestParam int manager_id) throws SQLException {
-        Manager manager = managerService.getById(manager_id);
+    public String managerInfo(Model model, @RequestParam int managerId) throws SQLException {
+        Manager manager = managerService.getById(managerId);
         model.addAttribute("manager", manager);
         return "persons/manager-info";
     }

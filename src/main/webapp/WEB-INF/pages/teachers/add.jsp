@@ -5,7 +5,12 @@
     <div class="col-sm-5 col-sm-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong>Add new Teacher</strong>
+                <c:if test="${lead.personId==null}">
+                    <strong>Add new Teacher</strong>
+                </c:if>
+                <c:if test="${lead.personId!=null}">
+                    <strong>Update Teacher</strong>
+                </c:if>
             </div>
             <div class="panel-body">
                 <sf:form method="post" modelAttribute="teacher" id="form" action="/teachers/save">
@@ -45,14 +50,15 @@
                         <div class="row padding-bot">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-4">
-                                <label path="languages">Languages:</label>
+                                <sf:label path="languages">Languages:</sf:label>
                             </div>
                             <div class="col-sm-6">
-                                <select name="languages" multiple size="3">
+                                <sf:select path="languages" class="form-control" multiple = "multiple">
                                     <c:forEach var="lang" items="${languages}" >
-                                            <option value="${lang.language}">${lang.language}</option>
+                                        <option value="${lang.id}">${lang.language}</option>
                                     </c:forEach>
-                                </select>
+                                </sf:select>
+                                <sf:errors path="languages" cssClass="has-error"/>
                             </div>
                         </div>
                         <div class="row padding-bot">
@@ -65,6 +71,7 @@
                                 <sf:errors path="email" cssClass="has-error"/>
                             </div>
                         </div>
+                        <c:if test="${lead.personId==null}">
                         <div class="row padding-bot">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-4">
@@ -95,6 +102,7 @@
                                 <sf:errors path="confirmPassword" cssClass="has-error"/>
                             </div>
                         </div>
+                        </c:if>
                         <div class="row padding-bot">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-4">

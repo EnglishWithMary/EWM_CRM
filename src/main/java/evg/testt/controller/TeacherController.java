@@ -85,18 +85,19 @@ public class TeacherController {
         List<Language> languages = languageService.getAll();
 
         model.addAttribute("languages", languages);
-        PersonDTO person =  new PersonDTO();
-        model.addAttribute("teacher", person);
+        PersonDTO personDTO =  new PersonDTO();
+        model.addAttribute("teacher", personDTO);
         return "teachers/add";
     }
 
     @RequestMapping(value = "/teachers/save", method = RequestMethod.POST)
     public String saveTeacher(@Valid @ModelAttribute("teacher") PersonDTO personDTO, BindingResult bindingResult,
                               Model model,
-                              HttpServletRequest request,
-                              @RequestParam(required = false) List<String> languages) throws SQLException, ParseException {
+                              HttpServletRequest request) throws SQLException, ParseException {
 
         User u = userService.findByUserLogin(personDTO.getLogin());
+
+        model.addAttribute("languages", languageService.getAll());
 
         if (u != null)
             bindingResult.rejectValue("login", "1", "Login already exist.");
@@ -104,7 +105,20 @@ public class TeacherController {
         if (!bindingResult.hasErrors()) {
 
             Teacher teacher = new Teacher();
+            Person person = new Person();
+
+            if (personDTO.getPersonId() != null){
+                teacher = teacherService.getById(personDTO.getPersonId());
+            }
+
             teacher = teacherService.updateRegisteredUser(teacher, personDTO);
+
+            teacher = teacherService.getUpdateTeacher(teacher,personDTO);
+
+            person = personService.getUpdatedPerson(person, personDTO);
+
+            teacher.setPerson(person);
+
             teacherService.insert(teacher);
 
             return "redirect:" + request.getSession().getAttribute("teachers/add").toString();
@@ -135,12 +149,12 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/teachers/info")
-    public String teacherInfo(Model model, @RequestParam int teacher_id) throws SQLException {
+    public String teacherInfo(Model model, @RequestParam int teacherId) throws SQLException {
 
-        Teacher teacher = teacherService.getById(teacher_id);
+        Teacher teacher = teacherService.getById(teacherId);
         List<Group> groups = groupService.getByTeacher(teacher);
 
-        model.addAttribute("allLanguages", languageService.getAll());
+        model.addAttribute("languages", languageService.getAll());
         model.addAttribute("teacher", teacher);
         model.addAttribute("groups", groups);
 
@@ -160,12 +174,12 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/teachers/setTeacherLevel")
-    public String setTeacherLevel(int level, int teacher_id) throws SQLException {
-        Teacher teacher = teacherService.getById(teacher_id);
+    public String setTeacherLevel(int level, int teacherId) throws SQLException {
+        Teacher teacher = teacherService.getById(teacherId);
         TeacherLevelEnum level_Id = TeacherLevelEnum.valueOf(level);
         teacher.setLevel(level_Id);
         teacherService.update(teacher);
 
-        return "redirect:/teachers/info?teacher_id=" + teacher_id;
+        return "redirect:/teachers/info?teacherId=" + teacherId;
     }
 }

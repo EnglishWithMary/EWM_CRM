@@ -2,12 +2,6 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <div class="row">
-    <div class="col-sm-12">
-        <h1 class="page-header">List of Rooms</h1>
-    </div>
-</div>
-
-<div class="row">
     <div class="col-sm-8">
         <div class="panel panel-default">
             <div class="panel-heading">

@@ -2,6 +2,7 @@ package evg.testt.dto;
 
 import lombok.Data;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 public @Data class GroupDTO {
 

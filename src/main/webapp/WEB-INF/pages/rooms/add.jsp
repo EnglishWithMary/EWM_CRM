@@ -1,11 +1,6 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 
 <div class="row">
-    <div class="col-sm-12">
-        <h2 class="page-header">Add Room</h2>
-    </div>
-</div>
-<div class="row">
     <div class="col-sm-5 col-sm-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">

@@ -74,13 +74,18 @@
                                         </select>
                                     </p>
 
-                                    <p><strong>Languages: </strong>
-                                        <select name="languages" multiple size="3">
-                                            <c:forEach var="lang" items="${allLanguages}" >
-                                                <option value="${lang.language}">${lang.language}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </p>
+                                    <div class="row padding-bot">
+                                        <div class="col-sm-3">
+                                            <label>Languages:</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" multiple>
+                                                <c:forEach var="lang" items="${languages}" >
+                                                    <option value="${lang.id}">${lang.language}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <p><strong>Referral: </strong><input type="text"></p>
                                     <p><strong>Color: </strong><input type="color"></p>
 
