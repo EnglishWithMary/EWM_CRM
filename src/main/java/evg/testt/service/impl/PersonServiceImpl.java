@@ -1,8 +1,11 @@
 package evg.testt.service.impl;
 
 import evg.testt.dao.PersonRepository;
+import evg.testt.dto.PersonDTO;
+import evg.testt.model.Email;
 import evg.testt.model.Person;
 import evg.testt.model.Personnel;
+import evg.testt.model.State;
 import evg.testt.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -17,25 +21,19 @@ import java.util.List;
 @Service
 public class PersonServiceImpl extends BaseService<Person, PersonRepository> implements PersonService {
 
-//    @Autowired
-//    PersonRepository personRepository;
-
     @Override
     public Person getPersonByUserLogin(String userLogin) throws SQLException {
         Person person = dao.findPersonByUserLogin(userLogin);
 
-//        try {
         if (person.getBirthdayDate() != null) {
             DateFormat birthdayDate = new SimpleDateFormat("yyyy-MM-dd");
             person.setBirthdayString(birthdayDate.format(person.getBirthdayDate()));
         }
-//        } catch (NullPointerException e) {}
         return person;
     }
 
     @Override
     public List<Person> getSortedByRegistrationDate() throws SQLException {
-//        return personRepository.findSortedByRegistrationDate();
         return dao.findSortedByRegistrationDate();
     }
 
@@ -48,5 +46,25 @@ public class PersonServiceImpl extends BaseService<Person, PersonRepository> imp
     public void update(Person o) throws SQLException {
         o.setModifyDate(new Date());
         dao.save(o);
+    }
+
+    public Person getUpdatedPerson(Person person, PersonDTO personDTO) throws ParseException, SQLException {
+
+        if(personDTO != null) {
+            if (person == null) {
+                person = new Person();
+            }
+
+            person.setFirstName(personDTO.getFirstName());
+            person.setLastName(personDTO.getLastName());
+            person.setMiddleName(personDTO.getMiddleName());
+            person.setComments(personDTO.getComments());
+            person.setOrganization(personDTO.getOrganization());
+            person.setBirthdayDate(personDTO.getBirthdayDate());
+            person.setEmail(new Email(personDTO.getEmail()));
+            person.setState(new State());
+        }
+
+        return person;
     }
 }

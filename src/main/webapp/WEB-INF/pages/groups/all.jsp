@@ -51,14 +51,14 @@
                                 <tr>
                                     <td><a href="/groups/${group.id}/info" alt="Group Profile">${group.name}</a></td>
                                     <td>
-                                        <a href="/teachers/info?teacher_id=${group.teacher.id}" alt="Teacher Profile">
+                                        <a href="/teachers/info?teacherId=${group.teacher.id}" alt="Teacher Profile">
                                                 ${group.teacher.person.firstName}${" "}
                                                 ${group.teacher.person.middleName}${" "}
                                                 ${group.teacher.person.lastName}${" "}
                                         </a></td>
-                                    <td>${group.language}</td>
-                                    <td>!add status</td>
-                                    <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <td>${group.language.language}</td>
+                                    <td></td>
+                                    <security:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
                                         <td>
                                             <a href="/teachers/delete?id=${teacher.id}">Delete</a>
                                         </td>

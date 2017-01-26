@@ -2,27 +2,22 @@ package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
-//import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,6 +39,8 @@ public class TeacherController {
     PersonDTOService personDTOService;
     @Autowired
     private GroupService groupService;
+    @Autowired
+    private LanguageService languageService;
 
     @RequestMapping(value = "/teachers", method = RequestMethod.GET)
     public String showTeachers(@RequestParam(required = false) Integer page,
@@ -83,10 +80,13 @@ public class TeacherController {
 
     @RequestMapping(value = "/teachers/add")
     public String addTeacher(Model model,
-                             HttpServletRequest request) {
+                             HttpServletRequest request) throws SQLException{
         request.getSession().setAttribute("teachers/add", request.getHeader("Referer"));
-        PersonDTO person = new PersonDTO();
-        model.addAttribute("teacher", person);
+        List<Language> languages = languageService.getAll();
+
+        model.addAttribute("languages", languages);
+        PersonDTO personDTO =  new PersonDTO();
+        model.addAttribute("teacher", personDTO);
         return "teachers/add";
     }
 
@@ -97,13 +97,28 @@ public class TeacherController {
 
         User u = userService.findByUserLogin(personDTO.getLogin());
 
+        model.addAttribute("languages", languageService.getAll());
+
         if (u != null)
             bindingResult.rejectValue("login", "1", "Login already exist.");
 
         if (!bindingResult.hasErrors()) {
 
             Teacher teacher = new Teacher();
-            teacher = personDTOService.updateRegisteredUser(teacher, personDTO);
+            Person person = new Person();
+
+            if (personDTO.getPersonId() != null){
+                teacher = teacherService.getById(personDTO.getPersonId());
+            }
+
+            teacher = teacherService.updateRegisteredUser(teacher, personDTO);
+
+            teacher = teacherService.getUpdateTeacher(teacher,personDTO);
+
+            person = personService.getUpdatedPerson(person, personDTO);
+
+            teacher.setPerson(person);
+
             teacherService.insert(teacher);
 
             return "redirect:" + request.getSession().getAttribute("teachers/add").toString();
@@ -134,11 +149,12 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/teachers/info")
-    public String teacherInfo(Model model, @RequestParam int teacher_id) throws SQLException {
+    public String teacherInfo(Model model, @RequestParam int teacherId) throws SQLException {
 
-        Teacher teacher = teacherService.getById(teacher_id);
+        Teacher teacher = teacherService.getById(teacherId);
         List<Group> groups = groupService.getByTeacher(teacher);
 
+        model.addAttribute("languages", languageService.getAll());
         model.addAttribute("teacher", teacher);
         model.addAttribute("groups", groups);
 
@@ -158,13 +174,13 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/teachers/setTeacherLevel")
-    public String setTeacherLevel(int level, int teacher_id) throws SQLException {
-        Teacher teacher = teacherService.getById(teacher_id);
+    public String setTeacherLevel(int level, int teacherId) throws SQLException {
+        Teacher teacher = teacherService.getById(teacherId);
         TeacherLevelEnum level_Id = TeacherLevelEnum.valueOf(level);
         teacher.setLevel(level_Id);
         teacherService.update(teacher);
 
-        return "redirect:/teachers/info?teacher_id=" + teacher_id;
+        return "redirect:/teachers/info?teacherId=" + teacherId;
     }
 
     @RequestMapping(value = "/teacherFilterByLevel", method = RequestMethod.GET)

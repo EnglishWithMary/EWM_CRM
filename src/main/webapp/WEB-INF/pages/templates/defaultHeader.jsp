@@ -15,6 +15,9 @@
             </button>
             <security:authorize access="isAuthenticated()">
                 <a id="logo" class="navbar-brand" href="/home">Mary</a>
+                <div class="trash">
+                    <a id="trash" href="#"><img width="100%" src="${pageContext.request.contextPath}/resources/img/trash.png"></a>
+                </div>
             </security:authorize>
         </div>
         <%--</security:authorize>--%>
@@ -22,18 +25,18 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <security:authorize access="isAuthenticated()">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-haspopup="true"
-                           aria-expanded="false">Admin tools <span class="caret"></span> </a>
-                        <security:authorize access="hasRole('ROLE_ADMIN')">
+                    <security:authorize access="hasRole('ROLE_ADMIN')">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false">Admin tools <span class="caret"></span> </a>
                             <ul class="dropdown-menu">
                                 <li><a href="/personnel">All Personnel</a></li>
                                 <li><a href="/admins">Admins</a></li>
                                 <li><a href="/trash" class="glyphicon glyphicon-trash"> Trash</a></li>
                             </ul>
-                        </security:authorize>
-                    </li>
+                        </li>
+                    </security:authorize>
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -41,14 +44,14 @@
                            aria-expanded="false">Managing <span class="caret"></span> </a>
                         <ul class="dropdown-menu">
                             <li><a href="/rooms">Rooms</a></li>
-                            <li><a href="/teachers">Teachers</a></li>
-                            <li><a href="/managers">Managers</a></li>
+                            <%--<li><a href="/teachers">Teachers</a></li>--%>
+                            <%--<li><a href="/managers">Managers</a></li>--%>
                             <li><a href="/students">Students</a></li>
                             <li><a href="/leads">Leads</a></li>
-                            <li><a href="/schedules">Schedules</a></li>
-                            <li><a href="/payments">Payments</a></li>
+                            <%--<li><a href="/schedules">Schedules</a></li>--%>
+                            <%--<li><a href="/payments">Payments</a></li>--%>
                             <li><a href="/groups">Groups</a></li>
-                            <li><a href="/events">Events</a></li>
+                            <%--<li><a href="/events">Events</a></li>--%>
 
                         </ul>
                     </li>

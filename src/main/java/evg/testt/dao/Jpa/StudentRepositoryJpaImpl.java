@@ -74,7 +74,12 @@ public class StudentRepositoryJpaImpl extends RegisteredUserRepositoryJpaImpl<St
 
     public Student findStudentByPersonId(Integer personId){
 
-        Query query = em.createQuery("SELECT student FROM students student WHERE student.person.id =:id");
+        if (personId == null) {
+            return new Student();
+        }
+
+        Query query = em.createQuery("SELECT student FROM students student WHERE student.person.id=:id");
+        query.setParameter("id",personId);
 
         return (Student) query.getSingleResult();
     }

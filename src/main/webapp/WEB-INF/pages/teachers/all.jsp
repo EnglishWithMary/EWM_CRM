@@ -69,7 +69,7 @@
                     <c:forEach var="teacher" items="${teachers}">
                         <tr>
                             <td>
-                                <a href="/teachers/info?teacher_id=${teacher.id}">
+                                <a href="/teachers/info?teacherId=${teacher.id}">
                                     ${teacher.person.firstName}
                                     ${teacher.person.middleName}
                                     ${teacher.person.lastName}
@@ -119,6 +119,9 @@
             </div>
             <div class="panel-body">
                 <p><a href="/teachers/add" class="btn btn-success">Add Teacher</a></p>
+            </div>
+            <div class="panel-body">
+                <p><a href="/languages" class="btn btn-success">Languages</a></p>
             </div>
         </div>
     </div>
