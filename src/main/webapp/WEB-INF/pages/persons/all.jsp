@@ -5,11 +5,6 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-12">
-            <h1 class="page-header">Personnel</h1>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-lg-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -93,13 +88,13 @@
                                 <tr>
                                     <td><c:choose>
                                         <c:when test="${person.role == 'ROLE_ADMIN'}">
-                                            <a href="/admins/info?admin_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                            <a href="/admins/info?adminId=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
                                         </c:when>
                                         <c:when test="${person.role == 'ROLE_MANAGER'}">
-                                            <a href="/managers/info?manager_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                            <a href="/managers/info?managerId=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
                                         </c:when>
                                         <c:when test="${person.role == 'ROLE_TEACHER'}">
-                                            <a href="/teachers/info?teacher_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                            <a href="/teachers/info?teacherId=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
                                         </c:when>
                                     </c:choose>
 

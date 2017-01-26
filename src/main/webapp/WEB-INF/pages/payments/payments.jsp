@@ -48,7 +48,7 @@
     <c:forEach var="student" items="${students}">
     <tr>
         <td>1</td>
-        <td>Бессонов Егений</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -62,7 +62,7 @@
     </tr>
     <tr>
         <td>2</td>
-        <td>Балабанов Денис</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>

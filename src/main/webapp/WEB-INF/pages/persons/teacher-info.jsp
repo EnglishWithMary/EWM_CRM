@@ -24,12 +24,9 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <h3>Language</h3>
-                            <p>(In development)</p>
-                            <h5>English</h5>
-                            <h5>German</h5>
-                            <h5>French</h5>
-                            <h5>Italian</h5>
+                            <c:forEach var="lang" items="${teacher.languages}" >
+                                <p>${lang.language}</p>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>
@@ -77,13 +74,18 @@
                                         </select>
                                     </p>
 
-                                    <p><strong>Languages: </strong>
-                                        <select name="languages">
-                                            <option>English</option>
-                                            <option>Spanish</option>
-                                            <option>French</option>
-                                        </select>
-                                    </p>
+                                    <div class="row padding-bot">
+                                        <div class="col-sm-3">
+                                            <label>Languages:</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" multiple>
+                                                <c:forEach var="lang" items="${languages}" >
+                                                    <option value="${lang.id}">${lang.language}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <p><strong>Referral: </strong><input type="text"></p>
                                     <p><strong>Color: </strong><input type="color"></p>
 
@@ -139,7 +141,7 @@
                                 <security:authorize access="hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
                                     <a href="/teachers/trash?id=${teacher.id}" class="btn btn-danger">Delete Teacher</a>
 
-                                    <a href="" class="btn btn-success" type="button">Update Teacher</a>
+                                    <a href="/teacherSave" class="btn btn-success" type="submit">Update Teacher</a>
 
                                     <a href="" class="btn btn-warning" type="button">Create New Teacher</a>
                                 </security:authorize>

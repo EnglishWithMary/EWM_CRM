@@ -7,6 +7,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import javax.persistence.Transient;
+import java.util.List;
+
 import java.sql.Date;
 
 @FieldEquals( field="password", equalsTo="confirmPassword" )
@@ -49,4 +51,6 @@ public @Data class PersonDTO {
     protected Integer cardId;
 
     protected Integer personId;
+
+    private List<String>languages;
 }
