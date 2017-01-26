@@ -1,19 +1,13 @@
 package evg.testt.controller;
 
-import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.EventDateTime;
 import com.google.gson.Gson;
-import evg.testt.google.utils.calendar.DateGoogleConverter;
 import evg.testt.google.utils.calendar.RoomsEventsHelper;
-import evg.testt.model.FullcalendarEvent;
+import evg.testt.util.fullcalendar.events.FullcalendarEvent;
 import evg.testt.model.Room;
 import evg.testt.model.RoomEvent;
 import evg.testt.service.GroupEventsService;
-import evg.testt.service.GroupService;
 import evg.testt.service.RoomService;
-import evg.testt.util.fullcalendar.FullcalendarHeleper;
-import evg.testt.util.helpers.RoomUpdateHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,11 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 

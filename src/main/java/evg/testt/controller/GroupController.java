@@ -4,7 +4,11 @@ import com.google.gson.Gson;
 import evg.testt.dto.GroupDTO;
 import evg.testt.model.*;
 import evg.testt.service.*;
-import evg.testt.util.fullcalendar.FullcalendarHeleper;
+import evg.testt.util.fullcalendar.convertors.FullcalendarConverter;
+import evg.testt.util.fullcalendar.events.FullcalendarEvent;
+import evg.testt.util.fullcalendar.UrlWrapperHelper;
+import evg.testt.util.fullcalendar.events.ISimpleFullcalendarEvent;
+import evg.testt.util.fullcalendar.events.ISimpleFullcalendarEventWithUrl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -14,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -245,9 +248,20 @@ public class GroupController {
     @RequestMapping(value = "/home/this-day-events", method = RequestMethod.GET)
     public String getEventsAllDay(@RequestParam(value = "start") Date start,
                                   @RequestParam(value = "end") Date end) throws SQLException {
-        List<FullcalendarEvent> groupEvents = FullcalendarHeleper
-                .convertGroupEventsToFullcalendarEventsWithUrls(
-                        groupEventsService.getAllByDate(start, end));
+        List<ISimpleFullcalendarEventWithUrl> groupEvents =
+                FullcalendarConverter.convertToSimpleFullcalendarEventsWithUrl(
+                        groupEventsService.getAllByDate(start, end),
+                        UrlWrapperHelper.getWrapper()
+                        .before("/groups")
+                        .after("/info")
+                );
+//                FullcalendarHeleper
+//                .convertGroupEventsToFullcalendarEventsWithUrls(
+//                        groupEventsService.getAllByDate(start, end),
+//                        UrlWrapperHelper.getWrapper()
+//                                .before("/groups")
+//                                .after("/info")
+//                );
         return new Gson().toJson(groupEvents);
     }
 }

@@ -1,6 +1,6 @@
 package evg.testt.service;
 
-import evg.testt.model.FullcalendarEvent;
+import evg.testt.util.fullcalendar.events.FullcalendarEvent;
 import evg.testt.model.GroupEvent;
 import evg.testt.model.Room;
 

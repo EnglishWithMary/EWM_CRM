@@ -1,15 +1,13 @@
 package evg.testt.service.impl;
 
 import evg.testt.dao.GroupEventsRepository;
-import evg.testt.model.FullcalendarEvent;
+import evg.testt.util.fullcalendar.events.FullcalendarEvent;
 import evg.testt.model.GroupEvent;
 import evg.testt.model.Room;
 import evg.testt.service.GroupEventsService;
-import evg.testt.util.fullcalendar.FullcalendarHeleper;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
