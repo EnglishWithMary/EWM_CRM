@@ -16,8 +16,6 @@ $(document).ready(function () {
                 maxlength: 20
             },
             middleName: {
-                required: true,
-                minlength: 3,
                 maxlength: 20
             },
             login: {
@@ -56,8 +54,6 @@ $(document).ready(function () {
                 maxlength: "Last Name should be less than 20 chars"
             },
             middleName: {
-                required: "Please enter your Middle Name",
-                minlength: "Middle Name should be at least 3 chars",
                 maxlength: "Middle Name should be less than 20 chars"
             },
             login: {

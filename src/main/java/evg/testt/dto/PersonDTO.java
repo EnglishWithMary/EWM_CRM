@@ -33,7 +33,7 @@ public @Data class PersonDTO {
     @Size(min = 3, max = 20, message = "Last Name should be between 3 and 20 chars.")
     private String lastName;
 
-    @Size(min = 3, max = 20, message = "Middle Name should be between 3 and 20 chars.")
+    @Size(max = 20, message = "Middle Name should less than 20 chars.")
     private String middleName;
 
     private String comments;

@@ -103,7 +103,7 @@ public class TeacherController {
         if (!bindingResult.hasErrors()) {
 
             Teacher teacher = new Teacher();
-            teacher = personDTOService.updateRegisteredUser(teacher, personDTO);
+            teacher = teacherService.updateRegisteredUser(teacher, personDTO);
             teacherService.insert(teacher);
 
             return "redirect:" + request.getSession().getAttribute("teachers/add").toString();

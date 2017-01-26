@@ -104,7 +104,7 @@ public class AdminController {
 
         if (!bindingResult.hasErrors()) {
             Admin admin = new Admin();
-            admin = personDTOService.updateRegisteredUser(admin, personDTO);
+            admin = adminService.updateRegisteredUser(admin, personDTO);
             adminService.insert(admin);
             return "redirect:" + request.getSession().getAttribute("admins/add").toString();
         } else {
