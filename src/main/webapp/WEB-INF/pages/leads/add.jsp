@@ -12,7 +12,12 @@
     <div class="col-sm-5 col-sm-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong>Add new Lead</strong>
+                <c:if test="${lead.personId==null}">
+                    <strong>Add new Lead</strong>
+                </c:if>
+                <c:if test="${lead.personId!=null}">
+                    <strong>Update Lead</strong>
+                </c:if>
             </div>
             <div class="panel-body">
 

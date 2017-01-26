@@ -1,14 +1,13 @@
 package evg.testt.service.impl;
 
 import evg.testt.dto.PersonDTO;
-import evg.testt.model.*;
-import evg.testt.service.CardService;
+import evg.testt.model.Person;
+import evg.testt.model.RegisteredUser;
 import evg.testt.service.PersonDTOService;
 import evg.testt.service.PersonService;
-import evg.testt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
+
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,6 +33,7 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
         personDTO.setAvatarURL(person.getAvatarURL());
         personDTO.setEmail(person.getEmail().getEmail());
         personDTO.setCardId(cardId);
+        personDTO.setPersonId(personId);
 
         return personDTO;
     }
@@ -48,37 +48,4 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
             return null;
         }
     }
-
-//    public Integer updatePersonPositionOnPipeline(Person person, PersonDTO personDTO) throws SQLException{
-//
-//        Integer personId = person.getId();
-//        Integer cardId = personDTO.getCardId();
-//        Card card;
-//
-//        if (personId == null){
-//            card = cardService.getById(cardId);
-//
-////          Add new person to Card
-//            card.getPersons().add(person);
-//            cardService.update(card);
-//        }
-//        else {
-//            card = cardService.getCardByPerson(person);
-//
-//            if (!cardId.equals(card.getId())) {
-//
-////              Delete person from old Card
-//                card.getPersons().remove(person);
-//                cardService.update(card);
-//
-////              Add person to new Card
-//                card = cardService.getById(cardId);
-//                card.getPersons().add(person);
-//                cardService.update(card);
-//            }
-//        }
-//
-//        return card.getPersons().size() + 1;
-//    }
-
 }
