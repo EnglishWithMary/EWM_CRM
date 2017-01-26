@@ -5,7 +5,12 @@
     <div class="col-sm-5 col-sm-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong>Add new Student</strong>
+                <c:if test="${student.personId==null}">
+                    <strong>Add new Student</strong>
+                </c:if>
+                <c:if test="${student.personId!=null}">
+                    <strong>Update Student</strong>
+                </c:if>
             </div>
             <div class="panel-body">
                 <sf:form method="post" modelAttribute="student" id="form" action="/students/save">
@@ -52,6 +57,7 @@
                                 <sf:errors path="email" cssClass="has-error"/>
                             </div>
                         </div>
+                        <c:if test="${student.personId==null}">
                         <div class="row padding-bot">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-4">
@@ -62,6 +68,7 @@
                                 <sf:errors path="login" cssClass="has-error"/>
                             </div>
                         </div>
+                        </c:if>
                         <div class="row padding-bot">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-4">

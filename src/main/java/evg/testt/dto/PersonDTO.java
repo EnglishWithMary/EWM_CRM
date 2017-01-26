@@ -47,4 +47,6 @@ public @Data class PersonDTO {
     protected String avatarURL;
 
     protected Integer cardId;
+
+    protected Integer personId;
 }
