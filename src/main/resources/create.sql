@@ -79,5 +79,8 @@ FROM persons
   LEFT JOIN students ON persons.id = students.person_id
   LEFT JOIN leads ON persons.id = leads.person_id
   LEFT JOIN groups ON students.group_id = groups.id
-  LEFT JOIN users ON admins.user_id = users.id or managers.user_id = users.id or teachers.user_id = users.id or students.user_id = users.id
+  LEFT JOIN users ON admins.user_id = users.id
+    or managers.user_id = users.id
+    or teachers.user_id = users.id
+    or students.user_id = users.id
   LEFT JOIN roles ON users.role_id = roles.id;
