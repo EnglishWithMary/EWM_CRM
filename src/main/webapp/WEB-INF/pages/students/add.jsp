@@ -68,7 +68,6 @@
                                 <sf:errors path="login" cssClass="has-error"/>
                             </div>
                         </div>
-                        </c:if>
                         <div class="row padding-bot">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-4">
@@ -89,6 +88,7 @@
                                 <sf:errors path="confirmPassword" cssClass="has-error"/>
                             </div>
                         </div>
+                        </c:if>
                         <div class="row padding-bot">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-4">
