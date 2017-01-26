@@ -95,7 +95,7 @@ public class ManagerController {
         if (!bindingResult.hasErrors()) {
 
             Manager manager = new Manager();
-            manager = personDTOService.updateRegisteredUser(manager, personDTO);
+            manager = managerService.updateRegisteredUser(manager, personDTO);
             managerService.insert(manager);
 
             return "redirect:" + request.getSession().getAttribute("managerAdd").toString();

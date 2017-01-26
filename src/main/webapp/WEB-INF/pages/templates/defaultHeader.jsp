@@ -15,6 +15,9 @@
             </button>
             <security:authorize access="isAuthenticated()">
                 <a id="logo" class="navbar-brand" href="/home">Mary</a>
+                <div class="trash">
+                    <a id="trash" href="#"><img width="100%" src="${pageContext.request.contextPath}/resources/img/trash.png"></a>
+                </div>
             </security:authorize>
         </div>
         <%--</security:authorize>--%>
