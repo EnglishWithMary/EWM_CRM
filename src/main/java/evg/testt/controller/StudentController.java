@@ -40,6 +40,7 @@ public class StudentController {
     @Autowired
     private StudentLevelHistoryService studentLevelHistoryService;
 
+
     @Value("${pagination.page.size}")
     protected int pageSize;
 
@@ -279,4 +280,20 @@ public class StudentController {
         model.addAttribute("student", student);
         return "persons/student-info";
     }
+
+
+
+//    @RequestMapping(value = "/students/notes", method = RequestMethod.POST)
+//    public String studentNote(Model model,
+//                                @RequestParam Integer id,
+//                                @RequestParam String note) throws SQLException {
+//        Student student = studentService.getById(id);
+//        studentService.update(student);
+//        model.addAttribute("note", note);
+//        return "persons/student-info";
+//    }
+
+
+
+
 }

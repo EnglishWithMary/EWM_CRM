@@ -26,4 +26,7 @@ public @Data class Student extends RegisteredUser implements BelongsToPerson{
     public String toString() {
         return "".toString();
     }
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "students", fetch = FetchType.LAZY)
+    private List<Note> notes;
 }

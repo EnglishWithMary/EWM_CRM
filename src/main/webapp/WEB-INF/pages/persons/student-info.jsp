@@ -220,6 +220,7 @@
                     </div>
 
                         <%--Panel with Notes--%>
+            <security:authorize access="hasRole('ROLE_ADMIN')">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="panel panel-default">
@@ -230,11 +231,14 @@
                                         <table class="table">
                                             <thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>PayName</th>
-                                                <th>ExpirationDate</th>
-                                                <th>Edit</th>
-                                                <th>Delete</th>
+                                                <th>
+                                                    <form method="post" id="note" action="students/notes">
+                                                        <input type="text" name="note" value=""/>
+                                                        <input type="hidden" name="id" value="${student.id}"/>
+                                                        <input type="submit" value="Add note" class="btn btn-success"/>
+                                                    </form>
+
+                                                </th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -252,7 +256,7 @@
                                 </div>
                             </div>
                         </div>
-
+                </security:authorize>
 
 
 
