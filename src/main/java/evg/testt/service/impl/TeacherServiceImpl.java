@@ -12,6 +12,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.sql.SQLException;
+
 @Service
 @Transactional
 public class TeacherServiceImpl extends RegisteredUserServiceImpl<Teacher, TeacherRepository> implements TeacherService {
@@ -36,4 +38,11 @@ public class TeacherServiceImpl extends RegisteredUserServiceImpl<Teacher, Teach
         }
         return teacher;
     }
+
+    public Teacher getTeacherByPersonId(Integer person_id) throws SQLException {
+
+        return dao.findTeacherByPersonId(person_id);
+
+    }
+
 }

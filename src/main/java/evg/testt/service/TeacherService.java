@@ -10,5 +10,9 @@ import java.util.List;
 
 
 public interface TeacherService extends RegisteredUserService<Teacher> {
+
     Teacher getUpdateTeacher(Teacher teacher, PersonDTO personDTO) throws ParseException;
+
+    Teacher getTeacherByPersonId(Integer person_id) throws SQLException;
+
 }

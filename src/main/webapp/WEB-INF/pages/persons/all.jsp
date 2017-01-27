@@ -94,7 +94,7 @@
                                             <a href="/managers/info?managerId=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
                                         </c:when>
                                         <c:when test="${person.role == 'ROLE_TEACHER'}">
-                                            <a href="/teachers/info?teacherId=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                            <a href="/teachers/info?person_id=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
                                         </c:when>
                                     </c:choose>
 
