@@ -4,7 +4,7 @@ import evg.testt.model.Teacher;
 
 import java.util.List;
 
-public interface TeacherRepository extends RegisteredUserRepository<Teacher> {
+public interface TeacherRepository extends StaffRepository<Teacher> {
 
     Teacher findTeacherByPersonId(Integer personId);
 

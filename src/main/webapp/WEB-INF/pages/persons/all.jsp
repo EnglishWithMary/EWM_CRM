@@ -11,58 +11,55 @@
                     <strong>Information about personnel</strong>
                 </div>
                 <div class="panel-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="col-sm-3">
-                                <div class="input-group">
-                                    <span class="input-group-addon">Sort by:</span>
-                                    <select class="form-control">
-                                        <option></option>
-                                        <option>First Name</option>
-                                        <option>Last Name</option>
-                                        <option>Personnel Role</option>
-                                        <option>Registration Date</option>
-                                        <option>Age</option>
-                                        <option>Status</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="input-group">
-                                    <span class="input-group-addon">Personnel's Role:</span>
-                                    <select class="form-control">
-                                        <option></option>
-                                        <option>ADMIN</option>
-                                        <option>MANAGER</option>
-                                        <option>TEACHER</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="input-group">
-                                    <span class="input-group-addon">Status:</span>
-                                    <select class="form-control">
-                                        <option></option>
-                                        <option>ACTIVE</option>
-                                        <option>DELETED</option>
-                                        <option>BLOCKED</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <%--<div class="row">--%>
+                        <%--<div class="col-sm-12">--%>
+                            <%--<div class="col-sm-3">--%>
+                                <%--<div class="input-group">--%>
+                                    <%--<span class="input-group-addon">Sort by:</span>--%>
+                                    <%--<select class="form-control">--%>
+                                        <%--<option></option>--%>
+                                        <%--<option>First Name</option>--%>
+                                        <%--<option>Last Name</option>--%>
+                                        <%--<option>Personnel Role</option>--%>
+                                        <%--<option>Registration Date</option>--%>
+                                        <%--<option>Age</option>--%>
+                                        <%--<option>Status</option>--%>
+                                    <%--</select>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="col-sm-4">--%>
+                                <%--<div class="input-group">--%>
+                                    <%--<span class="input-group-addon">Personnel's Role:</span>--%>
+                                    <%--<select class="form-control">--%>
+                                        <%--<option></option>--%>
+                                        <%--<option>ADMIN</option>--%>
+                                        <%--<option>MANAGER</option>--%>
+                                        <%--<option>TEACHER</option>--%>
+                                    <%--</select>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="col-sm-3">--%>
+                                <%--<div class="input-group">--%>
+                                    <%--<span class="input-group-addon">Status:</span>--%>
+                                    <%--<select class="form-control">--%>
+                                        <%--<option></option>--%>
+                                        <%--<option>ACTIVE</option>--%>
+                                        <%--<option>DELETED</option>--%>
+                                        <%--<option>BLOCKED</option>--%>
+                                    <%--</select>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
                     <div class="padding-bot"></div>
                     <div class="col-sm-12">
                         <table id="table-list" class="table table-striped table-bordered">
                             <thead>
                             <tr>
                                 <th>Full Name</th>
-                                <th>Login</th>
                                 <th>Role</th>
-                                <th>State</th>
-                                <%--<th>Birth Date</th>--%>
-                                <th>Reg. Date</th>
-                                <th>Mod. Date</th>
+                                <th>Login</th>
+                                <th>Birth Date</th>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
                                     <th>Delete</th>
                                 </security:authorize>
@@ -71,12 +68,9 @@
                             <tfoot>
                             <tr>
                                 <th>Full Name</th>
-                                <th>Login</th>
                                 <th>Role</th>
-                                <th>State</th>
-                                <%--<th>Birth Date</th>--%>
-                                <th>Reg. Date</th>
-                                <th>Mod. Date</th>
+                                <th>Login</th>
+                                <th>Birth Date</th>
                                 <security:authorize access="hasRole('ROLE_ADMIN')">
                                     <th>Delete</th>
                                 </security:authorize>
@@ -84,30 +78,40 @@
                             </tfoot>
 
                             <tbody>
-                            <c:forEach var="person" items="${personnel}">
+                            <c:forEach var="staff" items="${staffs}">
                                 <tr>
-                                    <td><c:choose>
-                                        <c:when test="${person.role == 'ROLE_ADMIN'}">
-                                            <a href="/admins/info?adminId=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                    <c:choose>
+                                        <c:when test="${staff.user.role.role == 'ROLE_ADMIN'}">
+                                            <td>
+                                                <a href="/admins/info?adminId=${staff.id}">${staff.person.lastName} ${fn:substring(staff.person.firstName, 0, 1)}. ${fn:substring(staff.person.middleName, 0, 1)}</a>
+                                            </td>
+                                            <td>
+                                                Admin
+                                            </td>
                                         </c:when>
-                                        <c:when test="${person.role == 'ROLE_MANAGER'}">
-                                            <a href="/managers/info?managerId=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                        <c:when test="${staff.user.role.role == 'ROLE_MANAGER'}">
+                                            <td>
+                                                a href="/managers/info?managerId=${staff.id}">${staff.person.lastName} ${fn:substring(staff.person.firstName, 0, 1)}. ${fn:substring(staff.person.middleName, 0, 1)}</a>
+                                            </td>
+                                            <td>
+                                                Manager
+                                            </td>
                                         </c:when>
-                                        <c:when test="${person.role == 'ROLE_TEACHER'}">
-                                            <a href="/teachers/info?teacherId=${person.id}">${person.lastName} ${fn:substring(person.firstName, 0, 1)}. ${fn:substring(person.middleName, 0, 1)}</a>
+                                        <c:when test="${staff.user.role.role == 'ROLE_TEACHER'}">
+                                            <td>
+                                                <a href="/teachers/info?teacherId=${staff.id}">${staff.person.lastName} ${fn:substring(staff.person.firstName, 0, 1)}. ${fn:substring(staff.person.middleName, 0, 1)}</a>
+                                            </td>
+                                            <td>
+                                                Teacher
+                                            </td>
                                         </c:when>
                                     </c:choose>
 
-                                    </td>
-                                    <td>${person.login}</td>
-                                    <td>${person.role}</td>
-                                    <td>${person.state}</td>
-                                        <%--<td>${person.birthdayDate}</td>--%>
-                                    <td>${person.registrationDate}</td>
-                                    <td>${person.modifyDate}</td>
+                                    <td>${staff.user.login}</td>
+                                    <td>${staff.person.birthdayDate}</td>
                                     <security:authorize access="hasRole('ROLE_ADMIN')">
                                         <td>
-                                            <a href="/personnel/trashed?id=${person.id}">Delete</a>
+                                            <a href="/personnel/trashed?id=${staff.person.id}">Delete</a>
                                         </td>
                                     </security:authorize>
                                 </tr>

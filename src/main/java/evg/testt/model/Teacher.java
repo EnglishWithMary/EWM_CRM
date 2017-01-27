@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Entity(name = "teachers")
-public @Data class Teacher extends RegisteredUser implements BelongsToPerson{
+public @Data class Teacher extends Staff implements BelongsToPerson{
 
     @OneToOne(cascade = CascadeType.ALL)
     private Person person;

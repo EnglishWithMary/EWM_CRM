@@ -17,7 +17,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class TeacherServiceImpl extends RegisteredUserServiceImpl<Teacher, TeacherRepository> implements TeacherService {
+public class TeacherServiceImpl extends StaffServiceImpl<Teacher, TeacherRepository> implements TeacherService {
 
     @Override
     public Teacher getUpdateTeacher(Teacher teacher, PersonDTO personDTO) throws ParseException {

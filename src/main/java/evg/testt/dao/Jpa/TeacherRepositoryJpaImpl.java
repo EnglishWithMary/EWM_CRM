@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class TeacherRepositoryJpaImpl extends RegisteredUserRepositoryJpaImpl<Teacher> implements TeacherRepository {
+public class TeacherRepositoryJpaImpl extends StaffRepositoryJpaImpl<Teacher> implements TeacherRepository {
 
     public Teacher findTeacherByPersonId(Integer personId){
 
