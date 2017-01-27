@@ -16,7 +16,7 @@
                             <p><strong>Group Name: </strong>${group.name}</p>
 
                             <p><strong>Group Teacher:</strong>
-                                <a href="/teachers/info?teacher_id=${group.teacher.id}">${group.teacher.person.firstName}</a>
+                                <a href="/teachers/info?teacherId=${group.teacher.id}">${group.teacher.person.firstName}</a>
                             </p>
 
                             <p><strong>Studying Language:</strong>English(null)</p>

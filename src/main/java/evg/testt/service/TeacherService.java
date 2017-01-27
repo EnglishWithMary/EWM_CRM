@@ -9,6 +9,9 @@ import java.text.ParseException;
 import java.util.List;
 
 
-public interface TeacherService extends RegisteredUserService<Teacher> {
+public interface TeacherService extends StaffService<Teacher> {
+
     Teacher getUpdateTeacher(Teacher teacher, PersonDTO personDTO) throws ParseException;
+
+    List<Teacher> getTeacherByLevel(int teacherLevel)throws SQLException;
 }

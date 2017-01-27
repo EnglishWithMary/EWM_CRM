@@ -8,13 +8,16 @@ import evg.testt.service.TeacherService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @Transactional
-public class TeacherServiceImpl extends RegisteredUserServiceImpl<Teacher, TeacherRepository> implements TeacherService {
+public class TeacherServiceImpl extends StaffServiceImpl<Teacher, TeacherRepository> implements TeacherService {
 
     @Override
     public Teacher getUpdateTeacher(Teacher teacher, PersonDTO personDTO) throws ParseException {
@@ -35,5 +38,10 @@ public class TeacherServiceImpl extends RegisteredUserServiceImpl<Teacher, Teach
 
         }
         return teacher;
+    }
+
+    @Override
+    public List<Teacher> getTeacherByLevel(int teacherLevel) throws SQLException {
+        return dao.findTeacherByLevel(teacherLevel);
     }
 }
