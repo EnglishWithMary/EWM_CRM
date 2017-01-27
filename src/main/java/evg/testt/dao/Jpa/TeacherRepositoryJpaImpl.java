@@ -1,6 +1,5 @@
 package evg.testt.dao.Jpa;
 
-import evg.testt.model.Student;
 import evg.testt.model.Teacher;
 import evg.testt.dao.TeacherRepository;
 import org.springframework.stereotype.Repository;
@@ -17,7 +16,7 @@ public class TeacherRepositoryJpaImpl extends RegisteredUserRepositoryJpaImpl<Te
         }
 
         Query query = em.createQuery("SELECT teacher FROM teachers teacher WHERE teacher.person.id=:id");
-        query.setParameter("id",personId);
+        query.setParameter("id", personId);
 
         return (Teacher) query.getSingleResult();
     }

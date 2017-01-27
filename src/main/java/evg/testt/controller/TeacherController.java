@@ -149,9 +149,9 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/teachers/info")
-    public String teacherInfo(Model model, @RequestParam int teacherId) throws SQLException {
+    public String teacherInfo(Model model, @RequestParam int person_id) throws SQLException {
 
-        Teacher teacher = teacherService.getById(teacherId);
+        Teacher teacher = teacherService.getTeacherByPersonId(person_id);
         List<Group> groups = groupService.getByTeacher(teacher);
 
         model.addAttribute("languages", languageService.getAll());
