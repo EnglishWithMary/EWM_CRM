@@ -29,7 +29,7 @@ public class FullcalendarConverter {
         return instance;
     }
 
-    public static List<ISimpleFullcalendarEvent> convertToSimpleFullcalendarEvents(List<GroupEvent> events) {
+    public List<ISimpleFullcalendarEvent> convertToSimpleFullcalendarEvents(List<GroupEvent> events) {
         List<ISimpleFullcalendarEvent> list = new ArrayList<>();
         for (GroupEvent item : events) {
             list.add(factory.getSimpleFullcalendarBuider().setGroupEvent(item).build());
@@ -37,7 +37,7 @@ public class FullcalendarConverter {
         return list;
     }
 
-    public static List<IDisabledFullcalendarEvent> convertToDisabledFullcalendarEvents(List<GroupEvent> events) {
+    public List<IDisabledFullcalendarEvent> convertToDisabledFullcalendarEvents(List<GroupEvent> events) {
         List<IDisabledFullcalendarEvent> list = new ArrayList<>();
         for (GroupEvent item : events) {
             list.add(factory.getDisabledFullcalendarBuilder().setGroupEvent(item).build());
@@ -45,7 +45,7 @@ public class FullcalendarConverter {
         return list;
     }
 
-    public static List<ISimpleFullcalendarEventWithUrl> convertToSimpleFullcalendarEventsWithUrl(
+    public List<ISimpleFullcalendarEventWithUrl> convertToSimpleFullcalendarEventsWithUrl(
             List<GroupEvent> events,
             UrlWrapper wrapper
     ) {

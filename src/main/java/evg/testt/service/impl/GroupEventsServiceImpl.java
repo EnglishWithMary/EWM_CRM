@@ -14,7 +14,6 @@ import java.util.List;
 public class GroupEventsServiceImpl extends BaseService<GroupEvent, GroupEventsRepository>
         implements GroupEventsService {
 
-
     @Override
     public List<GroupEvent> getAllByGroupId(Integer id) {
         return dao.findAllByGroupId(id);
@@ -31,14 +30,13 @@ public class GroupEventsServiceImpl extends BaseService<GroupEvent, GroupEventsR
     }
 
     @Override
-    public List<FullcalendarEvent> getAllByGroupIdAndRoomId(Integer groupId, Room room) {
-        List<FullcalendarEvent> events = FullcalendarHeleper
-                .convertGroupEventsToFullcalendarEventsDefinedAsBadTime(
-                        dao.findAllByRoomIdWhereGroupIsNotPresented(groupId, room)
-                );
-        events.addAll(FullcalendarHeleper.convertGroupEventsToFullcalendarEvents(
-                dao.findAllByGroupIdAndRoom(groupId, room)));
-        return events;
+    public List<GroupEvent> getAllByGroupIdAndRoomId(Integer groupId, Room room) {
+        return dao.findAllByGroupIdAndRoom(groupId, room);
+    }
+
+    @Override
+    public List<GroupEvent> getAllByNotGroupIdAndRoomId(Integer groupId, Room room) {
+        return dao.findAllByRoomIdWhereGroupIsNotPresented(groupId, room);
     }
 
     @Override
