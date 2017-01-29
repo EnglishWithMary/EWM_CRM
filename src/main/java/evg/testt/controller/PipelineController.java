@@ -35,8 +35,8 @@ public class PipelineController {
         return "pipeline/pipeline";
     }
 
-    //    /pipeline/addCard
-//    old naming is "/addCard
+//  /pipeline/addCard
+//  old naming is "/addCard
     @RequestMapping(value = "/pipeline/addCard", method = RequestMethod.POST)
     public String addCard(Model model, @RequestParam int pipeTypeId)
             throws SQLException {
