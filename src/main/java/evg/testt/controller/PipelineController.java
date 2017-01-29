@@ -46,13 +46,7 @@ public class PipelineController {
         card.setType(pt);
         cardService.insert(card);
         this.inserAttributes(model, pipe);
-        if (pipe == Pipe.LEAD_PIPE) {
-            return "redirect:/pipeline/leads";
-        } else if (pipe == Pipe.STUDENT_PIPE) {
-            return "redirect:/pipeline/students";
-        } else {
-            return "redirect:/pipeline";
-        }
+        return ChoiceRedirectByPipeType(pipe);
     }
 
 
@@ -85,14 +79,7 @@ public class PipelineController {
         cardService.update(card);
         cardService.delete(card);
         this.inserAttributes(model, pipe);
-
-        if (pipe == Pipe.LEAD_PIPE) {
-            return "redirect:/pipeline/leads";
-        } else if (pipe == Pipe.STUDENT_PIPE) {
-            return "redirect:/pipeline/students";
-        } else {
-            return "redirect:/pipeline";
-        }
+        return ChoiceRedirectByPipeType(pipe);
     }
 
     //    /pipeline/editCardName
@@ -107,6 +94,11 @@ public class PipelineController {
         cardService.update(card);
         this.inserAttributes(model, pipe);
 
+        return ChoiceRedirectByPipeType(pipe);
+
+    }
+
+    String ChoiceRedirectByPipeType(Pipe pipe) {
         if (pipe == Pipe.LEAD_PIPE) {
             return "redirect:/pipeline/leads";
         } else if (pipe == Pipe.STUDENT_PIPE) {
@@ -114,7 +106,6 @@ public class PipelineController {
         } else {
             return "redirect:/pipeline";
         }
-
     }
 
     //    /pipeline/moveLeadAjax
