@@ -247,6 +247,9 @@ public class StudentController {
         Student student = studentService.getStudentByPersonId(personId);
         Card currentCard = cardService.getCardByPerson(student.getPerson());
         List<Card> personCardList = cardService.getCards(Pipe.STUDENT_PIPE);
+        List<Group> groups = groupService.getAll();
+
+        model.addAttribute("groups", groups);
         model.addAttribute("currentCard", currentCard);
         model.addAttribute("personCardList", personCardList);
         model.addAttribute("student", student);
@@ -264,4 +267,27 @@ public class StudentController {
         model.addAttribute("student", student);
         return "persons/student-info";
     }
+
+    @RequestMapping(value = "/studentUpdateGroup", method = RequestMethod.POST)
+    public String studentUpdateGroup(Model model,
+                                     @RequestParam Integer id,
+                                     @RequestParam(required = false) Integer group_id) throws SQLException {
+
+        Student student = studentService.getById(id);
+
+        List<Group> groups = groupService.getAll();
+
+        if (group_id != null && group_id > 0) {
+            Group group = groupService.getById(group_id);
+            student.setGroup(group);
+        }
+        studentService.update(student);
+
+        model.addAttribute("student", student);
+        model.addAttribute("groups", groups);
+
+        return "persons/student-info";
+    }
+
+
 }
