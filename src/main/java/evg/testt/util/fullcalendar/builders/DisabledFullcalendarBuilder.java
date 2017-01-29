@@ -9,7 +9,7 @@ public interface DisabledFullcalendarBuilder extends FullCalendarBuilder {
 
     DisabledFullcalendarBuilder setRendering(String rendering);
 
-    IDisabledFullcalendarEvent getDisabledFullcalendarEvent();
+    DisabledFullcalendarBuilder generateDisabledFullcalendarEvent();
 
     DisabledFullcalendarBuilder setGroupEvent(GroupEvent groupEvent);
 

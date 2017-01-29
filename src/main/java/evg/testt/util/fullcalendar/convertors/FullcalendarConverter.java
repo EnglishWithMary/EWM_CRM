@@ -11,20 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FullcalendarConverter {
+
     private static FullcalendarConverter instance;
 
     private static FullcalendarBuilderFactoryImpl factory;
 
     private FullcalendarConverter() {
-    }
-
-    private FullcalendarConverter(FullcalendarBuilderFactoryImpl fullcalendarBuilderFactory) {
-        factory = fullcalendarBuilderFactory;
+        factory = FullcalendarBuilderFactoryImpl.getInstance();
     }
 
     public static FullcalendarConverter getInstance() {
         if (instance == null) {
-            instance = new FullcalendarConverter(new FullcalendarBuilderFactoryImpl());
+            instance = new FullcalendarConverter();
         }
         return instance;
     }
@@ -32,7 +30,7 @@ public class FullcalendarConverter {
     public List<ISimpleFullcalendarEvent> convertToSimpleFullcalendarEvents(List<GroupEvent> events) {
         List<ISimpleFullcalendarEvent> list = new ArrayList<>();
         for (GroupEvent item : events) {
-            list.add(factory.getSimpleFullcalendarBuider().setGroupEvent(item).build());
+            list.add(factory.getSimpleFullcalendarBuider().setGroupEvent(item).generateFromGroupEvent().build());
         }
         return list;
     }
@@ -40,7 +38,7 @@ public class FullcalendarConverter {
     public List<IDisabledFullcalendarEvent> convertToDisabledFullcalendarEvents(List<GroupEvent> events) {
         List<IDisabledFullcalendarEvent> list = new ArrayList<>();
         for (GroupEvent item : events) {
-            list.add(factory.getDisabledFullcalendarBuilder().setGroupEvent(item).build());
+            list.add(factory.getDisabledFullcalendarBuilder().setGroupEvent(item).generateDisabledFullcalendarEvent().build());
         }
         return list;
     }
@@ -53,7 +51,9 @@ public class FullcalendarConverter {
         for (GroupEvent item : events) {
             list.add(factory.getSimpleFullcalendarBuiderWithUrl()
                     .setGroupEvent(item)
-                    .setWrapper(wrapper).build());
+                    .setWrapper(wrapper)
+                    .generateSimpleFullcalendarEventWithUrl()
+                    .build());
         }
         return list;
     }

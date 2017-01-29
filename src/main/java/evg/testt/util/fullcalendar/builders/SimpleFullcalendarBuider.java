@@ -9,7 +9,7 @@ public interface SimpleFullcalendarBuider extends FullCalendarBuilder {
 
     SimpleFullcalendarBuider setTitle(String title);
 
-    ISimpleFullcalendarEvent getSimpleFullcalendarEvent();
+    SimpleFullcalendarBuider generateFromGroupEvent();
 
     SimpleFullcalendarBuider setGroupEvent(GroupEvent groupEvent);
 

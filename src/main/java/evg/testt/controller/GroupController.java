@@ -166,7 +166,7 @@ public class GroupController {
         events.addAll(
                 FullcalendarConverter.getInstance()
                         .convertToDisabledFullcalendarEvents(
-                                groupEventsService.getAllByGroupIdAndRoomId(
+                                groupEventsService.getAllByNotGroupIdAndRoomId(
                                         id,
                                         roomService.getById(roomId)
 
@@ -176,7 +176,7 @@ public class GroupController {
         events.addAll(
                 FullcalendarConverter.getInstance()
                         .convertToSimpleFullcalendarEvents(
-                                groupEventsService.getAllByNotGroupIdAndRoomId(
+                                groupEventsService.getAllByGroupIdAndRoomId(
                                         id,
                                         roomService.getById(roomId)
 
@@ -279,7 +279,7 @@ public class GroupController {
                         .convertToSimpleFullcalendarEventsWithUrl(
                                 groupEventsService.getAllByDate(start, end),
                                 UrlWrapperHelper.getWrapper()
-                                        .before("/groups")
+                                        .before("/groups/")
                                         .after("/info")
                         );
 //                FullcalendarHeleper

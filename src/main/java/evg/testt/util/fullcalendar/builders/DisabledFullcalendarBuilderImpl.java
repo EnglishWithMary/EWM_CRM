@@ -14,25 +14,30 @@ public class DisabledFullcalendarBuilderImpl extends FullcalendarBuilderImpl imp
         disabledFullcalendarEvent = new DisabledFullcalendarEvent();
     }
 
-    public IDisabledFullcalendarEvent getDisabledFullcalendarEvent() {
-        return this.disabledFullcalendarEvent;
+    public DisabledFullcalendarBuilder generateDisabledFullcalendarEvent() {
+        disabledFullcalendarEvent.setColor("red");
+        disabledFullcalendarEvent.setStart(groupEvent.getStartDate());
+        disabledFullcalendarEvent.setEnd(groupEvent.getEndDate());
+        disabledFullcalendarEvent.setRendering("background");
+        disabledFullcalendarEvent.setOverlap(false);
+        return this;
     }
 
     @Override
     public IDisabledFullcalendarEvent build() {
-        return
-                (
-                        (DisabledFullcalendarBuilder)
-                                (
-                                        new DisabledFullcalendarBuilderImpl()
-                                                .setColor("red")
-                                                .setStart(groupEvent.getStartDate())
-                                                .setEnd(groupEvent.getEndDate())
-                                )
-                )
-                        .setOverLap(false)
-                        .setRendering("background")
-                        .getDisabledFullcalendarEvent();
+        return disabledFullcalendarEvent;
+//                (
+//                        (DisabledFullcalendarBuilder)
+//                                (
+//                                        new DisabledFullcalendarBuilderImpl()
+//                                                .setColor("red")
+//                                                .setStart(groupEvent.getStartDate())
+//                                                .setEnd(groupEvent.getEndDate())
+//                                )
+//                )
+//                        .setOverLap(false)
+//                        .setRendering("background")
+//                        .getDisabledFullcalendarEvent();
     }
 
     @Override

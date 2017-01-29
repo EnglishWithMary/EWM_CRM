@@ -8,14 +8,22 @@ import evg.testt.util.fullcalendar.events.SimpleFullcalendarEventWithUrl;
 public class SimpleFullcalendarWithUrlBuilderImpl extends SimpleFullcalendarBuilderImpl implements SimpleFullcalendarBuiderWithUrl {
     protected ISimpleFullcalendarEventWithUrl simpleFullcalendarEventWithUrl;
 
+    protected GroupEvent groupEvent;
+
     protected UrlWrapper wrapper;
 
     public SimpleFullcalendarWithUrlBuilderImpl() {
         this.simpleFullcalendarEventWithUrl = new SimpleFullcalendarEventWithUrl();
     }
 
-    public ISimpleFullcalendarEventWithUrl getSimpleFullcalendarEventWithUrl() {
-        return this.simpleFullcalendarEventWithUrl;
+    public SimpleFullcalendarBuiderWithUrl generateSimpleFullcalendarEventWithUrl() {
+        simpleFullcalendarEventWithUrl.setUrl(wrapper.content(groupEvent.getGroupId().toString()).wrap());
+        simpleFullcalendarEventWithUrl.setId(groupEvent.getId());
+        simpleFullcalendarEventWithUrl.setTitle(groupEvent.getTitle());
+        simpleFullcalendarEventWithUrl.setStart(groupEvent.getStartDate());
+        simpleFullcalendarEventWithUrl.setEnd(groupEvent.getEndDate());
+        simpleFullcalendarEventWithUrl.setColor(groupEvent.getRoom().getColor());
+        return this;
     }
 
     public SimpleFullcalendarBuiderWithUrl setWrapper(UrlWrapper wrapper) {
@@ -25,18 +33,18 @@ public class SimpleFullcalendarWithUrlBuilderImpl extends SimpleFullcalendarBuil
 
     @Override
     public ISimpleFullcalendarEventWithUrl build() {
-        return
-                ((SimpleFullcalendarBuiderWithUrl) (
-                        ((SimpleFullcalendarBuider)
-                                (new SimpleFullcalendarWithUrlBuilderImpl()
-                                        .setColor(groupEvent.getRoom().getColor())
-                                        .setStart(groupEvent.getStartDate())
-                                        .setEnd(groupEvent.getEndDate())
-                                ))
-                                .setId(groupEvent.getId())
-                                .setTitle(groupEvent.getTitle())
-                )).setUrl(wrapper.content(groupEvent.getGroupId().toString()).wrap())
-                .getSimpleFullcalendarEventWithUrl();
+        return simpleFullcalendarEventWithUrl;
+//                ((SimpleFullcalendarBuiderWithUrl) (
+//                        ((SimpleFullcalendarBuider)
+//                                (new SimpleFullcalendarWithUrlBuilderImpl()
+//                                        .setColor(groupEvent.getRoom().getColor())
+//                                        .setStart(groupEvent.getStartDate())
+//                                        .setEnd(groupEvent.getEndDate())
+//                                ))
+//                                .setId(groupEvent.getId())
+//                                .setTitle(groupEvent.getTitle())
+//                )).setUrl(wrapper.content(groupEvent.getGroupId().toString()).wrap())
+//                .getSimpleFullcalendarEventWithUrl();
     }
 
     @Override

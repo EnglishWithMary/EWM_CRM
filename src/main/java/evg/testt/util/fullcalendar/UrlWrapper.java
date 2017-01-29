@@ -26,8 +26,8 @@ class UrlWrapper {
         return this;
     }
 
-    public UrlWrapper content(String after) {
-        this.setAfter(after);
+    public UrlWrapper content(String content) {
+        this.setContent(content);
         return this;
     }
 

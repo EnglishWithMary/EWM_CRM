@@ -11,7 +11,7 @@ public interface SimpleFullcalendarBuiderWithUrl extends SimpleFullcalendarBuide
 
     SimpleFullcalendarBuiderWithUrl setUrl(String url);
 
-    ISimpleFullcalendarEventWithUrl getSimpleFullcalendarEventWithUrl();
+    SimpleFullcalendarBuiderWithUrl generateSimpleFullcalendarEventWithUrl();
 
     SimpleFullcalendarBuiderWithUrl setGroupEvent(GroupEvent groupEvent);
 
