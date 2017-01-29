@@ -57,8 +57,8 @@
                                         <%--<button class="btn btn-default" href="#" role="button">--%>
                                             <%--Edit--%>
                                         <%--</button>--%>
-                                        <form method="post" action="/students/{studentId}/add-testing-result" class="btn-xs">
-                                            <input type="hidden" name="levelId" value="${level.student.id}">
+                                        <form method="post" action="/students/${level.student.id}/add-testing-result" class="btn-xs">
+                                            <input type="hidden" name="levelId" value="${level.id}">
                                             <button type="submit" class="btn btn-default btn-xs">
                                                 Edit
                                             </button>
