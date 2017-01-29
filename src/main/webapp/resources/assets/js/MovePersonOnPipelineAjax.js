@@ -76,6 +76,32 @@ $(document).ready(function () {
         }
     });
 
+
+    // Trash Basket
+    $(".trash").droppable({
+        accept: ".pipe .person",
+        hoverClass: "pipehover",
+
+        drop: function( event, ui ) {
+
+            var $draggable_item = ui.draggable;
+            var personId = $($draggable_item).find("#personId").val(); // Draggable person
+            // alert();
+
+            $.ajax({
+                url: '/trash/trashed',
+                dataType: 'json',
+                type: 'POST',
+                data: personId,
+                contentType: 'application/json',
+
+                success: function (data) {
+                    $draggable_item.remove();
+                }
+            });
+        }
+    });
+
     function movePerson($item, $target) {
         $item.appendTo($target).fadeIn();
     }

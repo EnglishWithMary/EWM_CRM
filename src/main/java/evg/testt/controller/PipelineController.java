@@ -2,6 +2,7 @@ package evg.testt.controller;
 
 import evg.testt.ajax.utils.AjaxFormCall;
 import evg.testt.model.Card;
+import evg.testt.model.Person;
 import evg.testt.model.Pipe;
 import evg.testt.model.PipeType;
 //import evg.testt.oval.SpringOvalValidator;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class PipelineController {
@@ -114,7 +117,17 @@ public class PipelineController {
 
     private void inserAttributes(Model model, Pipe pipe)
             throws SQLException {
-        model.addAttribute("cards", cardService.getCards(pipe));
+
+        List<Card> cards =  cardService.getCards(pipe);
+        for (Card card : cards) {
+            List<Person> sortedPersons = card.getPersons()
+                    .stream()
+                    .filter(person -> {if(person.getState().getState().equals("ACTIVE")) return true; else return false;})
+                    .sorted((o1, o2) -> {if(o1.getPosition() > o2.getPosition()) return 1; else return -1;})
+                    .collect(Collectors.toList());
+            card.setPersons(sortedPersons);
+        }
+        model.addAttribute("cards", cards);
         model.addAttribute("pipeType", pipeTypeService.getPipe(pipe));
     }
 }

@@ -44,6 +44,18 @@ public class TrashController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/trash/trashed", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> trashed(@RequestBody Integer person_id) throws SQLException {
+        if(person_id != null) {
+            Person person = personService.getById(person_id);
+            person.setState(new State(StateType.STATE_TRASHED));
+            personService.update(person);
+            return ResponseEntity.ok("{}");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/trash/delete", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> delete(@RequestBody Integer person_id) throws SQLException {
         if(person_id != null) {

@@ -164,6 +164,9 @@
                 </form>
             </div>
         </c:if>
+        <div class="trash">
+            <a id="trash" href="#"><img width="100%" src="${pageContext.request.contextPath}/resources/img/trash.png"></a>
+        </div>
     </div>
 </div>
 <style media="screen" type="text/css">

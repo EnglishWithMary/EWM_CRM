@@ -13,6 +13,6 @@ public @Data class Card extends BaseModel{
     @OneToOne
     private PipeType type;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private List<Person> persons;
 }
