@@ -2,7 +2,6 @@ package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
-//import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+//import evg.testt.oval.SpringOvalValidator;
 
 @Controller
 @PropertySource(value = "classpath:standard.properties")
@@ -39,6 +40,8 @@ public class StudentController {
     private GroupService groupService;
     @Autowired
     private StudentLevelHistoryService studentLevelHistoryService;
+    @Autowired
+    private NoteService noteService;
 
 
     @Value("${pagination.page.size}")
@@ -283,15 +286,23 @@ public class StudentController {
 
 
 
-//    @RequestMapping(value = "/students/notes", method = RequestMethod.POST)
-//    public String studentNote(Model model,
-//                                @RequestParam Integer id,
-//                                @RequestParam String note) throws SQLException {
-//        Student student = studentService.getById(id);
-//        studentService.update(student);
-//        model.addAttribute("note", note);
-//        return "persons/student-info";
-//    }
+    @RequestMapping(value = "/saveNote", method = RequestMethod.POST)
+    public String addNote(Model model,
+                          @RequestParam Integer studentId,
+                          @RequestParam String studentNote) throws SQLException {
+        Student student = studentService.getById(studentId);
+        Note note = new Note();
+        note.setNote(studentNote);
+//        note.setStudent(student);
+//        noteService.insert(note);
+//        Hibernate.initialize(student.getNotes().add(note));
+        student.getNotes().add(note);
+        studentService.update(student);
+        model.addAttribute("student", student);
+        return "persons/student-info";
+
+
+    }
 
 
 

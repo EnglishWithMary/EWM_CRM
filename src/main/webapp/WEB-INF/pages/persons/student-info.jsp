@@ -232,26 +232,26 @@
                                             <thead>
                                             <tr>
                                                 <th>
-                                                    <form method="post" id="note" action="students/notes">
-                                                        <input type="text" name="note" value=""/>
-                                                        <input type="hidden" name="id" value="${student.id}"/>
+                                                    <form method="post" id="note" action="/saveNote">
+                                                        <input type="text" name="studentNote"/>
+                                                        <input type="hidden" name="studentId" value="${student.id}"/>
                                                         <input type="submit" value="Add note" class="btn btn-success"/>
                                                     </form>
-
                                                 </th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>1</td>
-                                                <td>Payment1</td>
-                                                <td>Oct-16-2017</td>
-                                                <td>edit</td>
-                                                <td>delete</td>
+                                                <td>
+
+
+                                                <c:forEach var="note" items="${student.notes}">
+                                                    <p>${note.note} </p>
+                                                </c:forEach>
+                                                </tbody>
                                             </tr>
 
-                                            </tbody>
-                                        </table>
+                                          </table>
                                     </div>
                                 </div>
                             </div>

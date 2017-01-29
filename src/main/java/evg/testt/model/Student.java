@@ -1,12 +1,11 @@
 package evg.testt.model;
 
 import lombok.Data;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Transactional
+//@Transactional
 @Entity(name = "students")
 public @Data class Student extends RegisteredUser implements BelongsToPerson{
 
@@ -27,6 +26,7 @@ public @Data class Student extends RegisteredUser implements BelongsToPerson{
         return "".toString();
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "students", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    , mappedBy = "student")
     private List<Note> notes;
 }
