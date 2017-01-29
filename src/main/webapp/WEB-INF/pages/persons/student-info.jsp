@@ -240,16 +240,17 @@
                                                 </th>
                                             </tr>
                                             </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>
+                                            <%--<tbody>--%>
+                                            <%--<tr>--%>
 
 
-                                                <c:forEach var="note" items="${student.notes}">
+                                                <c:forEach var="note" items="${student.notes}" end="4">
                                                     <p>${note.note} </p>
                                                 </c:forEach>
-                                                </tbody>
-                                            </tr>
+
+
+                                                <%--</tbody>--%>
+                                            <%--</tr>--%>
 
                                           </table>
                                     </div>
