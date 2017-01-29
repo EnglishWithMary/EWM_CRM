@@ -4,7 +4,6 @@ import evg.testt.ajax.utils.AjaxFormCall;
 import evg.testt.model.Card;
 import evg.testt.model.Pipe;
 import evg.testt.model.PipeType;
-//import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.sql.SQLException;
 
 @Controller

@@ -1,5 +1,6 @@
 package evg.testt.service;
 
+import evg.testt.dto.GroupDTO;
 import evg.testt.model.Group;
 import evg.testt.model.Student;
 import evg.testt.model.Teacher;
@@ -10,13 +11,10 @@ import java.util.List;
 
 public interface GroupService extends Service<Group> {
 
-    public List<Group> getByTeacher(Teacher teacher) throws SQLException;
+    List<Group> getByTeacher(Teacher teacher) throws SQLException;
 
-    public  List<Group> getByGroup(Group group) throws SQLException;
+    List<Group> getByGroup(Group group) throws SQLException;
 
-
-
-
-
+    void updateGroup(Group group, GroupDTO groupDTO) throws SQLException;
 }
 

@@ -3,16 +3,10 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <div class="row">
-    <div class="col-sm-12">
-        <h1 class="page-header">${room.name}</h1>
-    </div>
-</div>
-
-<div class="row">
     <div class="col-sm-8">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong>Calendar for room</strong>
+                <strong>Calendar for room ${room.name}</strong>
             </div>
             <div class="panel-body">
                 <div id="calendar"></div>

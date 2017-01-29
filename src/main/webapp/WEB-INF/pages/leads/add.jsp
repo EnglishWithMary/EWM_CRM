@@ -9,16 +9,15 @@
 <%--</script>--%>
 
 <div class="row">
-    <div class="col-sm-12">
-        <h2 class="">Add Lead</h2>
-    </div>
-</div>
-
-<div class="row">
     <div class="col-sm-5 col-sm-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong>Add new Lead</strong>
+                <c:if test="${lead.personId==null}">
+                    <strong>Add new Lead</strong>
+                </c:if>
+                <c:if test="${lead.personId!=null}">
+                    <strong>Update Lead</strong>
+                </c:if>
             </div>
             <div class="panel-body">
 
@@ -65,16 +64,6 @@
                             <div class="col-sm-6">
                                 <sf:input path="email" type="email" cssClass="form-control"/>
                                 <sf:errors path="email" cssClass="has-error"/>
-                            </div>
-                        </div>
-                        <div class="row padding-bot">
-                            <div class="col-sm-1"></div>
-                            <div class="col-sm-4">
-                                <sf:label path="login">Login:</sf:label>
-                            </div>
-                            <div class="col-sm-6">
-                                <sf:input path="login" cssClass="form-control"/>
-                                <sf:errors path="login" cssClass="has-error"/>
                             </div>
                         </div>
                         <div class="row padding-bot">

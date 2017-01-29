@@ -1,19 +1,15 @@
 package evg.testt.controller;
 
-import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.EventDateTime;
 import com.google.gson.Gson;
-import evg.testt.google.utils.calendar.DateGoogleConverter;
 import evg.testt.google.utils.calendar.RoomsEventsHelper;
-import evg.testt.model.FullcalendarEvent;
+import evg.testt.util.fullcalendar.convertors.FullcalendarConverter;
+import evg.testt.util.fullcalendar.events.FullcalendarEvent;
 import evg.testt.model.Room;
 import evg.testt.model.RoomEvent;
 import evg.testt.service.GroupEventsService;
-import evg.testt.service.GroupService;
 import evg.testt.service.RoomService;
-import evg.testt.util.fullcalendar.FullcalendarHeleper;
-import evg.testt.util.helpers.RoomUpdateHelper;
+import evg.testt.util.fullcalendar.events.ISimpleFullcalendarEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,11 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -105,12 +98,14 @@ public class RoomsController {
     @RequestMapping(value = "/rooms/{ID}/info/events", method = RequestMethod.GET)
     public String getEventsByRoomId(@PathVariable(value = "ID") Integer id)
             throws SQLException, IOException {
-        List<FullcalendarEvent> events = FullcalendarHeleper
-                .convertGroupEventsToFullcalendarEventsWithUrls(
+        List<ISimpleFullcalendarEvent> events =
+                FullcalendarConverter.getInstance()
+                .convertToSimpleFullcalendarEvents(
                         groupEventsService.getAllByRoom(
                                 roomService.getById(id)
                         )
                 );
+
         return new Gson().toJson(events);
     }
 

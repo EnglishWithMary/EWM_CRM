@@ -1,7 +1,11 @@
 package evg.testt.service.impl;
 
+import evg.testt.dto.PersonDTO;
+import evg.testt.model.Lead;
+import evg.testt.model.Person;
 import evg.testt.model.User;
 import evg.testt.dao.UserRepository;
+import evg.testt.service.PersonService;
 import evg.testt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,8 +18,11 @@ public class UserServiceImpl extends BaseService<User, UserRepository> implement
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    PersonService personService;
 
-//    public
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     @Override
     public void insert(User user){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -27,4 +34,19 @@ public class UserServiceImpl extends BaseService<User, UserRepository> implement
     public User findByUserLogin(String login){
         return userRepository.findByLogin(login);
     }
+
+    public User getUpdatedUser(User user, PersonDTO personDTO){
+        if(personDTO!=null) {
+            if (user.getLogin() == null) {
+                user.setLogin(personDTO.getLogin());
+            }
+
+            if (personDTO.getPassword() != null) {
+                user.setPassword(passwordEncoder.encode(personDTO.getPassword()));
+            }
+        }
+
+        return user;
+    }
+
 }

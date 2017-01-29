@@ -2,5 +2,5 @@ package evg.testt.service;
 
 import evg.testt.model.Admin;
 
-public interface AdminService extends RegisteredUserService<Admin> {
+public interface AdminService extends StaffService<Admin> {
 }
