@@ -269,7 +269,7 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/studentUpdateGroup", method = RequestMethod.POST)
-    public String studentUpdateGroup(Model model,
+    public String studentUpdateGroup(Model model ,
                                      @RequestParam Integer id,
                                      @RequestParam(required = false) Integer group_id) throws SQLException {
 
