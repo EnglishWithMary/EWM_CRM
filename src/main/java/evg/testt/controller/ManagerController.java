@@ -95,7 +95,7 @@ public class ManagerController {
         if (!bindingResult.hasErrors()) {
 
             Manager manager = new Manager();
-            manager = personDTOService.updateRegisteredUser(manager, personDTO);
+            manager = managerService.updateRegisteredUser(manager, personDTO);
             managerService.insert(manager);
 
             return "redirect:" + request.getSession().getAttribute("managerAdd").toString();
@@ -119,8 +119,8 @@ public class ManagerController {
     }
 
     @RequestMapping(value = "/managers/info", method = RequestMethod.GET)
-    public String managerInfo(Model model, @RequestParam int manager_id) throws SQLException {
-        Manager manager = managerService.getById(manager_id);
+    public String managerInfo(Model model, @RequestParam int managerId) throws SQLException {
+        Manager manager = managerService.getById(managerId);
         model.addAttribute("manager", manager);
         return "persons/manager-info";
     }

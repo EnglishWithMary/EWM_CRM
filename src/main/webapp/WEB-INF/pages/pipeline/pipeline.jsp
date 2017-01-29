@@ -61,7 +61,12 @@
 
                             <div class="row">
                                 <div class="person-edit-tool-bar col-md-3">
-                                    <form method="post" action="/leads/add" class="editPersonFrom btn-xs">
+                                    <c:if test="${pipeType.id==1}">
+                                        <form method="post" action="/leads/add" class="editPersonFrom btn-xs">
+                                    </c:if>
+                                    <c:if test="${pipeType.id==2}">
+                                        <form method="post" action="/students/add" class="editPersonFrom btn-xs">
+                                    </c:if>
                                         <input type="hidden" name="personId" value="${person.id}">
                                         <button type="submit" class="pipe-button btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-pencil"></span>

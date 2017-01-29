@@ -112,29 +112,15 @@ public class LeadController {
             return "leads/add";
         }
 
-        if (personId == null) {
-            Card card = cardService.getById(personDTO.getCardId());
-            Lead lead = new Lead();
-            lead = personDTOService.updateLead(lead, personDTO);
-            lead.getPerson().setPosition(card.getPersons().size() + 1);
-            leadService.insert(lead);
-            card.getPersons().add(lead.getPerson());
-            cardService.update(card);
-        } else {
-            Person person = personService.getById(personId);
-            Card cardOld = cardService.getCardByPerson(person);
-            Lead lead = leadService.getByPerson(person);
-            lead = personDTOService.updateLead(lead, personDTO);
-            lead.getPerson().setPosition(cardOld.getPersons().size() + 1);
-            leadService.update(lead);
-            if (!personDTO.getCardId().equals(cardOld.getId())) {
-                cardOld.getPersons().remove(person);
-                cardService.update(cardOld);
-                Card cardNew = cardService.getById(personDTO.getCardId());
-                cardNew.getPersons().add(person);
-                cardService.update(cardNew);
-            }
-        }
+//      Read Existing student or get new Student()
+        Lead lead = leadService.getLeadByPersonId(personId);
+
+        lead = leadService.updateLead(lead, personDTO);
+
+        leadService.update(lead);
+
+        leadService.updatePosition(lead, personDTO);
+
         model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
         model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.LEAD_PIPE));
         return "redirect:" + request.getSession().getAttribute("callback").toString();

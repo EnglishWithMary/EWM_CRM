@@ -68,7 +68,7 @@ public class PersonController {
 
         try {
             Person person = personService.getPersonByUserLogin(login);
-            person = personDTOService.getUpdatedPerson(person, personDTO);
+            person = personService.getUpdatedPerson(person, personDTO);
             personService.update(person);
 
             if (!multipartFile.isEmpty()) {
