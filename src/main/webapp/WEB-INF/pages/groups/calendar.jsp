@@ -29,7 +29,7 @@
                     <select id="change-room-select" class="form-control">
                         <option value="">Click to change room</option>
                         <c:forEach var="roomItem" items="${rooms}">
-                            <option value="/group/${group.id}/room/${roomItem.id}/calendar">${roomItem.name}</option>
+                            <option value="/groups/${group.id}/room/${roomItem.id}/calendar">${roomItem.name}</option>
                         </c:forEach>
                     </select>
                 </p>

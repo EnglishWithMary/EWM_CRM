@@ -10,11 +10,13 @@ import org.springframework.stereotype.Repository;
 import java.sql.SQLException;
 
 @Repository
-public class PipeTypeRepositoryJpaImpl extends BaseRepositoryJpaImpl<PipeType> implements PipeTypeRepository {
+public class PipeTypeRepositoryJpaImpl
+        extends BaseRepositoryJpaImpl<PipeType>
+        implements PipeTypeRepository {
+
     @Override
     public PipeType findPipe(Pipe pipe) throws SQLException {
-        PipeType pt = new PipeType();
-        pt = findOne(pipe.getPipeId());
+        PipeType pt = this.findOne(pipe.getPipeId());
         return pt;
     }
 }

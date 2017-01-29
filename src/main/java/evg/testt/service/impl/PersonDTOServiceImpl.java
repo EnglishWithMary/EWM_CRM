@@ -2,7 +2,10 @@ package evg.testt.service.impl;
 
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
+import evg.testt.service.CardService;
 import evg.testt.service.PersonDTOService;
+import evg.testt.service.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.sql.SQLException;
@@ -12,6 +15,11 @@ import java.util.Date;
 
 @Service
 public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTOService {
+
+    @Autowired
+    PersonService personService;
+    @Autowired
+    CardService cardService;
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -41,12 +49,35 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
             person.setMiddleName(personDTO.getMiddleName());
             person.setComments(personDTO.getComments());
             person.setOrganization(personDTO.getOrganization());
-            person.setBirthdayDate(getDateFromString(personDTO.getBirthdayString()));
+            person.setBirthdayDate(personDTO.getBirthdayDate());
+//            person.setBirthdayDate(getDateFromString(personDTO.getBirthdayString()));
             person.setEmail(new Email(personDTO.getEmail()));
             person.setState(new State());
         }
 
         return person;
+    }
+
+    public PersonDTO getUpdatedPersonDTO (PersonDTO personDTO, Integer personId, Integer cardId) throws SQLException{
+
+        Person person = Person.NULL;
+
+        if (cardId == null) {
+            cardId = 1;//By Default cardId for Lead
+        }
+
+        if (personId != null) {
+            person = personService.getById(personId);
+        }
+
+        personDTO.setFirstName(person.getFirstName());
+        personDTO.setMiddleName(person.getMiddleName());
+        personDTO.setLastName(person.getLastName());
+        personDTO.setAvatarURL(person.getAvatarURL());
+        personDTO.setEmail(person.getEmail().getEmail());
+        personDTO.setCardId(cardId);
+
+        return personDTO;
     }
 
     public User getUpdatedUser (User user, PersonDTO personDTO){

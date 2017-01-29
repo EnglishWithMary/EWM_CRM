@@ -44,10 +44,12 @@ public class GroupController {
     public String showGroups(@RequestParam(required = false) Integer page,
                              @RequestParam(required = false) Boolean flagSorted,
                              Model model) throws SQLException {
+        int totalGroups = 0, pages = 0, currentPage = 1;
+
         List<Teacher> teachers = teacherService.getAll();
         List<Student> students = studentService.getAll();
+
         if (flagSorted == null) flagSorted = false;
-        int totalGroups = 0, pages = 0, currentPage = 1;
         if (page != null) {
             if (page > 0) {
                 currentPage = page;
@@ -55,7 +57,7 @@ public class GroupController {
         }
         totalGroups = groupService.count();
         List<Group> groups = Collections.EMPTY_LIST;
-        if (flagSorted == false) {
+        if (!flagSorted) {
             groups = groupService.getByPage(currentPage);
         } else {
             groups = groupService.getByPageSorted(currentPage);
@@ -63,7 +65,7 @@ public class GroupController {
         pages = ((totalGroups / pageSize) + 1);
         if (totalGroups % pageSize == 0)
             pages--;
-        groups = groupService.getAll();
+//        groups = groupService.getAll();
         model.addAttribute("groups", groups);
         model.addAttribute("pages", pages);
         model.addAttribute("flagSorted", flagSorted);
@@ -74,7 +76,7 @@ public class GroupController {
         return "groups/all";
     }
 
-    @RequestMapping(value = "/groupAdd")
+    @RequestMapping(value = "/groups/add")
     public String addGroup(Model model) throws SQLException {
         List<Teacher> teachers = teacherService.getAll();
         model.addAttribute("teachers", teachers);
@@ -84,7 +86,7 @@ public class GroupController {
         return "groups/add";
     }
 
-    @RequestMapping(value = "/groupSave")
+    @RequestMapping(value = "/groups/save")
     public String saveGroup(@ModelAttribute("group") @Valid GroupDTO groupDTO,
                             BindingResult bindingResult) throws SQLException {
         if (bindingResult.hasErrors()) {
@@ -101,14 +103,14 @@ public class GroupController {
         return "redirect:/groups";
     }
 
-    @RequestMapping(value = "/groupDelete")
+    @RequestMapping(value = "/groups/delete")
     public String groupDelete(@RequestParam Integer id) throws SQLException {
         Group group = groupService.getById(id);
         groupService.delete(group);
         return "groups/all";
     }
 
-    @RequestMapping(value = "/groupFilter", method = RequestMethod.POST)
+    @RequestMapping(value = "/groups/filter", method = RequestMethod.POST)
     public String filterGroups(Model model, @RequestParam(required = false) Integer teacherId)
             throws SQLException {
         GroupDTO groupFilter = new GroupDTO();
@@ -127,7 +129,7 @@ public class GroupController {
         return "groups/all";
     }
 
-    @RequestMapping(value = "/group/{ID}/info")
+    @RequestMapping(value = "/groups/{ID}/info")
     public String groupInfo(Model model, @PathVariable(value = "ID") Integer groupId)
             throws SQLException {
         if (!groupService.isExists(groupId)) {
@@ -138,7 +140,7 @@ public class GroupController {
         return "persons/group-info";
     }
 
-    @RequestMapping(value = "/group/{ID}/calendar")
+    @RequestMapping(value = "/groups/{ID}/calendar")
     public String showGroupCalendar(Model model, @PathVariable(value = "ID") Integer groupId)
             throws SQLException {
         if (!groupService.isExists(groupId)) {
@@ -150,7 +152,7 @@ public class GroupController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/group/{ID}/room/{roomID}/calendar/events", method = RequestMethod.GET)
+    @RequestMapping(value = "/groups/{ID}/room/{roomID}/calendar/events", method = RequestMethod.GET)
     public String getEventsByRoomId(@PathVariable(value = "ID") Integer id,
                                     @PathVariable(value = "roomID") Integer roomId)
             throws SQLException {
@@ -159,7 +161,7 @@ public class GroupController {
         return new Gson().toJson(groupEvents);
     }
 
-    @RequestMapping(value = "/group/{ID}/room/choose-room", method = RequestMethod.GET)
+    @RequestMapping(value = "/groups/{ID}/room/choose-room", method = RequestMethod.GET)
     public String chooseRomeForEvent(Model model, @PathVariable(value = "ID") Integer id)
             throws SQLException {
         model.addAttribute("rooms", roomService.getAll())
@@ -168,7 +170,7 @@ public class GroupController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/group/{ID}/info/calendar/events", method = RequestMethod.GET)
+    @RequestMapping(value = "/groups/{ID}/info/calendar/events", method = RequestMethod.GET)
     public String calendarForGroup(Model model, @PathVariable(value = "ID") Integer id)
             throws SQLException {
         List<FullcalendarEvent> groupEvents = FullcalendarHeleper.convertGroupEventsToFullcalendarEvents(
@@ -176,7 +178,7 @@ public class GroupController {
         return new Gson().toJson(groupEvents);
     }
 
-    @RequestMapping(value = "/group/{ID}/room/{roomID}/calendar", method = RequestMethod.GET)
+    @RequestMapping(value = "/groups/{ID}/room/{roomID}/calendar", method = RequestMethod.GET)
     public String calendarForGroupWithRoom(Model model, @PathVariable(value = "ID") Integer id,
                                            @PathVariable(value = "roomID") Integer roomId)
             throws SQLException {
@@ -187,7 +189,7 @@ public class GroupController {
     }
 
 
-    @RequestMapping(value = "/group/{ID}/add-event", method = RequestMethod.GET)
+    @RequestMapping(value = "/groups/{ID}/add-event", method = RequestMethod.GET)
     public String showAddEvent(Model model, @PathVariable(value = "ID") Integer id)
             throws SQLException {
         model.addAttribute("GroupEvent", new GroupEvent())
@@ -196,7 +198,7 @@ public class GroupController {
         return "group/add/event";
     }
 
-    @RequestMapping(value = "/group/{ID}/add-event", method = RequestMethod.POST)
+    @RequestMapping(value = "/groups/{ID}/add-event", method = RequestMethod.POST)
     public String saveEvent(Model model, @ModelAttribute("RoomEvent") @Valid GroupEvent groupEvent,
                             BindingResult result, @PathVariable(value = "ID") Integer id)
             throws SQLException {
@@ -206,11 +208,11 @@ public class GroupController {
             return "group/add/event";
         }
         groupEventsService.insert(groupEvent);
-        return "redirect:/group/" + id.toString() + "/calendar";
+        return "redirect:/groups/" + id.toString() + "/calendar";
     }
 
     @ResponseBody
-    @RequestMapping(value = "/group/{group_id}/room/{room_id}/calendar/add-event",
+    @RequestMapping(value = "/groups/{group_id}/room/{room_id}/calendar/add-event",
             method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public String saveEventAjaxMethod(@RequestBody FullcalendarEvent fullcalendarEvent,
                                       @PathVariable(value = "group_id") Integer groupId,
@@ -229,7 +231,7 @@ public class GroupController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/group/{group_id}/room/{room_id}/calendar/delete-event", method = RequestMethod.POST,
+    @RequestMapping(value = "/groups/{group_id}/room/{room_id}/calendar/delete-event", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public String deleteEventAjaxMethod(@RequestBody FullcalendarEvent fullcalendarEvent)
             throws SQLException {
@@ -239,7 +241,7 @@ public class GroupController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/groups/this-day-events", method = RequestMethod.GET)
+    @RequestMapping(value = "/home/this-day-events", method = RequestMethod.GET)
     public String getEventsAllDay(@RequestParam(value = "start") Date start,
                                   @RequestParam(value = "end") Date end) throws SQLException {
         List<FullcalendarEvent> groupEvents = FullcalendarHeleper

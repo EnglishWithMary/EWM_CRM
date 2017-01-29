@@ -12,7 +12,7 @@
                 <strong>Add new Manager</strong>
             </div>
             <div class="panel-body">
-                <sf:form method="post" modelAttribute="manager" id="form" action="/managerSave">
+                <sf:form method="post" modelAttribute="manager" id="form" action="/managers/save">
                     <fieldset class="form-group">
 
                         <div class="row padding-bot">

@@ -21,4 +21,9 @@ public @Data class Student extends RegisteredUser implements BelongsToPerson{
 
     @ManyToOne
     private Group group;
+
+    @Override
+    public String toString() {
+        return "".toString();
+    }
 }

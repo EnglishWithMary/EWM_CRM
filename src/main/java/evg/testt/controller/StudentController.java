@@ -2,6 +2,7 @@ package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
+//import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,14 +21,12 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-//import evg.testt.oval.SpringOvalValidator;
-
 @Controller
 @PropertySource(value = "classpath:standard.properties")
 public class StudentController {
 
-    //    @Autowired
-//    private SpringOvalValidator validator;
+    @Autowired
+    private CardService cardService;
     @Autowired
     private StudentService studentService;
     @Autowired
@@ -51,7 +50,9 @@ public class StudentController {
             , @RequestParam(required = false) String studentSortByDate
     ) throws SQLException {
 
-        int totalStudents = 0, pages = 0, currentPage = 1;
+        int totalStudents;
+        int pages;
+        int currentPage = 1;
 
         if (page != null) {
             if (page > 0) currentPage = page;
@@ -79,42 +80,43 @@ public class StudentController {
         return "students/all";
     }
 
-    @RequestMapping(value = "/studentAdd")
-    public String addStudent(Model model) throws SQLException {
-        PersonDTO person = new PersonDTO();
+    @RequestMapping(value = "/students/add")
+    public String addStudent(Model model,
+                             @RequestParam(required = false) Integer cardId,
+                             @RequestParam(required = false) Integer personId) throws SQLException {
+
+        PersonDTO personDTO = personDTOService.getUpdatedPersonDTO(new PersonDTO(), personId, cardId);
 
         List<Teacher> teachers = teacherService.getAll();
-
         List<Group> groups = groupService.getAll();
 
-        model.addAttribute("student", person).addAttribute("teachers", teachers);
+        model.addAttribute("student", personDTO);
+        model.addAttribute("teachers", teachers);
         model.addAttribute("groups", groups);
+        model.addAttribute("cards", cardService.getCards(Pipe.STUDENT_PIPE));
         return "students/add";
     }
 
-    @RequestMapping(value = "/studentSave", method = RequestMethod.POST)
+    @RequestMapping(value = "/students/save", method = RequestMethod.POST)
     public String saveStudent(@ModelAttribute("student") @Valid PersonDTO personDTO,
                               BindingResult bindingResult, Model model,
                               @RequestParam(required = false) Integer teacher_id,
                               @RequestParam(required = false) Integer group_id)
             throws SQLException, ParseException {
-//        validator.validate(personDTO, bindingResult);
 
         User u = userService.findByUserLogin(personDTO.getLogin());
-        Teacher teacher = null;
-        Group group = null;
-        if (u != null)
+        if (u != null) {
             bindingResult.rejectValue("login", "1", "Login already exist.");
-
+        }
         if (!bindingResult.hasErrors()) {
             Student student = new Student();
             student = personDTOService.updateRegisteredUser(student, personDTO);
             if (teacher_id != null && teacher_id > 0) {
-                teacher = teacherService.getById(teacher_id);
+                Teacher teacher = teacherService.getById(teacher_id);
                 student.setTeacher(teacher);
             }
             if (group_id != null && group_id > 0) {
-                group = groupService.getById(group_id);
+                Group group = groupService.getById(group_id);
                 student.setGroup(group);
             }
             studentService.insert(student);
@@ -126,7 +128,7 @@ public class StudentController {
         }
     }
 
-    @RequestMapping(value = "/studentSortByDate", method = RequestMethod.POST)
+    @RequestMapping(value = "/students/SortByDate", method = RequestMethod.POST)
     public String filterStudents(Model model) throws SQLException {
 
         List<Student> students = studentService.getSortedByRegistrationDate();
@@ -138,14 +140,14 @@ public class StudentController {
         return "students/all";
     }
 
-    @RequestMapping(value = "/studentDelete")
+    @RequestMapping(value = "/students/delete")
     public String studentDelete(@RequestParam Integer id) throws SQLException {
         Student student = studentService.getById(id);
         studentService.delete(student);
         return "students/all";
     }
 
-    @RequestMapping(value = "/studentTrash")
+    @RequestMapping(value = "/students/trash")
     public String studentTrash(@RequestParam Integer id) throws SQLException {
         Student student = studentService.getById(id);
         studentService.trash(student);
@@ -153,7 +155,7 @@ public class StudentController {
     }
 
 
-    @RequestMapping(value = "/studentSortByTeacher", method = RequestMethod.POST)
+    @RequestMapping(value = "/students/SortByTeacher", method = RequestMethod.POST)
     public String showSortedByTeacher(@RequestParam(required = false) Integer teacher_id, Model model) throws SQLException {
 
         List<Student> students = Collections.EMPTY_LIST;
@@ -222,21 +224,20 @@ public class StudentController {
         studentLevelHistory.setCheckpointDate(getDateFromString(studentLevelHistory.getTestingDate()));
         studentLevelHistoryService.insert(studentLevelHistory);
         return "redirect:/students";
-
     }
 
 
-
-
-
+    //change the date format
     public Date getDateFromString(String dateFromForm) throws ParseException {
-        if (dateFromForm == "") dateFromForm = "2001-01-01";
+        if (dateFromForm.equals("")){
+            dateFromForm = "2001-01-01";
+        }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = simpleDateFormat.parse(dateFromForm);
         return date;
     }
 
-    @RequestMapping(value = "/studentsSortedByGroup", method = RequestMethod.POST)
+    @RequestMapping(value = "/students/SortedByGroup", method = RequestMethod.POST)
     public String showSortedStudent(Model model, @RequestParam(required = false) List<Integer> groupIdList)
             throws SQLException {
         List<Group> groups = groupService.getAll();
@@ -260,15 +261,19 @@ public class StudentController {
 
     }
 
-    @RequestMapping(value = "/student/info", method = RequestMethod.GET)
+    @RequestMapping(value = "/students/info", method = RequestMethod.GET)
     public String studentInfo(Model model, @RequestParam(value = "student_id") Integer studentId) throws SQLException {
         Student student = studentService.getById(studentId);
+        Card currentCard = cardService.getCardByPerson(student.getPerson());
+        List<Card> personCardList = cardService.getCards(Pipe.STUDENT_PIPE);
+        model.addAttribute("currentCard", currentCard);
+        model.addAttribute("personCardList", personCardList);
         model.addAttribute("student", student);
         model.addAttribute("level", studentLevelHistoryService.getLastByStudent(student));
         return "persons/student-info";
     }
 
-    @RequestMapping(value = "/studentUpdateComments", method = RequestMethod.POST)
+    @RequestMapping(value = "/students/UpdateComments", method = RequestMethod.POST)
     public String studentUpdate(Model model,
                                 @RequestParam Integer id,
                                 @RequestParam String comments) throws SQLException {

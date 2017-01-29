@@ -26,12 +26,13 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-haspopup="true"
                            aria-expanded="false">Admin tools <span class="caret"></span> </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/users">All Users</a></li>
-                            <li><a href="/personnel">All Personnel</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">..in development</a></li>
-                        </ul>
+                        <security:authorize access="hasRole('ROLE_ADMIN')">
+                            <ul class="dropdown-menu">
+                                <li><a href="/personnel">All Personnel</a></li>
+                                <li><a href="/admins">Admins</a></li>
+                                <li><a href="/trash" class="glyphicon glyphicon-trash"> Trash</a></li>
+                            </ul>
+                        </security:authorize>
                     </li>
 
                     <li class="dropdown">
@@ -49,10 +50,6 @@
                             <li><a href="/groups">Groups</a></li>
                             <li><a href="/events">Events</a></li>
 
-                            <security:authorize access="hasRole('ROLE_ADMIN')">
-                                <li role="separator" class="divider"></li>
-                                <li><a href="/admins">Admins</a></li>
-                            </security:authorize>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -67,7 +64,7 @@
                     </li>
                 </ul>
                 <!--Search in All fields-->
-                <form class="navbar-form navbar-left" action="/fullSearch">
+                <form class="navbar-form navbar-left" action="/persons/fullSearch">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search" name="searchText">
                     </div>

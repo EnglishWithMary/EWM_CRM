@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -32,64 +33,48 @@ import java.util.List;
 @PropertySource(value = "classpath:standard.properties")
 public class AdminController {
 
-    @Autowired
-    private AdminService adminService;
+    @Value("${pagination.page.size}")
+    protected int pageSize;
     @Autowired
     PersonDTOService personDTOService;
     @Autowired
+    private AdminService adminService;
+    @Autowired
     private UserService userService;
 
-    @Value("${pagination.page.size}")
-    protected int pageSize;
-
-//    @ModelAttribute
-//    public Admin createAdmin(){
-//        Admin admin = new Admin();
-//        admin.setPerson(new Person());
-//        return admin;
-//    }
-//
-//    @RequestMapping(value = "/admin")
-//    public String adminPage(Model model){
-//        return "admin";
-//    }
-//
-//    @RequestMapping(value = "/admins")
-//    public String admins(Model model) throws SQLException {
-//        List<Admin> admins = Collections.EMPTY_LIST;
-//        admins = adminService.getAll();
-//        model.addAttribute("admins", admins);
-//        return "admins/all";
-//    }
-
-
-
-        @RequestMapping(value = "/admins", method = RequestMethod.GET)
+    @RequestMapping(value = "/admins", method = RequestMethod.GET)
     public String showAdmins(@RequestParam(required = false) Integer page,
-                               @RequestParam(required = false) Boolean flagSorted,
-                               Model model) throws SQLException {
+                             @RequestParam(required = false) Boolean flagSorted,
+                             Model model) throws SQLException {
 
-        if (flagSorted == null) flagSorted = false;
 
-        int totalManagers = 0, pages = 0, currentPage = 1;
+        int totalAdmins;
+        int pages;
+        int currentPage = 1;
 
-        if (page != null)
-            if (page > 0)
-                currentPage = page;
+        if (flagSorted == null) {
+            flagSorted = false;
+        }
 
-        totalManagers = adminService.count();
+        if (page != null && page > 0) {
+            currentPage = page;
+        }
+
+        totalAdmins = adminService.count();
 
         List<Admin> admins = Collections.EMPTY_LIST;
-        if (flagSorted == false) {
+
+        if (!flagSorted) {
             admins = adminService.getByPage(currentPage);
         } else {
             admins = adminService.getByPageSorted(currentPage);
         }
 
-        pages = ((totalManagers / pageSize) + 1);
+        pages = ((totalAdmins / pageSize) + 1);
 
-        if (totalManagers % pageSize == 0)
+        if (totalAdmins % pageSize == 0) {
             pages--;
+        }
 
         model.addAttribute("admins", admins);
         model.addAttribute("pages", pages);
@@ -97,46 +82,47 @@ public class AdminController {
         return "admins/all";
     }
 
-    @RequestMapping(value = "/adminAdd")
-    public String addAdmin(Model model) {
+    @RequestMapping(value = "/admins/add")
+    public String addAdmin(Model model, HttpServletRequest request) {
+        request.getSession().setAttribute("admins/add", request.getHeader("Referer"));
         PersonDTO person = new PersonDTO();
         model.addAttribute("admin", person);
         return "admins/add";
     }
 
-    @RequestMapping(value = "/adminSave", method = RequestMethod.POST)
+    @RequestMapping(value = "/admins/save", method = RequestMethod.POST)
     public String saveAdmin(@ModelAttribute("admin") @Valid PersonDTO personDTO,
-                              BindingResult bindingResult, Model model) throws SQLException, ParseException {
-
+                            BindingResult bindingResult, Model model,
+                            HttpServletRequest request)
+            throws SQLException, ParseException {
 
         User u = userService.findByUserLogin(personDTO.getLogin());
 
-        if (u != null)
+        if (u != null){
             bindingResult.rejectValue("login", "1", "Login already exist.");
+        }
 
         if (!bindingResult.hasErrors()) {
-
             Admin admin = new Admin();
             admin = personDTOService.updateRegisteredUser(admin, personDTO);
             adminService.insert(admin);
-
-            return "redirect:/admins";
+            return "redirect:" + request.getSession().getAttribute("admins/add").toString();
         } else {
             return "admins/add";
         }
     }
 
-    @RequestMapping(value = "/adminDelete")
+    @RequestMapping(value = "/admins/delete")
     public String adminDelete(@RequestParam Integer id) throws SQLException {
-      Admin admin =adminService.getById(id);
+        Admin admin = adminService.getById(id);
         adminService.delete(admin);
         return "redirect:/admins";
     }
 
-    @RequestMapping(value = "/adminTrash")
+    @RequestMapping(value = "/admins/trash")
     public String adminTrash(@RequestParam Integer id) throws SQLException {
         Admin admin = adminService.getById(id);
-       adminService.trash(admin);
+        adminService.trash(admin);
         return "redirect:/admins";
     }
 

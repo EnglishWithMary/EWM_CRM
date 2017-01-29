@@ -17,40 +17,31 @@ import java.util.List;
 @Service
 public class PersonServiceImpl extends BaseService<Person, PersonRepository> implements PersonService {
 
-    @Autowired
-    PersonRepository personRepository;
+//    @Autowired
+//    PersonRepository personRepository;
 
     @Override
     public Person getPersonByUserLogin(String userLogin) throws SQLException {
         Person person = dao.findPersonByUserLogin(userLogin);
 
-        try {
+//        try {
+        if (person.getBirthdayDate() != null) {
             DateFormat birthdayDate = new SimpleDateFormat("yyyy-MM-dd");
             person.setBirthdayString(birthdayDate.format(person.getBirthdayDate()));
         }
-        catch (NullPointerException e){}
-
+//        } catch (NullPointerException e) {}
         return person;
     }
 
     @Override
-    public List<Person>  getSortedByRegistrationDate() throws SQLException{
-        return personRepository.findSortedByRegistrationDate();
+    public List<Person> getSortedByRegistrationDate() throws SQLException {
+//        return personRepository.findSortedByRegistrationDate();
+        return dao.findSortedByRegistrationDate();
     }
 
     @Override
-    public List<Personnel> getPersonsByKeyWord(String keyWords) throws SQLException {
-        StringBuilder searchText = new StringBuilder();
-
-        String[] words = keyWords.split("\\s");
-
-        for (int i = 0; i < words.length; i++) {
-            searchText.append(words[i] + ":*");
-            if (i < words.length - 1)
-                searchText.append("|");
-        }
-
-        return dao.findPersonByKeyWord(searchText.toString());
+    public List<Person> getTrashedPersons() throws SQLException {
+        return dao.findTrashedPersons();
     }
 
     @Override

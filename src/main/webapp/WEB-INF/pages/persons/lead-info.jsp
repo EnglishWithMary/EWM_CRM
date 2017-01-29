@@ -58,7 +58,7 @@
                                     <p><strong>Comment: </strong></p>
 
                                     <p><textarea name="comments" form="comments" cols="30">${lead.person.comments}</textarea>
-                                    <form id=comments method="post" modelAttribute="lead.person" action="/leadUpdateComments">
+                                    <form id=comments method="post" modelAttribute="lead.person" action="/leads/UpdateComments">
                                         <input name="id" type=hidden value="${lead.id}">
                                         <%--<input name="role" type=hidden value="2">--%>
                                         <security:authorize access="hasRole('ROLE_ADMIN')">
@@ -81,7 +81,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="btn-group btn-group-md">
-                                <a href="/leadToStudent?personId=${lead.person.id}" class="btn btn-success" type="button">Enroll as a Student</a>
+                                <a href="/leads/ToStudent?personId=${lead.person.id}" class="btn btn-success" type="button">Enroll as a Student</a>
                                 <a href="" class="btn btn-danger" type="button">Delete Lead</a>
                             </div>
                         </div>
