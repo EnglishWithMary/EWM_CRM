@@ -127,8 +127,8 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/admins/info", method = RequestMethod.GET)
-    public String adminInfo(Model model, @RequestParam int admin_id) throws SQLException {
-        Admin admin = adminService.getById(admin_id);
+    public String adminInfo(Model model, @RequestParam int adminId) throws SQLException {
+        Admin admin = adminService.getById(adminId);
         model.addAttribute("admin", admin);
         return "persons/admin-info";
     }

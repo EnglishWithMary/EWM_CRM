@@ -34,10 +34,10 @@ public class GroupController {
     private TeacherService teacherService;
     @Autowired
     private StudentService studentService;
-
+    @Autowired
+    private LanguageService languageService;
     @Autowired
     private RoomService roomService;
-
     @Autowired
     private GroupEventsService groupEventsService;
 
@@ -83,7 +83,9 @@ public class GroupController {
     @RequestMapping(value = "/groups/add")
     public String addGroup(Model model) throws SQLException {
         List<Teacher> teachers = teacherService.getAll();
+        List<Language> languages = languageService.getAll();
         model.addAttribute("teachers", teachers);
+        model.addAttribute("languages", languages);
         GroupDTO groupDTO = new GroupDTO();
         groupDTO.setName("Default Group");
         model.addAttribute("group", groupDTO);
@@ -96,14 +98,10 @@ public class GroupController {
         if (bindingResult.hasErrors()) {
             return "groups/add";
         }
-        Group newGroup = new Group();
-        newGroup.setName(groupDTO.getName());
-        newGroup.setLanguage(groupDTO.getLanguage());
-        groupService.insert(newGroup);
-        if (groupDTO.getTeacherId() != null) {
-            newGroup.setTeacher(teacherService.getById(groupDTO.getTeacherId()));
-            groupService.update(newGroup);
-        }
+        Group group = new Group();
+
+        groupService.updateGroup(group,groupDTO);
+
         return "redirect:/groups";
     }
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="languages/add" extends="home">
+        <put-attribute name="title" value="Language page" />
+        <put-attribute name="body" value="/WEB-INF/pages/languages/add.jsp" />
+        <put-attribute name="formValidationScripts" value="/WEB-INF/pages/templates/defaultFormValidationScripts.jsp" />
+    </definition>
+
+    <definition name="languages/all" extends="home">
+        <put-attribute name="title" value="Language page" />
+        <put-attribute name="body" value="/WEB-INF/pages/languages/all.jsp" />
+    </definition>
+</tiles-definitions>

@@ -9,6 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ManagerRepositoryJpaImpl extends RegisteredUserRepositoryJpaImpl<Manager>
+public class ManagerRepositoryJpaImpl extends StaffRepositoryJpaImpl<Manager>
         implements ManagerRepository {
 }
