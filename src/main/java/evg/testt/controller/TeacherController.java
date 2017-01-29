@@ -149,14 +149,24 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/teachers/info")
-    public String teacherInfo(Model model, @RequestParam int person_id) throws SQLException {
+    public String teacherInfo(Model model, @RequestParam int person_id,
+                              @RequestParam(required = false) Integer cardId) throws SQLException {
+
+        PersonDTO personDTO = personDTOService.getUpdatedPersonDTO(new PersonDTO(), person_id, cardId);
 
         Teacher teacher = teacherService.getTeacherByPersonId(person_id);
         List<Group> groups = groupService.getByTeacher(teacher);
 
+        //List<TeacherLevelEnum> teacherLevels = teacherLevelService.getAll();
+
+        //TeacherLevelEnum teacherLevels = 0;
+
         model.addAttribute("languages", languageService.getAll());
         model.addAttribute("teacher", teacher);
         model.addAttribute("groups", groups);
+
+        model.addAttribute("teacherDTO", personDTO);
+        //model.addAttribute("levels", teacherLevels);
 
         return "persons/teacher-info";
     }

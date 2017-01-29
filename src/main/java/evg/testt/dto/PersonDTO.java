@@ -1,5 +1,6 @@
 package evg.testt.dto;
 
+import evg.testt.model.State;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -7,6 +8,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import javax.persistence.Transient;
+import java.awt.*;
 import java.util.List;
 
 import java.sql.Date;
@@ -46,6 +48,24 @@ public @Data class PersonDTO {
 
     private Date birthdayDate;
 
+    private String modifyDate;
+
+    private String phone;
+
+    private String web;
+
+    private String address;
+
+    private String referral;
+
+    private String salary;
+
+    private Color color;
+
+    private String teacherLevel;
+
+    private String registrationDate;
+
     protected String avatarURL;
 
     protected Integer cardId;
@@ -53,4 +73,6 @@ public @Data class PersonDTO {
     protected Integer personId;
 
     private List<String>languages;
+
+    protected String state;
 }

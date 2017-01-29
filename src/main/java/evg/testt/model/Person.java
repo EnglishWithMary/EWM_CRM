@@ -33,6 +33,16 @@ public @Data class Person extends BaseModel{
 
     private String organization;
 
+    private String phone;
+
+    private String web;
+
+    private String address;
+
+    private String referral;
+
+    private String salary;
+
     @OneToOne(cascade = CascadeType.ALL)
     Email email;
 

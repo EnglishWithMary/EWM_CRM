@@ -38,99 +38,274 @@
                                     <strong>Information About Teacher</strong>
                                 </div>
                                 <div class="panel-body">
-                                    <p><strong>First Name: </strong><input type="text"
-                                                                           value="${teacher.person.firstName}"></p>
-                                    <p><strong>Last Name: </strong><input type="text"
-                                                                          value="${teacher.person.lastName}"></p>
-                                    <p><strong>Middle Name: </strong><input type="text"
-                                                                            value="${teacher.person.middleName}"></p>
-                                    <p><strong>Phone: </strong><input type="text"></p>
-                                    <p><strong>Address: </strong><input type="text"></p>
-                                    <p><strong>email: </strong><input type="text" value="${teacher.person.email.email}">
-                                    </p>
-                                    <p><strong>web : </strong><a href=""></a><input type="text"></p>
-                                    <p><strong>Date of Birth: </strong><input type="date"></p>
 
-                                    <p><strong>Comment: </strong></p>
+                                    <sf:form method="post" modelAttribute="teacherDTO" id="form" action="/students/save">
+                                        <fieldset class="form-group">
 
-                                    <p><textarea name="comments" form="comments"
-                                                 cols="30">${teacher.person.comments}</textarea>
-                                    <form id=comments method="post" modelAttribute="teacher.person"
-                                          action="/teachers/UpdateComments">
-                                        <input name="id" type=hidden value="${teacher.id}">
-                                        <%--<input name="role" type=hidden value="2">--%>
-                                        <security:authorize access="hasRole('ROLE_ADMIN')">
-                                            <input type="submit" value="Submit comment"/>
-                                        </security:authorize>
-                                    </form>
-                                    </p>
+                                            <div class="row padding-bot">
+                                                <div class="col-sm-1"></div>
+                                                    <div class="col-sm-4">
+                                                        <sf:label path="lastName">First Name:</sf:label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <sf:input path="lastName" cssClass="form-control"/>
+                                                        <sf:errors path="lastName" cssClass="has-error"/>
+                                                    </div>
+                                            </div>
+                                            <div class="row padding-bot">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-4">
+                                                    <sf:label path="firstName">Last Name:</sf:label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <sf:input path="firstName" cssClass="form-control"/>
+                                                    <sf:errors path="firstName" cssClass="has-error"/>
+                                                </div>
+                                            </div>
+                                            <div class="row padding-bot">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-4">
+                                                    <sf:label path="middleName">Middle Name:</sf:label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <sf:input path="middleName" cssClass="form-control"/>
+                                                    <sf:errors path="middleName" cssClass="has-error"/>
+                                                </div>
+                                            </div>
 
-                                    <p><strong>Groups: </strong>
-                                        <select name="groups" onchange="location = this.value;">
-                                            <option value="Groups" checked>Groups</option>
-                                            <c:forEach items="${groups}" var="group">
-                                                <option value="/groups/info?group_id=${group.id}">${group.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </p>
+                                            <div class="row padding-bot">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-4">
+                                                    <sf:label path="phone">Phone:</sf:label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <sf:input path="phone" cssClass="form-control"/>
+                                                    <sf:errors path="phone" cssClass="has-error"/>
+                                                </div>
+                                            </div>
 
-                                    <div class="row padding-bot">
-                                        <div class="col-sm-3">
-                                            <label>Languages:</label>
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <select class="form-control" multiple>
-                                                <c:forEach var="lang" items="${languages}" >
-                                                    <option value="${lang.id}">${lang.language}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <p><strong>Referral: </strong><input type="text"></p>
-                                    <p><strong>Color: </strong><input type="color"></p>
+                                            <div class="row padding-bot">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-4">
+                                                    <sf:label path="address">Address:</sf:label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <sf:input path="address" cssClass="form-control"/>
+                                                    <sf:errors path="address" cssClass="has-error"/>
+                                                </div>
+                                            </div>
 
-                                    <p><strong>State: </strong>${teacher.person.state.state}</p>
-                                    <p><strong>Last modified: </strong>${teacher.person.modifyDate}</p>
-                                    <p><strong>Registration date: </strong>${teacher.person.registrationDate}</p>
-                                    <p><strong>Organization: </strong><input type="text"></p>
+                                            <div class="row padding-bot">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-4">
+                                                    <sf:label path="email">email:</sf:label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <sf:input path="email" cssClass="form-control"/>
+                                                    <sf:errors path="email" cssClass="has-error"/>
+                                                </div>
+                                            </div>
 
-                                    <p><strong>Knowledge level: </strong>${teacher.level}</p>
+                                            <div class="row padding-bot">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-4">
+                                                    <sf:label path="web">web:</sf:label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <a href="${teacherDTO.web}">
+                                                    <sf:input path="web" cssClass="form-control"/>
+                                                    </a>
+                                                    <sf:errors path="web" cssClass="has-error"/>
+                                                </div>
+                                            </div>
 
-                                    <security:authorize access="hasRole('ROLE_ADMIN')">
-                                        <p><strong>Set knowledge level: </strong></p>
-                                        <form action="/teachers/setTeacherLevel" method="get">
-                                            <input type="hidden" name="teacher_id" value="${teacher.id}">
-                                            <tr>
-                                                <td><input type="radio" name="level" value="0" checked>JUNIOR_1</td>
-                                                <td></td>
-                                                <td><input type="radio" name="level" value="3">MIDDLE_1</td>
-                                                <td></td>
-                                                <td><input type="radio" name="level" value="6">SENIOR_1</td>
-                                                <td></td>
-                                            </tr>
-                                            <br>
-                                            <tr>
-                                                <td><input type="radio" name="level" value="1">JUNIOR_2</td>
-                                                <td></td>
-                                                <td><input type="radio" name="level" value="4">MIDDLE_2</td>
-                                                <td></td>
-                                                <td><input type="radio" name="level" value="7">SENIOR_2</td>
-                                                <td></td>
-                                            </tr>
-                                            <br>
-                                            <tr>
-                                                <td><input type="radio" name="level" value="2">JUNIOR_3</td>
-                                                <td><input type="radio" name="level" value="5">MIDDLE_3</td>
-                                                <td><input type="radio" name="level" value="8">SENIOR_3</td>
-                                            </tr>
-                                            <br>
-                                            <input type="submit">
-                                        </form>
-                                    </security:authorize><br>
+                                            <div class="row padding-bot">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-4">
+                                                    <sf:label path="birthdayDate">Date of Birth:</sf:label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <sf:input path="birthdayDate" cssClass="form-control" type="date"/>
+                                                    <sf:errors path="birthdayDate" cssClass="has-error"/>
+                                                </div>
+                                            </div>
 
-                                    <security:authorize access="hasRole('ROLE_ADMIN')">
-                                        <p><strong>Salary: </strong><input type="text"></p>
-                                    </security:authorize>
+                                            <div class="row padding-bot">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-4">
+                                                    <sf:label path="comments">Comments:</sf:label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <sf:textarea path="comments" cssClass="form-control"/>
+                                                    <sf:errors path="comments" cssClass="has-error"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="row padding-bot">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-4">
+                                                    <label>Groups:</label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <select name="groups" onchange="location = this.value;">
+                                                        <option value="Groups" checked>Groups</option>
+                                                        <c:forEach items="${groups}" var="group">
+                                                            <option value="/groups/info?group_id=${group.id}">${group.name}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="row padding-bot">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-4">
+                                                    <label>Languages:</label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <select class="form-control" multiple>
+                                                        <c:forEach var="lang" items="${languages}" >
+                                                            <option value="${lang.id}">${lang.language}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="row padding-bot">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-4">
+                                                    <sf:label path="referral">Referral:</sf:label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <sf:input path="referral" cssClass="form-control"/>
+                                                    <sf:errors path="referral" cssClass="has-error"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="row padding-bot">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-4">
+                                                    <sf:label path="color">Color:</sf:label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <sf:input path="color" cssClass="form-control" type="color"/>
+                                                    <sf:errors path="color" cssClass="has-error"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="row padding-bot">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-4">
+                                                    <label>State:</label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <c:out value="${teacherDTO.state}"/>
+                                                </div>
+                                            </div>
+
+                                            <%--<p><strong>Last modified: </strong>${teacher.person.modifyDate}</p>--%>
+                                            <div class="row padding-bot">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-4">
+                                                    <label>Last modified:</label>
+                                                </div>
+                                                    <div class="col-sm-6">
+                                                        <c:out value="${teacherDTO.modifyDate}"/>
+                                                    </div>
+                                            </div>
+
+                                            <div class="row padding-bot">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-4">
+                                                    <label>Registration date:</label>
+                                                </div>
+                                                    <div class="col-sm-6">
+                                                        <c:out value="${teacherDTO.registrationDate}"/>
+                                                    </div>
+                                            </div>
+
+                                            <div class="row padding-bot">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-4">
+                                                    <sf:label path="organization">Organization:</sf:label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <sf:input path="organization" cssClass="form-control"/>
+                                                    <sf:errors path="organization" cssClass="has-error"/>
+                                                </div>
+                                            </div>
+
+                                            <%--<p><strong>Knowledge level: </strong>${teacher.level}</p>--%>
+                                            <div class="row padding-bot">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-4">
+                                                    <label>Knowledge level:</label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <c:out value="${teacherDTO.teacherLevel}"/>
+                                                </div>
+                                            </div>
+
+                                            <security:authorize access="hasRole('ROLE_ADMIN')">
+                                                <div class="row padding-bot">
+                                                    <div class="col-sm-1"></div>
+                                                    <div class="col-sm-4">
+                                                        <label>Set knowledge level:</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <select class="form-control" multiple>
+                                                            <%--<c:forEach var="level" items="${languages}" >--%>
+                                                                <%--<option value="${level}">${level}</option>--%>
+                                                            <%--</c:forEach>--%>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <%--<form action="/teachers/setTeacherLevel" method="get">--%>
+                                                    <%--<input type="hidden" name="teacher_id" value="${teacher.id}">--%>
+                                                    <%--<tr>--%>
+                                                        <%--<td><input type="radio" name="level" value="0" checked>JUNIOR_1</td>--%>
+                                                        <%--<td></td>--%>
+                                                        <%--<td><input type="radio" name="level" value="3">MIDDLE_1</td>--%>
+                                                        <%--<td></td>--%>
+                                                        <%--<td><input type="radio" name="level" value="6">SENIOR_1</td>--%>
+                                                        <%--<td></td>--%>
+                                                    <%--</tr>--%>
+                                                    <%--<br>--%>
+                                                    <%--<tr>--%>
+                                                        <%--<td><input type="radio" name="level" value="1">JUNIOR_2</td>--%>
+                                                        <%--<td></td>--%>
+                                                        <%--<td><input type="radio" name="level" value="4">MIDDLE_2</td>--%>
+                                                        <%--<td></td>--%>
+                                                        <%--<td><input type="radio" name="level" value="7">SENIOR_2</td>--%>
+                                                        <%--<td></td>--%>
+                                                    <%--</tr>--%>
+                                                    <%--<br>--%>
+                                                    <%--<tr>--%>
+                                                        <%--<td><input type="radio" name="level" value="2">JUNIOR_3</td>--%>
+                                                        <%--<td><input type="radio" name="level" value="5">MIDDLE_3</td>--%>
+                                                        <%--<td><input type="radio" name="level" value="8">SENIOR_3</td>--%>
+                                                    <%--</tr>--%>
+                                                    <%--<br>--%>
+                                                    <%--<input type="submit">--%>
+                                                <%--</form>--%>
+                                            </security:authorize><br>
+
+                                            <security:authorize access="hasRole('ROLE_ADMIN')">
+                                                <div class="row padding-bot">
+                                                    <div class="col-sm-1"></div>
+                                                    <div class="col-sm-4">
+                                                        <sf:label path="salary">Salary:</sf:label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <sf:input path="salary" cssClass="form-control"/>
+                                                        <sf:errors path="salary" cssClass="has-error"/>
+                                                    </div>
+                                                </div>
+                                            </security:authorize>
+
+                                        </fieldset>
+                                    </sf:form>
+
                                 </div>
                             </div>
                         </div>
