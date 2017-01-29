@@ -26,17 +26,17 @@ import java.util.List;
 public class StudentController {
 
     @Autowired
-    private CardService cardService;
-    @Autowired
-    private StudentService studentService;
+    private PersonDTOService personDTOService;
     @Autowired
     private UserService userService;
     @Autowired
-    private TeacherService teacherService;
-    @Autowired
-    private PersonDTOService personDTOService;
+    private StudentService studentService;
     @Autowired
     private GroupService groupService;
+    @Autowired
+    private TeacherService teacherService;
+    @Autowired
+    private CardService cardService;
     @Autowired
     private StudentLevelHistoryService studentLevelHistoryService;
 
@@ -101,16 +101,20 @@ public class StudentController {
     public String saveStudent(@ModelAttribute("student") @Valid PersonDTO personDTO,
                               BindingResult bindingResult, Model model,
                               @RequestParam(required = false) Integer teacher_id,
-                              @RequestParam(required = false) Integer group_id)
-            throws SQLException, ParseException {
+                              @RequestParam(required = false) Integer group_id,
+                              @RequestParam(required = false) Integer personId) throws SQLException, ParseException {
 
         User u = userService.findByUserLogin(personDTO.getLogin());
+
         if (u != null) {
             bindingResult.rejectValue("login", "1", "Login already exist.");
         }
+
         if (!bindingResult.hasErrors()) {
-            Student student = new Student();
-            student = personDTOService.updateRegisteredUser(student, personDTO);
+
+//          Read Existing student or get new Student()
+            Student student = studentService.getStudentByPersonId(personId);
+
             if (teacher_id != null && teacher_id > 0) {
                 Teacher teacher = teacherService.getById(teacher_id);
                 student.setTeacher(teacher);
@@ -119,11 +123,18 @@ public class StudentController {
                 Group group = groupService.getById(group_id);
                 student.setGroup(group);
             }
-            studentService.insert(student);
+
+            student = studentService.updateRegisteredUser(student, personDTO);
+
+            studentService.update(student);
+
+            studentService.updatePosition(student, personDTO);
+
             return "redirect:/students";
         } else {
             model.addAttribute("groups", groupService.getAll());
             model.addAttribute("teachers", teacherService.getAll());
+            model.addAttribute("cards", cardService.getCards(Pipe.STUDENT_PIPE));
             return "students/add";
         }
     }
@@ -154,35 +165,26 @@ public class StudentController {
         return "redirect:/students";
     }
 
-
     @RequestMapping(value = "/students/SortByTeacher", method = RequestMethod.POST)
     public String showSortedByTeacher(@RequestParam(required = false) Integer teacher_id, Model model) throws SQLException {
 
-        List<Student> students = Collections.EMPTY_LIST;
         List<Teacher> teachers = teacherService.getAll();
         List<Group> groups = groupService.getAll();
+        List<Student> students = studentService.getAllByTeacher(teacher_id);
 
-        if (teacher_id == null) {
-            students = studentService.getAll();
-        } else if (teacher_id == -1) {
-            students = studentService.getStudentsWithoutTeacher();
-        } else if (teacher_id > 0) {
-            students = studentService.getAllByTeacher(teacher_id);
-        }
-        model.addAttribute("students", students).addAttribute("teachers", teachers)
-                .addAttribute("groups", groups);
+        model.addAttribute("students", students)
+             .addAttribute("teachers", teachers)
+             .addAttribute("groups", groups);
         return "students/all";
     }
 
     @RequestMapping(value = "/students/tests")
     public String studentTests(Model model) throws SQLException {
         model.addAttribute("levels", studentLevelHistoryService.getAll());
+
         return "students/tests";
     }
 
-
-    //    /students/{studentId}/testing-result
-//    old mapping /studentTestingResults
     @RequestMapping(value = "/students/{studentId}/add-testing-result")
     public String studentEditLevel(@PathVariable(value = "studentId") Integer id, Model model,
                                    @RequestParam(required = false) Integer levelId) throws SQLException {
@@ -202,12 +204,8 @@ public class StudentController {
         }
 
         return "students/testingResults";
-
     }
 
-
-    //    /students/{studentId}/save-testing-results
-//    old value /saveTestingResults
     @RequestMapping(value = "/students/{studentId}/save-testing-result", method = RequestMethod.POST)
     public String saveTestingResults(@ModelAttribute("studentLevelHistory") StudentLevelHistory studentLevelHistory,
                                      @PathVariable(value = "studentId") Integer studentId)
@@ -220,8 +218,6 @@ public class StudentController {
         return "redirect:/students";
     }
 
-
-    //change the date format
     public Date getDateFromString(String dateFromForm) throws ParseException {
         if (dateFromForm.equals("")){
             dateFromForm = "2001-01-01";
@@ -256,8 +252,8 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/students/info", method = RequestMethod.GET)
-    public String studentInfo(Model model, @RequestParam(value = "student_id") Integer studentId) throws SQLException {
-        Student student = studentService.getById(studentId);
+    public String studentInfo(Model model, @RequestParam(value = "personId") Integer personId) throws SQLException {
+        Student student = studentService.getStudentByPersonId(personId);
         Card currentCard = cardService.getCardByPerson(student.getPerson());
         List<Card> personCardList = cardService.getCards(Pipe.STUDENT_PIPE);
         model.addAttribute("currentCard", currentCard);

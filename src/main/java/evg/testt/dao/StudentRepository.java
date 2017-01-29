@@ -12,6 +12,7 @@ public interface StudentRepository extends RegisteredUserRepository<Student>{
     List<Student> findStudentsByGroup(int group_id);
     List<Student> findStudentsWithoutGroup();
     List<Student> findStudentsWithGroup()throws SQLException;
+    Student findStudentByPersonId(Integer personId);
 
     List<Student> findStudentsPageWithFilters(int pageNumber, Integer teacher_id,
                                               List<Integer> groupIdList, String direction

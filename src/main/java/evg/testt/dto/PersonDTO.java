@@ -7,6 +7,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import javax.persistence.Transient;
+import java.util.List;
+
 import java.sql.Date;
 
 @FieldEquals( field="password", equalsTo="confirmPassword" )
@@ -33,7 +35,7 @@ public @Data class PersonDTO {
     @Size(min = 3, max = 20, message = "Last Name should be between 3 and 20 chars.")
     private String lastName;
 
-    @Size(min = 3, max = 20, message = "Middle Name should be between 3 and 20 chars.")
+    @Size(max = 20, message = "Middle Name should less than 20 chars.")
     private String middleName;
 
     private String comments;
@@ -47,4 +49,8 @@ public @Data class PersonDTO {
     protected String avatarURL;
 
     protected Integer cardId;
+
+    protected Integer personId;
+
+    private List<String>languages;
 }

@@ -66,7 +66,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <table class="table table-striped table-bordered">
+                        <table class="table table-bordered">
                             <thead>
                             <tr>
                                 <th>Name</th>
@@ -75,7 +75,7 @@
                                 <th>Comments</th>
                                 <th>Testing results</th>
                                 <th>Teacher</th>
-                                <security:authorize access="hasRole('ROLE_ADMIN')">
+                                <security:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
                                     <th>Delete</th>
                                     <th>Save</th>
                                 </security:authorize>
@@ -85,7 +85,7 @@
                             <c:forEach var="student" items="${students}">
                                 <tr>
                                     <td>
-                                        <a href="/students/info?student_id=${student.id}">
+                                        <a href="/students/info?personId=${student.person.id}">
                                             ${student.person.firstName}
                                             ${student.person.middleName}
                                             ${student.person.lastName}
@@ -100,7 +100,7 @@
                                     <td>
                                         <a href="/teachers/info?teacher_id=${student.teacher.id}">${student.teacher.person.firstName}</a>
                                     </td>
-                                    <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <security:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
                                         <td>
                                             <a href="/students/trash?id=${student.id}">Delete</a>
                                         </td>

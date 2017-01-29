@@ -3,11 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="row">
-    <div class="col-sm-12">
-        <h2 class="page-header">Create group</h2>
-    </div>
-</div>
-<div class="row">
     <div class="col-sm-4 col-md-offset-4">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -17,15 +12,20 @@
                 <sf:form method="post" modelAttribute="group" action="/groups/save">
                     <fieldset>
                         <div class="row pad ding-bot">
-                            <div class="col-sm-12">
+                            <div class="col-sm-3">
                                 <sf:label path="name">Group Name:</sf:label>
+                            </div>
+                            <div class="col-sm-9">
                                 <sf:input path="name" cssClass="form-control"/>
                                 <sf:errors path="name" cssClass="has-error"/>
                             </div>
                         </div>
+                        <br>
                         <div class="row padding-bot">
-                            <div class="col-sm-12">
+                            <div class="col-sm-3">
                                 <sf:label path="teacherId"> Teacher: </sf:label>
+                            </div>
+                            <div class="col-sm-9">
                                 <sf:select path="teacherId" cssClass="form-control">
                                     <c:forEach items="${teachers}" var="teach">
                                         <sf:option value="${teach.id}"
@@ -35,17 +35,14 @@
                             </div>
                         </div>
                         <div class="row padding-bot">
-                            <div class="col-sm-12">
-                                <sf:label path="language"> Language: </sf:label>
-                                <sf:select path="language" cssClass="form-control">
-                                    <option label="English">English</option>
-                                    <option label="Germany">Germany</option>
-                                    <option label="Germany">Spanish</option>
-                                    <option label="Germany">Russian</option>
-                                    <option label="Germany">Italian</option>
-                                    <option label="Germany">Polish</option>
-                                    <option label="Germany">French</option>
-                                    <option label="Germany">Ukrainian</option>
+                            <div class="col-sm-3">
+                                <sf:label path="languageId">Languages:</sf:label>
+                            </div>
+                            <div class="col-sm-9">
+                                <sf:select path="languageId" class ="form-control">
+                                    <c:forEach var="lang" items="${languages}" >
+                                        <option value="${lang.id}">${lang.language}</option>
+                                    </c:forEach>
                                 </sf:select>
                             </div>
                         </div>

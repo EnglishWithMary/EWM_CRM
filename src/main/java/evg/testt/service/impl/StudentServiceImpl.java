@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -17,13 +18,19 @@ import java.util.List;
 public class StudentServiceImpl extends RegisteredUserServiceImpl<Student, StudentRepository> implements StudentService {
 
     @Override
-    public List<Student> getAllByTeacher(int teacher_id) {
-        return dao.findStudensByTeacher(teacher_id);
-    }
+    public List<Student> getAllByTeacher(Integer teacher_id) {
 
-    @Override
-    public List<Student> getStudentsWithoutTeacher() {
-        return dao.findStudentsWithoutTeacher();
+        List<Student> students = Collections.EMPTY_LIST;
+
+        if (teacher_id == null) {
+            students = (List<Student>) dao.findAll();
+        } else if (teacher_id == -1) {
+            students = dao.findStudentsWithoutTeacher();
+        } else if (teacher_id > 0) {
+            students = dao.findStudensByTeacher(teacher_id);
+        }
+
+        return students;
     }
 
     @Override
@@ -50,5 +57,10 @@ public class StudentServiceImpl extends RegisteredUserServiceImpl<Student, Stude
     @Override
     public int countByFilter(Integer teacher_id, List<Integer> groupIdList) throws SQLException{
         return dao.countByFilter(teacher_id,groupIdList);
+    }
+
+    @Override
+    public Student getStudentByPersonId(Integer personId){
+        return dao.findStudentByPersonId(personId);
     }
 }

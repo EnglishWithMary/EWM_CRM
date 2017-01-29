@@ -337,3 +337,15 @@
     opacity: 0;
     cursor: pointer          /* example */
 }
+
+/*TRASH STYLE*/
+#trash {
+    display: block;
+    height: 5%;
+    width: 5%;
+    position: fixed;
+    bottom: 7%;
+    left: 1%;
+    margin-right: auto;
+    margin-left: auto;
+}

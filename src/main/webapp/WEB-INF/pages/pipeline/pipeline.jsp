@@ -43,16 +43,30 @@
                             </div>
 
                             <div class="personData">
-                                <input type="hidden" id="personId" name="personId" value="${person.id}">
-                                <a class="" href="/leads/info?person_id=${person.id}" role="button">
-                                        ${person.lastName}
-                                        ${fn:substring(person.firstName,0,1)}.${fn:substring(person.middleName,0,1)}.
-                                </a>
+                                <c:if test="${pipeType.id==1}">
+                                    <input type="hidden" id="personId" name="personId" value="${person.id}">
+                                    <a class="" href="/leads/info?personId=${person.id}" role="button">
+                                            ${person.lastName}
+                                            ${fn:substring(person.firstName,0,1)}.${fn:substring(person.middleName,0,1)}.
+                                    </a>
+                                </c:if>
+                                <c:if test="${pipeType.id==2}">
+                                    <input type="hidden" id="personId" name="personId" value="${person.id}">
+                                    <a class="" href="/students/info?personId=${person.id}" role="button">
+                                            ${person.lastName}
+                                            ${fn:substring(person.firstName,0,1)}.${fn:substring(person.middleName,0,1)}.
+                                    </a>
+                                </c:if>
                             </div>
 
                             <div class="row">
                                 <div class="person-edit-tool-bar col-md-3">
-                                    <form method="post" action="/leads/add" class="editPersonFrom btn-xs">
+                                    <c:if test="${pipeType.id==1}">
+                                        <form method="post" action="/leads/add" class="editPersonFrom btn-xs">
+                                    </c:if>
+                                    <c:if test="${pipeType.id==2}">
+                                        <form method="post" action="/students/add" class="editPersonFrom btn-xs">
+                                    </c:if>
                                         <input type="hidden" name="personId" value="${person.id}">
                                         <button type="submit" class="pipe-button btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-pencil"></span>

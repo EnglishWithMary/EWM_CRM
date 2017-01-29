@@ -109,37 +109,22 @@ public class LeadController {
                                  @RequestParam(required = false) Integer personId
     ) throws SQLException, ParseException {
 
-        model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
-        model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.LEAD_PIPE));
-
         if (bindingResult.hasErrors()) {
             model.addAttribute("personId", personId);
             return "leads/add";
         }
 
-        if (personId == null) {
-            Card card = cardService.getById(personDTO.getCardId());
-            Lead lead = new Lead();
-            lead = personDTOService.updateLead(lead, personDTO);
-            lead.getPerson().setPosition(card.getPersons().size() + 1);
-            leadService.insert(lead);
-            card.getPersons().add(lead.getPerson());
-            cardService.update(card);
-        } else {
-            Person person = personService.getById(personId);
-            Card cardOld = cardService.getCardByPerson(person);
-            Lead lead = leadService.getByPerson(person);
-            lead = personDTOService.updateLead(lead, personDTO);
-            lead.getPerson().setPosition(cardOld.getPersons().size() + 1);
-            leadService.update(lead);
-            if (!personDTO.getCardId().equals(cardOld.getId())) {
-                cardOld.getPersons().remove(person);
-                cardService.update(cardOld);
-                Card cardNew = cardService.getById(personDTO.getCardId());
-                cardNew.getPersons().add(person);
-                cardService.update(cardNew);
-            }
-        }
+//      Read Existing student or get new Student()
+        Lead lead = leadService.getLeadByPersonId(personId);
+
+        lead = leadService.updateLead(lead, personDTO);
+
+        leadService.update(lead);
+
+        leadService.updatePosition(lead, personDTO);
+
+        model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
+        model.addAttribute("pipeType", pipeTypeService.getPipe(Pipe.LEAD_PIPE));
         return "redirect:" + request.getSession().getAttribute("callback").toString();
     }
 
@@ -174,7 +159,7 @@ public class LeadController {
         return "redirect:" + request.getHeader("Referer");
     }
 
-    @RequestMapping(value = "/leads/DeleteFromPipe", method = RequestMethod.POST)
+    @RequestMapping(value = "/lead/DeleteFromPipe", method = RequestMethod.POST)
     public String leadDeleteFromPipe(HttpServletRequest request, Model model,
                                      @RequestParam(required = true) Integer personId) throws SQLException {
         model.addAttribute("cards", cardService.getCards(Pipe.LEAD_PIPE));
@@ -192,17 +177,17 @@ public class LeadController {
 
 
     @RequestMapping(value = "/leads/info", method = RequestMethod.GET)
-    public String leadInfo(Model model, @RequestParam int person_id) throws SQLException {
-        Lead lead = leadService.getById(person_id);
+    public String leadInfo(Model model, @RequestParam int personId) throws SQLException {
+        Lead lead = leadService.getLeadByPersonId(personId);
         model.addAttribute("lead", lead);
         return "persons/lead-info";
     }
 
-    @RequestMapping(value = "/leads/UpdateComments", method = RequestMethod.POST)
-    public String studentUpdate(Model model,
-                                @RequestParam Integer id,
+    @RequestMapping(value = "/lead/UpdateComments", method = RequestMethod.POST)
+    public String leadUpdate(Model model,
+                                @RequestParam Integer personId,
                                 @RequestParam String comments) throws SQLException {
-        Lead lead = leadService.getById(id);
+        Lead lead = leadService.getLeadByPersonId(personId);
         lead.getPerson().setComments(comments);
         leadService.update(lead);
         model.addAttribute("lead", lead);
@@ -213,13 +198,12 @@ public class LeadController {
     @RequestMapping(value = "/leads/ToStudent")
     public String leadToStudent(Model model, Integer personId) throws SQLException, ParseException {
 
-        Person person = personService.getById(personId);
         Student student = new Student();
-        Lead lead = leadService.getByPerson(person);
+        Lead lead = leadService.getLeadByPersonId(personId);
 
-        person.setId(null);
-        person.getEmail().setId(null);
-        student.setPerson(person);
+        lead.getPerson().setId(null);
+        lead.getPerson().getEmail().setId(null);
+        student.setPerson(lead.getPerson());
 
         leadService.delete(lead);
 

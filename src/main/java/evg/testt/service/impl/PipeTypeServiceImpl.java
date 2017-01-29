@@ -16,4 +16,6 @@ public class PipeTypeServiceImpl extends BaseService<PipeType, PipeTypeRepositor
 
         return dao.findPipe(pipe);
     }
+
+
 }
