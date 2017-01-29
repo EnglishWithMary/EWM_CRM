@@ -4,7 +4,10 @@ import com.google.gson.Gson;
 import evg.testt.dto.GroupDTO;
 import evg.testt.model.*;
 import evg.testt.service.*;
-import evg.testt.util.fullcalendar.FullcalendarHeleper;
+import evg.testt.util.fullcalendar.convertors.FullcalendarConverter;
+import evg.testt.util.fullcalendar.convertors.GroupEventConvertor;
+import evg.testt.util.fullcalendar.events.*;
+import evg.testt.util.fullcalendar.UrlWrapperHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -14,10 +17,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -155,9 +158,30 @@ public class GroupController {
     public String getEventsByRoomId(@PathVariable(value = "ID") Integer id,
                                     @PathVariable(value = "roomID") Integer roomId)
             throws SQLException {
-        List<FullcalendarEvent> groupEvents = groupEventsService.getAllByGroupIdAndRoomId(id,
-                roomService.getById(roomId));
-        return new Gson().toJson(groupEvents);
+
+        List<IFullcalendarEvent> events = new ArrayList<>();
+
+        events.addAll(
+                FullcalendarConverter.getInstance()
+                        .convertToDisabledFullcalendarEvents(
+                                groupEventsService.getAllByNotGroupIdAndRoomId(
+                                        id,
+                                        roomService.getById(roomId)
+
+                                ))
+        );
+
+        events.addAll(
+                FullcalendarConverter.getInstance()
+                        .convertToSimpleFullcalendarEvents(
+                                groupEventsService.getAllByGroupIdAndRoomId(
+                                        id,
+                                        roomService.getById(roomId)
+
+                                ))
+        );
+
+        return new Gson().toJson(events);
     }
 
     @RequestMapping(value = "/groups/{ID}/room/choose-room", method = RequestMethod.GET)
@@ -172,8 +196,11 @@ public class GroupController {
     @RequestMapping(value = "/groups/{ID}/info/calendar/events", method = RequestMethod.GET)
     public String calendarForGroup(Model model, @PathVariable(value = "ID") Integer id)
             throws SQLException {
-        List<FullcalendarEvent> groupEvents = FullcalendarHeleper.convertGroupEventsToFullcalendarEvents(
-                groupEventsService.getAllByGroupId(id));
+        List<ISimpleFullcalendarEvent> groupEvents = FullcalendarConverter
+                .getInstance()
+                .convertToSimpleFullcalendarEvents(
+                        groupEventsService.getAllByGroupId(id)
+                );
         return new Gson().toJson(groupEvents);
     }
 
@@ -213,15 +240,17 @@ public class GroupController {
     @ResponseBody
     @RequestMapping(value = "/groups/{group_id}/room/{room_id}/calendar/add-event",
             method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String saveEventAjaxMethod(@RequestBody FullcalendarEvent fullcalendarEvent,
+    public String saveEventAjaxMethod(@RequestBody SimpleFullcalendarEvent fullcalendarEvent,
                                       @PathVariable(value = "group_id") Integer groupId,
                                       @PathVariable(value = "room_id") Integer roomId)
             throws SQLException {
-        Room room = roomService.getById(roomId);
-        GroupEvent groupEvent = FullcalendarHeleper
-                .convertFullcalendarEventToGroupEvent(fullcalendarEvent);
-        groupEvent.setRoom(room);
-        groupEvent.setGroupId(groupId);
+        GroupEvent groupEvent = GroupEventConvertor
+                .getInstance()
+                .ConvertToGroupEvent(
+                        groupId,
+                        roomService.getById(roomId),
+                        fullcalendarEvent
+                );
         if (groupEvent.getTitle().equals("")) {
             groupEvent.setTitle("Default Title");
         }
@@ -232,10 +261,9 @@ public class GroupController {
     @ResponseBody
     @RequestMapping(value = "/groups/{group_id}/room/{room_id}/calendar/delete-event", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String deleteEventAjaxMethod(@RequestBody FullcalendarEvent fullcalendarEvent)
+    public String deleteEventAjaxMethod(@RequestBody SimpleFullcalendarEvent fullcalendarEvent)
             throws SQLException {
-        GroupEvent groupEvent = groupEventsService.getById(fullcalendarEvent.getId());
-        groupEventsService.delete(groupEvent);
+        groupEventsService.delete(groupEventsService.getById(fullcalendarEvent.getId()));
         return new Gson().toJson("msg = success, code = 200");
     }
 
@@ -243,9 +271,22 @@ public class GroupController {
     @RequestMapping(value = "/home/this-day-events", method = RequestMethod.GET)
     public String getEventsAllDay(@RequestParam(value = "start") Date start,
                                   @RequestParam(value = "end") Date end) throws SQLException {
-        List<FullcalendarEvent> groupEvents = FullcalendarHeleper
-                .convertGroupEventsToFullcalendarEventsWithUrls(
-                        groupEventsService.getAllByDate(start, end));
+        List<ISimpleFullcalendarEventWithUrl> groupEvents =
+                FullcalendarConverter
+                        .getInstance()
+                        .convertToSimpleFullcalendarEventsWithUrl(
+                                groupEventsService.getAllByDate(start, end),
+                                UrlWrapperHelper.getWrapper()
+                                        .before("/groups/")
+                                        .after("/info")
+                        );
+//                FullcalendarHeleper
+//                .convertGroupEventsToFullcalendarEventsWithUrls(
+//                        groupEventsService.getAllByDate(start, end),
+//                        UrlWrapperHelper.getWrapper()
+//                                .before("/groups")
+//                                .after("/info")
+//                );
         return new Gson().toJson(groupEvents);
     }
 }
