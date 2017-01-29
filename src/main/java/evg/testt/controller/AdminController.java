@@ -2,17 +2,13 @@ package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.Admin;
-
-import evg.testt.model.Person;
 import evg.testt.model.User;
 import evg.testt.service.AdminService;
-
 import evg.testt.service.PersonDTOService;
 import evg.testt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
