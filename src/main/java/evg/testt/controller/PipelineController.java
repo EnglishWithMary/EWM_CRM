@@ -85,7 +85,14 @@ public class PipelineController {
         cardService.update(card);
         cardService.delete(card);
         this.inserAttributes(model, pipe);
-        return "redirect:/pipeline/leads";
+
+        if (pipe == Pipe.LEAD_PIPE) {
+            return "redirect:/pipeline/leads";
+        } else if (pipe == Pipe.STUDENT_PIPE) {
+            return "redirect:/pipeline/students";
+        } else {
+            return "redirect:/pipeline";
+        }
     }
 
     //    /pipeline/editCardName
@@ -99,7 +106,15 @@ public class PipelineController {
         card.setCardName(cardName);
         cardService.update(card);
         this.inserAttributes(model, pipe);
-        return "redirect:/pipeline/leads";
+
+        if (pipe == Pipe.LEAD_PIPE) {
+            return "redirect:/pipeline/leads";
+        } else if (pipe == Pipe.STUDENT_PIPE) {
+            return "redirect:/pipeline/students";
+        } else {
+            return "redirect:/pipeline";
+        }
+
     }
 
     //    /pipeline/moveLeadAjax
