@@ -248,7 +248,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </security:authorize><br>
+                                            </security:authorize>
 
                                             <security:authorize access="hasRole('ROLE_ADMIN')">
                                                 <div class="row padding-bot">
