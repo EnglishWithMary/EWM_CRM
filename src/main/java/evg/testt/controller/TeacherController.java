@@ -18,8 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @PropertySource(value = "classpath:standard.properties")
@@ -149,7 +148,9 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/teachers/info")
-    public String teacherInfo(Model model, @RequestParam int teacherId) throws SQLException {
+    public String teacherInfo(Model model, @RequestParam int teacherId,
+                              @RequestParam(required = false) Integer person_id,
+                              @RequestParam(required = false) Integer cardId) throws SQLException {
 
         Teacher teacher = teacherService.getById(teacherId);
         List<Group> groups = groupService.getByTeacher(teacher);
@@ -157,6 +158,12 @@ public class TeacherController {
         model.addAttribute("languages", languageService.getAll());
         model.addAttribute("teacher", teacher);
         model.addAttribute("groups", groups);
+
+        TeacherLevelEnum levels[] = TeacherLevelEnum.values();
+        model.addAttribute("levels", levels);
+
+        PersonDTO personDTO = personDTOService.getUpdatedPersonDTO(new PersonDTO(), person_id, cardId);
+        model.addAttribute("teacherDTO", personDTO);
 
         return "persons/teacher-info";
     }
@@ -173,11 +180,21 @@ public class TeacherController {
         return "persons/teacher-info";
     }
 
+//    @RequestMapping(value = "/teachers/setTeacherLevel")
+//    public String setTeacherLevel(int level, int teacherId) throws SQLException {
+//        Teacher teacher = teacherService.getById(teacherId);
+//        TeacherLevelEnum level_Id = TeacherLevelEnum.valueOf(level);
+//        teacher.setLevel(level_Id);
+//        teacherService.update(teacher);
+//
+//        return "redirect:/teachers/info?teacherId=" + teacherId;
+//    }
+
     @RequestMapping(value = "/teachers/setTeacherLevel")
-    public String setTeacherLevel(int level, int teacherId) throws SQLException {
+    public String setTeacherLevel(TeacherLevelEnum level, Integer teacherId) throws SQLException {
         Teacher teacher = teacherService.getById(teacherId);
-        TeacherLevelEnum level_Id = TeacherLevelEnum.valueOf(level);
-        teacher.setLevel(level_Id);
+        //TeacherLevelEnum level_Id = TeacherLevelEnum.valueOf(level);
+        teacher.setLevel(level);
         teacherService.update(teacher);
 
         return "redirect:/teachers/info?teacherId=" + teacherId;
