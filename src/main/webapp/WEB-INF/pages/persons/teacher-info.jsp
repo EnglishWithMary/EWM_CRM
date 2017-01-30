@@ -234,60 +234,20 @@
                                                 </div>
                                             </div>
 
-                                            <%--<p><strong>Knowledge level: </strong>${teacher.level}</p>--%>
-                                            <div class="row padding-bot">
-                                                <div class="col-sm-1"></div>
-                                                <div class="col-sm-4">
-                                                    <label>Knowledge level:</label>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <c:out value="${teacherDTO.teacherLevel}"/>
-                                                </div>
-                                            </div>
-
                                             <security:authorize access="hasRole('ROLE_ADMIN')">
                                                 <div class="row padding-bot">
                                                     <div class="col-sm-1"></div>
                                                     <div class="col-sm-4">
-                                                        <label>Set knowledge level:</label>
+                                                        <label>Knowledge level:</label>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <select class="form-control" multiple>
-                                                            <%--<c:forEach var="level" items="${languages}" >--%>
-                                                                <%--<option value="${level}">${level}</option>--%>
-                                                            <%--</c:forEach>--%>
+                                                        <select class="selectpicker form-control" title="${teacherDTO.teacherLevel}">
+                                                            <c:forEach var="level" items="${levels}" >
+                                                                <option value="${level}">${level}</option>
+                                                            </c:forEach>
                                                         </select>
                                                     </div>
                                                 </div>
-
-                                                <%--<form action="/teachers/setTeacherLevel" method="get">--%>
-                                                    <%--<input type="hidden" name="teacher_id" value="${teacher.id}">--%>
-                                                    <%--<tr>--%>
-                                                        <%--<td><input type="radio" name="level" value="0" checked>JUNIOR_1</td>--%>
-                                                        <%--<td></td>--%>
-                                                        <%--<td><input type="radio" name="level" value="3">MIDDLE_1</td>--%>
-                                                        <%--<td></td>--%>
-                                                        <%--<td><input type="radio" name="level" value="6">SENIOR_1</td>--%>
-                                                        <%--<td></td>--%>
-                                                    <%--</tr>--%>
-                                                    <%--<br>--%>
-                                                    <%--<tr>--%>
-                                                        <%--<td><input type="radio" name="level" value="1">JUNIOR_2</td>--%>
-                                                        <%--<td></td>--%>
-                                                        <%--<td><input type="radio" name="level" value="4">MIDDLE_2</td>--%>
-                                                        <%--<td></td>--%>
-                                                        <%--<td><input type="radio" name="level" value="7">SENIOR_2</td>--%>
-                                                        <%--<td></td>--%>
-                                                    <%--</tr>--%>
-                                                    <%--<br>--%>
-                                                    <%--<tr>--%>
-                                                        <%--<td><input type="radio" name="level" value="2">JUNIOR_3</td>--%>
-                                                        <%--<td><input type="radio" name="level" value="5">MIDDLE_3</td>--%>
-                                                        <%--<td><input type="radio" name="level" value="8">SENIOR_3</td>--%>
-                                                    <%--</tr>--%>
-                                                    <%--<br>--%>
-                                                    <%--<input type="submit">--%>
-                                                <%--</form>--%>
                                             </security:authorize><br>
 
                                             <security:authorize access="hasRole('ROLE_ADMIN')">

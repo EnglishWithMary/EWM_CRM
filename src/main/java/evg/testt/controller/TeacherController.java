@@ -157,16 +157,14 @@ public class TeacherController {
         Teacher teacher = teacherService.getTeacherByPersonId(person_id);
         List<Group> groups = groupService.getByTeacher(teacher);
 
-        //List<TeacherLevelEnum> teacherLevels = teacherLevelService.getAll();
-
-        //TeacherLevelEnum teacherLevels = 0;
+        TeacherLevelEnum levels[] = TeacherLevelEnum.values();
+        model.addAttribute("levels", levels);
 
         model.addAttribute("languages", languageService.getAll());
         model.addAttribute("teacher", teacher);
         model.addAttribute("groups", groups);
 
         model.addAttribute("teacherDTO", personDTO);
-        //model.addAttribute("levels", teacherLevels);
 
         return "persons/teacher-info";
     }
