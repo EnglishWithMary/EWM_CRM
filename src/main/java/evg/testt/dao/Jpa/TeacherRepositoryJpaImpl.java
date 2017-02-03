@@ -2,6 +2,7 @@ package evg.testt.dao.Jpa;
 
 import evg.testt.model.Teacher;
 import evg.testt.dao.TeacherRepository;
+import evg.testt.model.TeacherLevelEnum;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
@@ -26,7 +27,7 @@ public class TeacherRepositoryJpaImpl extends StaffRepositoryJpaImpl<Teacher> im
     }
 
 
-    public List<Teacher> findTeacherByLevel(int teacherLevel) {
+    public List<Teacher> findTeacherByLevel(TeacherLevelEnum teacherLevel) {
 
         Query query = em.createQuery("SELECT teacher FROM teachers teacher WHERE level =:teacherLevel");
         query.setParameter("teacherLevel", teacherLevel);

@@ -202,7 +202,7 @@ public class TeacherController {
 
     @RequestMapping(value = "/teacherFilterByLevel", method = RequestMethod.GET)
     public String teacherFilterByLevel(Model model,
-                                       @RequestParam Integer teacherLevel) throws SQLException {
+                                       @RequestParam TeacherLevelEnum teacherLevel) throws SQLException {
         List<Teacher> teachersByLevel = Collections.EMPTY_LIST;
         teachersByLevel = teacherService.getTeacherByLevel(teacherLevel);
 

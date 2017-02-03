@@ -2,6 +2,7 @@ package evg.testt.service;
 
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.Teacher;
+import evg.testt.model.TeacherLevelEnum;
 import evg.testt.service.Service;
 
 import java.sql.SQLException;
@@ -13,5 +14,5 @@ public interface TeacherService extends StaffService<Teacher> {
 
     Teacher getUpdateTeacher(Teacher teacher, PersonDTO personDTO) throws ParseException;
 
-    List<Teacher> getTeacherByLevel(int teacherLevel)throws SQLException;
+    List<Teacher> getTeacherByLevel(TeacherLevelEnum teacherLevel)throws SQLException;
 }

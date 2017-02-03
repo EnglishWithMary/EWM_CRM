@@ -94,30 +94,29 @@
                                     <p><strong>Registration date: </strong>${teacher.person.registrationDate}</p>
                                     <p><strong>Organization: </strong><input type="text"></p>
 
-                                    <p><strong>Knowledge level: </strong>${teacher.level}</p>
-
+                                    <security:authorize access="hasRole('ROLE_ADMIN')">
                                     <%--<form method="post" modelAttribute="teacherDTO" id="form" action="/students/save">--%>
                                     <form action="/teachers/setTeacherLevel" method="get">
                                         <input type="hidden" name="teacherId" value="${teacher.id}">
+                                        <%--<input type="hidden" name="level" value="${level}">--%>
 
-                                        <security:authorize access="hasRole('ROLE_ADMIN')">
                                         <div class="row padding-bot">
                                             <div class="col-sm-1"></div>
                                             <div class="col-sm-4">
-                                                <label>Set knowledge level:</label>
+                                                <label>Knowledge level:</label>
                                             </div>
                                             <div class="col-sm-6">
-                                                <select class="form-control">
+                                                <select class="selectpicker form-control" title="${teacher.level}">
                                                     <c:forEach var="level" items="${levels}" >
                                                         <option value="${level}">${level}</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
                                         </div>
-                                        </security:authorize>
+
                                         <input type="submit">
                                     </form>
-
+                                    </security:authorize>
                                     <%----%>
                                     <%--<security:authorize access="hasRole('ROLE_ADMIN')">--%>
                                         <%--<p><strong>Set knowledge level: </strong></p>--%>
