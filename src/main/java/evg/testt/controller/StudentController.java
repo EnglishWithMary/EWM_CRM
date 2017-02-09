@@ -2,7 +2,6 @@ package evg.testt.controller;
 
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
-//import evg.testt.oval.SpringOvalValidator;
 import evg.testt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,9 +16,10 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+//import evg.testt.oval.SpringOvalValidator;
 
 @Controller
 @PropertySource(value = "classpath:standard.properties")
@@ -206,15 +206,29 @@ public class StudentController {
         return "students/testingResults";
     }
 
-    @RequestMapping(value = "/students/{studentId}/save-testing-result", method = RequestMethod.POST)
-    public String saveTestingResults(@ModelAttribute("studentLevelHistory") StudentLevelHistory studentLevelHistory,
-                                     @PathVariable(value = "studentId") Integer studentId)
+    @RequestMapping(value = "/students/{levelId}/save-testing-result", method = RequestMethod.POST)
+    public String saveTestingResults(@RequestParam(required = false) Integer studentId,
+                                     @RequestParam(required = false) StudentLevelPoints spelling,
+                                     @PathVariable (value = "levelId") Integer levelId,
+                                     @ModelAttribute("studentLevelHistory") StudentLevelHistory studentLevelHistory)
             throws SQLException, ParseException {
 
         Student student = studentService.getById(studentId);
-        studentLevelHistory.setStudent(student);
-        studentLevelHistory.setCheckpointDate(getDateFromString(studentLevelHistory.getTestingDate()));
-        studentLevelHistoryService.insert(studentLevelHistory);
+
+        if(levelId != null) {
+
+            studentLevelHistory = studentLevelHistoryService.getById(levelId);
+            studentLevelHistory.setSpelling(spelling);
+            studentLevelHistoryService.update(studentLevelHistory);
+
+        } else {
+
+
+            studentLevelHistory.setStudent(student);
+            studentLevelHistory.setCheckpointDate(getDateFromString(studentLevelHistory.getTestingDate()));
+            studentLevelHistoryService.insert(studentLevelHistory);
+
+        }
         return "redirect:/students";
     }
 
