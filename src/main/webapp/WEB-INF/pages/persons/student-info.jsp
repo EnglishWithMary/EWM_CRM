@@ -99,6 +99,26 @@
                                     <p><strong>Group: </strong><a
                                             href="/groups/info?group_id=${student.group.id}">${student.group.name}</a>
                                     </p>
+                                    <p><strong>
+                                        <div class="row padding-bot ">
+                                            <div class="col-sm-3">
+                                            </div>
+                                            <div class="col-sm-6">
+
+                                                <form id=groups method="post" modelAttribute="student.group" action="/studentUpdateGroup">
+                                                    <select name="group_id" class="form-control">
+                                                        <option value="">Set another group...</option>
+                                                        <c:forEach var="group" items="${groups}">
+                                                            <option value="${group.id}">${group.name}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                    <input name="id" type=hidden value="${student.id}">
+                                                    <security:authorize access="hasRole('ROLE_ADMIN')">
+                                                    <input type="submit" value="Submit change group"/>
+                                                    </security:authorize>
+                                                    </form>
+                                            </div>
+                                        </div>
                                     <p><strong>Last Groups: </strong><a href="">link to other groups</a>
                                         (status) </p>
                                     <p><strong>Teacher: </strong><a
