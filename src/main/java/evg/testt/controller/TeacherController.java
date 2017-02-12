@@ -152,6 +152,7 @@ public class TeacherController {
     public String teacherInfo(Model model, @RequestParam int person_id,
                               @RequestParam(required = false) Integer cardId) throws SQLException {
 
+        PersonDTO personDTO = personDTOService.getUpdatedPersonDTO(new PersonDTO(), person_id, cardId);
 
         Teacher teacher = teacherService.getTeacherByPersonId(person_id);
         List<Group> groups = groupService.getByTeacher(teacher);

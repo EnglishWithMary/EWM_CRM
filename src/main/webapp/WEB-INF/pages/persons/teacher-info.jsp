@@ -145,12 +145,6 @@
                                                         </c:forEach>
                                                     </select>
 
-                                                    <%--<select name="groups" onchange="location = this.value;">--%>
-                                                        <%--<option value="Groups" checked>Groups</option>--%>
-                                                        <%--<c:forEach items="${groups}" var="group">--%>
-                                                            <%--<option value="/groups/info?group_id=${group.id}">${group.name}</option>--%>
-                                                        <%--</c:forEach>--%>
-                                                    <%--</select>--%>
                                                 </div>
                                             </div>
 
