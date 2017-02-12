@@ -18,7 +18,7 @@ public @Data class Teacher extends Staff implements BelongsToPerson{
     @Enumerated(EnumType.ORDINAL)
     private TeacherLevelEnum level;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="teacher_languages", joinColumns=@JoinColumn(name="teacher_id"),
             inverseJoinColumns = @JoinColumn(name="language_id"))
     private List<Language> languages = Collections.EMPTY_LIST;

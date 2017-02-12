@@ -2,10 +2,7 @@ package evg.testt.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity(name = "languages")
@@ -13,7 +10,7 @@ public @Data class Language extends BaseModel{
 
     private String language;
 
-    @ManyToMany(mappedBy = "languages")
+    @ManyToMany(mappedBy = "languages", fetch = FetchType.EAGER)
     private List<Teacher> teachers;
 
 }

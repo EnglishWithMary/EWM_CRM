@@ -4,6 +4,7 @@ import evg.testt.dto.PersonDTO;
 import evg.testt.model.Language;
 import evg.testt.model.Teacher;
 import evg.testt.dao.TeacherRepository;
+import evg.testt.model.TeacherLevelEnum;
 import evg.testt.service.TeacherService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +42,7 @@ public class TeacherServiceImpl extends StaffServiceImpl<Teacher, TeacherReposit
     }
 
     @Override
-    public List<Teacher> getTeacherByLevel(int teacherLevel) throws SQLException {
+    public List<Teacher> getTeacherByLevel(TeacherLevelEnum teacherLevel) throws SQLException {
         return dao.findTeacherByLevel(teacherLevel);
     }
 }

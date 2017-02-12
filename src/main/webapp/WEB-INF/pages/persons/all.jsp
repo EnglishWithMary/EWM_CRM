@@ -91,7 +91,7 @@
                                         </c:when>
                                         <c:when test="${staff.user.role.role == 'ROLE_MANAGER'}">
                                             <td>
-                                                a href="/managers/info?managerId=${staff.id}">${staff.person.lastName} ${fn:substring(staff.person.firstName, 0, 1)}. ${fn:substring(staff.person.middleName, 0, 1)}</a>
+                                                <a href="/managers/info?managerId=${staff.id}">${staff.person.lastName} ${fn:substring(staff.person.firstName, 0, 1)}. ${fn:substring(staff.person.middleName, 0, 1)}</a>
                                             </td>
                                             <td>
                                                 Manager
