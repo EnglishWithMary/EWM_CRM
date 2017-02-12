@@ -161,7 +161,6 @@ public class TeacherController {
         model.addAttribute("teacher", teacher);
         model.addAttribute("groups", groups);
 
-        PersonDTO personDTO = personDTOService.getUpdatedPersonDTO(new PersonDTO(), person_id, cardId);
         model.addAttribute("teacherDTO", personDTO);
 
         TeacherLevelEnum levels[] = TeacherLevelEnum.values();
