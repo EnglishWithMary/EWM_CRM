@@ -55,7 +55,10 @@ public class PersonDTOServiceImpl<T extends RegisteredUser> implements PersonDTO
         personDTO.setSalary(person.getSalary());
 
         Teacher teacher = teacherService.getTeacherByPersonId(personId);
-        personDTO.setTeacherLevel(teacher.getLevel().toString());
+
+        if (teacher.getLevel() != null) {
+            personDTO.setTeacherLevel(teacher.getLevel().toString());
+        }
 
         personDTO.setColor(Color.black);
 
