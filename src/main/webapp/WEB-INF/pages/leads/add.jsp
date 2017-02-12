@@ -97,7 +97,14 @@
                         <div class="row padding-bot">
                             <div class="col-sm-4 col-sm-offset-4">
                                 <input type="hidden" value="${personId}" class="hidden" name="personId" />
-                                <input type="submit" value="Add lead" class="btn btn-success"/>
+                                <c:if test="${lead.personId==null}">
+                                    <input type="submit" value="Add lead" class="btn btn-success"/>
+                                </c:if>
+                                <c:if test="${lead.personId!=null}">
+                                    <input type="submit" value="Update lead" class="btn btn-success"/>
+                                </c:if>
+
+
                             </div>
                         </div>
                     </fieldset>

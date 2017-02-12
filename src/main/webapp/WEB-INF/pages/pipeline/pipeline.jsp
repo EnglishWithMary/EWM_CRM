@@ -67,10 +67,11 @@
                                     <c:if test="${pipeType.id==2}">
                                         <form method="post" action="/students/add" class="editPersonFrom btn-xs">
                                     </c:if>
-                                        <input type="hidden" name="personId" value="${person.id}">
-                                        <button type="submit" class="pipe-button btn btn-default btn-xs">
-                                            <span class="glyphicon glyphicon-pencil"></span>
-                                        </button>
+                                    <input type="hidden" name="cardId" value="${card.id}">
+                                    <input type="hidden" name="personId" value="${person.id}">
+                                    <button type="submit" class="pipe-button btn btn-default btn-xs">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
                                     </form>
                                     <button type="button" class="btn btn-default btn-xs"
                                             data-toggle="modal" data-target="#modal${person.id}">

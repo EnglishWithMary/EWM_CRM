@@ -26,13 +26,16 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h3>Pipeline position</h3>
-                            <p>(In development)</p>
-                            <div class="btn-group btn-group-vertical btn-group-sm">
-                                <button class="btn btn-default" type="button"><h4>Phase1(PASS)</h4></button>
-                                <button class="btn btn-default" type="button"><h4>Phase2(CUR)</h4></button>
-                                <button class="btn btn-default" type="button">Phase3</button>
-                                <button class="btn btn-default" type="button">Phase4</button>
-                                <button class="btn btn-default" type="button">Phase5</button>
+                             <div class="btn-group btn-group-vertical btn-group-sm">
+                                <c:forEach var="personCard" items="${personCardList}">
+                                    <c:if test="${personCard.id==currentCard.id}">
+                                        <button class="btn btn-default" type="button"><h4>${personCard.cardName}</h4>
+                                        </button>
+                                    </c:if>
+                                    <c:if test="${personCard.id != currentCard.id}">
+                                        <button class="btn btn-default" type="button">${personCard.cardName}</button>
+                                    </c:if>
+                                </c:forEach>
                             </div>
                         </div>
                     </div>

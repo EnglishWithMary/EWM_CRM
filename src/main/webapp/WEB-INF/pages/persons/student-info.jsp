@@ -36,9 +36,6 @@
                             <div class="btn-group btn-group-vertical btn-group-sm">
 
                                 <c:forEach var="personCard" items="${personCardList}">
-                                    <%--<c:set var="personCardId" value="${personCard.id}"/>--%>
-                                    <%--<c:set var="currentCardId" value="${currentCard.id}"/>--%>
-
                                     <c:if test="${personCard.id==currentCard.id}">
                                         <button class="btn btn-default" type="button"><h4>${personCard.cardName}</h4>
                                         </button>

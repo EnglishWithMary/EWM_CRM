@@ -145,7 +145,13 @@
                         </c:if>
                         <div class="row padding-bot">
                             <div class="col-sm-4 col-sm-offset-4">
-                                <input type="submit" value="Add student" class="btn btn-success"/>
+                                <c:if test="${student.personId==null}">
+                                    <input type="submit" value="Add student" class="btn btn-success"/>
+                                </c:if>
+                                <c:if test="${student.personId!=null}">
+                                    <input type="submit" value="Update student" class="btn btn-success"/>
+                                </c:if>
+
                             </div>
                         </div>
                     </fieldset>

@@ -173,10 +173,13 @@ public class LeadController {
         return "redirect:" + request.getHeader("Referer");
     }
 
-
     @RequestMapping(value = "/leads/info", method = RequestMethod.GET)
     public String leadInfo(Model model, @RequestParam int personId) throws SQLException {
         Lead lead = leadService.getLeadByPersonId(personId);
+        Card currentCard = cardService.getCardByPerson(lead.getPerson());
+        List<Card> personCardList = cardService.getCards(Pipe.LEAD_PIPE);
+        model.addAttribute("currentCard", currentCard);
+        model.addAttribute("personCardList", personCardList);
         model.addAttribute("lead", lead);
         return "persons/lead-info";
     }

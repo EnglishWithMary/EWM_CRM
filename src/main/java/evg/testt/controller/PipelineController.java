@@ -35,8 +35,8 @@ public class PipelineController {
         return "pipeline/pipeline";
     }
 
-    //    /pipeline/addCard
-//    old naming is "/addCard
+//  /pipeline/addCard
+//  old naming is "/addCard
     @RequestMapping(value = "/pipeline/addCard", method = RequestMethod.POST)
     public String addCard(Model model, @RequestParam int pipeTypeId)
             throws SQLException {
@@ -46,13 +46,7 @@ public class PipelineController {
         card.setType(pt);
         cardService.insert(card);
         this.inserAttributes(model, pipe);
-        if (pipe == Pipe.LEAD_PIPE) {
-            return "redirect:/pipeline/leads";
-        } else if (pipe == Pipe.STUDENT_PIPE) {
-            return "redirect:/pipeline/students";
-        } else {
-            return "redirect:/pipeline";
-        }
+        return ChoiceRedirectByPipeType(pipe);
     }
 
 
@@ -85,7 +79,7 @@ public class PipelineController {
         cardService.update(card);
         cardService.delete(card);
         this.inserAttributes(model, pipe);
-        return "redirect:/pipeline/leads";
+        return ChoiceRedirectByPipeType(pipe);
     }
 
     //    /pipeline/editCardName
@@ -99,7 +93,19 @@ public class PipelineController {
         card.setCardName(cardName);
         cardService.update(card);
         this.inserAttributes(model, pipe);
-        return "redirect:/pipeline/leads";
+
+        return ChoiceRedirectByPipeType(pipe);
+
+    }
+
+    String ChoiceRedirectByPipeType(Pipe pipe) {
+        if (pipe == Pipe.LEAD_PIPE) {
+            return "redirect:/pipeline/leads";
+        } else if (pipe == Pipe.STUDENT_PIPE) {
+            return "redirect:/pipeline/students";
+        } else {
+            return "redirect:/pipeline";
+        }
     }
 
     //    /pipeline/moveLeadAjax
