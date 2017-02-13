@@ -141,6 +141,8 @@
             <div class="panel-body">
                 <p><a href="/students/add" class="btn btn-success">Add Student</a></p>
                 <p><a href="/students/tests" class="btn btn-success">Test Results</a></p>
+                <p><a href="/newpages/all" class="btn btn-success">New Pages</a></p>
+                <p><a href="/newpages/teatcher_group" class="btn btn-success">New Pages1</a></p>
             </div>
         </div>
     </div>

@@ -1,5 +1,6 @@
 package evg.testt.controller;
 
+import evg.testt.dto.FieldEquals;
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
 import evg.testt.service.*;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Collections;
@@ -39,6 +41,8 @@ public class TeacherController {
     PersonDTOService personDTOService;
     @Autowired
     private GroupService groupService;
+    @Autowired
+    private StudentService studentService;
     @Autowired
     private LanguageService languageService;
 
@@ -192,4 +196,19 @@ public class TeacherController {
         model.addAttribute("teachers", teachersByLevel);
         return "teachers/all";
     }
-}
+
+
+        @RequestMapping(value = "/newpages/all", method = RequestMethod.GET)
+        public String showAll(Model model) throws SQLException, IOException {
+            List<Teacher> teachers = teacherService.getAll();
+            List<Group> groups = groupService.getAll();
+            List<Student> students = studentService.getAll();
+            model.addAttribute("teachers", teachers);
+            model.addAttribute("groups", groups);
+            model.addAttribute("students", students);
+            return "newpages/all";
+        }
+
+
+
+    }
