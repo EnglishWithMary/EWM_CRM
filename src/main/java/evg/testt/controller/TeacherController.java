@@ -209,6 +209,18 @@ public class TeacherController {
             return "newpages/all";
         }
 
+//
+//    @RequestMapping(value = "/newpages/all", method = RequestMethod.GET)
+//    public String teacherFilterByGR(Model model,
+//                                       @RequestParam Integer teacherGroup) throws SQLException {
+//        List<Group> teacherByGroup = Collections.EMPTY_LIST;
+//        teacherByGroup = groupService.getTeacherByGroup(teacherGroup);
+//
+//        model.addAttribute("groups", teacherByGroup);
+//        return "/newpages/all";
+//    }
+//
+
 
 
     }
