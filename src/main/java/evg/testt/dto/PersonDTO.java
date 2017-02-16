@@ -72,7 +72,7 @@ public @Data class PersonDTO {
 
     protected Integer personId;
 
-    private List<String>languages;
+    private List<String> languages;
 
     protected String state;
 }

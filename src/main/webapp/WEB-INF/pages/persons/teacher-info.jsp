@@ -234,13 +234,14 @@
                                                     </div>
                                                     <div class="col-sm-8">
                                                         <select class="form-control">
-                                                            <c:forEach var="level" items="${levels}">
+                                                            <c:forEach var="level" items="${levels}" >
                                                                 <option value="${level}">${level}</option>
                                                             </c:forEach>
                                                         </select>
                                                     </div>
                                                 </div>
                                             </security:authorize>
+
                                             <security:authorize access="hasRole('ROLE_ADMIN')">
                                                 <div class="row padding-bot">
                                                     <div class="col-sm-4">
