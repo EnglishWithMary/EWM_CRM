@@ -84,12 +84,12 @@ public class TeacherController {
 
     @RequestMapping(value = "/teachers/add")
     public String addTeacher(Model model,
-                             HttpServletRequest request) throws SQLException{
+                             HttpServletRequest request) throws SQLException {
         request.getSession().setAttribute("teachers/add", request.getHeader("Referer"));
         List<Language> languages = languageService.getAll();
 
         model.addAttribute("languages", languages);
-        PersonDTO personDTO =  new PersonDTO();
+        PersonDTO personDTO = new PersonDTO();
         model.addAttribute("teacher", personDTO);
         return "teachers/add";
     }
@@ -111,13 +111,13 @@ public class TeacherController {
             Teacher teacher = new Teacher();
             Person person = new Person();
 
-            if (personDTO.getPersonId() != null){
+            if (personDTO.getPersonId() != null) {
                 teacher = teacherService.getById(personDTO.getPersonId());
             }
 
             teacher = teacherService.updateRegisteredUser(teacher, personDTO);
 
-            teacher = teacherService.getUpdateTeacher(teacher,personDTO);
+            teacher = teacherService.getUpdateTeacher(teacher, personDTO);
 
             person = personService.getUpdatedPerson(person, personDTO);
 
@@ -198,29 +198,36 @@ public class TeacherController {
     }
 
 
-        @RequestMapping(value = "/newpages/all", method = RequestMethod.GET)
-        public String showAll(Model model) throws SQLException, IOException {
-            List<Teacher> teachers = teacherService.getAll();
-            List<Group> groups = groupService.getAll();
-            List<Student> students = studentService.getAll();
-            model.addAttribute("teachers", teachers);
-            model.addAttribute("groups", groups);
-            model.addAttribute("students", students);
-            return "newpages/all";
+    @RequestMapping(value = "/newpages", method = RequestMethod.GET)
+    public String showAll(Model model,
+                          @RequestParam (required = false) Integer teacherId,
+                          @RequestParam (required = false) Integer groupId) throws SQLException, IOException {
+        List<Teacher> teachers = Collections.EMPTY_LIST;
+        List<Group> groups = Collections.EMPTY_LIST;
+        List<Student> students = Collections.EMPTY_LIST;
+
+        if (teacherId == null && groupId==null) {
+            teachers = teacherService.getAll();
+            groups = groupService.getAll();
+            students = studentService.getAll();
+        } else if (teacherId != null && groupId==null) {
+            teachers=teacherService.getAll();
+            Teacher teacher = teacherService.getById(teacherId);
+            groups = groupService.getByTeacher(teacher);
+            students=studentService.getAllByTeacher(teacherId);
+        }
+        else if(groupId != null && teacherId!=null) {
+            teachers=teacherService.getAll();
+            Teacher teacher = teacherService.getById(teacherId);
+            groups = groupService.getByTeacher(teacher);
+            students= studentService.getAllByGroup(groupId);
         }
 
-//
-//    @RequestMapping(value = "/newpages/all", method = RequestMethod.GET)
-//    public String teacherFilterByGR(Model model,
-//                                       @RequestParam Integer teacherGroup) throws SQLException {
-//        List<Group> teacherByGroup = Collections.EMPTY_LIST;
-//        teacherByGroup = groupService.getTeacherByGroup(teacherGroup);
-//
-//        model.addAttribute("groups", teacherByGroup);
-//        return "/newpages/all";
-//    }
-//
-
-
-
+        model.addAttribute("teacherId", teacherId);
+        model.addAttribute("groupId", groupId);
+        model.addAttribute("teachers", teachers);
+        model.addAttribute("groups", groups);
+        model.addAttribute("students", students);
+        return "newpages";
     }
+}
