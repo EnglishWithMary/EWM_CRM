@@ -22,4 +22,5 @@ public interface StudentService extends RegisteredUserService<Student> {
     int countByFilter(Integer teacher_id, List<Integer> groupIdList) throws SQLException;
 
     Student getStudentByPersonId(Integer personId);
+
 }

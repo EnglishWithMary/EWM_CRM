@@ -1,5 +1,6 @@
 package evg.testt.controller;
 
+import evg.testt.dto.FieldEquals;
 import evg.testt.dto.PersonDTO;
 import evg.testt.model.*;
 import evg.testt.service.*;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Collections;
@@ -39,6 +41,8 @@ public class TeacherController {
     PersonDTOService personDTOService;
     @Autowired
     private GroupService groupService;
+    @Autowired
+    private StudentService studentService;
     @Autowired
     private LanguageService languageService;
 
@@ -80,12 +84,12 @@ public class TeacherController {
 
     @RequestMapping(value = "/teachers/add")
     public String addTeacher(Model model,
-                             HttpServletRequest request) throws SQLException{
+                             HttpServletRequest request) throws SQLException {
         request.getSession().setAttribute("teachers/add", request.getHeader("Referer"));
         List<Language> languages = languageService.getAll();
 
         model.addAttribute("languages", languages);
-        PersonDTO personDTO =  new PersonDTO();
+        PersonDTO personDTO = new PersonDTO();
         model.addAttribute("teacher", personDTO);
         return "teachers/add";
     }
@@ -107,13 +111,13 @@ public class TeacherController {
             Teacher teacher = new Teacher();
             Person person = new Person();
 
-            if (personDTO.getPersonId() != null){
+            if (personDTO.getPersonId() != null) {
                 teacher = teacherService.getById(personDTO.getPersonId());
             }
 
             teacher = teacherService.updateRegisteredUser(teacher, personDTO);
 
-            teacher = teacherService.getUpdateTeacher(teacher,personDTO);
+            teacher = teacherService.getUpdateTeacher(teacher, personDTO);
 
             person = personService.getUpdatedPerson(person, personDTO);
 
@@ -191,5 +195,39 @@ public class TeacherController {
 
         model.addAttribute("teachers", teachersByLevel);
         return "teachers/all";
+    }
+
+
+    @RequestMapping(value = "/newpages", method = RequestMethod.GET)
+    public String showAll(Model model,
+                          @RequestParam (required = false) Integer teacherId,
+                          @RequestParam (required = false) Integer groupId) throws SQLException, IOException {
+        List<Teacher> teachers = Collections.EMPTY_LIST;
+        List<Group> groups = Collections.EMPTY_LIST;
+        List<Student> students = Collections.EMPTY_LIST;
+
+        if (teacherId == null && groupId==null) {
+            teachers = teacherService.getAll();
+            groups = groupService.getAll();
+            students = studentService.getAll();
+        } else if (teacherId != null && groupId==null) {
+            teachers=teacherService.getAll();
+            Teacher teacher = teacherService.getById(teacherId);
+            groups = groupService.getByTeacher(teacher);
+            students=studentService.getAllByTeacher(teacherId);
+        }
+        else if(groupId != null && teacherId!=null) {
+            teachers=teacherService.getAll();
+            Teacher teacher = teacherService.getById(teacherId);
+            groups = groupService.getByTeacher(teacher);
+            students= studentService.getAllByGroup(groupId);
+        }
+
+        model.addAttribute("teacherId", teacherId);
+        model.addAttribute("groupId", groupId);
+        model.addAttribute("teachers", teachers);
+        model.addAttribute("groups", groups);
+        model.addAttribute("students", students);
+        return "newpages";
     }
 }

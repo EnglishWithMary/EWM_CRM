@@ -52,7 +52,7 @@
                             <%--<li><a href="/payments">Payments</a></li>--%>
                             <li><a href="/groups">Groups</a></li>
                             <%--<li><a href="/events">Events</a></li>--%>
-
+                            <li><a href="/newpages">New Pages</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
